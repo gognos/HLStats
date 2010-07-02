@@ -109,6 +109,14 @@ mysql_free_result($query);
 
 if(isset($_POST['sub']['saveActions'])) {
 
+	if(!empty($_POST['del'])) {
+		foreach($_POST['del'] as $k=>$v) {
+			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Actions`
+									WHERE `id` = '".mysql_escape_string($k)."'");
+			unset($_POST['code'][$k]);
+		}
+	}
+
 	if(!empty($_POST['code'])) {
 		foreach($_POST['code'] as $k=>$v) {
 			$c = trim($v);
@@ -143,10 +151,46 @@ if(isset($_POST['sub']['saveActions'])) {
 				}
 			}
 		}
+	}
 
-		if($return === false) {
-			header('Location: index.php?mode=admin&task=actions&gc='.$gc.'#actions');
+	// add
+	if(isset($_POST['newcode'])) {
+		$newOne = trim($_POST['newcode']);
+		if(!empty($newOne)) {
+			$rp = trim($_POST['newreward_player']);
+			$rt = trim($_POST['newreward_team']);
+			$d = trim($_POST['newdescription']);
+
+			$fpa = 0;
+			if(isset($_POST['newfor_PlayerActions'])) $fpa = 1;
+			$fppa = 0;
+			if(isset($_POST['newfor_PlayerPlayerActions'])) $fppa = 1;
+			$fta = 0;
+			if(isset($_POST['newfor_TeamActions'])) $fta = 1;
+			$fwa = 0;
+			if(isset($_POST['newfor_WorldActions'])) $fwa = 1;
+
+			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Actions`
+									SET `code` = '".mysql_escape_string($newOne)."',
+										reward_player = '".mysql_escape_string($rp)."',
+										reward_team = '".mysql_escape_string($rt)."',
+										team  = '".mysql_escape_string($_POST['newteam'])."',
+										description  = '".mysql_escape_string($d)."',
+										for_PlayerActions  = '".mysql_escape_string($fpa)."',
+										for_PlayerPlayerActions  = '".mysql_escape_string($fppa)."',
+										for_TeamActions  = '".mysql_escape_string($fta)."',
+										for_WorldActions = '".mysql_escape_string($fwa)."',
+										game = '".mysql_escape_string($gc)."'
+									");
+			if($query === false) {
+				$return['status'] = "1";
+				$return['msg'] = l('Data could not be saved');
+			}
 		}
+	}
+
+	if($return === false) {
+		header('Location: index.php?mode=admin&task=actions&gc='.$gc.'#actions');
 	}
 }
 
@@ -248,8 +292,43 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 				<td class="<?php echo $rcol; ?> small">
 					<input type="checkbox" name="del[<?php echo $a['id']; ?>]" value="1" />
 				</td>
-			<tr>
+			</tr>
 			<?php } ?>
+			<tr>
+				<td class="<?php echo toggleRowClass($rcol); ?> small">
+					<input type="text" name="newcode" value="" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="checkbox" name="new_for_PlayerActions" value="1" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="checkbox" name="newfor_PlayerPlayerActions" value="1"/>
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="checkbox" name="newfor_TeamActions" value="1" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="checkbox" name="newfor_WorldActions" value="1" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="text" size="4" name="newreward_player" value="" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="text" size="4" name="newreward_team" value="" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<select name="newteam">
+					<?php
+					foreach($teams as $t) {
+						echo '<option value="',$t['code'],'" >',$t['name'],'</option>';
+					}
+					?>
+					</select>
+				</td>
+				<td class="<?php echo $rcol; ?> small" colspan="2">
+					<input type="text" name="newdescription" value="" />
+				</td>
+			</tr>
 			<tr>
 				<td colspan="10" align="right">
 					<button type="submit" name="sub[saveActions]" title="<?php echo l('Save'); ?>">
