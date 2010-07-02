@@ -72,6 +72,7 @@ if(isset($_GET['gc'])) {
 			}
 		}
 	}
+	mysql_free_result($query);
 }
 
 // do we have a valid gc code?
@@ -93,10 +94,62 @@ if(mysql_num_rows($query) > 0) {
 		$actions[] = $result;
 	}
 }
+mysql_free_result($query);
+
+// get the teams for this game
+$teams = false;
+$query = mysql_query("SELECT code,name FROM `".DB_PREFIX."_Teams`
+						WHERE `game` = '".mysql_escape_string($gc)."'");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$teams[] = $result;
+	}
+}
+mysql_free_result($query);
+
+if(isset($_POST['sub']['saveActions'])) {
+
+	if(!empty($_POST['code'])) {
+		foreach($_POST['code'] as $k=>$v) {
+			$c = trim($v);
+			if(!empty($c)) {
+				$rp = trim($_POST['reward_player'][$k]);
+				$rt = trim($_POST['reward_team'][$k]);
+				$d = trim($_POST['description'][$k]);
+
+				$fpa = 0;
+				if(isset($_POST['for_PlayerActions'][$k])) $fpa = 1;
+				$fppa = 0;
+				if(isset($_POST['for_PlayerPlayerActions'][$k])) $fppa = 1;
+				$fta = 0;
+				if(isset($_POST['for_TeamActions'][$k])) $fta = 1;
+				$fwa = 0;
+				if(isset($_POST['for_WorldActions'][$k])) $fwa = 1;
+
+				$query = mysql_query("UPDATE `".DB_PREFIX."_Actions`
+										SET `code` = '".mysql_escape_string($c)."',
+											reward_player = '".mysql_escape_string($rp)."',
+											reward_team = '".mysql_escape_string($rt)."',
+											team  = '".mysql_escape_string($_POST['team'][$k])."',
+											description  = '".mysql_escape_string($d)."',
+											for_PlayerActions  = '".mysql_escape_string($fpa)."',
+											for_PlayerPlayerActions  = '".mysql_escape_string($fppa)."',
+											for_TeamActions  = '".mysql_escape_string($fta)."',
+											for_WorldActions = '".mysql_escape_string($fwa)."'
+										WHERE `id` = '".mysql_escape_string($k)."'");
+				if($query === false) {
+					$return['status'] = "1";
+					$return['msg'] = l('Data could not be saved');
+				}
+			}
+		}
+	}
+}
+
 
 $rcol = "row-dark";
 
-pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=admin",l('Awards')=>''));
+pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=admin",l('Actions')=>''));
 ?>
 <div id="sidebar">
 	<h1><?php echo l('Options'); ?></h1>
@@ -112,7 +165,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Awards for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Actions for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<p>
 		<?php echo l('You can make an action map-specific by prepending the map name and an underscore to the Action Code'); ?>.<br  />
 		<br />
@@ -120,6 +173,16 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 		<?php echo " <b>goalitem</b> ", l('(in which case it will match all maps) or you can make it'); ?>
 		<?php echo " <b>rock2_goalitem</b> ", l('to match only on the "rock2" map'); ?>
 	</p>
+	<?php
+		if(!empty($return)) {
+			if($return['status'] === "1") {
+				echo '<div class="error">',$return['msg'],'</div>';
+			}
+			elseif($return['status'] === "2") {
+				echo '<div class="success">',$return['msg'],'</div>';
+			}
+		}
+	?>
 </div>
 <div style="clear: both;">
 	<?php if(!empty($actions)) { ?>
@@ -164,11 +227,27 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				<td class="<?php echo $rcol; ?> small">
 					<input type="text" size="4" name="reward_team[<?php echo $a['id']; ?>]" value="<?php echo $a['reward_team']; ?>" />
 				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<select name="team[<?php echo $a['id']; ?>]">
+					<?php
+					foreach($teams as $t) {
+						($a['team'] == $t['code']) ? $selected='selected="1"':$selected='';
+						echo '<option value="',$t['code'],'" '.$selected.'>',$t['name'],'</option>';
+					}
+					?>
+					</select>
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="text" name="description[<?php echo $a['id']; ?>]" value="<?php echo $a['description']; ?>" />
+				</td>
+				<td class="<?php echo $rcol; ?> small">
+					<input type="checkbox" name="del[<?php echo $a['id']; ?>]" value="1" />
+				</td>
 			<tr>
 			<?php } ?>
 			<tr>
 				<td colspan="10" align="right">
-					<button type="submit" name="sub[savActions]" title="<?php echo l('Save'); ?>">
+					<button type="submit" name="sub[saveActions]" title="<?php echo l('Save'); ?>">
 						<?php echo l('Save'); ?>
 					</button>
 				</td>

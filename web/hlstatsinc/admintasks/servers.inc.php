@@ -77,60 +77,64 @@ if(empty($gc) || empty($check)) {
 	exit('No game code given');
 }
 
+$return = false;
 if(isset($_POST['sub']['saveServer'])) {
-// delete
-
-if(!empty($_POST['del'])) {
-	foreach($_POST['del'] as $k=>$v) {
-		$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
-								WHERE `serverId` = '".mysql_escape_string($k)."'");
-		unset($_POST['server'][$k]);
+	// delete
+	if(!empty($_POST['del'])) {
+		foreach($_POST['del'] as $k=>$v) {
+			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
+									WHERE `serverId` = '".mysql_escape_string($k)."'");
+			unset($_POST['server'][$k]);
+		}
 	}
-}
 
-// update
-if(!empty($_POST['server']) && !empty($_POST['port'])) {
-	// update given patterns
-	foreach($_POST['server'] as $k=>$v) {
-		$v = trim($v);
-		if(!empty($v) && isset($_POST['port'][$k]) && isset($_POST['name'][$k])) {
-			$query = mysql_query("UPDATE `".DB_PREFIX."_Servers`
-									SET `address` = '".$v."',
-										`port` = '".mysql_escape_string(trim($_POST['port'][$k]))."',
-										`name` = '".mysql_escape_string(trim($_POST['name'][$k]))."',
-										`game` = '".mysql_escape_string($gc)."',
-										`publicaddress` = '".mysql_escape_string(trim($_POST['pub'][$k]))."',
-										`statusurl` = '".mysql_escape_string(trim($_POST['stat'][$k]))."',
-										`rcon_password` = '".mysql_escape_string(trim($_POST['rcon'][$k]))."',
-										`defaultMap` = '".mysql_escape_string(trim($_POST['map'][$k]))."'
-									WHERE `serverId` = '".$k."'");
+	// update
+	if(!empty($_POST['server']) && !empty($_POST['port'])) {
+		// update given patterns
+		foreach($_POST['server'] as $k=>$v) {
+			$v = trim($v);
+			if(!empty($v) && isset($_POST['port'][$k]) && isset($_POST['name'][$k])) {
+				$query = mysql_query("UPDATE `".DB_PREFIX."_Servers`
+										SET `address` = '".$v."',
+											`port` = '".mysql_escape_string(trim($_POST['port'][$k]))."',
+											`name` = '".mysql_escape_string(trim($_POST['name'][$k]))."',
+											`game` = '".mysql_escape_string($gc)."',
+											`publicaddress` = '".mysql_escape_string(trim($_POST['pub'][$k]))."',
+											`statusurl` = '".mysql_escape_string(trim($_POST['stat'][$k]))."',
+											`rcon_password` = '".mysql_escape_string(trim($_POST['rcon'][$k]))."',
+											`defaultMap` = '".mysql_escape_string(trim($_POST['map'][$k]))."'
+										WHERE `serverId` = '".$k."'");
+				if($query === false) {
+					$return['status'] = "1";
+					$return['msg'] = l('Data could not be saved');
+				}
+			}
+		}
+	}
+
+	// add
+	if(isset($_POST['newIP'])) {
+		$newOne = trim($_POST['newIP']);
+		if(!empty($newOne) && !empty($_POST['newport']) && !empty($_POST['newname'])) {
+			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Servers`
+									SET `address` = '".mysql_escape_string(trim($_POST['newIP']))."',
+										`port` = '".mysql_escape_string(trim($_POST['newport']))."',
+										`name` = '".mysql_escape_string(trim($_POST['newname']))."',
+										`publicaddress` = '".mysql_escape_string(trim($_POST['newpub']))."',
+										`statusurl` = '".mysql_escape_string(trim($_POST['newstat']))."',
+										`rcon_password` = '".mysql_escape_string(trim($_POST['newrcon']))."',
+										`defaultMap` = '".mysql_escape_string(trim($_POST['newmap']))."',
+										`game` = '".mysql_escape_string($gc)."'");
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
 			}
 		}
 	}
-}
 
-// add
-if(isset($_POST['newIP'])) {
-	$newOne = trim($_POST['newIP']);
-	if(!empty($newOne) && !empty($_POST['newport']) && !empty($_POST['newname'])) {
-		$query = mysql_query("INSERT INTO `".DB_PREFIX."_Servers`
-								SET `address` = '".mysql_escape_string(trim($_POST['newIP']))."',
-									`port` = '".mysql_escape_string(trim($_POST['newport']))."',
-									`name` = '".mysql_escape_string(trim($_POST['newname']))."',
-									`publicaddress` = '".mysql_escape_string(trim($_POST['newpub']))."',
-									`statusurl` = '".mysql_escape_string(trim($_POST['newstat']))."',
-									`rcon_password` = '".mysql_escape_string(trim($_POST['newrcon']))."',
-									`defaultMap` = '".mysql_escape_string(trim($_POST['newmap']))."',
-									`game` = '".mysql_escape_string($gc)."'");
-		if($query === false) {
-			$return['status'] = "1";
-			$return['msg'] = l('Data could not be saved');
-		}
+	if($return === false) {
+		header('Location: index.php?mode=admin&task=servers&gc='.$gc);
 	}
-}
 }
 
 $rcol = "row-dark";
