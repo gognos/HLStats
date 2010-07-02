@@ -50,6 +50,8 @@
 $gc = false;
 $check = false;
 $servers = false;
+$return = false;
+
 // get the game, without it we can no do anyting
 if(isset($_GET['gc'])) {
 	$gc = trim($_GET['gc']);
@@ -79,12 +81,11 @@ if(empty($gc) || empty($check)) {
 }
 
 	// process the reset for this game
-	if (isset($_POST['submitReset'])) {
-		/*
+	if (isset($_POST['sub']['reset'])) {
 
 		// we need first the playids for this game
 		$players = array();
-		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players WHERE game = '".$gamecode."'");
+		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players WHERE game = '".$gc."'");
 		while($result = mysql_fetch_assoc($query)) {
 			$players[]= $result['playerId'];
 		}
@@ -95,7 +96,7 @@ if(empty($gc) || empty($check)) {
 
 		// get the servers for this game
 		$serversArr = array();
-		$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Servers WHERE game = '".$gamecode."'");
+		$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Servers WHERE game = '".$gc."'");
 		while($result = mysql_fetch_assoc($query)) {
 			$serversArr[]= $result['serverId'];
 		}
@@ -121,36 +122,34 @@ if(empty($gc) || empty($check)) {
 			"".DB_PREFIX."_Players"
 		);
 
-		echo "<ul>\n";
 		foreach ($dbtables as $dbt) {
-			echo "<li>$dbt ... ";
 			if($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
 				if (mysql_query("DELETE FROM ".$dbt."
 									WHERE killerId IN (".$playerIdString.")
 										OR victimId IN (".$playerIdString.")")) {
-					echo "OK\n";
+					$return .= $dbt." OK<br />";
 				}
 				else {
-					echo "Error for Table:".$dbt."\n";
+					$return .= "Error for Table:".$dbt."<br />";
 				}
 
 			}
 			elseif($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
 				if (mysql_query("DELETE FROM ".$dbt."
 									WHERE serverId IN (".$serversArrString.")")) {
-					echo "OK\n";
+					$return .= $dbt." OK<br />";
 				}
 				else {
-					echo "Error for Table:".$dbt."\n";
+					$return .= "Error for Table:".$dbt."<br />";
 				}
 			}
 			else {
 				if (mysql_query("DELETE FROM ".$dbt."
 									WHERE playerId IN (".$playerIdString.")")) {
-					echo "OK\n";
+					$return .= $dbt." OK<br />";
 				}
 				else {
-					echo "Error for Table:".$dbt."\n";
+					$return .= "Error for Table:".$dbt."<br />";
 				}
 			}
 		}
@@ -161,24 +160,23 @@ if(empty($gc) || empty($check)) {
 		foreach ($dbtablesGamecode as $dbtGame) {
 			echo "<li>$dbtGame ... ";
 			if (mysql_query("DELETE FROM ".$dbtGame."
-								WHERE game = '".$gamecode."'")) {
+								WHERE game = '".$gc."'")) {
 
-				echo "OK\n";
+				$return .= $dbtGame." OK<br />";
 			}
 			else {
-				echo "Error for Table:".$dbtGame."\n";
+				$return .= "Error for Table:".$dbtGame."<br />";
 			}
 		}
 
-		echo "<li>Clearing awards ... ";
-		mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL
-					WHERE game = '".$gamecode."'");
-		echo "OK\n";
-
-		echo "</ul>\n";
-
-		echo l("Done"),"<p>";
-		*/
+		$return .= "Clearing awards ... <br />";
+		if (mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL
+					WHERE game = '".$gc."'")) {
+			$return .= "Awards OK<br />";
+		}
+		else {
+			$return .= "Error for Table: Awards<br />";
+		}
 	}
 
 pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=admin",l('Reset Statistics')=>''));
@@ -206,6 +204,11 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	<b><?php echo l('Note'); ?></b> <?php echo l('You should kill'); ?> <b>hlstats.pl</b>
 	<?php echo l('before resetting the stats. You can restart it after they are reset'); ?>.<br />
 	<br />
+	<?php
+	if(!empty($return)) {
+		echo '<p>',$return,'</p>';
+	}
+	?>
 	<form method="post" action="">
 		<p align="center">
 		<button type="submit" name="sub[reset]" title="<?php echo l('Reset'); ?>">
