@@ -166,6 +166,7 @@ See which ISPs your players are using. = Von welchem ISP kommen die Spieler ?
 Optimize Database = Datenbank optimieren
 This operation tells the MySQL server to clean up the database tables, optimizing them for better performance. It is recommended that you run this at least once a month. = Dies optimiert und räumt die MySQL Datenbank und deren Tabellen auf und ermöglicht somit einen schnelleren Zugriff. Dies sollte einmal pro Monat ausgeführt werden.
 Reset Statistics = Statistiken zurücksetzten
+Reset Statistics for = Statistiken zurücksetzten für
 Delete all players, clans and events from the database. = Alle Spieler, clans und Events löschen.
 News at Front page = News auf der Startseite
 Write news to the front page. = News auf der Startseite erstellen.
@@ -551,7 +552,6 @@ Optimize Database = Datenbank optimieren
 if you get "table handler does not support check/repair" = wenn die Meldung "table handler does not support check/repair" erscheint
 Optimizing tables... = Optimiere Tabellen...
 Analyzing tables... = Analysiere Tabellen...
-Reset Statistics = Statistiken zurücksetzten
 Update = Aktualisieren
 
 Can be an URL or even mailto:address = kann eine URL sein oder eine mailto:Adresse
