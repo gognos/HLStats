@@ -570,3 +570,4 @@ Manage the roles. = Verwaltung der Rollen.
 Manage the weapons. = Verwaltung der Waffen.
 Manage the award for each weapon. = Verwaltung der Auszeichnungen für jede Waffe.
 Manage the awards for each action. = Verwaltung der Auszeichnung für jede Aktion.
+Awards for = Auszeichnungen für

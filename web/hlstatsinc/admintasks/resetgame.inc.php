@@ -80,104 +80,104 @@ if(empty($gc) || empty($check)) {
 	exit('No game code given');
 }
 
-	// process the reset for this game
-	if (isset($_POST['sub']['reset'])) {
+// process the reset for this game
+if (isset($_POST['sub']['reset'])) {
 
-		// we need first the playids for this game
-		$players = array();
-		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players WHERE game = '".$gc."'");
-		while($result = mysql_fetch_assoc($query)) {
-			$players[]= $result['playerId'];
-		}
-		if(empty($players)) {
-			die("Fatal error: No players found for this game.");
-		}
-		$playerIdString = implode(",",$players);
+	// we need first the playids for this game
+	$players = array();
+	$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players WHERE game = '".$gc."'");
+	while($result = mysql_fetch_assoc($query)) {
+		$players[]= $result['playerId'];
+	}
+	if(empty($players)) {
+		die("Fatal error: No players found for this game.");
+	}
+	$playerIdString = implode(",",$players);
 
-		// get the servers for this game
-		$serversArr = array();
-		$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Servers WHERE game = '".$gc."'");
-		while($result = mysql_fetch_assoc($query)) {
-			$serversArr[]= $result['serverId'];
-		}
-		if(empty($serversArr)) {
-			die("Fatal error: No players found for this game.");
-		}
-		$serversArrString = implode(",",$serversArr);
+	// get the servers for this game
+	$serversArr = array();
+	$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Servers WHERE game = '".$gc."'");
+	while($result = mysql_fetch_assoc($query)) {
+		$serversArr[]= $result['serverId'];
+	}
+	if(empty($serversArr)) {
+		die("Fatal error: No players found for this game.");
+	}
+	$serversArrString = implode(",",$serversArr);
 
 
-		$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
-		if (mysql_num_rows($query) < 1) {
-			die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
-				There may be something wrong with your hlstats database or your version of MySQL.");
-		}
+	$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+	if (mysql_num_rows($query) < 1) {
+		die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
+			There may be something wrong with your hlstats database or your version of MySQL.");
+	}
 
-		while (list($table) = mysql_fetch_array($query)) {
-			$dbtables[] = $table;
-		}
+	while (list($table) = mysql_fetch_array($query)) {
+		$dbtables[] = $table;
+	}
 
-		array_push($dbtables,
-			"".DB_PREFIX."_PlayerNames",
-			"".DB_PREFIX."_PlayerUniqueIds",
-			"".DB_PREFIX."_Players"
-		);
+	array_push($dbtables,
+		"".DB_PREFIX."_PlayerNames",
+		"".DB_PREFIX."_PlayerUniqueIds",
+		"".DB_PREFIX."_Players"
+	);
 
-		foreach ($dbtables as $dbt) {
-			if($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
-				if (mysql_query("DELETE FROM ".$dbt."
-									WHERE killerId IN (".$playerIdString.")
-										OR victimId IN (".$playerIdString.")")) {
-					$return .= $dbt." OK<br />";
-				}
-				else {
-					$return .= "Error for Table:".$dbt."<br />";
-				}
-
-			}
-			elseif($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
-				if (mysql_query("DELETE FROM ".$dbt."
-									WHERE serverId IN (".$serversArrString.")")) {
-					$return .= $dbt." OK<br />";
-				}
-				else {
-					$return .= "Error for Table:".$dbt."<br />";
-				}
+	foreach ($dbtables as $dbt) {
+		if($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
+			if (mysql_query("DELETE FROM ".$dbt."
+								WHERE killerId IN (".$playerIdString.")
+									OR victimId IN (".$playerIdString.")")) {
+				$return .= $dbt." OK<br />";
 			}
 			else {
-				if (mysql_query("DELETE FROM ".$dbt."
-									WHERE playerId IN (".$playerIdString.")")) {
-					$return .= $dbt." OK<br />";
-				}
-				else {
-					$return .= "Error for Table:".$dbt."<br />";
-				}
+				$return .= "Error for Table:".$dbt."<br />";
 			}
+
 		}
-
-		// now the tables which we can delete by gamecode
-		$dbtablesGamecode [] = "".DB_PREFIX."_Clans";
-
-		foreach ($dbtablesGamecode as $dbtGame) {
-			echo "<li>$dbtGame ... ";
-			if (mysql_query("DELETE FROM ".$dbtGame."
-								WHERE game = '".$gc."'")) {
-
-				$return .= $dbtGame." OK<br />";
+		elseif($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
+			if (mysql_query("DELETE FROM ".$dbt."
+								WHERE serverId IN (".$serversArrString.")")) {
+				$return .= $dbt." OK<br />";
 			}
 			else {
-				$return .= "Error for Table:".$dbtGame."<br />";
+				$return .= "Error for Table:".$dbt."<br />";
 			}
-		}
-
-		$return .= "Clearing awards ... <br />";
-		if (mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL
-					WHERE game = '".$gc."'")) {
-			$return .= "Awards OK<br />";
 		}
 		else {
-			$return .= "Error for Table: Awards<br />";
+			if (mysql_query("DELETE FROM ".$dbt."
+								WHERE playerId IN (".$playerIdString.")")) {
+				$return .= $dbt." OK<br />";
+			}
+			else {
+				$return .= "Error for Table:".$dbt."<br />";
+			}
 		}
 	}
+
+	// now the tables which we can delete by gamecode
+	$dbtablesGamecode [] = "".DB_PREFIX."_Clans";
+
+	foreach ($dbtablesGamecode as $dbtGame) {
+		echo "<li>$dbtGame ... ";
+		if (mysql_query("DELETE FROM ".$dbtGame."
+							WHERE game = '".$gc."'")) {
+
+			$return .= $dbtGame." OK<br />";
+		}
+		else {
+			$return .= "Error for Table:".$dbtGame."<br />";
+		}
+	}
+
+	$return .= "Clearing awards ... <br />";
+	if (mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL
+				WHERE game = '".$gc."'")) {
+		$return .= "Awards OK<br />";
+	}
+	else {
+		$return .= "Error for Table: Awards<br />";
+	}
+}
 
 pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=admin",l('Reset Statistics')=>''));
 ?>
