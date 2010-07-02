@@ -143,6 +143,10 @@ if(isset($_POST['sub']['saveActions'])) {
 				}
 			}
 		}
+
+		if($return === false) {
+			header('Location: index.php?mode=admin&task=actions&gc='.$gc.'#actions');
+		}
 	}
 }
 
@@ -185,6 +189,7 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 	?>
 </div>
 <div style="clear: both;">
+	<a name="actions"></a>
 	<?php if(!empty($actions)) { ?>
 	<form method="post" action="">
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
