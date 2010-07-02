@@ -178,75 +178,65 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
 			<tr>
 				<th>&nbsp;</th>
-				<th><?php echo l('IP Address'); ?> *</th>
-				<th><?php echo l('Port'); ?> *</th>
-				<th><?php echo l('Server Name'); ?> *</th>
+				<th><?php echo l('Required'); ?></th>
+				<th><?php echo l('Optional'); ?></th>
 				<th><?php echo l('Delete'); ?></th>
 			</tr>
 		<?php foreach($servers as $s) { ?>
 			<tr>
-				<td class="<?php echo toggleRowClass($rcol); ?>"><img src="hlstatsimg/server.gif" alt="<?php echo l('Server'); ?>" /></td>
-				<td>
-					<input size="10" type="text" name="server[<?php echo $s['serverId']; ?>]" value="<?php echo $s['address']; ?>" />
+				<td class="<?php echo toggleRowClass($rcol); ?>" valign="top">
+					<img src="hlstatsimg/server.gif" alt="<?php echo l('Server'); ?>" />
 				</td>
-				<td class="<?php echo ($rcol); ?>">
-					<input size="5" type="text" name="port[<?php echo $s['serverId']; ?>]" value="<?php echo $s['port']; ?>" />
-				</td>
-				<td class="<?php echo ($rcol); ?>">
+				<td class="<?php echo ($rcol); ?>" valign="top">
+					<b><?php echo l('IP Address'); ?> :</b><br />
+					<input size="10" type="text" name="server[<?php echo $s['serverId']; ?>]" value="<?php echo $s['address']; ?>" /><br />
+					<b><?php echo l('Port'); ?> :</b><br />
+					<input size="5" type="text" name="port[<?php echo $s['serverId']; ?>]" value="<?php echo $s['port']; ?>" /><br />
+					<b><?php echo l('Server Name'); ?> :</b><br />
 					<input size="25" type="text" name="name[<?php echo $s['serverId']; ?>]" value="<?php echo $s['serverName']; ?>" />
 				</td>
-				<td align="center" class="<?php echo ($rcol); ?>">
+				<td class="<?php echo ($rcol); ?>" valign="top">
+					<?php echo l('Rcon Password'); ?> :<br />
+					<input size="10"  type="text" name="rcon[<?php echo $s['serverId']; ?>]" value="<?php echo $s['rcon_password']; ?>" /><br />
+					<?php echo l('Default Server Map'); ?> :<br />
+					<input type="text" name="map[<?php echo $s['serverId']; ?>]" value="<?php echo $s['defaultMap']; ?>" /><br />
+					<?php echo l('Public Address'); ?> :<br />
+					<input type="text" name="pub[<?php echo $s['serverId']; ?>]" value="<?php echo $s['publicaddress']; ?>" /><br />
+					<?php echo l('Status URL'); ?> :<br />
+					<input type="text" name="stat[<?php echo $s['serverId']; ?>]" value="<?php echo $s['statusurl']; ?>" />
+				</td>
+				<td align="center" class="<?php echo ($rcol); ?>" valign="top" width="30">
 					<input type="checkbox" name="del[<?php echo $s['serverId']; ?>]" value="yes" />
 				</td>
 			</tr>
-			<tr>
-				<td class="<?php echo ($rcol); ?>">&nbsp;</td>
-				<td colspan="3" class="small <?php echo ($rcol); ?>">
-					<b><?php echo l('Rcon Password'); ?> :</b>
-					<input size="10"  type="text" name="rcon[<?php echo $s['serverId']; ?>]" value="<?php echo $s['rcon_password']; ?>" />&nbsp;
-					&nbsp;
-					<b><?php echo l('Default Server Map'); ?> :</b>
-					<input type="text" name="map[<?php echo $s['serverId']; ?>]" value="<?php echo $s['defaultMap']; ?>" /><br />
-					<b><?php echo l('Public Address'); ?> :</b>
-					<input type="text" name="pub[<?php echo $s['serverId']; ?>]" value="<?php echo $s['publicaddress']; ?>" />&nbsp;
-					&nbsp;
-					<b><?php echo l('Status URL'); ?> :</b>
-					<input type="text" name="stat[<?php echo $s['serverId']; ?>]" value="<?php echo $s['statusurl']; ?>" />
-				</td>
-				<td class="<?php echo ($rcol); ?>">&nbsp;</td>
-			</tr>
 		<?php } ?>
 			<tr>
-				<td class="<?php echo toggleRowClass($rcol); ?>"><?php echo l('new'); ?></td>
-				<td class="<?php echo ($rcol); ?>">
-					<input size="10" type="text" name="newIP" value="" />
+				<td class="<?php echo toggleRowClass($rcol); ?>" valign="top">
+					<img src="hlstatsimg/server.gif" alt="<?php echo l('Server'); ?>" /><br />
+					<?php echo l('new'); ?>
 				</td>
-				<td class="<?php echo ($rcol); ?>">
-					<input size="5" type="text" name="newport" value="" />
-				</td>
-				<td class="<?php echo ($rcol); ?>">
+				<td class="<?php echo ($rcol); ?>" valign="top">
+					<b><?php echo l('IP Address'); ?> :</b><br />
+					<input size="10" type="text" name="newIP" value="" /><br />
+					<b><?php echo l('Port'); ?> :</b><br />
+					<input size="5" type="text" name="newport" value="" /><br />
+					<b><?php echo l('Server Name'); ?> :</b><br />
 					<input size="25" type="text" name="newname" value="" />
 				</td>
-				<td class="<?php echo ($rcol); ?>">&nbsp;</td>
-			</tr>
-			<tr>
-				<td class="<?php echo ($rcol); ?>">&nbsp;</td>
-				<td colspan="3" class="small <?php echo ($rcol); ?>">
-					<b><?php echo l('Rcon Password'); ?> :</b>
-					<input size="10"  type="text" name="newrcon" value="" />&nbsp;
-					&nbsp;
-					<b><?php echo l('Default Server Map'); ?> :</b>
+				<td class="<?php echo ($rcol); ?>">
+					<?php echo l('Rcon Password'); ?> :<br />
+					<input size="10"  type="text" name="newrcon" value="" /><br />
+					<?php echo l('Default Server Map'); ?> :<br />
 					<input size="10"  type="text" name="newmap" value="" /><br />
-					<b><?php echo l('Public Address'); ?> :</b>
-					<input type="text" name="newpub" value="" />&nbsp;
-					&nbsp;
-					<b><?php echo l('Status URL'); ?> :</b>
+					<?php echo l('Public Address'); ?> :<br />
+					<input type="text" name="newpub" value="" /><br />
+					<?php echo l('Status URL'); ?> :<br />
 					<input type="text" name="newstat" value="" />
 				</td>
 				<td class="<?php echo ($rcol); ?>">&nbsp;</td>
 			</tr>
 			<tr>
-				<td colspan="5" align="right">
+				<td colspan="4" align="right">
 					<button type="submit" name="sub[saveServer]" title="<?php echo l('Save'); ?>">
 						<?php echo l('Save'); ?>
 					</button>
