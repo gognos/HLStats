@@ -104,7 +104,7 @@ if(isset($_POST['sub']['saveTeam'])) {
 		}
 	}
 
-	// add
+	// new
 	if(!empty($_POST['code'])) {
 		foreach($_POST['code'] as $k=>$v) {
 			$c = trim($v);
@@ -123,6 +123,27 @@ if(isset($_POST['sub']['saveTeam'])) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
 				}
+			}
+		}
+	}
+
+	// add
+	if(isset($_POST['newcode'])) {
+		$newOne = trim($_POST['newcode']);
+		if(!empty($newOne)) {
+			$name = trim($_POST['newname']);
+
+			$hide = 0;
+			if(isset($_POST['newhidden'])) $hide = 1;
+
+			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Teams`
+									SET `code` = '".mysql_escape_string($newOne)."',
+										`name` = '".mysql_escape_string($name)."',
+										`hidden` = '".mysql_escape_string($hide)."',
+										`game` = '".mysql_escape_string($gc)."'");
+			if($query === false) {
+				$return['status'] = "1";
+				$return['msg'] = l('Data could not be saved');
 			}
 		}
 	}
@@ -196,6 +217,17 @@ pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin
 			}
 		}
 		?>
+			<tr>
+				<td class="<?php echo toggleRowClass($rcol); ?>">
+					<?php echo l('new'); ?> <input type="text" name="newcode" value="" />
+				</td>
+				<td class="<?php echo $rcol; ?>">
+					<input type="text" name="newname" value="" />
+				</td>
+				<td colspan="2" class="<?php echo $rcol; ?>">
+					<input type="checkbox" name="newhidden" value="1" />
+				</td>
+			</tr>
 			<tr>
 				<td colspan="4" align="right">
 					<button type="submit" name="sub[saveTeam]" title="<?php echo l('Save'); ?>">
