@@ -1,6 +1,6 @@
 <?php
 /**
- * manage the actions
+ * manage the teams
  * @package HLStats
  * @author Johannes 'Banana' Keßler
  * @copyright Johannes 'Banana' Keßler
@@ -49,7 +49,6 @@
 
 $gc = false;
 $check = false;
-$servers = false;
 $return = false;
 
 // get the game, without it we can no do anyting
