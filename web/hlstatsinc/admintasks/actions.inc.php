@@ -80,22 +80,6 @@ if(empty($gc) || empty($check)) {
 	exit('No game code given');
 }
 
-$actions = false;
-// get the actions
-$query = mysql_query("SELECT id, code, reward_player, reward_team,
-						team, description, for_PlayerActions,
-						for_PlayerPlayerActions,for_TeamActions,
-						for_WorldActions
-					FROM `".DB_PREFIX."_Actions`
-					WHERE game='".mysql_escape_string($gc)."'
-					ORDER BY code ASC");
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
-		$actions[] = $result;
-	}
-}
-mysql_free_result($query);
-
 // get the teams for this game
 $teams = false;
 $query = mysql_query("SELECT code,name FROM `".DB_PREFIX."_Teams`
@@ -194,6 +178,22 @@ if(isset($_POST['sub']['saveActions'])) {
 	}
 }
 
+$actions = false;
+// get the actions
+$query = mysql_query("SELECT id, code, reward_player, reward_team,
+						team, description, for_PlayerActions,
+						for_PlayerPlayerActions,for_TeamActions,
+						for_WorldActions
+					FROM `".DB_PREFIX."_Actions`
+					WHERE game='".mysql_escape_string($gc)."'
+					ORDER BY code ASC");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$actions[] = $result;
+	}
+}
+mysql_free_result($query);
+
 
 $rcol = "row-dark";
 
@@ -234,7 +234,6 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 </div>
 <div style="clear: both;">
 	<a name="actions"></a>
-	<?php if(!empty($actions)) { ?>
 	<form method="post" action="">
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
 			<tr>
@@ -249,7 +248,8 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 				<th class="small"><?php echo l('Action Description'); ?></th>
 				<th class="small"><?php echo l('Delete'); ?></th>
 			</tr>
-			<?php foreach($actions as $a) { ?>
+		<?php if(!empty($actions)) {
+			foreach($actions as $a) { ?>
 			<tr>
 				<td class="<?php echo toggleRowClass($rcol); ?> small">
 					<input type="text" name="code[<?php echo $a['id']; ?>]" value="<?php echo $a['code']; ?>" />
@@ -293,7 +293,8 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 					<input type="checkbox" name="del[<?php echo $a['id']; ?>]" value="1" />
 				</td>
 			</tr>
-			<?php } ?>
+			<?php }
+			} ?>
 			<tr>
 				<td class="<?php echo toggleRowClass($rcol); ?> small">
 					<input type="text" name="newcode" value="" />
@@ -338,5 +339,4 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 			</tr>
 		</table>
 	</form>
-	<?php } ?>
 </div>

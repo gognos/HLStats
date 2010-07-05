@@ -1,5 +1,13 @@
 <?php
 /**
+ * manage the actions
+ * @package HLStats
+ * @author Johannes 'Banana' Keßler
+ * @copyright Johannes 'Banana' Keßler
+ */
+
+
+/**
  *
  * Original development:
  * +
@@ -39,45 +47,76 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
-	if ($auth->userdata["acclevel"] < 80) die ("Access denied!");
+$gc = false;
+$check = false;
+$servers = false;
+$return = false;
 
-	$edlist = new EditList("teamId", DB_PREFIX."_Teams", "team");
-	$edlist->columns[] = new EditListColumn("game", "Game", 0, true, "hidden", $gamecode);
-	$edlist->columns[] = new EditListColumn("code", "Team Code", 20, true, "text", "", 32);
-	$edlist->columns[] = new EditListColumn("name", "Team Name", 20, true, "text", "", 64);
-	$edlist->columns[] = new EditListColumn("hidden", "Hide Team", 0, false, "checkbox");
-
-
-	if ($_POST)
-	{
-		if ($edlist->update())
-			message("success", l("Operation successful"));
-		else
-			message("warning", $edlist->error());
+// get the game, without it we can no do anyting
+if(isset($_GET['gc'])) {
+	$gc = trim($_GET['gc']);
+	$check = validateInput($gc,'nospace');
+	if($check === true) {
+		// load the server
+		$query = mysql_query("SELECT s.serverId, s.address, s.port,
+								s.name AS serverName,
+								s.publicaddress, s.statusurl,
+								s.rcon_password, s.defaultMap,
+								g.name AS gameName
+							FROM `".DB_PREFIX."_Servers` AS s
+							LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
+							WHERE s.game = '".mysql_escape_string($gc)."'
+							ORDER BY address ASC, port ASC");
+		if(mysql_num_rows($query) > 0) {
+			while($result = mysql_fetch_assoc($query)) {
+				$servers[] = $result;
+			}
+		}
 	}
+	mysql_free_result($query);
+}
+
+$teams = false;
+// get the teams
+$query = mysql_query("SELECT teamId, code, name, hidden
+					FROM `".DB_PREFIX."_Teams`
+					WHERE game='".mysql_escape_string($gc)."'
+					ORDER BY code ASC");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$teams[] = $result;
+	}
+}
+
+// do we have a valid gc code?
+if(empty($gc) || empty($check)) {
+	exit('No game code given');
+}
+
+$rcol = "row-dark";
+
+pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin",l('Teams')=>''));
 ?>
+<div id="sidebar">
+	<h1><?php echo l('Options'); ?></h1>
+	<div class="left-box">
+		<ul class="sidemenu">
+			<li>
+				<a href="index.php?mode=admin&task=gameoverview&code=<?php echo $gc; ?>"><?php echo l('Back to game overview'); ?></a>
+			</li>
+			<li>
+				<a href="index.php?mode=admin"><?php echo l('Back to admin overview'); ?></a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div id="main">
+	<h1><?php echo l('Actions for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<p>
+		<?php echo l("You can specify descriptive names for each game's team codes"); ?>
+	</p>
+	<a name="teams"></a>
+	<form method="post" action="">
 
-<?php echo l("You can specify descriptive names for each game's team codes"); ?>.<p>
-
-<?php $query = mysql_query("
-		SELECT
-			teamId,
-			code,
-			name,
-			hidden
-		FROM
-			".DB_PREFIX."_Teams
-		WHERE
-			game='$gamecode'
-		ORDER BY
-			code ASC
-	");
-
-	$edlist->draw($query);
-?>
-
-<table width="75%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-	<td align="center"><input type="submit" value=" <?php echo l('Apply'); ?> " class="submit"></td>
-</tr>
-</table>
+	</form>
+</div>
