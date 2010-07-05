@@ -93,6 +93,7 @@ mysql_free_result($query);
 
 if(isset($_POST['sub']['saveActions'])) {
 
+	//del
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Actions`
@@ -101,6 +102,7 @@ if(isset($_POST['sub']['saveActions'])) {
 		}
 	}
 
+	// update
 	if(!empty($_POST['code'])) {
 		foreach($_POST['code'] as $k=>$v) {
 			$c = trim($v);
