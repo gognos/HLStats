@@ -92,6 +92,66 @@ if(mysql_num_rows($query) > 0) {
 	}
 }
 
+if(isset($_POST['sub']['saveRoles'])) {
+
+	// del
+	if(!empty($_POST['del'])) {
+		foreach($_POST['del'] as $k=>$v) {
+			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Roles`
+									WHERE `roleId` = '".mysql_escape_string($k)."'");
+			unset($_POST['code'][$k]);
+		}
+	}
+
+	// new
+	if(!empty($_POST['code'])) {
+		foreach($_POST['code'] as $k=>$v) {
+			$c = trim($v);
+			if(!empty($c)) {
+				$name = trim($_POST['name'][$k]);
+
+				$hide = 0;
+				if(isset($_POST['hidden'][$k])) $hide = 1;
+
+				$query = mysql_query("UPDATE `".DB_PREFIX."_Roles`
+										SET `code` = '".mysql_escape_string($c)."',
+											`name` = '".mysql_escape_string($name)."',
+											`hidden` = '".mysql_escape_string($hide)."'
+										WHERE `roleId` = '".mysql_escape_string($k)."'");
+				if($query === false) {
+					$return['status'] = "1";
+					$return['msg'] = l('Data could not be saved');
+				}
+			}
+		}
+	}
+
+	// add
+	if(isset($_POST['newcode'])) {
+		$newOne = trim($_POST['newcode']);
+		if(!empty($newOne)) {
+			$name = trim($_POST['newname']);
+
+			$hide = 0;
+			if(isset($_POST['newhidden'])) $hide = 1;
+
+			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Roles`
+									SET `code` = '".mysql_escape_string($newOne)."',
+										`name` = '".mysql_escape_string($name)."',
+										`hidden` = '".mysql_escape_string($hide)."',
+										`game` = '".mysql_escape_string($gc)."'");
+			if($query === false) {
+				$return['status'] = "1";
+				$return['msg'] = l('Data could not be saved');
+			}
+		}
+	}
+
+	if($return === false) {
+		header('Location: index.php?mode=admin&task=roles&gc='.$gc.'#roles');
+	}
+
+}
 
 
 $rcol = "row-dark";
@@ -115,17 +175,66 @@ pageHeader(array(l("Admin"),l('Roles')), array(l("Admin")=>"index.php?mode=admin
 	<h1><?php echo l('Actions for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<p>
 		<?php echo l("You can specify descriptive names for each game's role codes"); ?>
-	<p>
+	</p>
+	<?php
+		if(!empty($return)) {
+			if($return['status'] === "1") {
+				echo '<div class="error">',$return['msg'],'</div>';
+			}
+			elseif($return['status'] === "2") {
+				echo '<div class="success">',$return['msg'],'</div>';
+			}
+		}
+	?>
+	<a name="roles"></a>
+	<form method="post" action="">
+		<table cellpadding="2" cellspacing="0" border="0" width="100%">
+			<tr>
+				<th><?php echo l('Roles Code'); ?></th>
+				<th><?php echo l('Roles Name'); ?></th>
+				<th><?php echo l('Hide Role'); ?></th>
+				<th><?php echo l('Delete'); ?></th>
+			</tr>
+		<?php if(!empty($roles)) {
+			foreach($roles as $t) {
+		?>
+			<tr>
+				<td class="<?php echo toggleRowClass($rcol); ?>">
+					<input type="text" name="code[<?php echo $t['roleId']; ?>]" value="<?php echo $t['code']; ?>" />
+				</td>
+				<td class="<?php echo $rcol; ?>">
+					<input type="text" name="name[<?php echo $t['roleId']; ?>]" value="<?php echo $t['name']; ?>" />
+				</td>
+				<td class="<?php echo $rcol; ?>">
+					<?php ($t['hidden'] == "1") ? $checked='checked="1"':$checked=''; ?>
+					<input type="checkbox" name="hidden[<?php echo $t['roleId']; ?>]" value="1" <?php echo $checked; ?> />
+				</td>
+				<td class="<?php echo $rcol; ?>">
+					<input type="checkbox" name="del[<?php echo $t['roleId']; ?>]" value="1" />
+				</td>
+			</tr>
+		<?php
+			}
+		}
+		?>
+			<tr>
+				<td class="<?php echo toggleRowClass($rcol); ?>">
+					<?php echo l('new'); ?> <input type="text" name="newcode" value="" />
+				</td>
+				<td class="<?php echo $rcol; ?>">
+					<input type="text" name="newname" value="" />
+				</td>
+				<td colspan="2" class="<?php echo $rcol; ?>">
+					<input type="checkbox" name="newhidden" value="1" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4" align="right">
+					<button type="submit" name="sub[saveRoles]" title="<?php echo l('Save'); ?>">
+						<?php echo l('Save'); ?>
+					</button>
+				</td>
+			</tr>
+		</table>
+	</form>
 </div>
-
-
-
-<?php $
-	$edlist->draw($result);
-?>
-
-<table width="75%" border="0" cellspacing="0" cellpadding="0">
-<tr>
-	<td align="center"><input type="submit" value=" <?php echo l('Apply'); ?> " class="submit"></td>
-</tr>
-</table>
