@@ -150,7 +150,6 @@ if(isset($_POST['sub']['saveTeam'])) {
 	if($return === false) {
 		header('Location: index.php?mode=admin&task=teams&gc='.$gc.'#teams');
 	}
-
 }
 
 $rcol = "row-dark";

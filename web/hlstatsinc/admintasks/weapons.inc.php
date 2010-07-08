@@ -92,6 +92,62 @@ if(mysql_num_rows($query) > 0) {
 	}
 }
 
+if(isset($_POST['sub']['saveWeapon'])) {
+
+	// del
+	if(!empty($_POST['del'])) {
+		foreach($_POST['del'] as $k=>$v) {
+			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Weapons`
+									WHERE `weaponId` = '".mysql_escape_string($k)."'");
+			unset($_POST['code'][$k]);
+		}
+	}
+
+	// new
+	if(!empty($_POST['code'])) {
+		foreach($_POST['code'] as $k=>$v) {
+			$c = trim($v);
+			if(!empty($c)) {
+				$name = trim($_POST['name'][$k]);
+				$mod = trim($_POST['modifier'][$k]);
+
+				$query = mysql_query("UPDATE `".DB_PREFIX."_Weapons`
+										SET `code` = '".mysql_escape_string($c)."',
+											`name` = '".mysql_escape_string($name)."',
+											`modifier` = '".mysql_escape_string($mod)."'
+										WHERE `weaponId` = '".mysql_escape_string($k)."'");
+				if($query === false) {
+					$return['status'] = "1";
+					$return['msg'] = l('Data could not be saved');
+				}
+			}
+		}
+	}
+
+	// add
+	if(isset($_POST['newcode'])) {
+		$newOne = trim($_POST['newcode']);
+		if(!empty($newOne)) {
+			$name = trim($_POST['newname']);
+			$mod = trim($_POST['newmodifier']);
+
+			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Weapons`
+									SET `code` = '".mysql_escape_string($newOne)."',
+										`name` = '".mysql_escape_string($name)."',
+										`modifier` = '".mysql_escape_string($mod)."',
+										`game` = '".mysql_escape_string($gc)."'");
+			if($query === false) {
+				$return['status'] = "1";
+				$return['msg'] = l('Data could not be saved');
+			}
+		}
+	}
+
+	if($return === false) {
+		header('Location: index.php?mode=admin&task=weapons&gc='.$gc.'#weapons');
+	}
+}
+
 $rcol = "row-dark";
 
 pageHeader(array(l("Admin"),l('Weapons')), array(l("Admin")=>"index.php?mode=admin",l('Weapons')=>''));
@@ -127,7 +183,7 @@ pageHeader(array(l("Admin"),l('Weapons')), array(l("Admin")=>"index.php?mode=adm
 			}
 		}
 	?>
-	<a name="teams"></a>
+	<a name="weapons"></a>
 	<form method="post" action="">
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
 			<tr>

@@ -150,7 +150,6 @@ if(isset($_POST['sub']['saveRoles'])) {
 	if($return === false) {
 		header('Location: index.php?mode=admin&task=roles&gc='.$gc.'#roles');
 	}
-
 }
 
 
