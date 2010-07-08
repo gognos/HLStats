@@ -80,18 +80,6 @@ if(empty($gc) || empty($check)) {
 	exit('No game code given');
 }
 
-$teams = false;
-// get the teams
-$query = mysql_query("SELECT teamId, code, name, hidden
-					FROM `".DB_PREFIX."_Teams`
-					WHERE game='".mysql_escape_string($gc)."'
-					ORDER BY code ASC");
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
-		$teams[] = $result;
-	}
-}
-
 if(isset($_POST['sub']['saveTeam'])) {
 
 	// del
@@ -103,7 +91,7 @@ if(isset($_POST['sub']['saveTeam'])) {
 		}
 	}
 
-	// new
+	// update
 	if(!empty($_POST['code'])) {
 		foreach($_POST['code'] as $k=>$v) {
 			$c = trim($v);
@@ -152,6 +140,18 @@ if(isset($_POST['sub']['saveTeam'])) {
 	}
 }
 
+$teams = false;
+// get the teams
+$query = mysql_query("SELECT teamId, code, name, hidden
+					FROM `".DB_PREFIX."_Teams`
+					WHERE game='".mysql_escape_string($gc)."'
+					ORDER BY code ASC");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$teams[] = $result;
+	}
+}
+
 $rcol = "row-dark";
 
 pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin",l('Teams')=>''));
@@ -170,7 +170,7 @@ pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Actions for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Teams for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<p>
 		<?php echo l("You can specify descriptive names for each game's team codes"); ?>
 	</p>

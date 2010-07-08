@@ -334,7 +334,8 @@ You can give each weapon a "points modifier", amultiplier which determines how m
 for a full description of how points ratings are calculated.) The baseline points modifier for weapons is 1.00. A points modifier of 0.00 will cause kills with that weapon to have no effect on players' points = für eine ausführliche Beschreibung wie die Punkte berechnet werden). Der Grundwert des Modifikators ist 1.00. Ein modifikator von 0.00 bewirkt, dass keine Punkte für diese Waffe gewonnen werden können
 
 Award Name = Auszeichnungsname
-Verb Plural = Text
+Verb Plural = Text Mehrzahl
+Weapon Awards for = Waffen Auszeichnungen für
 
 Are you sure you want to reset all statistics? All players, clans and events will be deleted from the database = Sind Sie sicher, dass sie alle Statistiken zurücksetzten wollen ?  Alle Spieler, Clans und Events werden gelöscht
 Reset Stats = Statistiken zurücksetzten
@@ -525,6 +526,7 @@ The details for this server couldn't be retrieved, this maybe because the server
 Back to game overview = Zurück zur Spielübersicht
 Back to Weapon Statistics = Zurück zur Waffenübersicht
 Back to Action Statistics = Zurück zur Aktionsübersicht
+Back to game statistics = Zurück zur Spielstatistik
 
 Back to start page = Zurück zur Startseite
 All = Alle

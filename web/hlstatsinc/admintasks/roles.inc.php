@@ -80,18 +80,6 @@ if(empty($gc) || empty($check)) {
 }
 
 
-// get the roles
-$roles = false;
-$query = mysql_query("SELECT roleId, code, name, hidden
-						FROM `".DB_PREFIX."_Roles`
-						WHERE game='".mysql_escape_string($gc)."'
-						ORDER BY code ASC");
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
-		$roles[] = $result;
-	}
-}
-
 if(isset($_POST['sub']['saveRoles'])) {
 
 	// del
@@ -103,7 +91,7 @@ if(isset($_POST['sub']['saveRoles'])) {
 		}
 	}
 
-	// new
+	// update
 	if(!empty($_POST['code'])) {
 		foreach($_POST['code'] as $k=>$v) {
 			$c = trim($v);
@@ -152,6 +140,17 @@ if(isset($_POST['sub']['saveRoles'])) {
 	}
 }
 
+// get the roles
+$roles = false;
+$query = mysql_query("SELECT roleId, code, name, hidden
+						FROM `".DB_PREFIX."_Roles`
+						WHERE game='".mysql_escape_string($gc)."'
+						ORDER BY code ASC");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$roles[] = $result;
+	}
+}
 
 $rcol = "row-dark";
 
@@ -171,7 +170,7 @@ pageHeader(array(l("Admin"),l('Roles')), array(l("Admin")=>"index.php?mode=admin
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Actions for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Roles for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<p>
 		<?php echo l("You can specify descriptive names for each game's role codes"); ?>
 	</p>
@@ -189,8 +188,8 @@ pageHeader(array(l("Admin"),l('Roles')), array(l("Admin")=>"index.php?mode=admin
 	<form method="post" action="">
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
 			<tr>
-				<th><?php echo l('Roles Code'); ?></th>
-				<th><?php echo l('Roles Name'); ?></th>
+				<th><?php echo l('Role Code'); ?></th>
+				<th><?php echo l('Role Name'); ?></th>
 				<th><?php echo l('Hide Role'); ?></th>
 				<th><?php echo l('Delete'); ?></th>
 			</tr>
