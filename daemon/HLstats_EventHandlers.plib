@@ -53,13 +53,23 @@ sub doEvent_Connect
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
-	my $hostname;
-	my $hostgroup;
+	my $country;
+	my $countryCode;
+	my $countryCity;
 
-	if ($player)
-	{
-		$hostname = &resolveIp($ipAddr);
-		$hostgroup = "";
+	if ($player) {
+
+		if($g_use_geoip) {
+			my @countryData = &resolveCountry($ipAddr);
+			$country = $countryData[0];
+			$countryCode = $countryData[1];
+			$countryCity = $countryData[2];
+		}
+		else {
+			$country = "";
+			$countryCode = "";
+			$countryCity = "";
+		}
 
 		if ($g_mode eq "LAN") {
 			$player->set("uniqueid", $ipAddr);
@@ -69,8 +79,9 @@ sub doEvent_Connect
 			"Connects", 0,
 			$player->get("playerid"),
 			$ipAddr,
-			$hostname,
-			$hostgroup
+			$country,
+			$countryCode,
+			$countryCity
 		);
 	}
 	else
@@ -79,7 +90,7 @@ sub doEvent_Connect
 	}
 
 	return $desc . $playerstr . " connected, address \"$ipAddr\","
-		. " hostname \"$hostname\", hostgroup \"$hostgroup\"";
+		. " country \"$country\", countrycode \"$countryCode\"";
 }
 
 

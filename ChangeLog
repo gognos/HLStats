@@ -16,6 +16,8 @@ HLStats ChangeLog
 		needed.
 	http://www.php.net/manual/en/book.bc.php
 *) New: Clan Profile can new enter a steam group URL
+*) New: Daemon can now looup country and city. Using Maxmind GeoIP.
+		Please read the documentation on how to use this feature !!
 *) Changed: Only one admin user is now possible. Dropped admin rights
 			for now.
 *) Changed: Design options removed from options table
@@ -29,9 +31,14 @@ HLStats ChangeLog
 *) Changed: replaced AMCharts with pChart
 *) Changed: Information about real kills removed
 *) Changed: hls_set options cleanup
+*) Changed: hlstats.conf.ini DNSResolveIP and DNSTimeout removed.
+			Replaced by UseGEOIP
 *) Fixed: typo in lang (thx to LuBJe)
 *) Fixed: bug in admin -> Tools -> Reset (thx to conan)
 *) Fixed: remove the ; in rcon commands (thx to Par0noid)
+*) Fixed: Issue #23
+*) Fixed: Issue #26
+
 
 
 1.51 (2009-11-23)

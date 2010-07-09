@@ -118,6 +118,7 @@ sub doQuery
 #
 # Do a DNS reverse-lookup on an IP address and return the hostname, or empty
 # string on error.
+# @todo: remove
 #
 
 sub resolveIp {
@@ -155,6 +156,46 @@ sub resolveIp {
 
 	chomp($host);
 	return $host;
+}
+
+#
+# string resolveCountry (string ip)
+#
+# do an ip to country looup via maxmind geoip
+# see documentation for more details
+#
+sub resolveCountry {
+	my ($ip) = @_;
+	my @ret;
+
+	print "-- Resolving country for IP \"$ip\" ... "  if ($g_debug > 0);
+
+	if ($ip) {
+		my $gi = Geo::IP::PurePerl->open( "./GeoLiteCity.dat" );
+
+		my (
+		   $country_code, $country_code3, $country_name, $region,
+		   $city,         $postal_code,   $latitude,     $longitude,
+		   $metro_code,   $area_code
+		) = $gi->get_city_record($ip);
+
+		#print $country_code . "\n";
+		#print $country_code3 . "\n";
+		#print $country_name . "\n";
+		#print $region . "\n";
+		#print $city . "\n";
+		#print $postal_code . "\n";
+		#print $latitude . "\n";
+		#print $longitude . "\n";
+		#print $area_code . "\n";
+		#print $metro_code . "\n";
+
+		@ret = ($country_name, $country_code, $city);
+	}
+
+	print join("\n",@countryData) if ($g_debug > 0);
+
+	return @ret;
 }
 
 

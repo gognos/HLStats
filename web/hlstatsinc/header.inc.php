@@ -69,9 +69,9 @@ $tstr = array_pop($titlestr);
 	<div id="header">
 		<span id="slogan"><?php echo $tstr; ?></span>
 		<ul>
-			<li id="current"><a href="index.php"><span>Content</span></a></li>
-			<li id="current"><a href="index.php?mode=search"><span>Search</span></a></li>
-			<li id="current"><a href="index.php?mode=help"><span>Help</span></a></li>
+			<li id="current"><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
+			<li id="current"><a href="index.php?mode=search"><span><?php echo l('Search'); ?></span></a></li>
+			<li id="current"><a href="index.php?mode=help"><span><?php echo l('Help'); ?></span></a></li>
 		</ul>
 	</div>
 	<div id="header-logo">

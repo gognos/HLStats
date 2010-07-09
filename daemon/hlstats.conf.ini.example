@@ -58,13 +58,10 @@ ServerPort = 27015
 # set this only if you use STDIN
 Timestamp = 0
 
-# Resolve player IP addresses to hostnames. Requires a working DNS setup
-# (on the box running hlstats.pl). 1=on 0=off
-DNSResolveIP = 0
-
-# Time in seconds to wait for DNS queries to complete before cancelling.
-# However, while hlstats.pl is waiting for an IP to resolve it cannot be parsing log data.
-DNSTimeout = 5
+# Resolve the player country by IP
+# For this to work please read doc/geoip.install.txt !!!
+# default 0
+UseGEOIP = 0
 
 ##
 ## General options

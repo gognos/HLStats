@@ -32,7 +32,7 @@ ALTER TABLE `#DB_PREFIX#_Players` ADD `jabber` VARCHAR( 128 ) CHARACTER SET utf8
 ALTER TABLE `#DB_PREFIX#_Players` ADD `steamprofile` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `jabber` ;
 
 ALTER TABLE `#DB_PREFIX#_Users`  DROP `acclevel`,  DROP `playerId`;
-ALTER TABLE `#DB_PREFIX#_Users` ADD `authCode` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL 
+ALTER TABLE `#DB_PREFIX#_Users` ADD `authCode` VARCHAR( 40 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 
 ALTER TABLE `#DB_PREFIX#_Players` CHANGE `icq` `icq` VARCHAR( 10 ) NOT NULL ;
 
@@ -67,3 +67,9 @@ DELETE FROM `#DB_PREFIX#_Options` WHERE `keyname` = 'body_bgcolor';
 DELETE FROM `#DB_PREFIX#_Options` WHERE `keyname` = 'body_background';
 
 UPDATE `#DB_PREFIX#_Options` SET `value` = 'default' WHERE `keyname` =  'style';
+
+ALTER TABLE `#DB_PREFIX#_Events_Connects` CHANGE `hostname` `country` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
+ALTER TABLE `#DB_PREFIX#_Events_Connects` CHANGE `hostgroup` `countrycode` CHAR( 2 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
+UPDATE `#DB_PREFIX#_Events_Connects` SET `country` = '';
+UPDATE `#DB_PREFIX#_Events_Connects` SET `countryCode` = '';
+ALTER TABLE `#DB_PREFIX#_Events_Connects` ADD `city` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;

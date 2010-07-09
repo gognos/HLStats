@@ -77,6 +77,7 @@ require "$opt_libdir/HLstats_Player.pm";
 require "$opt_libdir/HLstats.plib";
 require "$opt_libdir/HLstats_EventHandlers.plib";
 require "$opt_libdir/HLstats_RatingSystem.pm";
+require "$opt_libdir/geoip/PurePerl.pm";
 
 $|=1;
 Getopt::Long::Configure ("bundling");
@@ -110,8 +111,8 @@ $g_stdin = $Config->{System}->{Stdin};
 $g_server_ip = $Config->{System}->{ServerIP};
 $g_server_port = $Config->{System}->{ServerPort};
 $g_timestamp = $Config->{System}->{Timestamp};
-$g_dns_resolveip = $Config->{System}->{DNSResolveIP};
-$g_dns_timeout = $Config->{System}->{DNSTimeout};
+
+$g_use_geoip = $Config->{System}->{UseGEOIP};
 
 $g_mode = $Config->{Options}->{Mode};
 $g_deletedays = $Config->{Options}->{DeleteDays};
@@ -153,10 +154,7 @@ a MySQL database.
                                     password on the command line is insecure.
                                     Use the configuration file instead.)
       --db-username=USERNAME      database username
-      --dns-resolveip             resolve player IP addresses to hostnames
-                                    (requires working DNS)
-      --nodns-resolveip           disables above
-      --dns-timeout=SEC           timeout DNS queries after SEC seconds  [$g_dns_timeout]
+      --use-geoip             	resolve player country by IP addresses (READ documentation)
   -i, --ip=IP                     set IP address to listen on for UDP log data
   -p, --port=PORT                 set port to listen on for UDP log data  [$s_port]
   -r, --rcon                      enables rcon command exec support (the default)
@@ -197,8 +195,7 @@ GetOptions(
 	"db-name=s"			=> \$db_name,
 	"db-password=s"		=> \$db_pass,
 	"db-username=s"		=> \$db_user,
-	"dns-resolveip!"	=> \$g_dns_resolveip,
-	"dns-timeout=i"		=> \$g_dns_timeout,
+	"use-geoip!"	=> \$g_use_geoip,
 	"ip|i=s"			=> \$s_ip,
 	"port|p=i"			=> \$s_port,
 	"rcon!"				=> \$g_rcon,
@@ -298,7 +295,7 @@ print "connected OK\n";
 	"ChangeTeam",
 		["playerId", "team"],
 	"Connects",
-		["playerId", "ipAddress", "hostname", "hostgroup"],
+		["playerId", "ipAddress", "country", "countrycode", "city"],
 	"Disconnects",
 		["playerId"],
 	"Entries",
