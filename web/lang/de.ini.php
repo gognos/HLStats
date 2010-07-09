@@ -574,3 +574,7 @@ Manage the award for each weapon. = Verwaltung der Auszeichnungen für jede Waff
 Manage the awards for each action. = Verwaltung der Auszeichnung für jede Aktion.
 Awards for = Auszeichnungen für
 Actions for  = Aktionen für
+
+Questions = Fragen
+Player Reward = Spielerlohn
+Team Reward = Teamlohn

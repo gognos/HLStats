@@ -260,6 +260,7 @@ pageHeader(array(l("Admin"),l('Edit Details')), array(l("Admin")=>"index.php?mod
 		}
 	?>
 	<p>&nbsp;</p>
+	<p>&nbsp;</p>
 	<h2><?php echo l('Enter player or clan ID'); ?></h2>
 	<form method="post" action="">
 		<?php echo l('You can enter a player or clan ID number directly, or you can search for a player or clan'); ?>.<br />
