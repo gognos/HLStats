@@ -167,7 +167,7 @@ pageHeader(array(l("Admin"),l('Action Awards')), array(l("Admin")=>"index.php?mo
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Weapon Awards for'); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Action Awards for'); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<?php
 		if(!empty($return)) {
 			if($return['status'] === "1") {

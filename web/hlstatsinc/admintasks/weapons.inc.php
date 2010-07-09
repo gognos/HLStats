@@ -167,7 +167,7 @@ pageHeader(array(l("Admin"),l('Weapons')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Actions for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Weapons for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<p>
 		<?php echo l('You can give each weapon a "points modifier", amultiplier which determines how many points will be gained or lost for killing with or being killed by that weapon'); ?>.
 		<?php echo l('(Refer to'), ' <a href="index.php?mode=help#points">', l('Help'),'</a> ' ?>
@@ -221,7 +221,7 @@ pageHeader(array(l("Admin"),l('Weapons')), array(l("Admin")=>"index.php?mode=adm
 					<input type="text" name="newname" value="" />
 				</td>
 				<td colspan="2" class="<?php echo $rcol; ?>">
-					<input type="text" name="newmodifier" value="" />
+					<input type="text" size="5" name="newmodifier" value="" />
 				</td>
 			</tr>
 			<tr>
