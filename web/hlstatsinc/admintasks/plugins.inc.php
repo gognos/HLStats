@@ -5,7 +5,7 @@
  * @author Johannes 'Banana' Keßler
  * @copyright Johannes 'Banana' Keßler
  */
- 
+
 /**
  *
  * Original development:
@@ -65,7 +65,7 @@ if(isset($_POST['sub']['saveAddons'])) {
 			unset($_POST['rule'][$k]);
 		}
 	}
-	
+
 	if(!empty($_POST['rule']) && !empty($_POST['add'])) {
 		// update given addons
 		foreach($_POST['rule'] as $k=>$v) {
@@ -117,6 +117,8 @@ if(mysql_num_rows($query) > 0) {
 	}
 }
 
+$rcol = "row-dark";
+
 pageHeader(array(l("Admin"),l('Server Plugins')), array(l("Admin")=>"index.php?mode=admin",l('Server Plugins')=>''));
 ?>
 <div id="sidebar">
@@ -149,7 +151,7 @@ pageHeader(array(l("Admin"),l('Server Plugins')), array(l("Admin")=>"index.php?m
 			</tr>
 		</table><br />
 		<br />
-		
+
 		<?php echo l("Addons usually create a cvar that is publicly available in the rules list. In most cases the cvar that shows the addons existance just shows the version of the addon. You can configure HLStats on this page to then show the proper name of the plugin and it's version on the live statistics page. For example"); ?>:<br />
 		<br />
 		<table border="1" cellspacing="0" cellpadding="4">
@@ -191,7 +193,7 @@ pageHeader(array(l("Admin"),l('Server Plugins')), array(l("Admin")=>"index.php?m
 	?>
 	<?php if(!empty($addons)) { ?>
 	<form method="post" action="">
-		<table cellpadding="2" cellspacing="0" border="1" width="100%">
+		<table cellpadding="2" cellspacing="0" border="0" width="100%">
 			<tr>
 				<th><?php echo l('Rule'); ?></td>
 				<th><?php echo l('Addon'); ?></td>
@@ -200,29 +202,29 @@ pageHeader(array(l("Admin"),l('Server Plugins')), array(l("Admin")=>"index.php?m
 			</tr>
 			<?php foreach($addons as $addon) { ?>
 			<tr>
-				<td>
+				<td class="<?php echo toggleRowClass($rcol); ?>">
 					<input type="text" name="rule[<?php echo $addon['rule']; ?>]" value="<?php echo $addon['rule']; ?>" />
 				</td>
-				<td>
+				<td class="<?php echo $rcol; ?>">
 					<input type="text" name="add[<?php echo $addon['rule']; ?>]" value="<?php echo $addon['addon']; ?>" />
 				</td>
-				<td>
+				<td class="<?php echo $rcol; ?>">
 					<input type="text" name="url[<?php echo $addon['rule']; ?>]" value="<?php echo $addon['url']; ?>" />
 				</td>
-				<td>
+				<td class="<?php echo $rcol; ?>">
 					<input type="checkbox" name="del[<?php echo $addon['rule']; ?>]" value="yes" />
 				</td>
 			</tr>
 			<?php } ?>
 			<tr>
-				<td>
+				<td class="<?php echo toggleRowClass($rcol); ?>">
 					<?php echo l('new'); ?>: <br/>
 					<input type="text" name="newrule" value="" />
 				</td>
-				<td>
+				<td class="<?php echo $rcol; ?>">
 					<input type="text" name="newadd" value="" />
 				</td>
-				<td colspan="2">
+				<td colspan="2" class="<?php echo $rcol; ?>">
 					<input type="text" name="newurl" value="" />
 				</td>
 			</tr>

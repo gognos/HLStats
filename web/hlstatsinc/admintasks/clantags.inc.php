@@ -123,7 +123,7 @@ pageHeader(array(l("Admin"),l('Clan Tag Patterns')), array(l("Admin")=>"index.ph
 	</p>
 	<p>
 		<h2><?php echo l("Special characters in the pattern"); ?></h2>
-		<table border="0" cellspacing="0" cellpadding="4">
+		<table border="1" cellspacing="0" cellpadding="4">
 			<tr>
 				<th><?php echo l('Character'); ?></th>
 				<th><?php echo l('Description'); ?></th>
@@ -152,7 +152,7 @@ pageHeader(array(l("Admin"),l('Clan Tag Patterns')), array(l("Admin")=>"index.ph
 	</p>
 	<p>
 		<h2><?php echo l('Example patterns'); ?></h2>
-		<table border="0" cellspacing="0" cellpadding="4">
+		<table border="1" cellspacing="0" cellpadding="4">
 			<tr>
 				<th><?php echo l('Pattern'); ?></th>
 				<th><?php echo l('Description'); ?></th>
@@ -195,7 +195,7 @@ pageHeader(array(l("Admin"),l('Clan Tag Patterns')), array(l("Admin")=>"index.ph
 	?>
 	<?php if(!empty($patterns)) { ?>
 	<form method="post" action="">
-	<table cellpadding="2" cellspacing="0" border="1" width="100%">
+	<table cellpadding="2" cellspacing="0" border="0" width="100%">
 		<tr>
 			<th><?php echo l('Pattern'); ?></th>
 			<th><?php echo l('Match Position'); ?></th>
@@ -205,9 +205,9 @@ pageHeader(array(l("Admin"),l('Clan Tag Patterns')), array(l("Admin")=>"index.ph
 			foreach($patterns as $pat) {
 				echo '<tr>';
 
-				echo '<td><input type="text" size="30" name="pat[',$pat['id'],']" value="',$pat['pattern'],'"/></td>';
+				echo '<td class="',toggleRowClass($rcol),'"><input type="text" size="30" name="pat[',$pat['id'],']" value="',$pat['pattern'],'"/></td>';
 
-				echo '<td>';
+				echo '<td class="',$rcol,'">';
 				echo '<select name="sel[',$pat['id'],']">';
 					$selected = '';
 					if($pat['position'] == "EITHER") $selected = 'selected="1"';
@@ -221,16 +221,16 @@ pageHeader(array(l("Admin"),l('Clan Tag Patterns')), array(l("Admin")=>"index.ph
 				echo '</select>';
 				echo '</td>';
 
-				echo '<td><input type="checkbox" name="del[',$pat['id'],']" value="yes" /></td>';
+				echo '<td class="',$rcol,'"><input type="checkbox" name="del[',$pat['id'],']" value="yes" /></td>';
 
 				echo '</tr>';
 			}
 	?>
 		<tr>
-			<td>
+			<td class="<?php echo toggleRowClass($rcol); ?>">
 				<?php echo l('new'); ?> <input type="text" size="30" name="newpat" value="" />
 			</td>
-			<td colspan="2">
+			<td colspan="2" class="<?php echo ($rcol); ?>">
 				<select name="newsel">
 					<option value="EITHER"><?php echo l('EITHER'); ?></option>
 					<option  value="START"><?php echo l('START'); ?></option>
@@ -239,7 +239,7 @@ pageHeader(array(l("Admin"),l('Clan Tag Patterns')), array(l("Admin")=>"index.ph
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2">
+			<td colspan="3" align="right">
 				<button type="submit" name="sub[patterns]" title="<?php echo l('Save'); ?>">
 					<?php echo l('Save'); ?>
 				</button>
