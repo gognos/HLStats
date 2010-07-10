@@ -116,8 +116,8 @@ $queryStr = "SELECT IFNULL(".DB_PREFIX."_Teams.name, ".DB_PREFIX."_Events_Change
 
 
 pageHeader(
-	array($gamename, l("Teams Statistics")),
-	array($gamename=>"index.php?game=$game", l("Teams Statistics")=>"")
+	array($gamename, l("Team Statistics")),
+	array($gamename=>"index.php?game=$game", l("Team Statistics")=>"")
 );
 ?>
 
@@ -132,7 +132,7 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l("Teams Statistics"); ?></h1>
+	<h1><?php echo l("Team Statistics"); ?></h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
 			<th class="<?php echo $rcol; ?>">
@@ -145,7 +145,7 @@ pageHeader(
 			</th>
 			<th class="<?php echo $rcol; ?>">
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'teamcount','sortorder'=>$newSort)); ?>">
-					<?php echo l('Joined'); ?>
+					<?php echo l('Selected'); ?>
 				</a>
 				<?php if($sort == "teamcount") { ?>
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />

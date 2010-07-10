@@ -588,3 +588,6 @@ Optional = Optional
 Questions = Fragen
 Player Reward = Spielerlohn
 Team Reward = Teamlohn
+
+Team Statistics = Team Statistiken
+Selected = Ausgewählt

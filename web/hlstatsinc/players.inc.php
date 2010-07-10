@@ -144,7 +144,7 @@ pageHeader(
 				<input type="text" name="minkills" size="4" maxlength="2" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
 				<?php echo l('or more kills'); ?>.<br />
 				<button type="submit" title="<?php echo l('Apply'); ?>">
-					<?php echo l('Apply'); ?>"
+					<?php echo l('Apply'); ?>
 				</button>
 			<?php } ?>
 		</form>
