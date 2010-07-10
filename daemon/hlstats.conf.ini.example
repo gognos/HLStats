@@ -60,6 +60,7 @@ Timestamp = 0
 
 # Resolve the player country by IP
 # For this to work please read doc/geoip.install.txt !!!
+# Have to be disabled if Mode is set to LAN
 # default 0
 UseGEOIP = 0
 
