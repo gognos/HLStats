@@ -235,8 +235,9 @@ class Chart {
 			$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-80);
 			$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
 			$this->_pChart->drawGraphArea(255,255,255,TRUE);
-			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_NORMAL,150,150,150,true,30,2,true);
+			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,true,30,2,true);
 			$this->_pChart->drawGrid(4,TRUE,230,230,230,50);
+
 
 			// draw the bar graph
 			$this->_pChart->drawBarGraph($this->_pData->GetData(),$this->_pData->GetDataDescription(),TRUE);
@@ -324,7 +325,7 @@ class Chart {
 			$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-80);
 			$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
 			$this->_pChart->drawGraphArea(255,255,255,TRUE);
-			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,30,2,true);
+			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,TRUE,30,2,true);
 			$this->_pChart->drawGrid(4,TRUE,230,230,230,50);
 
 			// display only more the 3 days as a curve, otherwise as a bar
@@ -407,7 +408,7 @@ class Chart {
 		$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-70);
 		$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
 		$this->_pChart->drawGraphArea(255,255,255,TRUE);
-		$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2);
+		$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,TRUE,0,2);
 		$this->_pChart->drawGrid(4,TRUE,230,230,230,50);
 
 		#  // Draw the cubic curve graph

@@ -519,6 +519,7 @@ Find a Player or Clan = Finde einen Spieler oder Clan
 Search For = Suche nach
 In = In
 Search Results = Suchergebnisse
+Nothing found = Nichts gefunden
 
 Show only events of type = Zeige nur Events von dem Typ
 
