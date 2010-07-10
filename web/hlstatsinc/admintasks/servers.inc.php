@@ -167,6 +167,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</p>
 	<p>
 		<?php echo l('The Default map is used to sepecify the map if HLStats is unable to determine the map'); ?>.
+		<?php echo l('Even if HLStats is stated befor the server it could happen that the map name is not in the log'); ?>
 	</p>
 	<?php
 		if(!empty($return)) {

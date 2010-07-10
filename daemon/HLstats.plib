@@ -781,7 +781,7 @@ sub getServer
 		$result->finish;
 
 		if($defaultMap eq "") {
-			$defaultMap = '';
+			$defaultMap = 'unknown';
 		}
 
 		return new HLstats_Server($serverId, $address, $port, $game, $defaultMap);

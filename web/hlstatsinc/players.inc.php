@@ -296,7 +296,7 @@ pageHeader(
 		$chartObj = new Chart($game);
 
 		$chart = $chartObj->getChart('playerActivity');
-		echo '<img src="',$chart,'" />';
+		echo '<p><img src="',$chart,'" /></p>';
 
 		/*
     	$chart = $chartObj->getChart('mostTimeOnline');

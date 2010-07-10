@@ -298,7 +298,7 @@ while ($addon_list = mysql_fetch_assoc($query)) {
 			<tr>
 				<th width="20">&nbsp;</th>
 				<th><?php echo l('Name'); ?></th>
-				<th><?php echo l('Frags'); ?></th>
+				<th><?php echo l('Kills'); ?></th>
 				<th><?php echo l('Connected'); ?></th>
 			</tr>
 			<?php

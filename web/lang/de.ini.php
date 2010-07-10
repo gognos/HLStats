@@ -290,6 +290,7 @@ HLStats can use Rcon to give feedback to users when they = HLStats kann das Rcon
 update their profile = Ihr Profil aktualisieren
 if you enable Rcon support in hlstats.conf and specify an Rcon Password for each server = wenn Sie die Rcon Unterstützung aktivieren und das Rcon Passwort für den Server angeben
 The Default map is used to sepecify the map if HLStats is unable to determine the map = Die Standard Map dient HLStats dazu eine Map anzuzeigen wenn es nicht möglich ist die Map auszulesen
+Even if HLStats is stated befor the server it could happen that the map name is not in the log = Selbst wenn HLStats vor der Gameserver gestartet wird, kann es sein, dass die Map nicht in der Log auftaucht
 Go to = Gehe zu
 Basic View = Normale Ansicht
 Advanced View = Erweiterte Ansicht
@@ -471,6 +472,7 @@ Weapon Details = Waffendetails
 
 Map Details = Map Details
 Kills on = Frags auf
+No data recorded = Keine Daten vorhanden
 
 Action Details = Aktionsdetails
 From a total of = Von gesamt
@@ -497,6 +499,9 @@ Valve Anti-Cheat = Valve Anti-Cheat
 Rules = Regeln
 Server Addons = Serveraddons
 The details for this server couldn't be retrieved, this maybe because the server is currently unavailable. = Die Details für diesen Game-Server konnten nicht erfragt werden. Der Game-Server ist nicht erreichbar.
+Server details = Serverdetails
+Connected = Verbunden
+
 
 Player Chat History = Spieler Chat Historie
 Chat History = Chat Historie
@@ -528,6 +533,7 @@ Back to game overview = Zurück zur Spielübersicht
 Back to Weapon Statistics = Zurück zur Waffenübersicht
 Back to Action Statistics = Zurück zur Aktionsübersicht
 Back to game statistics = Zurück zur Spielstatistik
+Back to Map Statistics = Zurück zur Map Übersicht
 
 Back to start page = Zurück zur Startseite
 All = Alle
