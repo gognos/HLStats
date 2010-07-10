@@ -156,7 +156,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Servers for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Servers for'); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<p>
 		<?php echo l('Enter the addresses of all servers that you want to accept data from'); ?>
 	</p>

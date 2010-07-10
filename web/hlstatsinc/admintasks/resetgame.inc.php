@@ -158,7 +158,6 @@ if (isset($_POST['sub']['reset'])) {
 	$dbtablesGamecode [] = "".DB_PREFIX."_Clans";
 
 	foreach ($dbtablesGamecode as $dbtGame) {
-		echo "<li>$dbtGame ... ";
 		if (mysql_query("DELETE FROM ".$dbtGame."
 							WHERE game = '".$gc."'")) {
 
@@ -195,7 +194,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Reset Statistics for '); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Reset Statistics for'); ?>: <?php echo $servers[0]['gameName']; ?></h1>
 	<?php echo l('Are you sure you want to reset all statistics for game'); ?> <b><?php echo $servers[0]['gameName'];?></b> ? <br />
 	<br />
 	<?php echo l('All players, clans and events will be deleted from the database'); ?>.<br />

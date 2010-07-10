@@ -117,7 +117,7 @@ Statistics = Statistik
 View = Ansehen
 players = Spieler
 clans ranked on = Clans gelistet auf
-servers = Servern
+servers = Server
 Last kill = Letzter Frag
 All statistics are generated in real-time. Event history data expires after = Alle Statistiken sind in Echtzeit erstellt. Events werden gelöscht nach
 
@@ -299,7 +299,7 @@ Are you sure you want to reset all statistics for game = Wollen Sie wirklich die
 All players, clans and events will be deleted from the database = Alle Spieler,Clans und Events werden aus der Datenbank gelöscht
 (All other admin settings will be retained) = Alle anderen Einstellungen bleiben erhalten
 You should kill = Beenden Sie
-before resetting the stats. = bevor Sie die Stats zurücksetzten.
+before resetting the stats. You can restart it after they are reset = bevor Sie die Stats zurücksetzten. Danach sollte man den daemon wieder starten
 
 Action Code = Aktion Code
 Player Action = Spieler Aktion
@@ -575,6 +575,9 @@ Manage the award for each weapon. = Verwaltung der Auszeichnungen für jede Waff
 Manage the awards for each action. = Verwaltung der Auszeichnung für jede Aktion.
 Awards for = Auszeichnungen für
 Actions for  = Aktionen für
+Servers for = Server für
+Required = Benötigt
+Optional = Optional
 
 Questions = Fragen
 Player Reward = Spielerlohn
