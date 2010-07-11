@@ -209,11 +209,16 @@ class Chart {
 			$kills = array();
 			$xLine = array();
 
+			$kCount = count($data);
 			foreach($data as $entry) {
 				$kills[] = $entry['dayEvents'];
 
 				// this shows the date only every 5 days
-				$xLine[] = $entry['eventDay'];
+				//$xLine[] = $entry['eventDay'];
+				// if less then 15 days show everytime
+				if($c % 4 == 0 || $kCount < 15) { $xLine[] = $entry['eventDay']; }
+				else { $xLine[] = ''; }
+				$c++;
 				/*
 				if($c % 4 == 0) { $xLine[] = $entry['eventDay']; }
 				else { $xLine[] = ''; }
@@ -292,11 +297,13 @@ class Chart {
 			$disconnects = array();
 
 			// we need only the count for each day
+			$dcCount = count($data['connect']);
 			foreach($data['connect'] as $d=>$e) {
 				$connects[] = count($e);
 
 				// this shows the date only every 5 days
-				if($c % 4 == 0) { $xLine[] = $d; }
+				// if less then 15 days show everytime
+				if($c % 4 == 0 || $dcCount < 15) { $xLine[] = $d; }
 				else { $xLine[] = ''; }
 				$c++;
 			}
@@ -401,7 +408,6 @@ class Chart {
 		$this->_pData->AddPoint($disconnects,'2');
 		$this->_pData->AddSerie('2');
 		$this->_pData->SetSerieName(l("Disconnects"),'2');
-
 
 
 		$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);

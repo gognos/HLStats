@@ -102,7 +102,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 	if(!empty($sr_query)) {
 		$andgame = "";
 		if ($sr_game !== "---") {
-			$andgame = "AND ".DB_PREFIX."_Games.name = '".mysql_escape_string($sr_game)."'";
+			$andgame = "AND ".DB_PREFIX."_Games.code = '".mysql_escape_string($sr_game)."'";
 		}
 
 		switch($sr_type) {
