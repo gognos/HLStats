@@ -54,14 +54,14 @@ use IO::Select;
 use Carp qw(croak);
 use Encode qw(from_to);
 
-use Data::Dumper;
-
 # implemented queries
 # see http://developer.valvesoftware.com/wiki/Source_Server_Queries
 # for all queries.
+
 # http://developer.valvesoftware.com/wiki/Talk:Server_Queries#A2S_SERVERQUERY_GETCHALLENGE_not_working_since_last_HLDS_update
 #use constant GETCHALLENGE => "\xFF\xFF\xFF\xFF\x57";
 use constant GETCHALLENGE => "\xFF\xFF\xFF\xFF\x55\xFF\xFF\xFF\xFF";
+
 use constant A2S_INFO     => "\xFF\xFF\xFF\xFFTSource Engine Query\0";
 use constant A2S_PLAYER   => "\xFF\xFF\xFF\xFF\x55";
 use constant A2S_RULES    => "\xFF\xFF\xFF\xFF\x56";
@@ -234,7 +234,6 @@ sub parse_packet {
     my $result;
 
     if ( $t eq 'A' ) {
-		# ...
         $result = $self->parse_challenge($buf);
     }
     elsif ( $t eq 'I' ) {
