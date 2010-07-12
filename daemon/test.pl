@@ -1,28 +1,32 @@
 require "./Net/SRCDS/Queries.pm";
 
 use Socket;
-#use YAML;
+use YAML;
 
-my $port = 27015;
-my $addr = '192.168.0.127';
-
-
-my $q = Net::SRCDS::Queries->new(encoding => 'utf-8', timeout => 3);
-my $dest = sockaddr_in $port, inet_aton $addr;
-$q->send_a2s_info($dest);
-print $q->get_result."\n";
+use Data::Dumper;
 
 
-#$q->add_server( $addr, $port );
-#my %result = $q->get_all;
+my $port = 27111;
+my $addr = '88.198.59.207';
+
+
+my $q = Net::SRCDS::Queries->new(encoding => 'utf-8',
+									timeout => 1,
+									'addr' => $addr,
+									'pot' => $port);
+#my $dest = sockaddr_in $port, inet_aton $addr;
+#$q->send_a2s_info($dest);
+#print $q->get_result."\n";
+
+
+$q->add_server( $addr, $port );
+my $result = $q->get_all;
+my $server = sprintf "%s:%s", $addr, $port;
+#print Dumper($result);
+print $result->{$server}->{info}->{version}."\n";
+
 #warn YAML::Dump $result;
-#print "@{[ %result ]}\n";
 
-#print join("\n",%result),"\n";
-
-#foreach $k (sort keys %result) {
- #   print "$k => $result{$k}\n";
-#}
 
 
 #use Net::SRCDS::Queries;

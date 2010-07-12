@@ -8,6 +8,8 @@ use IO::Socket::INET;
 use IO::Select;
 use base qw(Net::SRCDS::Queries::Parser);
 
+use Data::Dumper;
+
 # implemented queries
 # see http://developer.valvesoftware.com/wiki/Source_Server_Queries
 # for all queries.
@@ -57,11 +59,13 @@ LOOP: while (1) {
         my @ready = $select->can_read($timeout);
         for my $fh (@ready) {
             my $sender = $fh->recv( my $buf, MAX_SOCKBUF );
+            print Dumper($sender);
             my( $port, $addr ) = sockaddr_in $sender;
             my $server = sprintf "%s:%s", inet_ntoa($addr), $port;
             my $result = $self->parse_packet( $buf, $server, $sender );
-            print $result;
+            #print $result;
             my $sr = $self->{results}->{$server};
+            print Dumper($sr);
             if ( exists $sr->{player} and exists $sr->{rules} ) {
                 $finished->{$server}++;
             }
