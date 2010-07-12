@@ -45,7 +45,7 @@ package HLstats_Server;
 
 sub new
 {
-	my ($class_name, $serverId, $address, $port, $game, $defaultMap) = @_;
+	my ($class_name, $serverId, $address, $port, $game, $currentMap) = @_;
 
 	my ($self) = {};
 
@@ -56,7 +56,7 @@ sub new
 	$self->{port}    = $port;
 	$self->{game}    = $game;
 
-	$self->{map}     = $defaultMap;
+	$self->{map}     = $currentMap;
 	$self->{numplayers} = 0;
 
 	return $self;

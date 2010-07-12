@@ -58,7 +58,7 @@ if(isset($_GET['gc'])) {
 		$query = mysql_query("SELECT s.serverId, s.address, s.port,
 								s.name AS serverName,
 								s.publicaddress, s.statusurl,
-								s.rcon_password, s.defaultMap,
+								s.rcon_password,
 								g.name AS gameName
 							FROM `".DB_PREFIX."_Servers` AS s
 							LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
@@ -101,8 +101,7 @@ if(isset($_POST['sub']['saveServer'])) {
 											`game` = '".mysql_escape_string($gc)."',
 											`publicaddress` = '".mysql_escape_string(trim($_POST['pub'][$k]))."',
 											`statusurl` = '".mysql_escape_string(trim($_POST['stat'][$k]))."',
-											`rcon_password` = '".mysql_escape_string(trim($_POST['rcon'][$k]))."',
-											`defaultMap` = '".mysql_escape_string(trim($_POST['map'][$k]))."'
+											`rcon_password` = '".mysql_escape_string(trim($_POST['rcon'][$k]))."'
 										WHERE `serverId` = '".$k."'");
 				if($query === false) {
 					$return['status'] = "1";
@@ -123,7 +122,6 @@ if(isset($_POST['sub']['saveServer'])) {
 										`publicaddress` = '".mysql_escape_string(trim($_POST['newpub']))."',
 										`statusurl` = '".mysql_escape_string(trim($_POST['newstat']))."',
 										`rcon_password` = '".mysql_escape_string(trim($_POST['newrcon']))."',
-										`defaultMap` = '".mysql_escape_string(trim($_POST['newmap']))."',
 										`game` = '".mysql_escape_string($gc)."'");
 			if($query === false) {
 				$return['status'] = "1";
@@ -165,10 +163,6 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 		<a href="index.php?mode=help#set"><?php echo l('update their profile'); ?></a>
 		<?php echo l('if you enable Rcon support in hlstats.conf and specify an Rcon Password for each server'); ?>.
 	</p>
-	<p>
-		<?php echo l('The Default map is used to sepecify the map if HLStats is unable to determine the map'); ?>.
-		<?php echo l('Even if HLStats is stated befor the server it could happen that the map name is not in the log'); ?>
-	</p>
 	<?php
 		if(!empty($return)) {
 			if($return['status'] === "1") {
@@ -204,8 +198,6 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				<td class="<?php echo ($rcol); ?>" valign="top">
 					<?php echo l('Rcon Password'); ?> :<br />
 					<input size="10"  type="text" name="rcon[<?php echo $s['serverId']; ?>]" value="<?php echo $s['rcon_password']; ?>" /><br />
-					<?php echo l('Default Server Map'); ?> :<br />
-					<input type="text" name="map[<?php echo $s['serverId']; ?>]" value="<?php echo $s['defaultMap']; ?>" /><br />
 					<?php echo l('Public Address'); ?> :<br />
 					<input type="text" name="pub[<?php echo $s['serverId']; ?>]" value="<?php echo $s['publicaddress']; ?>" /><br />
 					<?php echo l('Status URL'); ?> :<br />
@@ -232,8 +224,6 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				<td class="<?php echo ($rcol); ?>">
 					<?php echo l('Rcon Password'); ?> :<br />
 					<input size="10"  type="text" name="newrcon" value="" /><br />
-					<?php echo l('Default Server Map'); ?> :<br />
-					<input size="10"  type="text" name="newmap" value="" /><br />
 					<?php echo l('Public Address'); ?> :<br />
 					<input type="text" name="newpub" value="" /><br />
 					<?php echo l('Status URL'); ?> :<br />

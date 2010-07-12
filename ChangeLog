@@ -33,6 +33,9 @@ HLStats ChangeLog
 *) Changed: hls_set options cleanup
 *) Changed: hlstats.conf.ini DNSResolveIP and DNSTimeout removed.
 			Replaced by UseGEOIP
+*) Changed: Dropped hlstats_Server defaultMap.
+			While loading servers from DB we get the current map via
+			ServerQueries. This should avaid "unknown" maps
 *) Fixed: typo in lang (thx to LuBJe)
 *) Fixed: bug in admin -> Tools -> Reset (thx to conan)
 *) Fixed: remove the ; in rcon commands (thx to Par0noid)

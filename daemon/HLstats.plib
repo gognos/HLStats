@@ -766,8 +766,7 @@ sub getServer
 	my $query = "
 		SELECT
 			serverId,
-			game,
-			defaultMap
+			game
 		FROM
 			${db_prefix}_Servers
 		WHERE
@@ -777,14 +776,22 @@ sub getServer
 	my $result = &doQuery($query);
 
 	if ($result->rows) {
-		my ($serverId, $game, $defaultMap) = $result->fetchrow_array;
+		my ($serverId, $game) = $result->fetchrow_array;
 		$result->finish;
 
-		if($defaultMap eq "") {
-			$defaultMap = 'unknown';
+		# get the current map to avoid unknown maps
+		my $currentMap;
+		my $q = HLstats_ServerQueries->new(encoding => 'utf-8',
+											timeout => 1,
+											'addr' => $address,
+											'port' => $port);
+		my $alive = $q->is_alive;
+		if($alive) {
+			my $ret = $q->getA2S_Info;
+			$currentMap = $ret->{map};
 		}
 
-		return new HLstats_Server($serverId, $address, $port, $game, $defaultMap);
+		return new HLstats_Server($serverId, $address, $port, $game, $currentMap);
 	}
 	else {
 		$result->finish;
