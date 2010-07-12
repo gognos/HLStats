@@ -10,5 +10,6 @@ my $q = HLstats_ServerQueries->new(encoding => 'utf-8',
 									'addr' => $addr,
 									'port' => $port);
 #my $ret = $q->getA2S_Info;
-my $ret = $q->getA2S_Players;
+#smy $ret = $q->getA2S_Players;
+my $ret = $q->is_alive;
 print Dumper($ret);

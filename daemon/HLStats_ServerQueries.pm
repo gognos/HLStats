@@ -66,6 +66,7 @@ use constant A2S_INFO     => "\xFF\xFF\xFF\xFFTSource Engine Query\0";
 use constant A2S_PLAYER   => "\xFF\xFF\xFF\xFF\x55";
 use constant A2S_RULES    => "\xFF\xFF\xFF\xFF\x56";
 use constant MAX_SOCKBUF  => 65535;
+use constant A2A_PING => "\xFF\xFF\xFF\xFF\x69";
 
 sub new {
     my( $class, %args ) = @_;
@@ -89,7 +90,8 @@ sub new {
 }
 
 #
-# get the A2S Info from
+# get the A2S Info
+#
 sub getA2S_Info {
     my($self)   = @_;
     my $select  = $self->{select};
@@ -161,6 +163,34 @@ LOOP: while (1) {
 	return $result;
 }
 
+#
+# check if alive
+#
+sub is_alive {
+	my($self)   = @_;
+    my $select  = $self->{select};
+    my $timeout = $self->{timeout};
+    my $result;
+
+    my $dest = sockaddr_in $self->{port}, inet_aton $self->{addr};
+    $self->send_a2a_ping($dest);
+
+    LOOP: while (1) {
+		my @ready = $select->can_read($timeout);
+		for my $fh (@ready) {
+			my $sender = $fh->recv( my $buf, MAX_SOCKBUF );
+
+			$result = $self->parse_packet( $buf );
+		}
+		# exit loop when you get nothing
+        unless (@ready) {
+            last LOOP;
+        }
+	}
+
+	return $result;
+}
+
 
 #
 # intern stuff
@@ -175,6 +205,12 @@ sub send_a2s_info {
     my( $self, $dest ) = @_;
     my $socket = $self->{socket};
     $socket->send( A2S_INFO, 0, $dest );
+}
+
+sub send_a2a_ping {
+    my( $self, $dest ) = @_;
+    my $socket = $self->{socket};
+    $socket->send( A2A_PING, 0, $dest );
 }
 
 sub send_a2s_player {
@@ -200,22 +236,18 @@ sub parse_packet {
     if ( $t eq 'A' ) {
 		# ...
         $result = $self->parse_challenge($buf);
-        #$self->send_a2s_rules( $sender, $result->{cnum} );
-        #$self->send_a2s_player( $sender, $result->{cnum} );
     }
     elsif ( $t eq 'I' ) {
         $result = $self->parse_a2s_info($buf);
-        #$self->{results}->{$server}->{info} = $result;
     }
     elsif ( $t eq 'D' ) {
         $result = $self->parse_a2s_player($buf);
-        #$self->{results}->{$server}->{player} = $result;
-        #return 1;
     }
     elsif ( $t eq 'E' ) {
         $result = $self->parse_a2s_rules($buf);
-        #$self->{results}->{$server}->{rules} = $result;
-        #return 1;
+    }
+    elsif ( $t eq 'j' ) {
+        return 1;
     }
     return $result;
 }
