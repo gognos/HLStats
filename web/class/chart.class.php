@@ -294,11 +294,10 @@ class Chart {
 			$c = 0;
 			$xLine = array();
 			$connects = array();
-			$disconnects = array();
 
 			// we need only the count for each day
-			$dcCount = count($data['connect']);
-			foreach($data['connect'] as $d=>$e) {
+			$dcCount = count($data);
+			foreach($data as $d=>$e) {
 				$connects[] = count($e);
 
 				// this shows the date only every 5 days
@@ -307,25 +306,15 @@ class Chart {
 				else { $xLine[] = ''; }
 				$c++;
 			}
-
-			// we need only the count for each day
-			foreach($data['disconnect'] as $d=>$e) {
-				$disconnects[] = count($e);
-			}
-
-			// add the connects
+			
+			// add the players
 			$this->_pData->AddPoint($connects,'1');
 			$this->_pData->AddSerie('1');
-			$this->_pData->SetSerieName(l("Connects"),'1');
+			$this->_pData->SetSerieName(l("Players per day"),'1');
 
 			// the dates for x axe
 			$this->_pData->AddPoint($xLine,'x');
 			$this->_pData->SetAbsciseLabelSerie("x");
-
-			// add the disconnects
-			$this->_pData->AddPoint($disconnects,'2');
-			$this->_pData->AddSerie('2');
-			$this->_pData->SetSerieName(l("Disconnects"),'2');
 
 			// create the canvas
 			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
@@ -349,7 +338,7 @@ class Chart {
 			//$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
 			$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),255,255,255);
 			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",10);
-			$this->_pChart->drawTitle(0,20,l("Player activity"),50,50,50,$this->_option['width']);
+			$this->_pChart->drawTitle(0,20,l("Players per day"),50,50,50,$this->_option['width']);
 
 
 			$this->_pChart->Render($this->_option['chartFile']);

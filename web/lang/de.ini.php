@@ -123,6 +123,7 @@ Last kill = Letzter Frag
 All statistics are generated in real-time. Event history data expires after = Alle Statistiken sind in Echtzeit erstellt. Events werden gelöscht nach
 
 Player Activity = Spieler Aktivität
+Players per day = Spieler pro Tag
 You need to upgrade your flash player = Sie müssen Ihren Flash Player aktualisieren
 Get Flashplayer = FlashPlayer download
 Most time online = Am längsten online

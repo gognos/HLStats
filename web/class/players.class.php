@@ -195,58 +195,32 @@ class Players {
 	/**
 	 * get the player count per day
 	 *
-	 * @return array An array with connect and disconnect data
+	 * @return array
 	 */
 	public function getPlayerCountPerDay() {
-		$data['connect'] = array();
-		$data['disconnect'] = array();
+		//$data['connect'] = array();
+		//$data['disconnect'] = array();
+		$data = array();
 
-		$query = mysql_query("SELECT DATE_FORMAT(`".DB_PREFIX."_Events_Connects`.`eventTime`,'%Y-%m-%d') AS eventTime,
-        				`".DB_PREFIX."_Events_Connects`.`playerId`
-						FROM `".DB_PREFIX."_Events_Connects`
-						LEFT JOIN `".DB_PREFIX."_Players`
-							ON `".DB_PREFIX."_Events_Connects`.`playerId` = `".DB_PREFIX."_Players`.`playerId`
-						WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($this->_game)."'");
+		$queryStr = "SELECT `playerId`,
+								DATE(lastUpdate) AS lastUpdate
+								FROM `".DB_PREFIX."_Players`
+								WHERE `game` = '".mysql_escape_string($this->_game)."'";
+								
+		if(DELETEDAYS !== 0) {
+			$startTime = time()-(86400*DELETEDAYS);
+			$startDay = date("Y-m-d",$startTime);
+			$queryStr .= " HAVING lastUpdate > '".$startDay."'";
+		}
+
+		$query = mysql_query($queryStr);
 		if(mysql_num_rows($query) > 0) {
 			while ($result = mysql_fetch_assoc($query)) {
 				// we group by day
-				//$dataArr = explode(" ",$result['eventTime']);
-				$data['connect'][$result['eventTime']][] = $result['playerId'];
+				$data[$result['lastUpdate']][] = $result['playerId'];
 			}
 		}
-		else {
-			// no connects ?
-			// perhaps we have something in Events_Entries
-			$query = mysql_query("SELECT DATE_FORMAT(`ee`.`eventTime`,'%Y-%m-%d') AS eventTime,
-							`ee`.`playerId`
-							FROM `".DB_PREFIX."_Events_Entries` AS ee
-							LEFT JOIN `".DB_PREFIX."_Players` p
-								ON `ee`.`playerId` = `p`.`playerId`
-							WHERE `p`.`game` = '".mysql_escape_string($this->_game)."'");
-			if(mysql_num_rows($query) > 0) {
-				while ($result = mysql_fetch_assoc($query)) {
-					// we group by day
-					//$dataArr = explode(" ",$result['eventTime']);
-					$data['connect'][$result['eventTime']][] = $result['playerId'];
-				}
-			}
-		}
-        mysql_free_result($query);
-
-		$query = mysql_query("SELECT DATE_FORMAT(`".DB_PREFIX."_Events_Disconnects`.`eventTime`,'%Y-%m-%d') AS eventTime,
-						`".DB_PREFIX."_Events_Disconnects`.`playerId`
-		                FROM `".DB_PREFIX."_Events_Disconnects`
-		                LEFT JOIN `".DB_PREFIX."_Players`
-		                	ON `".DB_PREFIX."_Events_Disconnects`.`playerId` = `".DB_PREFIX."_Players`.`playerId`
-		                WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($this->_game)."'");
-		if(mysql_num_rows($query) > 0) {
-			while ($result = mysql_fetch_assoc($query)) {
-				// we group by day
-				//$dataArr = explode(" ",$result['eventTime']);
-				$data['disconnect'][$result['eventTime']][] = $result['playerId'];
-			}
-		}
-        mysql_free_result($query);
+		mysql_free_result($query);
 
 		return $data;
 	}
