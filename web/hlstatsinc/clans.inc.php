@@ -157,8 +157,10 @@ pageHeader(
 			<input type="hidden" name="game" value="<?php echo $game; ?>">
 			<input type="hidden" name="st" value="clan">
 			<?php echo l('Find a clan'); ?>:
-			<input type="text" name="q" size=20 maxlength=64 class="textbox">
-			<input type="submit" value="<?php echo l('Search'); ?>" class="smallsubmit">
+			<input type="text" name="q" size="10"><br />
+			<button type="submit" title="<?php echo l('Search'); ?>">
+				<?php echo l('Search'); ?>
+			<button>
 		</form>
 	</div>
 </div>

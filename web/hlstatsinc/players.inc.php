@@ -57,8 +57,6 @@ if (isset($_GET["minkills"])) {
 	$check = validateInput($_GET['minkills'],'digit');
 	if($check === true) {
 		$playersObj->setOption("minkills",$_GET['minkills']);
-
-		$minkills = $_GET["minkills"]; //@todo to remove
 	}
 }
 if (isset($_GET["showall"])) {
