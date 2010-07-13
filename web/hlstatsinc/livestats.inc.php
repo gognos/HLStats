@@ -210,7 +210,7 @@ elseif (isset($server_rules['cm_timeleft']))
 	$server_details['timeleft'] = $server_rules['cm_timeleft'];
 elseif (isset($server_rules['mani_timeleft']))
 	$server_details['timeleft'] = $server_rules['mani_timeleft'];
-elseif (isset($server_rules['mp_timeleft']))
+elseif (isset($server_rules['mp_timeleft']) && !empty($server_rules['mp_timeleft']))
 	$server_details['timeleft'] = sprintf('%02u:%02u', ($server_rules['mp_timeleft'] / 60), ($server_rules['mp_timeleft'] % 60));
 
 // Load our plugin list
@@ -235,7 +235,7 @@ while ($addon_list = mysql_fetch_assoc($query)) {
 		}
 
 		// Are there any time limits or frag limits?
-		if (isset($server_details['timeleft'])) {
+		if (!empty($server_details['timeleft'])) {
 			echo l('Timeleft'),': '.$server_details['timeleft'];
 			if(isset($server_rules['mp_timelimit'])) {
 				echo ' ('.sprintf('%02u:%02u', $server_rules['mp_timelimit'], 0).')';

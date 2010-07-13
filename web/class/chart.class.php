@@ -338,7 +338,7 @@ class Chart {
 			// display only more the 3 days as a curve, otherwise as a bar
 			if(count($xLine) >= 4) {
 				// Draw the cubic curve graph
-				$this->_pChart->drawCubicCurve($this->_pData->GetData(),$this->_pData->GetDataDescription());
+				$this->_pChart->drawCubicCurve($this->_pData->GetData(),$this->_pData->GetDataDescription(),.1);
 			}
 			else {
 				// draw the bar graph

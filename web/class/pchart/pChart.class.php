@@ -1530,6 +1530,8 @@
          $Yt[0] = 0;
          $Yt[1] = 0;
          $U[1]  = 0;
+         $Yt[0] = 0;
+         $U[0]  = 0;
          for($i=2;$i<=$Index-1;$i++)
           {
            $Sig    = ($XIn[$i] - $XIn[$i-1]) / ($XIn[$i+1] - $XIn[$i-1]);
@@ -1541,7 +1543,13 @@
 
          $qn = 0;
          $un = 0;
-         $Yt[$Index] = ($un - $qn * $U[$Index-1]) / ($qn * $Yt[$Index-1] + 1);
+         if(!empty($Index)) {
+			$Yt[$Index] = ($un - $qn * $U[$Index-1]) / ($qn * $Yt[$Index-1] + 1);
+		 }
+		 else {
+			$Yt[$Index] = ($un - $qn * $U[$Index]) / ($qn * $Yt[$Index] + 1);
+		 }
+		
 
          for($k=$Index-1;$k>=1;$k--)
           $Yt[$k] = $Yt[$k] * $Yt[$k+1] + $U[$k];
