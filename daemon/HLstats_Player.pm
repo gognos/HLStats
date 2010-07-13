@@ -150,7 +150,6 @@ sub set
 #
 # Increment (or decrement) the value of 'key' by 'amount' (or 1 by default)
 #
-
 sub increment
 {
 	my ($self, $key, $amount, $no_updatetime) = @_;
@@ -166,7 +165,6 @@ sub increment
 #
 # Get value of property 'key'
 #
-
 sub get
 {
 	my ($self, $key) = @_;
@@ -185,7 +183,6 @@ sub get
 #
 # Set player's uniqueid
 #
-
 sub setUniqueId
 {
 	my ($self, $uniqueid) = @_;
@@ -270,7 +267,6 @@ sub setUniqueId
 #
 # Set player's name
 #
-
 sub setName
 {
 	my ($self, $name) = @_;
@@ -354,7 +350,6 @@ sub setName
 #
 # Update player information in database
 #
-
 sub updateDB
 {
 	my ($self, $leaveLastUse, $callref) = @_;

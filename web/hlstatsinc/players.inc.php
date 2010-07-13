@@ -67,6 +67,12 @@ if (isset($_GET["showall"])) {
 		$playersObj->setOption("showall",$_GET['showall']);
 	}
 }
+if (isset($_GET["showToday"])) {
+	$check = validateInput($_GET['showToday'],'digit');
+	if($check === true) {
+		$playersObj->setOption("showToday",$_GET['showToday']);
+	}
+}
 if (isset($_GET["page"])) {
 	$check = validateInput($_GET['page'],'digit');
 	if($check === true) {
@@ -127,6 +133,10 @@ pageHeader(
 			echo '<a href="?mode=players&amp;game=',$game,'&amp;showall=1">',l('Show all players (including inactive ones)'),'</a>';
 		}
 		?>
+			</li>
+			<li>
+				<a href="?mode=players&amp;game=<?php echo $game; ?>&amp;showToday=1"><?php echo l('Show players from today'); ?></a>
+
 			</li>
 			<li>
 				<a href="<?php echo "index.php?mode=clans&amp;game=$game"; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="clan.gif">&nbsp;<?php echo l('Clan Rankings'); ?></a>
@@ -244,7 +254,7 @@ pageHeader(
 						echo '<img src="hlstatsimg/player_inactive.gif" alt="inactive Player" title="inactive Player" width="16" height="16" />';
 					}
 
-					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">',makeSavePlayerName($entry['lastName']),'</a></td>',"\n";
+					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">',$entry['lastName'],'</a></td>',"\n";
 
 					echo '<td class="',toggleRowClass($rcol),'">';
 					echo '<img width="16" height="16" ';

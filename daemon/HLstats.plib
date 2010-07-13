@@ -936,7 +936,6 @@ sub getPlayerInfo
 		if ($g_mode ne "LAN" || $forced_uniqueid) {
 
 			# Add the player to our hash of player objects
-
 			$g_players{"$s_addr/$userid"} = new HLstats_Player(
 				server => $s_addr,
 				userid => $userid,
@@ -946,7 +945,6 @@ sub getPlayerInfo
 			);
 
 			# Increment number of players on server
-
 			$g_servers{$s_addr}->{numplayers}++ if (!$haveplayer);
 			&printNotice("NumPlayers ($s_addr): $g_servers{$s_addr}->{numplayers} (Connect)");
 

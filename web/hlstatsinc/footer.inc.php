@@ -71,7 +71,9 @@
 				}
 				?>
 			</select>
-			<input type="submit" name="submit-change-lang" value="<?php echo l('Change language'); ?>" />
+			<button type="submit" name="submit-change-lang" title="<?php echo l('Change language'); ?>" >
+				<?php echo l('Change language'); ?>
+			</button>
 		</form>
 	</p>
 </div>

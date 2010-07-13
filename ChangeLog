@@ -18,6 +18,8 @@ HLStats ChangeLog
 *) New: Clan Profile can new enter a steam group URL
 *) New: Daemon can now looup country and city. Using Maxmind GeoIP.
 		Please read the documentation on how to use this feature !!
+*) New: Players table gets a date on updates. This can be used to show
+		Players from current day etc.
 *) Changed: Only one admin user is now possible. Dropped admin rights
 			for now.
 *) Changed: Design options removed from options table

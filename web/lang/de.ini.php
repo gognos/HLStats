@@ -91,6 +91,7 @@ Go to = Gehe zu
 Show all players (including inactive ones) = Zeige alle Spieler (beinhaltet auch inaktive Spieler)
 Show only active players = Nur aktive Spieler anzeigen
 Content = Inhalt
+Show players from today = Zeige Spieler von Heute
 
 Player Rankings = Spieler Rankings
 Sections = Bereiche

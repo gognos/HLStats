@@ -127,7 +127,8 @@ class Players {
 				t1.kills,
 				t1.deaths,
 				t1.active,
-				IFNULL(t1.kills/t1.deaths, '-') AS kpd
+				IFNULL(t1.kills/t1.deaths, '-') AS kpd,
+				DATE(t1.lastUpdate) AS lastUpdate
 			FROM
 				".DB_PREFIX."_Players as t1";
 
@@ -144,6 +145,10 @@ class Players {
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
 			$queryStr .= " ";
+		}
+		elseif(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
+			// should we show only players from today
+			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
 		}
 		else {
 			$queryStr .= " AND t1.active = '1'";
