@@ -154,7 +154,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 								LEFT JOIN ".DB_PREFIX."_Players ON
 									".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards.d_winner_id
 								WHERE
-									".DB_PREFIX."_Awards.game='".mysql_escape_string($game)."'
+									".DB_PREFIX."_Awards.game = '".mysql_escape_string($game)."'
 								ORDER BY
 									".DB_PREFIX."_Awards.awardType DESC,
 									".DB_PREFIX."_Awards.name ASC");
