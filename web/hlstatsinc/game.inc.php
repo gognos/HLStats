@@ -52,6 +52,9 @@ $hasRoles = false;
 $query = mysql_query("SELECT `roleId`
 						FROM `".DB_PREFIX."_Roles`
 						WHERE `game` = '".mysql_escape_string($game)."'");
+						var_dump("SELECT `roleId`
+						FROM `".DB_PREFIX."_Roles`
+						WHERE `game` = '".mysql_escape_string($game)."'");
 if(mysql_num_rows($query) > 0) {
 	$hasRoles = true;
 }
@@ -72,9 +75,11 @@ pageHeader(array($gamename), array($gamename=>""));
 			<li>
 				<a href="<?php echo "index.php?mode=teams&amp;game=$game"; ?>"><?php echo l('Team Rankings'); ?></a>
 			</li>
+			<?php if($hasRoles === true) { ?>
 			<li>
 				<a href="<?php echo "index.php?mode=roles&amp;game=$game"; ?>"><?php echo l('Role Rankings'); ?></a>
 			</li>
+			<?php } ?>
 			<li>
 				<a href="<?php echo "index.php?mode=weapons&amp;game=$game"; ?>"><?php echo l('Weapon Statistics'); ?></a>
 			</li>
