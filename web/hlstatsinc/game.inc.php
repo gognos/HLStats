@@ -47,6 +47,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+// check if we have roles for this game
+$hasRoles = false;
+$query = mysql_query("SELECT `roleId`
+						FROM `".DB_PREFIX."_Roles`
+						WHERE `game` = '".mysql_escape_string($game)."'");
+if(mysql_num_rows($query) > 0) {
+	$hasRoles = true;
+}
+mysql_free_result($query);
+
 pageHeader(array($gamename), array($gamename=>""));
 ?>
 <div id="sidebar" >
@@ -61,6 +71,9 @@ pageHeader(array($gamename), array($gamename=>""));
 			</li>
 			<li>
 				<a href="<?php echo "index.php?mode=teams&amp;game=$game"; ?>"><?php echo l('Team Rankings'); ?></a>
+			</li>
+			<li>
+				<a href="<?php echo "index.php?mode=roles&amp;game=$game"; ?>"><?php echo l('Role Rankings'); ?></a>
 			</li>
 			<li>
 				<a href="<?php echo "index.php?mode=weapons&amp;game=$game"; ?>"><?php echo l('Weapon Statistics'); ?></a>

@@ -541,7 +541,7 @@ if(!empty($roleSelection)) { ?>
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th>&nbsp;</th>
+			<th width="40">&nbsp;</th>
 			<th><?php echo l('Role'); ?></th>
 			<th><?php echo l('Joined'); ?></th>
 			<th><?php echo l('Percentage of Times'); ?></th>

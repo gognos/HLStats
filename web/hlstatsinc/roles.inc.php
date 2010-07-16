@@ -1,6 +1,6 @@
 <?php
 /**
- * teams overview file
+ * roles overview file
  * display an overview about each team the game has.
  * @package HLStats
  * @author Johannes 'Banana' Keßler
@@ -48,8 +48,8 @@
  */
 
 $rcol = "row-dark";
-$teams['data'] = array();
-$teams['pages'] = array();
+$roles['data'] = array();
+$roles['pages'] = array();
 
 $page = 1;
 if (isset($_GET["page"])) {
@@ -58,7 +58,7 @@ if (isset($_GET["page"])) {
 		$page = $_GET['page'];
 	}
 }
-$sort = 'teamcount';
+$sort = 'rolecount';
 if (isset($_GET["sort"])) {
 	$check = validateInput($_GET['sort'],'nospace');
 	if($check === true) {
@@ -79,18 +79,18 @@ if (isset($_GET["sortorder"])) {
 	}
 }
 
-$queryStr = "SELECT IFNULL(".DB_PREFIX."_Teams.name, ".DB_PREFIX."_Events_ChangeTeam.team) AS name,
-			COUNT(".DB_PREFIX."_Events_ChangeTeam.id) AS teamcount,
-			".DB_PREFIX."_Teams.teamId
-		FROM ".DB_PREFIX."_Events_ChangeTeam
-		LEFT JOIN ".DB_PREFIX."_Teams ON
-			".DB_PREFIX."_Events_ChangeTeam.team=".DB_PREFIX."_Teams.code
+$queryStr = "SELECT IFNULL(".DB_PREFIX."_Roles.name, ".DB_PREFIX."_Events_ChangeRole.role) AS name,
+			COUNT(".DB_PREFIX."_Events_ChangeRole.id) AS rolecount,
+			".DB_PREFIX."_Roles.roleId
+		FROM ".DB_PREFIX."_Events_ChangeRole
+		LEFT JOIN ".DB_PREFIX."_Roles ON
+			".DB_PREFIX."_Events_ChangeRole.role=".DB_PREFIX."_Roles.code
 		LEFT JOIN ".DB_PREFIX."_Servers ON
-			".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_ChangeTeam.serverId
-		WHERE ".DB_PREFIX."_Teams.game='".mysql_escape_string($game)."'
+			".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_ChangeRole.serverId
+		WHERE ".DB_PREFIX."_Roles.game='".mysql_escape_string($game)."'
 			AND ".DB_PREFIX."_Servers.game='".mysql_escape_string($game)."'
 			AND (hidden <>'1' OR hidden IS NULL)
-		GROUP BY ".DB_PREFIX."_Events_ChangeTeam.team
+		GROUP BY ".DB_PREFIX."_Events_ChangeRole.role
 		ORDER BY ".$sort." ".$sortorder;
 // calculate the limit
 if($page === 1) {
@@ -104,20 +104,20 @@ else {
 $query = mysql_query($queryStr);
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
-		$teams['data'][] = $result;
+		$roles['data'][] = $result;
 	}
 }
 
 // get the max count for pagination
 $query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
 $result = mysql_fetch_assoc($query);
-$teams['pages'] = (int)ceil($result['rows']/50);
+$roles['pages'] = (int)ceil($result['rows']/50);
 mysql_freeresult($query);
 
 
 pageHeader(
-	array($gamename, l("Team Statistics")),
-	array($gamename=>"index.php?game=$game", l("Team Statistics")=>"")
+	array($gamename, l("Role Statistics")),
+	array($gamename=>"index.php?game=$game", l("Role Statistics")=>"")
 );
 ?>
 
@@ -132,29 +132,29 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l("Team Statistics"); ?></h1>
+	<h1><?php echo l("Role Statistics"); ?></h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
 			<th class="<?php echo $rcol; ?>">
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'name','sortorder'=>$newSort)); ?>">
-					<?php echo l('Team'); ?>
+					<?php echo l('Role'); ?>
 				</a>
 				<?php if($sort == "name") { ?>
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
 			<th class="<?php echo $rcol; ?>">
-				<a href="index.php?<?php echo makeQueryString(array('sort'=>'teamcount','sortorder'=>$newSort)); ?>">
+				<a href="index.php?<?php echo makeQueryString(array('sort'=>'rolecount','sortorder'=>$newSort)); ?>">
 					<?php echo l('Selected'); ?>
 				</a>
-				<?php if($sort == "teamcount") { ?>
+				<?php if($sort == "rolecount") { ?>
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
 		</tr>
 		<?php
-		if(!empty($teams['data'])) {
-			foreach($teams['data'] as $k=>$entry) {
+		if(!empty($roles['data'])) {
+			foreach($roles['data'] as $k=>$entry) {
 				toggleRowClass($rcol);
 
 				echo '<tr>',"\n";
@@ -164,14 +164,14 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo $entry['teamcount'];
+				echo $entry['rolecount'];
 				echo '</td>',"\n";
 
 				echo '</tr>';
 			}
 			echo '<tr><td colspan="3" align="right">';
-				if($teams['pages'] > 1) {
-					for($i=1;$i<=$teams['pages'];$i++) {
+				if($roles['pages'] > 1) {
+					for($i=1;$i<=$roles['pages'];$i++) {
 						if($page == ($i)) {
 							echo "[",$i,"]";
 						}
