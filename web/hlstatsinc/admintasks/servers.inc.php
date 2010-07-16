@@ -48,7 +48,7 @@
 
 $gc = false;
 $check = false;
-$servers = false;
+$servers = array();
 // get the game, without it we can no do anyting
 if(isset($_GET['gc'])) {
 	$gc = trim($_GET['gc']);
@@ -173,7 +173,6 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 			}
 		}
 	?>
-	<?php if(!empty($servers)) { ?>
 	<form method="post" action="">
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
 			<tr>
@@ -240,5 +239,4 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 			</tr>
 		</table>
 	</form>
-	<?php } ?>
 </div>

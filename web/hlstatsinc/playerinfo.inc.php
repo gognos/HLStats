@@ -533,7 +533,6 @@ if(!empty($teamSelection)) { ?>
 
 $roleSelection = $playerObj->getParam('roleSelection');
 if(!empty($roleSelection)) { ?>
-	exit("role selection todo");
 	<a name="roles"></a>
 	<h1>
 		<?php echo l('Role Selection'); ?>
@@ -542,13 +541,15 @@ if(!empty($roleSelection)) { ?>
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
+			<th>&nbsp;</th>
 			<th><?php echo l('Role'); ?></th>
 			<th><?php echo l('Joined'); ?></th>
 			<th><?php echo l('Percentage of Times'); ?></th>
 		</tr>
 		<?php
-		foreach ($teamSelection as $entry) {
+		foreach ($roleSelection as $entry) {
 			echo '<tr class="',toggleRowClass($rcol),'">';
+			echo '<td><img src="hlstatsimg/roles/',$game,'/',$entry['rolecode'],'.png" /></td>';
 			echo '<td>',$entry['name'],'</td>';
 			echo '<td>',$entry['rolecount'],'</td>';
 			echo '<td>';

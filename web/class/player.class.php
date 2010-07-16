@@ -1129,8 +1129,8 @@ class Player {
 			while($result = mysql_fetch_assoc($query)) {
 				$this->_playerData['killstats'][] = $result;
 			}
-			mysql_free_result($query);
 		}
+		mysql_free_result($query);
 	}
 
 	/**
@@ -1168,8 +1168,13 @@ class Player {
 						".DB_PREFIX."_Events_ChangeRole.role
 					ORDER BY `name`
 					LIMIT 10");
+			if(mysql_num_rows($query) > 0) {
+				while($result = mysql_fetch_assoc($query)) {
+					$this->_playerData['roleSelection'][] = $result;
+				}
+			}
+			mysql_free_result($query);
 		}
-
 	}
 }
 
