@@ -21,6 +21,7 @@ HLStats ChangeLog
 *) New: Players table gets a date on updates. This can be used to show
 		Players from current day etc.
 *) Update: TFC images
+*) Update: TFC gamesupport
 *) Changed: Only one admin user is now possible. Dropped admin rights
 			for now.
 *) Changed: Design options removed from options table
