@@ -46,10 +46,16 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Medic_Heal', '1'
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Hallucination_Grenade','Hallucination_Grenade',0.50);
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Concussion_Grenade', '1', '0', '', 'Concussion Grenade  / Shockwave' , '0', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Caltrop_Grenade', '1', '0', '', 'Caltrops' , '0', '1', '0', '0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_1', '2', '0', '', 'Build Sentry', '1', '0', '0', '0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_2', '5', '0', '', 'Buld Sentry level 2', '1', '0', '0', '0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_3', '10', '0', '', 'Build Sentry level 3', '1', '0', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_1', '3', '0', '', 'Upgrade Sentry', '1', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_2', '5', '0', '', 'Upgrade Sentry level 2', '1', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_3', '10', '0', '', 'Upgrade Sentry level 3', '1', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Medic_Cured_Hallucinations', '10', '0', '', 'Heal Hallucinations', '0', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Repair', '1', '0', '', 'Repair Sentry', '1', '0', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Medic_Infection', '5', '0', '', 'Damage Enemy with Medpac', '0', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Destroyed', '10', '0', '', 'Sentry Destroyed', '1', '0', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_1', '3', '0', '', 'Built Sentry', '1', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_2', '5', '0', '', 'Built Sentry level 2', '1', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_3', '10', '0', '', 'Built Sentry level 3', '1', '1', '0', '0');
 
 #
 # Teams
