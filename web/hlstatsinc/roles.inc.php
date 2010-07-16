@@ -81,7 +81,8 @@ if (isset($_GET["sortorder"])) {
 
 $queryStr = "SELECT IFNULL(".DB_PREFIX."_Roles.name, ".DB_PREFIX."_Events_ChangeRole.role) AS name,
 			COUNT(".DB_PREFIX."_Events_ChangeRole.id) AS rolecount,
-			".DB_PREFIX."_Roles.roleId
+			".DB_PREFIX."_Roles.roleId,
+			".DB_PREFIX."_Roles.code
 		FROM ".DB_PREFIX."_Events_ChangeRole
 		LEFT JOIN ".DB_PREFIX."_Roles ON
 			".DB_PREFIX."_Events_ChangeRole.role=".DB_PREFIX."_Roles.code
@@ -135,6 +136,7 @@ pageHeader(
 	<h1><?php echo l("Role Statistics"); ?></h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
+			<th width="50">&nbsp;</th>
 			<th class="<?php echo $rcol; ?>">
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'name','sortorder'=>$newSort)); ?>">
 					<?php echo l('Role'); ?>
@@ -158,6 +160,10 @@ pageHeader(
 				toggleRowClass($rcol);
 
 				echo '<tr>',"\n";
+
+				echo '<td class="',$rcol,'">';
+				echo '<img src="hlstatsimg/roles/',$game,'/',$entry['code'],'.png" alt="',$entry['name'],'" />';
+				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
 				echo $entry['name'];

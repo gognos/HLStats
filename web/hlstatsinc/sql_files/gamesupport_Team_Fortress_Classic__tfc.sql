@@ -35,7 +35,7 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','team_two_dropoff',7
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','team_one_dropoff',75,25,'1','Captured Red Flag','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Team_2_dropoff',75,25,'2','Captured Blue Flag','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Team_1_dropoff',75,25,'1','Captured Red Flag','1','0','0','0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Entrance_Destroyed',5,0,'0','eleporter Entrance Destroyed','1','0','0','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Entrance_Destroyed',5,0,'0','Teleporter Entrance Destroyed','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Entrance_Finished',8,0,'0','Teleporter Entrance Build','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Exit_Destroyed',5,0,'0','Teleporter Exit Destroyed','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Exit_Finished',8,0,'0','Teleporter Exit Build','1','0','0','0');
