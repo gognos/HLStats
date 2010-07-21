@@ -125,8 +125,7 @@ GetOptions(
 	"db-username=s"		=> \$db_user
 ) or die($usage);
 
-if ($opt_help)
-{
+if ($opt_help) {
 	print $usage;
 	exit(0);
 }
@@ -192,8 +191,7 @@ $result = &doQuery("
 		keyname='awards_d_date'
 ");
 
-if ($result->rows > 0)
-{
+if ($result->rows > 0) {
 	($awards_d_date, $awards_d_date_new) = $result->fetchrow_array;
 
 	&doQuery("
@@ -207,8 +205,7 @@ if ($result->rows > 0)
 
 	print "\n++ Generating awards for $awards_d_date_new (previous: $awards_d_date)...\n\n";
 }
-else
-{
+else {
 	&doQuery("
 		INSERT INTO
 			${db_prefix}_Options
@@ -239,19 +236,16 @@ else
 ");
 
 
-while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array )
-{
+while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 	print "$game ($awardType) $code";
 
-	if ($awardType eq "O")
-	{
+	if ($awardType eq "O") {
 		$table = "${db_prefix}_Events_PlayerActions";
 		$join  = "LEFT JOIN ${db_prefix}_Actions ON ${db_prefix}_Actions.id = $table.actionId";
 		$matchfield = "${db_prefix}_Actions.code";
 		$playerfield = "$table.playerId";
 	}
-	elsif ($awardType eq "W")
-	{
+	elsif ($awardType eq "W") {
 		$table = "${db_prefix}_Events_Frags";
 		$join  = "";
 		$matchfield = "$table.weapon";
@@ -283,8 +277,7 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array )
 
 	($d_winner_id, $d_winner_count) = $result->fetchrow_array;
 
-	if (!$d_winner_id || $d_winner_count < 1)
-	{
+	if (!$d_winner_id || $d_winner_count < 1) {
 		$d_winner_id = "NULL";
 		$d_winner_count = "NULL";
 	}
