@@ -22,6 +22,7 @@ HLStats ChangeLog
 		Players from current day etc.
 *) Update: TFC images
 *) Update: TFC gamesupport
+*) Changed: ELO Ratingsystem removed. It was never used..... :(
 *) Changed: Only one admin user is now possible. Dropped admin rights
 			for now.
 *) Changed: Design options removed from options table

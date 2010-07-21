@@ -143,18 +143,12 @@ pageHeader(
 		<form method="GET" action="index.php">
 			<input type="hidden" name="game" value="<?php echo $game; ?>" />
 			<input type="hidden" name="mode" value="players" />
-			<?php if (defined('ELORATING') && (ELORATING === "1" || ELORATING === "2")) { //@todo remove ! ?>
-				Don't show players with an RD higher than
-				<input type="text" name="rdlimit" size="4"  value="<?php echo $rdlimit; ?>">
-				of 350 <input type="submit" value="Apply"> (lower RD = more accurate rating)
-			<?php } else { ?>
 			<?php echo l('Only show players with'); ?><br />
-				<input type="text" name="minkills" size="4" maxlength="2" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
-				<?php echo l('or more kills'); ?>.<br />
-				<button type="submit" title="<?php echo l('Apply'); ?>">
-					<?php echo l('Apply'); ?>
-				</button>
-			<?php } ?>
+			<input type="text" name="minkills" size="4" maxlength="2" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
+			<?php echo l('or more kills'); ?>.<br />
+			<button type="submit" title="<?php echo l('Apply'); ?>">
+				<?php echo l('Apply'); ?>
+			</button>
 		</form>
 	</div>
 </div>
