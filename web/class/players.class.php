@@ -206,7 +206,7 @@ class Players {
 								DATE(lastUpdate) AS lastUpdate
 								FROM `".DB_PREFIX."_Players`
 								WHERE `game` = '".mysql_escape_string($this->_game)."'";
-								
+
 		if(DELETEDAYS !== 0) {
 			$startTime = time()-(86400*DELETEDAYS);
 			$startDay = date("Y-m-d",$startTime);
@@ -237,12 +237,6 @@ class Players {
 		$data = array();
 
 		$query = mysql_query("SELECT ".DB_PREFIX."_Events_StatsmeTime.*,
-					TIME_TO_SEC(".DB_PREFIX."_Events_StatsmeTime.time) as tTime
-					FROM ".DB_PREFIX."_Events_StatsmeTime
-					LEFT JOIN ".DB_PREFIX."_Servers
-						ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_StatsmeTime.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'");
-		var_dump("SELECT ".DB_PREFIX."_Events_StatsmeTime.*,
 					TIME_TO_SEC(".DB_PREFIX."_Events_StatsmeTime.time) as tTime
 					FROM ".DB_PREFIX."_Events_StatsmeTime
 					LEFT JOIN ".DB_PREFIX."_Servers

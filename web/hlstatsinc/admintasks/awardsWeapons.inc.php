@@ -5,7 +5,7 @@
  * @author Johannes 'Banana' Keßler
  * @copyright Johannes 'Banana' Keßler
  */
- 
+
 /**
  *
  * Original development:
@@ -51,28 +51,21 @@ $gc = false;
 $check = false;
 $return = false;
 
-// get the game, without it we can no do anyting
+// get the game, without it we can not do anyting
 if(isset($_GET['gc'])) {
 	$gc = trim($_GET['gc']);
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
-		// load the server
-		$query = mysql_query("SELECT s.serverId, s.address, s.port,
-								s.name AS serverName,
-								s.publicaddress, s.statusurl,
-								s.rcon_password, s.defaultMap,
-								g.name AS gameName
-							FROM `".DB_PREFIX."_Servers` AS s
-							LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
-							WHERE s.game = '".mysql_escape_string($gc)."'
-							ORDER BY address ASC, port ASC");
+		// load the game info
+		$query = mysql_query("SELECT name
+							FROM `".DB_PREFIX."_Games`
+							WHERE code = '".mysql_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
-			while($result = mysql_fetch_assoc($query)) {
-				$servers[] = $result;
-			}
+			$result = mysql_fetch_assoc($query);
+			$gName = $result['name'];
 		}
+		mysql_free_result($query);
 	}
-	mysql_free_result($query);
 }
 
 // do we have a valid gc code?
@@ -169,7 +162,7 @@ pageHeader(array(l("Admin"),l('Weapon Awards')), array(l("Admin")=>"index.php?mo
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Weapon Awards for'); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Weapon Awards for'); ?>: <?php echo $gName; ?></h1>
 	<?php
 		if(!empty($return)) {
 			if($return['status'] === "1") {

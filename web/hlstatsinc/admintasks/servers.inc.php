@@ -48,27 +48,21 @@
 
 $gc = false;
 $check = false;
-$servers = array();
-// get the game, without it we can no do anyting
+
+// get the game, without it we can not do anyting
 if(isset($_GET['gc'])) {
 	$gc = trim($_GET['gc']);
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
-		// load the server
-		$query = mysql_query("SELECT s.serverId, s.address, s.port,
-								s.name AS serverName,
-								s.publicaddress, s.statusurl,
-								s.rcon_password,
-								g.name AS gameName
-							FROM `".DB_PREFIX."_Servers` AS s
-							LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
-							WHERE s.game = '".mysql_escape_string($gc)."'
-							ORDER BY address ASC, port ASC");
+		// load the game info
+		$query = mysql_query("SELECT name
+							FROM `".DB_PREFIX."_Games`
+							WHERE code = '".mysql_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
-			while($result = mysql_fetch_assoc($query)) {
-				$servers[] = $result;
-			}
+			$result = mysql_fetch_assoc($query);
+			$gName = $result['name'];
 		}
+		mysql_free_result($query);
 	}
 }
 
@@ -105,7 +99,7 @@ if(isset($_POST['sub']['saveServer'])) {
 										WHERE `serverId` = '".$k."'");
 				if($query === false) {
 					$return['status'] = "1";
-					$return['msg'] = l('Data could not be saved');
+					$return['msg'] = l('Data could not be updated');
 				}
 			}
 		}
@@ -135,6 +129,23 @@ if(isset($_POST['sub']['saveServer'])) {
 	}
 }
 
+$servers = array();
+// load the servers
+$query = mysql_query("SELECT s.serverId, s.address, s.port,
+						s.name AS serverName,
+						s.publicaddress, s.statusurl,
+						s.rcon_password,
+						g.name AS gameName
+					FROM `".DB_PREFIX."_Servers` AS s
+					LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
+					WHERE s.game = '".mysql_escape_string($gc)."'
+					ORDER BY address ASC, port ASC");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$servers[] = $result;
+	}
+}
+
 $rcol = "row-dark";
 
 pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=admin",l('Servers')=>''));
@@ -154,7 +165,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Servers for'); ?>: <?php echo $servers[0]['gameName']; ?></h1>
+	<h1><?php echo l('Servers for'); ?>: <?php echo $gName; ?></h1>
 	<p>
 		<?php echo l('Enter the addresses of all servers that you want to accept data from'); ?>
 	</p>

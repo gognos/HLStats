@@ -52,9 +52,6 @@ $hasRoles = false;
 $query = mysql_query("SELECT `roleId`
 						FROM `".DB_PREFIX."_Roles`
 						WHERE `game` = '".mysql_escape_string($game)."'");
-						var_dump("SELECT `roleId`
-						FROM `".DB_PREFIX."_Roles`
-						WHERE `game` = '".mysql_escape_string($game)."'");
 if(mysql_num_rows($query) > 0) {
 	$hasRoles = true;
 }

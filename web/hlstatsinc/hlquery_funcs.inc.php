@@ -61,7 +61,7 @@ function GetServerData($command, $ip, $port) {
 
 	socket_set_blocking($server_connection, 1);
 	# Time out after 4 seconds
-	socket_set_timeout($server_connection, 4);
+	socket_set_timeout($server_connection, 2);
 	//fwrite($server_connection, $command, strlen($command));
 	fwrite($server_connection, $command);
 	# This must time out first to make sure the right arguement is returned
@@ -71,7 +71,6 @@ function GetServerData($command, $ip, $port) {
 	$formated_data = '';
 	do
 	{
-
 	# Rough explanation
 	# First loop is a hack to force packet scanning
 	# for the Valve split packet bug
@@ -248,8 +247,7 @@ function HalfLife_Details ($ip, $port)
 	return $serverdetails;
 }
 
-function Source_A2S_Info ($ip, $port)
-{
+function Source_A2S_Info ($ip, $port) {
 	$cmd = "\xFF\xFF\xFF\xFF".'TSource Engine Query'."\x00";
 	if (!$serverdata = GetServerData($cmd, $ip, $port))
 		return false;

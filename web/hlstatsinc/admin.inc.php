@@ -56,12 +56,6 @@ if(!empty($_GET["task"])) {
 	}
 }
 
-if(!empty($_GET["admingame"])) {
-	if(validateInput($_GET["admingame"],'nospace') === true) {
-		$selGame = $_GET["admingame"];
-	}
-}
-
 session_set_cookie_params(43200); // 8 hours
 session_name("hlstats-session");
 session_start();
