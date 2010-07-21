@@ -59,7 +59,7 @@ sub doEvent_Connect
 
 	if ($player) {
 
-		if($g_use_geoip) {
+		if($g_use_geoip && $g_mode eq "Normal") {
 			my @countryData = &resolveCountry($ipAddr);
 			$country = $countryData[0];
 			$countryCode = $countryData[1];

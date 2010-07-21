@@ -37,7 +37,7 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Team_2_dropoff',75,
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Team_1_dropoff',75,25,'1','Captured Red Flag','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Entrance_Destroyed',5,0,'0','Teleporter Entrance Destroyed','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Entrance_Finished',8,0,'0','Teleporter Entrance Build','1','0','0','0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Exit_Destroyed',5,0,'0','Teleporter Exit Destroyed','1','0','0','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Exit_Destroyed',5,0,'0','Teleporter Exit Destroyed','1','1','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Exit_Finished',8,0,'0','Teleporter Exit Build','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Built_Dispenser',8,0,'0','Built Dispenser','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Discovered_Spy',2,0,'0','Discovered a Spy','1','0','0','0');
@@ -52,7 +52,7 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_L
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Medic_Cured_Hallucinations', '10', '0', '', 'Heal Hallucinations', '0', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Repair', '1', '0', '', 'Repair Sentry', '1', '0', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Medic_Infection', '5', '0', '', 'Damage Enemy with Medpac', '0', '1', '0', '0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Destroyed', '10', '0', '', 'Sentry Destroyed', '1', '0', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Destroyed', '10', '0', '', 'Sentry Destroyed', '1', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_1', '3', '0', '', 'Built Sentry', '1', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_2', '5', '0', '', 'Built Sentry level 2', '1', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_3', '10', '0', '', 'Built Sentry level 3', '1', '1', '0', '0');
