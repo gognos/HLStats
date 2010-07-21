@@ -93,10 +93,12 @@ Show only active players = Nur aktive Spieler anzeigen
 Content = Inhalt
 Show players from today = Zeige Spieler von Heute
 
-Player Rankings = Spieler Rankings
+Player Rankings = Spieler Statistiken
 Sections = Bereiche
-Clan Rankings = Clan Rankings
-Team Rankings = Team Rankings
+Clan Rankings = Clan Statistik
+Team Rankings = Team Statistik
+Role Rankings = Rollen Statistik
+Role Statistics = Rollen Statistik
 Weapon Statistics = Waffen Statistiken
 Action Statistics = Aktion Statistiken
 Map Statistics = Map Statistiken

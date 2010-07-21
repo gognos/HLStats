@@ -380,6 +380,22 @@ while ($loop = &getLine()) {
 		}
 	}
 
+	# update the information about the server
+	# to avoid unaccounted maps
+	if($c % 500 == 0) {
+		$g_servers{$s_addr} = &getServer($s_peerhost, $s_peerport);
+		my $q = HLstats_ServerQueries->new(encoding => 'utf-8',
+											timeout => 1,
+											'addr' => $s_peerhost,
+											'port' => $s_peerport);
+		my $alive = $q->is_alive;
+		if($alive) {
+			my $ret = $q->getA2S_Info;
+			$g_servers{$s_addr}->{map} = $ret->{map};
+		}
+	}
+	
+
 	# Get the datestamp (or complain)
 	# otherwise ignore the data and proceed to the next loop
 	if ($s_output =~ s/^.*L (\d\d)\/(\d\d)\/(\d{4}) - (\d\d):(\d\d):(\d\d):\s*//) {
@@ -1272,7 +1288,7 @@ EOT
 	}
 
 
-	# Delete events over $g_deletedays days old, at every 500th iteration of the main loop
+	# Delete events over $g_deletedays days old, at every 5000th iteration of the main loop
 
 	if ($c % 5000 == 0 && $g_deletedays != 0) {
 		if ($g_debug > 0) {
