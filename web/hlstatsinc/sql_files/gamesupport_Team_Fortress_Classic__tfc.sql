@@ -56,6 +56,7 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Destroyed
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_1', '3', '0', '', 'Built Sentry', '1', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_2', '5', '0', '', 'Built Sentry level 2', '1', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Built_Level_3', '10', '0', '', 'Built Sentry level 3', '1', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Discovered_Spy', '3', '0', '', 'Spy revealed', '0', '1', '0', '0');
 
 #
 # Teams

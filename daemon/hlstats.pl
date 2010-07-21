@@ -76,7 +76,6 @@ require "$opt_libdir/HLstats_Server.pm";
 require "$opt_libdir/HLstats_Player.pm";
 require "$opt_libdir/HLstats.plib";
 require "$opt_libdir/HLstats_EventHandlers.plib";
-require "$opt_libdir/HLstats_RatingSystem.pm";
 require "$opt_libdir/geoip/PurePerl.pm";
 require "$opt_libdir/HLStats_ServerQueries.pm";
 
@@ -126,13 +125,10 @@ $g_log_chat = $Config->{Options}->{LogChat};
 $g_rcon_say = $Config->{Rcon}->{RconSay};
 $g_ignore_bots = $Config->{Options}->{IgnoreBots};
 $g_ingame_points = $Config->{Options}->{IngamePoints};
-$g_rating_system = $Config->{Options}->{EloRating};
-$g_rating_system_verbose = $Config->{Options}->{EloRatingVerbose};
 $g_option_strip_tags = $Config->{Options}->{StripTags};
 
 # Options
 # default values
-
 $opt_help = 0;
 $opt_version = 0;
 $g_lan_hack = 1;
@@ -338,11 +334,6 @@ print "\n++ HLStats is now running ($g_mode mode";
 if ($g_debug > 0) { print ", debug level $g_debug"; }
 print ").\n\n";
 
-# Init rating system
-if($g_rating_system eq "1" || $g_rating_system eq "2") {
-	$ratingsys = HLstats_RatingSystem->new();
-}
-
 #
 # Main data loop
 #
@@ -394,7 +385,7 @@ while ($loop = &getLine()) {
 			$g_servers{$s_addr}->{map} = $ret->{map};
 		}
 	}
-	
+
 
 	# Get the datestamp (or complain)
 	# otherwise ignore the data and proceed to the next loop
@@ -1229,10 +1220,6 @@ while ($loop = &getLine()) {
 
 
 	if ($ev_type) {
-		# Update the rating system.
-		if($g_rating_system eq "1" || $g_rating_system eq "2") {
-			$ratingsys->update();
-		}
 
 		if ($g_debug > 2) {
 			print <<EOT

@@ -203,9 +203,6 @@ sub doEvent_TeamSelection
 	{
 		$player->set("team", $team);
 
-		if($g_rating_system eq "1" || $g_rating_system eq "2") {
-			$ratingsys->player_joined($player);
-        }
 		&recordEvent(
 			"ChangeTeam", 0,
 			$player->get("playerid"),
@@ -366,10 +363,6 @@ sub doEvent_Frag {
 			if($g_ingame_points) {
 				&rcon("$killerName \"You got $killerskill\(+$killerdiff\) for killing $victimName\"",1);
 			}
-
-			if($g_rating_system eq "1" || $g_rating_system eq "2") {
-				$ratingsys->player_scored($killer, 5.0*$weapon_modifier);
-			}
 		}
 		else
 		{
@@ -387,10 +380,6 @@ sub doEvent_Frag {
 			$killer->updateDB();
 
 			$desc = "TEAMKILL: ";
-
-			if($g_rating_system eq "1" || $g_rating_system eq "2") {
-				$ratingsys->player_scored($killer, -60);
-			}
 		}
 	}
 	else {
@@ -464,12 +453,6 @@ sub doEvent_PlayerPlayerAction
 			{
 				&rewardTeam($team, $reward_team, $actionid);
 			}
-
-			if ($reward_player != 0) {
-				if($g_rating_system eq "1" || $g_rating_system eq "2") {
-                	$ratingsys->player_scored($player, $reward_player);
-                }
-            }
 		}
 		else
 		{
@@ -560,11 +543,6 @@ sub doEvent_PlayerAction
 			{
 				&rewardTeam($team, $reward_team, $actionid);
 			}
-			if ($reward_player != 0) {
-				if($g_rating_system eq "1" || $g_rating_system eq "2") {
-                	$ratingsys->player_scored($player, $reward_player);
-                }
-            }
 		}
 		else {
 			$desc = "(IGNORED) ";
@@ -678,17 +656,7 @@ sub doEvent_WorldAction
 	#print $ev_prop{winner};
 
 
-    if($action eq "Round_Start") {
-    	if($g_rating_system eq "1" || $g_rating_system eq "2") {
-        	$ratingsys->round_start();
-        }
-    }
-    elsif($action eq "Round_Win") {
-    	if($g_rating_system eq "1" || $g_rating_system eq "2") {
-        	$ratingsys->round_end();
-        }
-    }
-	# tf2 extensions
+    # tf2 extensions
 	if($ev_prop{winner}) {
 		$action .= "_" . $ev_prop{winner};
 	}
