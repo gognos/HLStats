@@ -160,7 +160,7 @@ pageHeader(
 			<input type="text" name="q" size="10"><br />
 			<button type="submit" title="<?php echo l('Search'); ?>">
 				<?php echo l('Search'); ?>
-			<button>
+			</button>
 		</form>
 	</div>
 </div>

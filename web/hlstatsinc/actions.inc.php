@@ -140,7 +140,7 @@ if(!empty($totalactions)) {
 
 pageHeader(
 	array($gamename, l("Action Statistics")),
-	array($gamename=>"%s?game=$game", l("Action Statistics")=>"")
+	array($gamename=>"index.php?game=$game", l("Action Statistics")=>"")
 );
 ?>
 <div id="sidebar">
