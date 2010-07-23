@@ -581,14 +581,12 @@ sub getPlayerId
 	";
 	my $result = &doQuery($query);
 
-	if ($result->rows)
-	{
+	if ($result->rows) {
 		my ($playerId) = $result->fetchrow_array;
 		$result->finish;
 		return $playerId;
 	}
-	else
-	{
+	else {
 		$result->finish;
 		return 0;
 	}
