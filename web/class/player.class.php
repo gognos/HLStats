@@ -181,10 +181,12 @@ class Player {
 	 * get the player history for the events
 	 * I know this is big, but I don't think there is a better way.
 	 *
+	 * @param string Special parameters if needed
 	 * @return array The history
 	 */
-	public function getEventHistory() {
-		$ret = false;
+	public function getEventHistory($special=false) {
+		$ret = array('data' => array(),
+					'pages' => false);
 
 		$queryStr = "SELECT SQL_CALC_FOUND_ROWS
 					'".l('Team Bonus')."' AS eventType,
@@ -391,30 +393,47 @@ class Player {
 				t.playerId=".mysql_escape_string($this->playerId)."
 		";
 
-		$queryStr .= " ORDER BY ";
-		if(!empty($this->_option['sort']) && !empty($this->_option['sortorder'])) {
-			$queryStr .= " ".$this->_option['sort']." ".$this->_option['sortorder']."";
-		}
+		if(!empty($special)) {
+			if($special === "lastEvent") {
+				// we want the last event
+				$queryStr .= " ORDER BY eventTime DESC";
+				$queryStr .= " LIMIT 1";
 
-		if($this->_option['page'] === 1) {
-			$queryStr .= " LIMIT 0,50";
-		}
-		else {
-			$start = 50*($this->_option['page']-1);
-			$queryStr .= " LIMIT ".$start.",50";
-		}
-
-		$query = mysql_query($queryStr);
-		if(mysql_num_rows($query) > 0) {
-			while($result = mysql_fetch_assoc($query)) {
-				$ret['data'][] = $result;
+				$query = mysql_query($queryStr);
+				$result = mysql_fetch_assoc($query);
+				$ret = $result['eventTime'];
 			}
 		}
+		else {
 
-		// get the max count for pagination
-		$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-		$result = mysql_fetch_assoc($query);
-		$ret['pages'] = (int)ceil($result['rows']/50);
+
+			$queryStr .= " ORDER BY ";
+			if(!empty($this->_option['sort']) && !empty($this->_option['sortorder'])) {
+				$queryStr .= " ".$this->_option['sort']." ".$this->_option['sortorder']."";
+			}
+
+			if($this->_option['page'] === 1) {
+				$queryStr .= " LIMIT 0,50";
+			}
+			else {
+				$start = 50*($this->_option['page']-1);
+				$queryStr .= " LIMIT ".$start.",50";
+			}
+
+			$query = mysql_query($queryStr);
+			if(mysql_num_rows($query) > 0) {
+				while($result = mysql_fetch_assoc($query)) {
+					$ret['data'][] = $result;
+				}
+			}
+			mysql_free_result($query);
+
+			// get the max count for pagination
+			$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
+			$result = mysql_fetch_assoc($query);
+			$ret['pages'] = (int)ceil($result['rows']/50);
+			mysql_free_result($query);
+		}
 		return $ret;
 	}
 
@@ -720,8 +739,14 @@ class Player {
 					WHERE playerId='".mysql_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
-			$this->_playerData['lastConnect'] = $result['eventTime'];
-			mysql_free_result($query);
+			if(empty($result['eventTime'])) {
+				// no connect recorded ?
+				$this->_playerData['lastConnect'] = $this->getEventHistory('lastEvent');
+			}
+			else {
+				$this->_playerData['lastConnect'] = $result['eventTime'];
+				mysql_free_result($query);
+			}
 		}
 	}
 

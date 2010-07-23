@@ -20,6 +20,8 @@ HLStats ChangeLog
 		Please read the documentation on how to use this feature !!
 *) New: Players table gets a date on updates. This can be used to show
 		Players from current day etc.
+*) New: If no connect is recorded the "Last Connect" information is
+		taken from the last event a player has made.
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Changed: ELO Ratingsystem removed. It was never used..... :(

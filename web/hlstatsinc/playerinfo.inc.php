@@ -101,7 +101,6 @@ if($playerObj === false) {
 $playerObj->setOption('killLimit',$killLimit);
 $playerObj->loadFullInformation();
 
-//$pl_name = ereg_replace(" ", "&nbsp;", htmlspecialchars($playerObj->getParam('name')));
 $pl_name = makeSavePlayerName($playerObj->getParam('name'));
 $pl_urlname = urlencode($playerObj->getParam('lastName'));
 
