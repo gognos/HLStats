@@ -58,7 +58,7 @@ if(!$g_options['hideNews']) {
 								ORDER BY `date` DESC");
 	if(mysql_num_rows($queryNews) > 0) {
 ?>
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
 	<!--
 	function showNews(id) {
 		if(document.getElementById("newsBox_" + id).style.display == "none") {
@@ -70,7 +70,7 @@ if(!$g_options['hideNews']) {
 
 	}
 	//-->
-	</script>
+</script>
 	<h1><?php echo l('News'); ?></h1>
 	<?php
 		$i = 0;

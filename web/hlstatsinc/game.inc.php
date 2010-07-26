@@ -98,7 +98,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 							 ORDER BY `date` DESC");
 	if(mysql_num_rows($queryNews) > 0) {
 ?>
-<script type="text/javascript" language="javascript">
+<script type="text/javascript">
 	<!--
 	function showNews(id) {
 		if(document.getElementById("newsBox_" + id).style.display == "none") {
@@ -110,7 +110,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 
 	}
 	//-->
-	</script>
+</script>
 	<h1><?php echo l('News'); ?></h1>
 	<?php
 		$i = 0;
@@ -204,8 +204,8 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 			<?php
 				if ($awarddata["d_winner_id"]) {
 					echo "<a href=\"index.php?mode=playerinfo&amp;player="
-						. $awarddata["d_winner_id"] . "\"><img src=\"hlstatsimg/player.gif\" width=16 height=16 "
-						. "hspace='4' border='0' align=\"middle\" alt=\"player.gif\">&nbsp;<b>"
+						. $awarddata["d_winner_id"] . "\"><img src=\"hlstatsimg/player.gif\" width='16' height='16' "
+						. "alt=\"player.gif\">&nbsp;<b>"
 						. htmlspecialchars($awarddata["d_winner_name"]) . "</b></a> ("
 						. $awarddata["d_winner_count"] . " " . htmlspecialchars($awarddata["verb"]) . ")";
 				}

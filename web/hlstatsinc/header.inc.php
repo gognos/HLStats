@@ -52,7 +52,7 @@ $titlestr = $title;
 $tstr = array_pop($titlestr);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 	<title>HLStats
@@ -69,14 +69,14 @@ $tstr = array_pop($titlestr);
 	<div id="header">
 		<span id="slogan"><?php echo $tstr; ?></span>
 		<ul>
-			<li id="current"><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
-			<li id="current"><a href="index.php?mode=search"><span><?php echo l('Search'); ?></span></a></li>
-			<li id="current"><a href="index.php?mode=help"><span><?php echo l('Help'); ?></span></a></li>
+			<li <?php if(!isset($_GET['mode']) { ?>id="current"<?php } ?>><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
+			<li <?php if(isset($_GET['mode']) && $_GET['mode'] == "search") { ?>id="current"<?php } ?>><a href="index.php?mode=search"><span><?php echo l('Search'); ?></span></a></li>
+			<li <?php if(isset($_GET['mode']) && $_GET['mode'] == "help") { ?>id="current"<?php } ?>><a href="index.php?mode=help"><span><?php echo l('Help'); ?></span></a></li>
 		</ul>
 	</div>
 	<div id="header-logo">
 		<div id="logo">
-			<img src="hlstatsimg/title.png" />
+			<img src="hlstatsimg/title.png" alt="HLStats" />
 		</div>
 		<div id="breadcrumb">
 			<a href="<?php echo $g_options["siteurl"]; ?>"><?php echo $g_options["sitename"]; ?></a>:
