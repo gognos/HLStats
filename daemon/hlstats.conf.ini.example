@@ -57,14 +57,3 @@ Timestamp = 0
 # such as CD, NO-CD or (1) etc.
 # default 1=on 0=off
 StripTags = 1
-
-##
-## player-activity.pl
-## settings
-##
-[playerActivity]
-# Time frame after players are marked as inactive
-# This depends on skill change. If a player has no skill change
-# in this time frame the player will be set as inactive
-# Default 5 Days (value in days)
-timeFrame = 5

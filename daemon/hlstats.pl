@@ -23,10 +23,6 @@
 # + 2007 - 2010
 # +
 #
-# HLStats - Real-time player and clan rankings and statistics for Half-Life
-# http://sourceforge.net/projects/hlstats/
-#
-# Copyright (C) 2001  Simon Garner
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -132,11 +128,8 @@ a MySQL database.
                                     password on the command line is insecure.
                                     Use the configuration file instead.)
       --db-username=USERNAME      database username
-      --use-geoip             	resolve player country by IP addresses (READ documentation)
   -i, --ip=IP                     set IP address to listen on for UDP log data
   -p, --port=PORT                 set port to listen on for UDP log data  [$s_port]
-  -r, --rcon                      enables rcon command exec support (the default)
-      --norcon                    disables rcon command exec support
   -s, --stdin                     read log data from standard input, instead of
                                     from UDP socket. Must specify --server-ip
                                     and --server-port to indicate the generator
@@ -152,10 +145,9 @@ a MySQL database.
 Long options can be abbreviated, where such abbreviation is not ambiguous.
 Default values for options are indicated in square brackets [...].
 
-Most options can be specified in the configuration file:
+Options are located in the configuration file:
   $opt_configfile
-Note: Options set on the command line take precedence over options set in the
-configuration file. The configuration file name is set at the top of hlstats.pl.
+AND in the _Options table.
 
 HLStats: http://www.hlstats-community.org
 EOT
@@ -165,7 +157,11 @@ EOT
 # only help and version a this time
 GetOptions(
 	"help|h"			=> \$opt_help,
-	"version|v"			=> \$opt_version
+	"version|v"			=> \$opt_version,
+	"db-host=s"			=> \$db_host,
+	"db-name=s"			=> \$db_name,
+	"db-password=s"		=> \$db_pass,
+	"db-username=s"		=> \$db_user,
 ) or die($usage);
 
 if ($opt_help) {
@@ -174,17 +170,13 @@ if ($opt_help) {
 }
 
 if ($opt_version) {
-	print "hlstats.pl (HLStats) $g_version\n"
+	print "\nhlstats.pl (HLStats) $g_version\n"
 		. "Real-time player and clan rankings and statistics for Half-Life\n"
-		. "Copyright (C) 2001  Simon Garner\n\n";
-
-	print "Using ConfigReaderSimple module version $ConfigReaderSimple::VERSION\n";
-	if ($g_rcon) {
-		print "Using KKrcon module version $KKrcon::VERSION\n";
-	}
+		. "Copyright (C) 2001  Simon Garner\n"
+		. "Copyright (C) 2007 - 2010  Johannes Keßler\n\n";
 
 	print "\nThis is free software; see the source for copying conditions.  There is NO\n"
-		. "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
+		. "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n";
 
 	exit(0);
 }
@@ -227,8 +219,6 @@ $g_skill_maxchange = $oHash{SKILLMAXCHANGE};
 $g_log_chat = $oHash{LOGCHAT};
 $g_ingame_points = $oHash{INGAMEPOINTS};
 
-
-
 print "OK\n";
 
 exit(0);
@@ -238,15 +228,8 @@ exit(0);
 GetOptions(
 	"debug|d+"			=> \$g_debug,
 	"mode|m=s"			=> \$g_mode,
-	"db-host=s"			=> \$db_host,
-	"db-name=s"			=> \$db_name,
-	"db-password=s"		=> \$db_pass,
-	"db-username=s"		=> \$db_user,
-	"use-geoip!"		=> \$g_use_geoip,
 	"ip|i=s"			=> \$s_ip,
 	"port|p=i"			=> \$s_port,
-	"rcon!"				=> \$g_rcon,
-	"r"					=> \$g_rcon,
 	"stdin!"			=> \$g_stdin,
 	"s"					=> \$g_stdin,
 	"server-ip=s"		=> \$g_server_ip,

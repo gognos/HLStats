@@ -23,11 +23,6 @@
 # + 2007 - 2010
 # +
 #
-# HLStats - Real-time player and clan rankings and statistics for Half-Life
-# http://sourceforge.net/projects/hlstats/
-#
-# Copyright (C) 2001  Simon Garner
-#
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
@@ -93,17 +88,13 @@ my $db_user = $Config->{Database}->{DBUsername};
 my $db_pass = $Config->{Database}->{DBPassword};
 my $db_prefix = $Config->{Database}->{DBPrefix};
 
-my $conf_timeFrame = $Config->{playerActivity}->{timeFrame};
-
 # Usage message
-
 my $usage = <<EOT
 Usage: player-activity.pl [OPTION]...
 Update player activity from Half-Life server statistics.
 
   -h, --help                      display this help and exit
   -v, --version                   output version information and exit
-      --period                    number of days in period for player-activity
       --db-host=HOST              database ip:port
       --db-name=DATABASE          database name
       --db-password=PASSWORD      database password (WARNING: specifying the
@@ -113,20 +104,17 @@ Update player activity from Half-Life server statistics.
 
 Long options can be abbreviated, where such abbreviation is not ambiguous.
 
-Most options can be specified in the configuration file:
+Options are located in the configuration file:
   $opt_configfile
-Note: Options set on the command line take precedence over options set in the
-configuration file.
+AND in the _Options table.
 
 HLStats: http://www.hlstats-community.org
 EOT
 ;
 
-
 GetOptions(
 	"help|h"			=> \$opt_help,
 	"version|v"			=> \$opt_version,
-	"period=i"			=> \$conf_timeFrame,
 	"db-host=s"			=> \$db_host,
 	"db-name=s"			=> \$db_name,
 	"db-password=s"		=> \$db_pass,
@@ -139,11 +127,11 @@ if ($opt_help) {
 }
 
 if ($opt_version) {
-	print "player-activity.pl (HLStats): $main::g_version\n"
+	print "\nplayer-activity.pl (HLStats): $main::g_version\n"
 		. "Real-time player and clan rankings and statistics for Half-Life\n\n"
 		. "http://www.hlstats-community.org\n"
 		. "This is free software; see the source for copying conditions.  There is NO\n"
-		. "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n";
+		. "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n";
 	exit(0);
 }
 
@@ -163,7 +151,25 @@ $main::db_conn = DBI->connect(
 &doQuery("SET character set utf8");
 &doQuery("SET NAMES utf8");
 
-print "\n\nConnected OK\n";
+print " OK\n";
+
+print "-- Loading options... ";
+
+# load the options from DB
+my $result = &doQuery("SELECT `keyname`,`value` FROM ${db_prefix}_Options");
+my ($keyname, $value, %oHash);
+while( ($keyname, $value) = $result->fetchrow_array ) {
+	$oHash{$keyname} = $value;
+}
+$result->finish();
+
+$conf_timeFrame = $oHash{TIMEFRAME};
+
+GetOptions(
+	"period=i"			=> \$conf_timeFrame,
+) or die($usage);
+
+print "OK\n";
 
 ## main process
 my $frame = time() - ($conf_timeFrame*86400); # time in seconds
