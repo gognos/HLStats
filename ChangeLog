@@ -50,6 +50,7 @@ HLStats ChangeLog
 *) Changed: Dropped hlstats_Server defaultMap.
 			While loading servers from DB we get the current map via
 			ServerQueries. This should avaid "unknown" maps
+*) Changed: Dropped MailTo and MailPath setting for daemon.
 *) Fixed: typo in lang (thx to LuBJe)
 *) Fixed: bug in admin -> Tools -> Reset (thx to conan)
 *) Fixed: remove the ; in rcon commands (thx to Par0noid)

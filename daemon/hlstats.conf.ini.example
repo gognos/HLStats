@@ -34,12 +34,6 @@ BindIP =
 # Port to listen on for log data from the game servers.
 Port = 27500
 
-# E-mail address to mail database errors to. (See also MailPath.)
-MailTo = mail@some.domain.tld
-
-# Path to the 'mail' program -- usually /bin/mail
-MailPath = /bin/mail
-
 # Set this to 1 to have debugging information printed on stdout
 # Set higher for even more debugging information
 # 0 means no output at all

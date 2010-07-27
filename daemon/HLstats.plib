@@ -52,25 +52,6 @@ our $g_version = "development version";
 ##
 
 #
-# void error (string errormsg)
-#
-# Dies, and optionally mails error messages to $g_mailto.
-#
-
-sub error
-{
-	my $errormsg = $_[0];
-
-	if ($g_mailto && $g_mailpath)
-	{
-		system("echo \"$errormsg\" | $g_mailpath -s \"HLStats crashed `date`\" $g_mailto");
-	}
-
-	die("$errormsg\n");
-}
-
-
-#
 # string quoteSQL (string varQuote)
 #
 # Escapes all quote characters in a variable, making it suitable for use in an
@@ -102,12 +83,12 @@ sub doQuery
 	$db_conn ||= DBI->connect("DBI:mysql:$db_name:$db_host",$db_user, $db_pass,
 				{ 'RaiseError' => 'mysql_enable_utf8' => 1, 'mysql_auto_reconnect' => 1,
 					'ShowErrorStatement' => 1})
-			or error("Unable to connect to MySQL server");
+			or die("Unable to connect to MySQL server");
 
 	my $result = $db_conn->prepare($query)
-		or error("Unable to prepare query:\n$query\n$DBI::errstr\n$callref");
+		or die("Unable to prepare query:\n$query\n$DBI::errstr\n$callref");
 	$result->execute
-		or error("Unable to execute query:\n$query\n$DBI::errstr\n$callref");
+		or die("Unable to execute query:\n$query\n$DBI::errstr\n$callref");
 
 	return $result;
 }

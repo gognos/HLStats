@@ -234,7 +234,7 @@ sub setUniqueId
 		}
 		else
 		{
-			error("Unable to create player:\n$query");
+			&::printNotice("Unable to create player:\n$query");
 		}
 	}
 
@@ -321,9 +321,8 @@ sub setName
 
 		$result->finish;
 	}
-	else
-	{
-		&::error("HLstats_Player->setName(): No playerid");
+	else {
+		&::printNotice("HLstats_Player->setName(): No playerid");
 	}
 }
 
