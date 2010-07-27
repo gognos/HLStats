@@ -102,7 +102,7 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 		<h2><?php echo l('General'); ?></h2>
 		<table cellpadding="2" cellspacing="0" border="0">
 			<tr>
-				<th><?php echo l("Site Name"); ?></th>
+				<th width="220"><?php echo l("Site Name"); ?></th>
 				<td>
 					<input type="text" name="option[sitename]" size="40"
 						value="<?php echo $g_options['sitename']; ?>" />
@@ -168,11 +168,81 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 					</select>
 				</td>
 			</tr>
+			<tr>
+				<th><?php echo l("Default Language"); ?></th>
+				<td>
+					<select name="option[LANGUAGE]">
+					<option value="en">EN</option>
+					<?php
+					$available_langs = glob(getcwd()."/lang/*.ini.php");
+					foreach($available_langs as $available_lang) {
+						$available_lang = str_replace(".ini.php",'',basename($available_lang));
+						$selected = '';
+						if($g_options['LANGUAGE'] === $available_lang) $selected="selected='1'";
+						echo '<option value="'.$available_lang.'" '.$selected.'>'.strtoupper($available_lang)."</option>";
+					}
+					unset($available_langs,$available_lang);
+					?>
+				</select>
+				</td>
+			</tr>
+		</table>
+		<h2><?php echo l('System Settings'); ?></h2>
+		<blockquote>
+			<?php echo l('This settings are also used by the daemon (hlstats.pl). If you change these the daemon have to be stopped and started again !!'); ?>
+		</blockquote>
+		<table cellpadding="2" cellspacing="0" border="0">
+			<tr>
+				<th width="220">
+					<?php echo l("Deletedays"); ?><br />
+					<small>DELETEDAYS</small>
+				</th>
+				<td>
+					<input type="text" size="4" name="option[DELETEDAYS]" value="<?php echo $g_options['DELETEDAYS']; ?>"> <?php echo l('Days'); ?><br />
+					<small>
+						<?php echo l('HLStats will automatically delete history events from the events tables when they are over this many days old.<br>This is important for performance reasons.<br>Set lower if you are logging a large number of game servers or find the load on the MySQL server is too high.<br>A value of 0 means no delete days'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Ignore BOT"); ?><br />
+					<small>IGNOREBOTS</small>
+				</th>
+				<td>
+					<select name="option[IGNOREBOTS]">
+						<option value="0" <?php if($g_options['IGNOREBOTS'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['IGNOREBOTS'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Completly ignore anything which is identified as a BOT.'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Mode"); ?><br />
+					<small>MODE</small>
+				</th>
+				<td>
+					<select name="option[MODE]">
+						<option value="Normal" <?php if($g_options['MODE'] === "Normal") echo 'selected="1"'; ?>><?php echo l('Normal(Internet)'); ?></option>
+						<option value="LAN" <?php if($g_options['MODE'] === "LAN") echo 'selected="1"'; ?>><?php echo l('LAN'); ?></option>
+						<option value="NameTrack" <?php if($g_options['MODE'] === "NameTrack") echo 'selected="1"'; ?>><?php echo l('NameTrack'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Sets the player-tracking mode'); ?>
+						<?php echo l('Normal(Internet)'); ?> - <?php echo l('Recommended for public Internet server use'); ?>
+						<?php echo l('NameTrack'); ?> - <?php echo l('Players will be tracked by nickname'); ?>
+						<?php echo l('LAN'); ?> - <?php echo l('Players will be tracked by IP Address'); ?>
+					</small>
+				</td>
+			</tr>
 		</table>
 		<h2><?php echo l('Paths'); ?></h2>
 		<table cellpadding="2" cellspacing="0" border="0">
 			<tr>
-				<th><?php echo l("Map Download URL"); ?></th>
+				<th width="220"><?php echo l("Map Download URL"); ?></th>
 				<td>
 					<input type="text" name="option[map_dlurl]" size="40"
 						value="<?php echo $g_options['map_dlurl']; ?>" /><br />
@@ -184,7 +254,7 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 		<h2><?php echo l('Preset Styles'); ?></h2>
 		<table cellpadding="2" cellspacing="0" border="0">
 			<tr>
-				<th><?php echo l("Load Preset Style"); ?></th>
+				<th width="220"><?php echo l("Style"); ?></th>
 				<td>
 					<select name="option[style]">
 						<?php
@@ -199,7 +269,7 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 					</select>
 				</td>
 			</tr>
-		</table>
+		</table><br />
 		<button type="submit" title="<?php echo l('Save'); ?>" name="sub[saveOptions]">
 			<?php echo l('Save'); ?>
 		</button>
