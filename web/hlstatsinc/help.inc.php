@@ -140,12 +140,12 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 	<a name="players"></a>
 	<h1>How are players tracked? Or, why is my name listed more than once ?</h1>
 	<p>
-	<?php if (MODE == "NameTrack") { ?>
+	<?php if ($g_options['MODE'] == "NameTrack") { ?>
 		Players are tracked by nickname. All statistics for any player using a particular name will
 		be grouped under that name. It is not possible for a name to be listed more than once for each game.<br />
 		<br />
 	<?php } else {
-			if (MODE == "LAN") {
+			if ($g_options['MODE'] == "LAN") {
 				$uniqueid = "IP Address";
 				$uniqueid_plural = "IP Addresses";
 	?>

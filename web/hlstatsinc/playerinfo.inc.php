@@ -192,7 +192,7 @@ $rcol = "row-dark";
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
-			   <?php if (MODE == "LAN") {
+			   <?php if ($g_options['MODE'] == "LAN") {
 					echo l("IP Addresses");
 				} else {
 					echo l("Unique ID(s)");
@@ -201,7 +201,7 @@ $rcol = "row-dark";
 			</th>
 			<td>
 			   <?php
-				if (MODE == "NameTrack") {
+				if ($g_options['MODE'] == "NameTrack") {
 					echo l("Unknown");
 				} else {
 					echo $playerObj->getParam('uniqueIds');
