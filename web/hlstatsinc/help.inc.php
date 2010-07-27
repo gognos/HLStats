@@ -321,11 +321,13 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 	<p>
 		At the players overview you have multiple options to select which players are show and which
 		not.<br />
-		The default is to show only active players. Which means a player is active if you use the
+		The default is to show only active and non BOT players. Which means a player is active if you use the
 		<b>player-activity.pl</b> script and define the <b>timeFrame</b> in which a player is
 		still active.<br />
 		Everytime a player does something a flag is set to 1 and a timestamp is set.
 		Then the <b>player-activity.pl</b> checks if the player has a activity within the given
-		timeFrame. If not the player is set to in-active.
+		timeFrame. If not the player is set to in-active.<br />
+		BOTs are recored if the <b>IGNOREBOTS</b> option is set to <b>0</b>. This enables
+		a additional option which displays those too. Otherwise no BOT is recorded or even shown.
 	</p>
 </div>

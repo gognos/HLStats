@@ -69,7 +69,7 @@ $tstr = array_pop($titlestr);
 	<div id="header">
 		<span id="slogan"><?php echo $tstr; ?></span>
 		<ul>
-			<li <?php if(!isset($_GET['mode'])) { ?>id="current"<?php } ?>><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
+			<li <?php if(!isset($_GET['mode']) || $_GET['mode'] != "search" || $_GET['mode'] != "help") { ?>id="current"<?php } ?>><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
 			<li <?php if(isset($_GET['mode']) && $_GET['mode'] == "search") { ?>id="current"<?php } ?>><a href="index.php?mode=search"><span><?php echo l('Search'); ?></span></a></li>
 			<li <?php if(isset($_GET['mode']) && $_GET['mode'] == "help") { ?>id="current"<?php } ?>><a href="index.php?mode=help"><span><?php echo l('Help'); ?></span></a></li>
 		</ul>
