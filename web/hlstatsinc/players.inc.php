@@ -71,6 +71,16 @@ if (isset($_GET["showToday"])) {
 		$playersObj->setOption("showToday",$_GET['showToday']);
 	}
 }
+if (isset($_GET["showBots"])) {
+	$check = validateInput($_GET['showBots'],'digit');
+	if($check === true) {
+		$playersObj->setOption("showBots",$_GET['showBots']);
+	}
+}
+else {
+	$playersObj->setOption("showBots",'0');
+}
+
 if (isset($_GET["page"])) {
 	$check = validateInput($_GET['page'],'digit');
 	if($check === true) {
@@ -128,7 +138,7 @@ pageHeader(
 			echo '<a href="?mode=players&amp;game=',$game,'">',l('Show only active players'),'</a>';
 		}
 		else {
-			echo '<a href="?mode=players&amp;game=',$game,'&amp;showall=1">',l('Show all players (including inactive ones)'),'</a>';
+			echo '<a href="?mode=players&amp;game=',$game,'&amp;showall=1">',l('Show all players'),'</a>';
 		}
 		?>
 			</li>
@@ -136,6 +146,15 @@ pageHeader(
 				<a href="?mode=players&amp;game=<?php echo $game; ?>&amp;showToday=1"><?php echo l('Show players from today'); ?></a>
 
 			</li>
+			<?php if($g_options['IGNOREBOTS'] === "0") { ?>
+			<li>
+				<?php if(isset($_GET['showBots']) && $_GET['showBots'] === "1") { ?>
+				<a href="?mode=players&amp;game=<?php echo $game; ?>"><?php echo l('HideBots'); ?></a>
+				<?php } else { ?>
+				<a href="?mode=players&amp;game=<?php echo $game; ?>&amp;showBots=1"><?php echo l('Show BOTs too'); ?></a>
+				<?php } ?>
+			</li>
+			<?php } ?>
 			<li>
 				<a href="<?php echo "index.php?mode=clans&amp;game=$game"; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="clan.gif">&nbsp;<?php echo l('Clan Rankings'); ?></a>
 			</li>
@@ -150,6 +169,12 @@ pageHeader(
 				<?php echo l('Apply'); ?>
 			</button>
 		</form>
+		<small>
+		<?php echo l('Default is to show only active players'); ?>
+		(<a href="index.php?mode=help#playersoverview">?</a>)<br />
+		<?php echo l('All players inlcude inactive players.'); ?><br />
+		<?php echo l('BOTs will show only if the are not ignored.'); ?>
+		</small>
 	</div>
 </div>
 <div id="main">
@@ -229,21 +254,26 @@ pageHeader(
 					$rank = 1;
 				}
 
-				foreach($pData['data'] as $k=>$entry) {
+				// needed to display the corrent rank
+				$x = 0;
+				foreach($pData['data'] as $entry) {
 					$rcol = "row-dark";
 
 					echo '<tr>',"\n";
 
 					echo '<td class="',toggleRowClass($rcol),'">';
-					echo $rank+$k;
+					echo $rank+$x;
 					echo '</td>',"\n";
 
 					echo '<td class="',toggleRowClass($rcol),'">';
-					if($entry['active'] === "1") {
-						echo '<img src="hlstatsimg/player.gif" alt="active Player" title="active Player" width="16" height="16" />';
+					if($entry['isBot']) {
+						echo '<img src="hlstatsimg/bot.png" alt="BOT" title="BOT" width="16" height="16" />&nbsp;';
+					}
+					elseif($entry['active'] === "1") {
+						echo '<img src="hlstatsimg/player.gif" alt="active Player" title="active Player" width="16" height="16" />&nbsp;';
 					}
 					else {
-						echo '<img src="hlstatsimg/player_inactive.gif" alt="inactive Player" title="inactive Player" width="16" height="16" />';
+						echo '<img src="hlstatsimg/player_inactive.gif" alt="inactive Player" title="inactive Player" width="16" height="16" />&nbsp;';
 					}
 
 					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">',$entry['lastName'],'</a></td>',"\n";
@@ -267,6 +297,7 @@ pageHeader(
 					echo '<td class="',toggleRowClass($rcol),'">',$entry['kpd'],'</td>',"\n";
 
 					echo '</tr>',"\n";
+					$x++;
 				}
 
 				echo '<tr><td colspan="6" align="right">';

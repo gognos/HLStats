@@ -78,3 +78,6 @@ ALTER TABLE `#DB_PREFIX#_Servers` DROP `defaultMap`;
 
 ALTER TABLE `#DB_PREFIX#_Players`  DROP `rating`, DROP `rd2`, DROP `rating_last`;
 ALTER TABLE `#DB_PREFIX#_Players` ADD `lastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+
+INSERT INTO `#DB_PREFIX#_Options` (`keyname` ,`value`) VALUES ('LANGUAGE', 'de'), ('DELETEDAYS', '10');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('IGNOREBOTS', '0');

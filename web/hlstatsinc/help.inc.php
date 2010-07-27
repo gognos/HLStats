@@ -107,7 +107,7 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 				<a href="#players">How are players tracked? Or, why is my name listed more than once?</a>
 			</li>
 			<li>
-				<a href="#points">How is the "points" rating calculated?</a>
+				<a href="#points">How is the "points" rating calculated ?</a>
 			</li>
 			<li>
 				<a href="#weaponmods">What are all the weapon points modifiers?</a>
@@ -116,15 +116,17 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 				<a href="#set">How can I set my profile data ? eg. hompage or Facebook profile</a>
 			</li>
 			<li>
-				<a href="#hideranking">My rank is embarrassing. How can I opt out?</a>
+				<a href="#hideranking">My rank is embarrassing. How can I opt out ?</a>
+			</li>
+			<li>
+				<a href="#playersoverview">What are active players etc. ?</a>
 			</li>
 		</ul>
 	</div>
 </div>
 <div id="main">
-	<h1>
-		<a name="help"></a>How and where can I get help if I need it ?
-	</h1>
+	<a name="help"></a>
+	<h1>How and where can I get help if I need it ?</h1>
 	<p>
 		First make sure you have <a href="http://hlstats-community.org/Documentation.html" target="_blank">read the documentation</a>.<br />
 		In most cases it is only a config error.<br />
@@ -135,9 +137,8 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 		For more and quick information we a <a href="http://blog.bananas-playground.net/categories/12-HLstats" target="_blank">blog</a>
 		and <a href="http://twitter.com/HLStats" target="_blank">twitter</a>.
 	</p>
-	<h1>
-		<a name="players"></a>How are players tracked? Or, why is my name listed more than once?
-	</h1>
+	<a name="players"></a>
+	<h1>How are players tracked? Or, why is my name listed more than once ?</h1>
 	<p>
 	<?php if (MODE == "NameTrack") { ?>
 		Players are tracked by nickname. All statistics for any player using a particular name will
@@ -170,9 +171,8 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 		<?php echo $uniqueid; ?>.
 	<?php } ?>
 	</p>
-	<h1>
-		<a name="points"></a>How is the "points" rating calculated?
-	</h1>
+	<a name="points"></a>
+	<h1>How is the "points" rating calculated ?</h1>
 	<p>
 		A new player has 1000 points. Every time you make a kill, you gain a certain amount of
 		points depending on a) the victim's points rating, and b) the weapon you used. If you kill
@@ -227,7 +227,7 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 		<b>Note</b> The player who triggers an action may receive both the player reward and the team reward.
 	</p>
 	<a name="weaponmods"></a>
-	<h1>What are all the weapon points modifiers?</h1>
+	<h1>What are all the weapon points modifiers ?</h1>
 	<p>
 		Weapon points modifiers are used to determine how many points you should gain or lose
 		when you make a kill or are killed by another player. Higher modifiers indicate that more
@@ -307,12 +307,25 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 		<b>Note</b> These are not standard Half-Life console commands. If you type them in the console,
 		Half-Life will give you an error.
 	</p>
-	<a name="hideranking"></a><h1>My rank is embarrassing. How can I opt out?</h1>
+	<a name="hideranking"></a>
+	<h1>My rank is embarrassing. How can I opt out?</h1>
 	<p>
 		Say <b>/hls_hideranking</b> while playing on a participating game server.
 		This will toggle you between being visible on the Player Rankings and being invisible.<br />
 		<br />
 		<b>Note</b> You will still be tracked and you can still view your Player Details page.
 		Use the <a href="index.php?mode=search">Search</a> page to find yourself.
+	</p>
+	<a name="playersoverview"></a>
+	<h1>What are active players etc. ?</h1>
+	<p>
+		At the players overview you have multiple options to select which players are show and which
+		not.<br />
+		The default is to show only active players. Which means a player is active if you use the
+		<b>player-activity.pl</b> script and define the <b>timeFrame</b> in which a player is
+		still active.<br />
+		Everytime a player does something a flag is set to 1 and a timestamp is set.
+		Then the <b>player-activity.pl</b> checks if the player has a activity within the given
+		timeFrame. If not the player is set to in-active.
 	</p>
 </div>

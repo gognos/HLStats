@@ -128,14 +128,11 @@ class Players {
 				t1.deaths,
 				t1.active,
 				IFNULL(t1.kills/t1.deaths, '-') AS kpd,
-				DATE(t1.lastUpdate) AS lastUpdate
+				DATE(t1.lastUpdate) AS lastUpdate,
+				t2.uniqueId
 			FROM
-				".DB_PREFIX."_Players as t1";
-
-		// should we hide the bots
-		if(defined('HIDE_BOTS') && HIDE_BOTS == "1") {
-			$queryStr .= " INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId";
-		}
+				".DB_PREFIX."_Players as t1
+			INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId";
 
 		$queryStr .= " WHERE
 				t1.game='".mysql_escape_string($this->_game)."'
@@ -155,7 +152,7 @@ class Players {
 		}
 
 		// should we hide the bots
-		if(defined('HIDE_BOTS') && HIDE_BOTS == "1") {
+		if($this->_option['showBots'] === "0") {
 			$queryStr .= " AND t2.uniqueID not like 'BOT:%'";
 		}
 
@@ -179,7 +176,13 @@ class Players {
 			while($result = mysql_fetch_assoc($query)) {
 				$result['kpd'] = number_format((int)$result['kpd'],1,'.','');
 				$result['lastName'] = makeSavePlayerName($result['lastName']);
-				$pl[] = $result;
+
+				$result['isBot'] = 0;
+				if(strstr($result['uniqueId'],'BOT:')) {
+					$result['isBot'] = 1;
+				}
+				
+				$pl[$result['playerId']] = $result;
 			}
 			$ret['data'] = $pl;
 		}
