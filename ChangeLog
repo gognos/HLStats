@@ -27,7 +27,7 @@ HLStats ChangeLog
 		shown.
 *) Update: TFC images
 *) Update: TFC gamesupport
-*) Chnaged: Options moved from conf files into DB, but information
+*) Changed: Options moved from conf files into DB, but information
 			about DB access is still in those files. Needed to make sure
 			the daemon and webinterface can still be apart.
 			IMPORTANT: READ THE UPGRADE INFORMATION ABOUT THIS !!
