@@ -92,3 +92,5 @@ INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('SKILLMAXCHANGE',
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('LOGCHAT', '0');
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('INGAMEPOINTS', '0');
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('TIMEFRAME', '5');
+
+DROP TABLE `#DB_PREFIX#_Style` ;

@@ -41,6 +41,7 @@ CREATE TABLE `#DB_PREFIX#_Clans` (
   `name` varchar(128) NOT NULL default '',
   `homepage` varchar(64) NOT NULL default '',
   `game` varchar(16) NOT NULL default '',
+  `steamGroup` varchar(128) NOT NULL,
   PRIMARY KEY  (`clanId`),
   UNIQUE KEY `tag` (`game`,`tag`),
   KEY `game` (`game`)
@@ -134,6 +135,18 @@ CREATE TABLE `#DB_PREFIX#_Events_ChangeTeam` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `#DB_PREFIX#_Events_Chat`;
+CREATE TABLE `#DB_PREFIX#_Events_Chat` (
+ `id` int(10) unsigned NOT NULL auto_increment,
+  `eventTime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `serverId` int(10) unsigned NOT NULL default '0',
+  `map` varchar(64) NOT NULL,
+  `playerId` int(10) NOT NULL,
+  `type` int(1) NOT NULL,
+  `message` varchar(128) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `#DB_PREFIX#_Events_Connects`;
 CREATE TABLE `#DB_PREFIX#_Events_Connects` (
   `id` int(10) unsigned NOT NULL auto_increment,
@@ -142,8 +155,9 @@ CREATE TABLE `#DB_PREFIX#_Events_Connects` (
   `map` varchar(64) NOT NULL,
   `playerId` int(10) unsigned NOT NULL default '0',
   `ipAddress` varchar(15) NOT NULL default '',
-  `hostname` varchar(128) NOT NULL default '',
-  `hostgroup` varchar(128) NOT NULL default '',
+  `country` varchar(128) NOT NULL default '',
+  `countrycode` char(2) NOT NULL default '',
+  `city` varchar(128) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -200,7 +214,7 @@ CREATE TABLE `#DB_PREFIX#_Events_PlayerActions` (
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Events_PlayerPlayerActions`;
 CREATE TABLE `#DB_PREFIX#_Events_PlayerPlayerActions` (
- `id` int(10) unsigned NOT NULL auto_increment,
+  `id` int(10) unsigned NOT NULL auto_increment,
   `eventTime` datetime NOT NULL default '0000-00-00 00:00:00',
   `serverId` int(10) unsigned NOT NULL default '0',
   `map` varchar(64) NOT NULL,
@@ -365,43 +379,31 @@ CREATE TABLE `#DB_PREFIX#_Options` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES
-('font_normal', '<font face="Verdana,Arial,Helvetica" size="2" class="fontNormal">'),
-('fontend_normal', '</font>'),
-('font_small', '<font face="Verdana,Arial,Helvetica" size="1" class="fontSmall">'),
-('fontend_small', '</font>'),
-('font_title', '<font face="Arial,Helvetica" size="3" class="fontTitle"><b>'),
-('fontend_title', '</b></font>'),
-('table_bgcolor1', '#283846'),
-('table_bgcolor2', '#1F2F3D'),
-('table_wpnbgcolor', '#253546'),
-('table_border', '#39495A'),
-('table_head_text', '#C6C6C6'),
-('table_head_bgcolor', '#39495A'),
-('location_link', '#FFFFFF'),
-('location_text', '#FFFFFF'),
-('location_bgcolor', '#39495A'),
-('body_leftmargin', '10'),
-('body_topmargin', '15'),
-('body_alink', '#C6C6C6'),
-('body_link', '#C6C6C6'),
-('body_hlink', '#FFFFFF'),
-('body_vlink', '#C6C6C6'),
-('body_text', '#C6C6C6'),
-('body_bgcolor', '#253546'),
-('body_background', ''),
-('imgdir', 'hlstatsimg/'),
 ('contact', 'mailto:admin@example.com'),
-('sitename', 'Some Site'),
+('sitename', 'HLstats'),
 ('siteurl', 'http://www.example.com'),
-('style', 'ua_style'),
-('hideAwards', '0'),
+('style', 'default'),
+('hideAwards', '1'),
 ('hideNews', '0'),
-('imgpath', ''),
 ('map_dlurl', ''),
 ('reset_date', '1203413710'),
-('useFlash', '0'),
+('showChart', '1'),
 ('allowSig', '0'),
-('allowXML', '0');
+('allowXML', '0'),
+('LANGUAGE', 'de'),
+('DELETEDAYS', '10'),
+('IGNOREBOTS', '0'),
+('MODE', 'LAN'),
+('USEGEOIP', '0'),
+('RCON', '0'),
+('RCONRECORD', '0'),
+('RCONIGNORESELF', '1'),
+('RCONSAY', 'say'),
+('MINPLAYERS', '2'),
+('SKILLMAXCHANGE', '100'),
+('LOGCHAT', '0'),
+('INGAMEPOINTS', '0'),
+('TIMEFRAME', '5');
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_PlayerNames`;
 CREATE TABLE `#DB_PREFIX#_PlayerNames` (
@@ -430,12 +432,14 @@ CREATE TABLE `#DB_PREFIX#_Players` (
   `fullName` varchar(128) default NULL,
   `email` varchar(128) default NULL,
   `homepage` varchar(128) default NULL,
-  `icq` int(10) unsigned default NULL,
+  `icq` varchar(10) NOT NULL,
+  `myspace` varchar(128) NOT NULL,
+  `facebook` varchar(128) NOT NULL,
+  `jabber` varchar(128) NOT NULL,
+  `steamprofile` varchar(128) NOT NULL,
   `game` varchar(16) NOT NULL default '',
   `hideranking` int(1) unsigned NOT NULL default '0',
-  `rating` float NOT NULL default '1500',
-  `rd2` float NOT NULL default '122500',
-  `rating_last` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `lastUpdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`playerId`),
   KEY `clan` (`clan`),
   KEY `game` (`game`),
@@ -474,14 +478,14 @@ CREATE TABLE `#DB_PREFIX#_Servers` (
   `publicaddress` varchar(64) NOT NULL default '',
   `statusurl` varchar(255) default NULL,
   `rcon_password` varchar(48) NOT NULL default '',
-  `defaultMap` varchar(128) NOT NULL,
   PRIMARY KEY  (`serverId`),
-  UNIQUE KEY `addressport` (`address`,`port`)
+  UNIQUE KEY `addressport` (`address`,`port`),
+  KEY `game` (`game`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Server_Addons`;
 CREATE TABLE `#DB_PREFIX#_Server_Addons` (
-  `rule` varchar(64) NOT NULL default '',
+ `rule` varchar(64) NOT NULL default '',
   `addon` varchar(64) NOT NULL default '',
   `url` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`rule`)
@@ -489,57 +493,16 @@ CREATE TABLE `#DB_PREFIX#_Server_Addons` (
 
 
 INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`, `addon`, `url`) VALUES
-('hlg_version', 'HLGuard %', 'http://www.thezproject.org/projects.php?pid=1'),
-('clanmod_version', 'ClanMod %', 'http://www.unitedadmins.com/index.php?p=content&content=clanmod'),
-('statsme_version', 'StatsMe %', 'http://www.unitedadmins.com/index.php?p=content&content=statsme'),
-('phpua_mm_version', 'phpUA %', 'http://www.phpua.com'),
-('cdversion', 'Cheating-Death %', 'http://www.unitedadmins.com/index.php?p=content&content=cd'),
+('hlg_version', 'HLGuard %', 'http://wiki.hlsw.net/index.php/HLGuard'),
+('clanmod_version', 'ClanMod %', 'http://sourceforge.net/projects/clanmod/'),
+('statsme_version', 'StatsMe %', 'http://sourceforge.net/projects/statsme/'),
+('phpua_mm_version', 'phpUA %', 'http://phpua.sourceforge.net/'),
+('cdversion', 'Cheating-Death %', 'http://de.wikipedia.org/wiki/Cheating-Death'),
 ('metamod_version', 'MetaMod %', 'http://www.metamod.org'),
 ('amxmodx_version', 'AMXX %', 'http://www.amxmodx.org'),
 ('sbsrv_version', 'Steambans %', 'http://www.steambans.com'),
 ('sourcemod_version', 'SourceMod %', 'http://www.sourcemod.net'),
-('logmod_version', 'LogMod %', 'http://www.hlsw.org/other_projects/logmod/');
-
-DROP TABLE IF EXISTS `#DB_PREFIX#_Style`;
-CREATE TABLE `#DB_PREFIX#_Style` (
-  `keyname` varchar(32) NOT NULL default '',
-  `def` varchar(255) NOT NULL default '',
-  `black` varchar(255) NOT NULL default '',
-  `light_blue` varchar(255) NOT NULL default '',
-  `grey` varchar(255) NOT NULL default '',
-  `ua_style` varchar(255) NOT NULL default '',
-  `red` varchar(255) NOT NULL default '',
-  `light_grey` varchar(255) NOT NULL default '',
-  `white` varchar(255) NOT NULL default '',
-  PRIMARY KEY  (`keyname`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-INSERT INTO `#DB_PREFIX#_Style` (`keyname`, `def`, `black`, `light_blue`, `grey`, `ua_style`, `red`, `light_grey`, `white`) VALUES
-('font_normal', '<font face="Verdana, Arial, sans-serif" size=2 class="fontNormal">', '<font face="Courier New, Courier" size=2 class="fontNormal">', '<font face="Verdana, Arial, sans-serif" size=2 class="fontNormal">', '<font face="Georgia, Times New Roman, Times, serif" size=2 class="fontNormal">', '<font face="Verdana,Arial,Helvetica" size="2" class="fontNormal">', '<font face="Verdana, Arial, sans-serif" size=2 class="fontNormal">', '<font face="Georgia, Times New Roman, Times, serif" size=2 class="fontNormal">', '<font face="Geneva, Arial, Helvetica, sans-serif" size=2 class="fontNormal">'),
-('fontend_normal', '</font>', '</font>', '</font>', '</font>', '</font>', '</font>', '</font>', '</font>'),
-('font_small', '<font face="Verdana, Arial, sans-serif" size=1 class="fontSmall">', '<font face="Courier New, Courier" size=1 class="fontSmall">', '<font face="Verdana, Arial, sans-serif" size=1 class="fontSmall">', '<font face="Georgia, Times New Roman, Times, serif" size=1 class="fontSmall">', '<font face="Verdana,Arial,Helvetica" size="1" class="fontSmall">', '<font face="Verdana, Arial, sans-serif" size=1 class="fontSmall">', '<font face="Georgia, Times New Roman, Times, serif" size=1 class="fontSmall">', '<font face="Geneva, Arial, Helvetica, sans-serif" size=1 class="fontSmall">'),
-('fontend_small', '</font>', '</font>', '</font>', '</font>', '</font>', '</font>', '</font>', '</font>'),
-('font_title', '<font face="Arial, sans-serif" size=4 class="fontTitle"><b>', '<font face="Courier New, Courier" size=4 class="fontTitle"><b>', '<font face="Arial, sans-serif" size=4 class="fontTitle"><b>', '<font face="Georgia, Times New Roman, Times, serif" size=4 class="fontTitle"><b>', '<font face="Arial,Helvetica" size="3" class="fontTitle"><b>', '<font face="Arial, sans-serif" size=4 class="fontTitle"><b>', '<font face="Georgia, Times New Roman, Times, serif" size=4 class="fontTitle"><b>', '<font face="Geneva, Arial, Helvetica, sans-serif" size=4 class="fontTitle"><b>'),
-('fontend_title', '</b></font>', '</b></font>', '</b></font>', '</b></font>', '</b></font>', '</b></font>', '</b></font>', '</b></font>'),
-('table_bgcolor1', '#15154D', '#282828', '#3F5576', '#CCCCCC', '#283846', '#550000', '#FFFFFF', '#edf3f9'),
-('table_bgcolor2', '#161652', '#282828', '#3F5569', '#999999', '#1F2F3D', '#440000', '#FAFAFA', '#d0dbe6'),
-('table_wpnbgcolor', '#000000', '#000000', '#3F5569', '#999999', '#253546', '#440000', '#EAEAEA', '#d0dbe6'),
-('table_border', '#001B73', '#E0E0E0', '#59748D', '#333333', '#39495A', '#000000', '#000000', '#000000'),
-('table_head_text', '#EEEEEE', '#EEEEEE', '#EEEEEE', '#FFFFFF', '#C6C6C6', '#FFFFFF', '#000000', '#000000'),
-('table_head_bgcolor', '#002E8A', '#282828', '#3F5576', '#666666', '#39495A', '#660000', '#AEAEAE', '#E8E8E8'),
-('location_link', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#808080', '#FFFFFF', '#FFFFFF', '#AEAEAE', '#000000'),
-('location_text', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#000000', '#FFFFFF', '#FFFFFF', '#000000', '#000000'),
-('location_bgcolor', '#003399', '#003399', '#3F5576', '#AAAAAA', '#39495A', '#660000', '#EAEAEA', '#E8E8E8'),
-('body_leftmargin', '10', '10', '10', '5', '10', '10', '10', '10'),
-('body_topmargin', '15', '15', '15', '8', '15', '15', '15', '15'),
-('body_alink', '#FFBB00', '#FFFFFF', '#B0B0B0', '#808080', '#C6C6C6', '#800000', '#AEAEAE', '#000000'),
-('body_link', '#FF9900', '#FFFFFF', '#B0B0B0', '#808080', '#C6C6C6', '#C0C0C0', '#AEAEAE', '#000000'),
-('body_text', '#EEEEEE', '#CCCCCC', '#FFFFFF', '#000000', '#C6C6C6', '#FFFFFF', '#000000', '#000000'),
-('body_vlink', '#FF9000', '#FFFFFF', '#B0B0B0', '#808080', '#C6C6C6', '#C0C0C0', '#AEAEAE', '#000000'),
-('body_bgcolor', '#0C1D40', '#000000', '#3F5569', '#AAAAAA', '#253546', '#000000', '#EAEAEA', '#FFFFFF'),
-('body_background', '', '', '', '', '', '', '', ''),
-('body_hlink', '#FF9900', '#494949', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#800000', '#7A7A7A', '#404040');
+('logmod_version', 'LogMod %', 'http://wiki.hlsw.net/index.php/LogMod_Information');
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Teams`;
 CREATE TABLE `#DB_PREFIX#_Teams` (
@@ -554,16 +517,15 @@ CREATE TABLE `#DB_PREFIX#_Teams` (
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Users`;
 CREATE TABLE `#DB_PREFIX#_Users` (
-  `username` varchar(16) NOT NULL default '',
+ `username` varchar(16) NOT NULL default '',
   `password` varchar(32) NOT NULL default '',
-  `acclevel` int(11) NOT NULL default '0',
-  `playerId` int(11) NOT NULL default '0',
+  `authCode` varchar(40) NOT NULL,
   PRIMARY KEY  (`username`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `#DB_PREFIX#_Users` (`username`, `password`, `acclevel`, `playerId`) VALUES
-('admin', 'e10adc3949ba59abbe56e057f20f883e', 100, 0);
+INSERT INTO `#DB_PREFIX#_Users` (`username`, `password`) VALUES
+('admin', 'e10adc3949ba59abbe56e057f20f883e');
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Weapons`;
 CREATE TABLE `#DB_PREFIX#_Weapons` (
@@ -575,16 +537,4 @@ CREATE TABLE `#DB_PREFIX#_Weapons` (
   PRIMARY KEY  (`weaponId`),
   UNIQUE KEY `gamecode` (`game`,`code`),
   KEY `code` (`code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `#DB_PREFIX#_Events_Chat`;
-CREATE TABLE `#DB_PREFIX#_Events_Chat` (
- `id` int(10) unsigned NOT NULL auto_increment,
-  `eventTime` datetime NOT NULL default '0000-00-00 00:00:00',
-  `serverId` int(10) unsigned NOT NULL default '0',
-  `map` varchar(64) NOT NULL,
-  `playerId` int(10) NOT NULL,
-  `type` int(1) NOT NULL,
-  `message` varchar(128) NOT NULL,
-  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

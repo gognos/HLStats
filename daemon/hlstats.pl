@@ -221,8 +221,6 @@ $g_ingame_points = $oHash{INGAMEPOINTS};
 
 print "OK\n";
 
-exit(0);
-
 # Read Command Line Arguments
 # the second time but with the other options now
 GetOptions(
@@ -347,7 +345,7 @@ while ($loop = &getLine()) {
 	if($g_option_strip_tags) {
 		$s_output =~ s/\[No.C-D\]//g;	# remove [No C-D] tag
 		$s_output =~ s/\[OLD.C-D\]//g;	# remove [OLD C-D] tag
-		$s_output =~ s/\[NOCL\]//g;	# remove [NOCL] tag
+		$s_output =~ s/\[NOCL\]//g;		# remove [NOCL] tag
 		$s_output =~ s/\([0-9]\)//g;	# strip (1) and (2) from player names
 	}
 
