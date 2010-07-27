@@ -64,6 +64,13 @@ class Players {
 	private $_option = array();
 
 	/**
+	 * the system options
+	 *
+	 * @var array The system options
+	 */
+	private $g_options = array();
+
+	/**
 	 * set some vars and the game. Game code check is already done
 	 *
 	 * @param string $game The current game
@@ -79,6 +86,9 @@ class Players {
 		// set default values
 		$this->setOption('page',1);
 		$this->setOption('minkills','1');
+
+		global $g_options;
+		$this->g_options = $g_options;
 	}
 
 	/**
@@ -210,8 +220,8 @@ class Players {
 								FROM `".DB_PREFIX."_Players`
 								WHERE `game` = '".mysql_escape_string($this->_game)."'";
 
-		if($g_options['DELETEDAYS'] !== "0") {
-			$startTime = time()-(86400*$g_options['DELETEDAYS']);
+		if($this->g_options['DELETEDAYS'] !== "0") {
+			$startTime = time()-(86400*$this->g_options['DELETEDAYS']);
 			$startDay = date("Y-m-d",$startTime);
 			$queryStr .= " HAVING lastUpdate > '".$startDay."'";
 		}
