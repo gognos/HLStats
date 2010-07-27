@@ -83,3 +83,11 @@ INSERT INTO `#DB_PREFIX#_Options` (`keyname` ,`value`) VALUES ('LANGUAGE', 'de')
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('IGNOREBOTS', '0');
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('MODE', 'LAN');
 INSERT INTO `#DB_PREFIX#_Options` (`keyname` ,`value`) VALUES ('USEGEOIP', '0');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('RCON', '0');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('RCONRECORD', '0');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('RCONIGNORESELF', '1');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('RCONSAY', 'say');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('MINPLAYERS', '2');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('SKILLMAXCHANGE', '100');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('LOGCHAT', '0');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('INGAMEPOINTS', '0');

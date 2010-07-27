@@ -107,6 +107,7 @@ $g_stdin = $Config->{System}->{Stdin};
 $g_server_ip = $Config->{System}->{ServerIP};
 $g_server_port = $Config->{System}->{ServerPort};
 $g_timestamp = $Config->{System}->{Timestamp};
+$g_option_strip_tags = $Config->{Options}->{StripTags};
 
 # Options
 # default values
@@ -217,16 +218,16 @@ $g_use_geoip = $oHash{USEGEOIP};
 $g_mode = $oHash{MODE};
 $g_deletedays = $oHash{DELETEDAYS};
 $g_ignore_bots = $oHash{IGNOREBOTS};
+$g_rcon = $oHash{RCON};
+$g_rcon_record = $oHash{RCONRECORD};
+$g_rcon_ignoreself = $oHash{RCONIGNORESELF};
+$g_rcon_say = $oHash{RCONSAY};
+$g_minplayers = $oHash{MINPLAYERS};
+$g_skill_maxchange = $oHash{SKILLMAXCHANGE};
+$g_log_chat = $oHash{LOGCHAT};
+$g_ingame_points = $oHash{INGAMEPOINTS};
 
-$g_rcon = $Config->{Rcon}->{Rcon};
-$g_rcon_record = $Config->{Rcon}->{RconRecord};
-$g_rcon_ignoreself = $Config->{Rcon}->{RconIgnoreSelf};
-$g_minplayers = $Config->{Options}->{MinPlayers};
-$g_skill_maxchange = $Config->{Options}->{SkillMaxChange};
-$g_log_chat = $Config->{Options}->{LogChat};
-$g_rcon_say = $Config->{Rcon}->{RconSay};
-$g_ingame_points = $Config->{Options}->{IngamePoints};
-$g_option_strip_tags = $Config->{Options}->{StripTags};
+
 
 print "OK\n";
 

@@ -52,87 +52,11 @@ ServerPort = 27015
 # set this only if you use STDIN
 Timestamp = 0
 
-# Resolve the player country by IP
-# For this to work please read docs/geoip.install.txt !!!
-# Have to be disabled if Mode is set to LAN
-# default 0
-UseGEOIP = 0
-
-##
-## General options
-##
 [Options]
-# Sets the player-tracking mode
-# Normal     - Recommended for public Internet server use
-# NameTrack  - Players will be tracked by nickname
-# LAN        - Players will be tracked by IP Address
-Mode = Normal
-
-# HLStats will automatically delete history events from the
-# events tables when they are over this many days old.
-# This is important for performance reasons.
-# Set lower if you are logging a large number of game servers or find the load on
-# the MySQL server is too high
-## A value of 0 means no delete days
-# ++ Note: Make sure you change the setting of DELETEDAYS at the
-# top of hlstatsinc/hlstats.conf.php, as well
-DeleteDays = 5
-
-# Specifies the minimum number of players required in the server
-# for most player events to be recorded
-MinPlayers = 2
-
-# Specifies the maximum number of skill points a player can
-# gain at one time through frags. Because players with low
-# skill ratings gain more for killing players with high skill
-# ratings, this cap is needed to prevent e.g. a player with a
-# skill rating of '100' killing a player with a skill rating of
-# '2000' and therefore gaining several hundred or thousand
-# skill points. Instead they cannot gain more than the value
-# specified here. (Default is 100 skill points maximum change.)
-SkillMaxChange = 100
-
-# Show ingame stat report if you kill / or be killed
-# The response is done via rcon and the option RconSay
-# (below) is used.
-IngamePoints = 0
-
-# Log all your chat massages
-# This is conected with the DeleteDays setting. So the chat messages
-# will be only hold in the DB for the DeleteDays value.
-LogChat = 0
-
-# Completly ignore anything which has BOT
-# default 0=off 1=on
-IgnoreBots = 0
-
 # Strip some common tags
 # such as CD, NO-CD or (1) etc.
 # default 1=on 0=off
 StripTags = 1
-
-##
-## Rcon settings
-##
-[Rcon]
-# Allow HLStats to send Rcon commands to the game servers.
-# 1=on 0=off
-Rcon = 1
-
-# Sets whether to record Rcon commands to the Admin event table
-# 1=on 0=off
-RconRecord = 1
-
-# Ignore (do not log) Rcon commands originating from the same IP as the server being Rcon'd
-# 1=on 0=off
-RconIgnoreSelf = 0
-
-# How the Rcon say command would be returned
-# say > ordinary say command (default)
-# admin_psay > return a private say adminMod
-# amx_psay > return a private say with amxMod
-# sm_psay > return a private say with sourceMod
-RconSay = say
 
 ##
 ## player-activity.pl
