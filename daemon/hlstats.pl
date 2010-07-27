@@ -100,32 +100,13 @@ $db_user = $Config->{Database}->{DBUsername};
 $db_pass = $Config->{Database}->{DBPassword};
 $db_prefix = $Config->{Database}->{DBPrefix};
 $db_lowpriority = $Config->{Database}->{DBLowPriority};
-
-# @todo: renames
 $s_ip = $Config->{System}->{BindIP};
 $s_port = $Config->{System}->{Port};
-$g_mailto = $Config->{System}->{MailTo};
-$g_mailpath = $Config->{System}->{MailPath};
 $g_debug = $Config->{System}->{DebugLevel};
 $g_stdin = $Config->{System}->{Stdin};
 $g_server_ip = $Config->{System}->{ServerIP};
 $g_server_port = $Config->{System}->{ServerPort};
 $g_timestamp = $Config->{System}->{Timestamp};
-
-$g_use_geoip = $Config->{System}->{UseGEOIP};
-
-$g_mode = $Config->{Options}->{Mode};
-$g_deletedays = $Config->{Options}->{DeleteDays};
-$g_rcon = $Config->{Rcon}->{Rcon};
-$g_rcon_record = $Config->{Rcon}->{RconRecord};
-$g_rcon_ignoreself = $Config->{Rcon}->{RconIgnoreSelf};
-$g_minplayers = $Config->{Options}->{MinPlayers};
-$g_skill_maxchange = $Config->{Options}->{SkillMaxChange};
-$g_log_chat = $Config->{Options}->{LogChat};
-$g_rcon_say = $Config->{Rcon}->{RconSay};
-$g_ignore_bots = $Config->{Options}->{IgnoreBots};
-$g_ingame_points = $Config->{Options}->{IngamePoints};
-$g_option_strip_tags = $Config->{Options}->{StripTags};
 
 # Options
 # default values
@@ -135,7 +116,6 @@ $g_lan_hack = 1;
 
 
 # Usage message
-
 $usage = <<EOT
 Usage: hlstats.pl [OPTION]...
 Collect statistics from one or more Half-Life servers for insertion into
@@ -181,28 +161,10 @@ EOT
 ;
 
 # Read Command Line Arguments
-
+# only help and version a this time
 GetOptions(
 	"help|h"			=> \$opt_help,
-	"version|v"			=> \$opt_version,
-	"debug|d+"			=> \$g_debug,
-#	"nodebug|n+"		=> \$g_nodebug,
-	"mode|m=s"			=> \$g_mode,
-	"db-host=s"			=> \$db_host,
-	"db-name=s"			=> \$db_name,
-	"db-password=s"		=> \$db_pass,
-	"db-username=s"		=> \$db_user,
-	"use-geoip!"	=> \$g_use_geoip,
-	"ip|i=s"			=> \$s_ip,
-	"port|p=i"			=> \$s_port,
-	"rcon!"				=> \$g_rcon,
-	"r"					=> \$g_rcon,
-	"stdin!"			=> \$g_stdin,
-	"s"					=> \$g_stdin,
-	"server-ip=s"		=> \$g_server_ip,
-	"server-port=i"		=> \$g_server_port,
-	"timestamp!"		=> \$g_timestamp,
-	"t"					=> \$g_timestamp
+	"version|v"			=> \$opt_version
 ) or die($usage);
 
 if ($opt_help) {
@@ -226,24 +188,85 @@ if ($opt_version) {
 	exit(0);
 }
 
-# Startup
+# Connect to the database
+print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_user' ... ";
 
+$db_conn = DBI->connect(
+	"DBI:mysql:$db_name:$db_host",
+	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 'mysql_auto_reconnect' => 1,
+				'ShowErrorStatement' => 1 }
+) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
+	"Server error: $DBI::errstr\n");
+
+&doQuery("SET character set utf8");
+&doQuery("SET NAMES utf8");
+
+print "connected OK\n";
+
+print "-- Loading options... ";
+
+# load the options from DB
+my $result = &doQuery("SELECT `keyname`,`value` FROM ${db_prefix}_Options");
+my ($keyname, $value, %oHash);
+while( ($keyname, $value) = $result->fetchrow_array ) {
+	$oHash{$keyname} = $value;
+}
+$result->finish();
+
+$g_use_geoip = $oHash{USEGEOIP};
+$g_mode = $oHash{MODE};
+$g_deletedays = $oHash{DELETEDAYS};
+$g_ignore_bots = $oHash{IGNOREBOTS};
+
+$g_rcon = $Config->{Rcon}->{Rcon};
+$g_rcon_record = $Config->{Rcon}->{RconRecord};
+$g_rcon_ignoreself = $Config->{Rcon}->{RconIgnoreSelf};
+$g_minplayers = $Config->{Options}->{MinPlayers};
+$g_skill_maxchange = $Config->{Options}->{SkillMaxChange};
+$g_log_chat = $Config->{Options}->{LogChat};
+$g_rcon_say = $Config->{Rcon}->{RconSay};
+$g_ingame_points = $Config->{Options}->{IngamePoints};
+$g_option_strip_tags = $Config->{Options}->{StripTags};
+
+print "OK\n";
+
+exit(0);
+
+# Read Command Line Arguments
+# the second time but with the other options now
+GetOptions(
+	"debug|d+"			=> \$g_debug,
+	"mode|m=s"			=> \$g_mode,
+	"db-host=s"			=> \$db_host,
+	"db-name=s"			=> \$db_name,
+	"db-password=s"		=> \$db_pass,
+	"db-username=s"		=> \$db_user,
+	"use-geoip!"		=> \$g_use_geoip,
+	"ip|i=s"			=> \$s_ip,
+	"port|p=i"			=> \$s_port,
+	"rcon!"				=> \$g_rcon,
+	"r"					=> \$g_rcon,
+	"stdin!"			=> \$g_stdin,
+	"s"					=> \$g_stdin,
+	"server-ip=s"		=> \$g_server_ip,
+	"server-port=i"		=> \$g_server_port,
+	"timestamp!"		=> \$g_timestamp,
+	"t"					=> \$g_timestamp
+) or die($usage);
+
+## Startup
 print "++ HLStats $g_version starting...\n\n";
 
-
 # Create the UDP socket
-
 if ($g_stdin) {
 	print "-- UDP listen socket disabled, reading log data from STDIN.\n";
 
-	if (!$g_server_ip || !$g_server_port)
-	{
+	if (!$g_server_ip || !$g_server_port) {
 		print "-> ERROR: Must specify source of STDIN data using --server-ip and --server-port\n";
 		print "-> Example: ./hlstats.pl --stdin --server-ip 12.34.56.78 --server-port 27015\n\n";
 		exit(255);
 	}
-	else
-	{
+	else {
 		print "-> All data from STDIN will be allocated to server '$g_server_ip:$g_server_port'.\n";
 		$s_peerhost = $g_server_ip;
 		$s_peerport = $g_server_port;
@@ -261,23 +284,6 @@ else {
 
 	print "opened OK\n";
 }
-
-# Connect to the database
-
-print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_user' ... ";
-
-$db_conn = DBI->connect(
-	"DBI:mysql:$db_name:$db_host",
-	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 'mysql_auto_reconnect' => 1,
-				'ShowErrorStatement' => 1 }
-) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
-	"Server error: $DBI::errstr\n");
-
-&doQuery("SET character set utf8");
-&doQuery("SET NAMES utf8");
-
-
-print "connected OK\n";
 
 %g_servers = ();
 %g_players = ();

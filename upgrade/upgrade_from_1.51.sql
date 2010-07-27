@@ -82,3 +82,4 @@ ALTER TABLE `#DB_PREFIX#_Players` ADD `lastUpdate` TIMESTAMP NOT NULL DEFAULT CU
 INSERT INTO `#DB_PREFIX#_Options` (`keyname` ,`value`) VALUES ('LANGUAGE', 'de'), ('DELETEDAYS', '10');
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('IGNOREBOTS', '0');
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('MODE', 'LAN');
+INSERT INTO `#DB_PREFIX#_Options` (`keyname` ,`value`) VALUES ('USEGEOIP', '0');
