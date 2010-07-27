@@ -192,7 +192,7 @@ if(!file_exists($mapImage)) {
 </div>
 <div id="main">
 	<h1><?php echo l("Map Details"); ?> |
-		<?php echo l('From a total of'); ?> <b><?php echo intval($totalkills); ?></b> <?php echo l('kills'); ?> (<?php echo l('Last'); ?> <?php echo DELETEDAYS; ?> <?php echo l('days'); ?>)
+		<?php echo l('From a total of'); ?> <b><?php echo intval($totalkills); ?></b> <?php echo l('kills'); ?> (<?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>)
 	</h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>

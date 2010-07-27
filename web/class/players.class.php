@@ -210,8 +210,8 @@ class Players {
 								FROM `".DB_PREFIX."_Players`
 								WHERE `game` = '".mysql_escape_string($this->_game)."'";
 
-		if(DELETEDAYS !== 0) {
-			$startTime = time()-(86400*DELETEDAYS);
+		if($g_options['DELETEDAYS'] !== "0") {
+			$startTime = time()-(86400*$g_options['DELETEDAYS']);
 			$startDay = date("Y-m-d",$startTime);
 			$queryStr .= " HAVING lastUpdate > '".$startDay."'";
 		}

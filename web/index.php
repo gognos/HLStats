@@ -85,42 +85,6 @@ require("hlstatsinc/functions.inc.php");
  */
 require("hlstatsinc/classes.inc.php");
 
-/**
- * lang change via cookies
- */
-$cl = LANGUAGE;
-if(isset($_POST['submit-change-lang'])) {
-	$check = validateInput($_POST['hls_lang_selection'],'nospace');
-	if($check === true && !isset($_POST['hls_lang_selection'][2])) {
-		// ok we can assume that we have a valid post value
-		// we have a lang change
-		// set the cookie and reload the page
-		setcookie("hls_language",$_POST['hls_lang_selection'],time()+600,dirname($_SERVER["SCRIPT_NAME"]).'/','',false,true);
-		header('Location: '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-	}
-}
-elseif(isset($_COOKIE['hls_language']) && !empty($_COOKIE['hls_language'])) {
-	$check = validateInput($_COOKIE['hls_language'],'nospace');
-	if($check === true && !isset($_COOKIE['hls_language'][2])) {
-		// ok we can assume that we have a valid cookie
-		$cl = $_COOKIE['hls_language'];
-	}
-}
-if($cl !== 'en') { // use standard language
-	$langFile = getcwd().'/lang/'.$cl.'.ini.php';
-	if(!file_exists($langFile)) {
-		die('Language file could not be loaded. Please check your LANGUAGE setting in configuration file.');
-	}
-	$lData = parse_custom_lang_file($langFile);
-	if(empty($lData)) {
-		die('Language file could not be parsed. Please check your LANGUAGE setting in configuration file.');
-	}
-}
-
-// set utf-8 header
-// we have to save all the stuff with utf-8 to make it work !!
-header("Content-type: text/html; charset=UTF-8");
-
 ////
 //// Initialisation
 ////
@@ -144,6 +108,42 @@ $g_options = getOptions();
 if(empty($g_options)) {
 	error('Failed to load options.');
 }
+
+/**
+ * lang change via cookies
+ */
+$cl = $g_options['LANGUAGE'];
+if(isset($_POST['submit-change-lang'])) {
+	$check = validateInput($_POST['hls_lang_selection'],'nospace');
+	if($check === true && !isset($_POST['hls_lang_selection'][2])) {
+		// ok we can assume that we have a valid post value
+		// we have a lang change
+		// set the cookie and reload the page
+		setcookie("hls_language",$_POST['hls_lang_selection'],time()+600,dirname($_SERVER["SCRIPT_NAME"]).'/','',false,true);
+		header('Location: '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
+	}
+}
+elseif(isset($_COOKIE['hls_language']) && !empty($_COOKIE['hls_language'])) {
+	$check = validateInput($_COOKIE['hls_language'],'nospace');
+	if($check === true && !isset($_COOKIE['hls_language'][2])) {
+		// ok we can assume that we have a valid cookie
+		$cl = $_COOKIE['hls_language'];
+	}
+}
+if($cl !== 'en') { // use standard language
+	$langFile = getcwd().'/lang/'.$cl.'.ini.php';
+	if(!file_exists($langFile)) {
+		die('Language file could not be loaded. Please check your LANGUAGE setting.');
+	}
+	$lData = parse_custom_lang_file($langFile);
+	if(empty($lData)) {
+		die('Language file could not be parsed. Please check your LANGUAGE setting.');
+	}
+}
+
+// set utf-8 header
+// we have to save all the stuff with utf-8 to make it work !!
+header("Content-type: text/html; charset=UTF-8");
 
 ////
 //// Main

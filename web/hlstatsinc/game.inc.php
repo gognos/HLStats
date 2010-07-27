@@ -315,7 +315,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 	}
 ?>
 		<li>
-			<?php echo l("All statistics are generated in real-time. Event history data expires after"), " <b>" . DELETEDAYS . "</b> ",l("days"),"."; ?>
+			<?php echo l("All statistics are generated in real-time. Event history data expires after"), " <b>" . $g_options['DELETEDAYS'] . "</b> ",l("days"),"."; ?>
 		</li>
 	</ul>
 </p>

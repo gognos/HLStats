@@ -379,7 +379,7 @@ if(!empty($actions)) { ?>
 	<h1>
 		<?php echo l('Player Actions'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playeractions"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -405,7 +405,7 @@ if(!empty($playerPlayerActions)) { ?>
 	<h1>
 		<?php echo l('Player-Player Actions'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playerplayeractions"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -431,7 +431,7 @@ if(!empty($teamSelection)) { ?>
 	<h1>
 		<?php echo l('Team Selection'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#teams"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -459,7 +459,7 @@ if(!empty($roleSelection)) { ?>
 	<h1>
 		<?php echo l('Role Selection'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#role"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -489,7 +489,7 @@ if(!empty($weaponUsage)) { ?>
 	<h1>
 		<?php echo l('Weapon Usage'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#weaponusage"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -521,7 +521,7 @@ if(!empty($weaponStats)) { ?>
 	<h1>
 		<?php echo l('Weapon Stats'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#weaponstats"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -568,7 +568,7 @@ if(!empty($weaponTarget)) { ?>
 	<h1>
 		<?php echo l('Weapon Target'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#weapontarget"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -610,7 +610,7 @@ if(!empty($maps)) { ?>
 	<h1>
 		<?php echo l('Map Performance'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#maps"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -643,7 +643,7 @@ if(!empty($playerKillStats)) { ?>
 		<?php echo l('Player Kill Statistics'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#killstats"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		<?php echo $killLimit ?> <?php echo l('or more kills'); ?>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -686,7 +686,7 @@ if(!empty($playerKillStats)) { ?>
 		}
 	?>
 	</select>
-	<?php echo l('or more times in the last'),' ',DELETEDAYS,' ',l('days'); ?>
+	<?php echo l('or more times in the last'),' ',$g_options['DELETEDAYS'],' ',l('days'); ?>
 <?php }
 
 
@@ -700,7 +700,7 @@ if($g_options['showChart'] == "1") {
 		<h1>
 			<?php echo l('Playtime per day'); ?>
 			<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playtime"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-			(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+			(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 		</h1>
 		<img src="<?php echo $playtimeChart; ?>" />
 <?php }
@@ -713,7 +713,7 @@ if($g_options['showChart'] == "1") {
 		<h1>
 			<?php echo l('Player Kill Statistics per Day'); ?>
 			<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playerkillsperday"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-			(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+			(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 		</h1>
 		<img src="<?php echo $killDayChart; ?>" />
 <?php }
@@ -721,8 +721,8 @@ if($g_options['showChart'] == "1") {
 ?>
 <p><b><?php echo l('Note'); ?>:</b><br />
 <?php echo l('Player event histories cover only the last'); ?>&nbsp;
-<?php echo DELETEDAYS; ?> <?php echo l('days'); ?>. <?php echo l('Items marked "Last'); ?>&nbsp;
-<?php echo DELETEDAYS; ?> <?php echo l('Days" or "*" above are generated from the player\'s Event History. Player kill, death and suicide totals and points ratings cover the entire recorded period'); ?>.
+<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>. <?php echo l('Items marked "Last'); ?>&nbsp;
+<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days" or "*" above are generated from the player\'s Event History. Player kill, death and suicide totals and points ratings cover the entire recorded period'); ?>.
 </p>
 <p style="text-align: right">
     <b><?php echo l('Admin Options'); ?>:</b>

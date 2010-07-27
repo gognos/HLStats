@@ -175,7 +175,7 @@ pageHeader(
 <div id="main">
 	<h1><?php echo l("Weapon Details"); ?> |
 		<?php echo l("From a total of"); ?> <b><?php echo intval($totalkills); ?></b> <?php echo l('kills'); ?>
-		(<?php echo l('Last'); ?> <?php echo DELETEDAYS; ?> <?php echo l('Days'); ?>)
+		(<?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days'); ?>)
 	</h1>
 	<img src="hlstatsimg/weapons/<?php echo $game; ?>/<?php echo $weapon; ?>.png" alt="<?php echo $wep_name; ?>" title="<?php echo $wep_name; ?>"border="0" />
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">

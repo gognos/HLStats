@@ -156,7 +156,7 @@ pageHeader(
 <div id="main">
 	<h1>
 		<?php echo l("Action Statistics"); ?> |
-		<?php echo l('From a total of'); ?> <b><?php echo $totalactions; ?></b> <?php echo l('actions'); ?> (<?php echo l('Last'); ?> <?php echo DELETEDAYS; ?> <?php echo l('days'); ?>)
+		<?php echo l('From a total of'); ?> <b><?php echo $totalactions; ?></b> <?php echo l('actions'); ?> (<?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>)
 	</h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>

@@ -128,7 +128,7 @@ pageHeader(
 <div id="main">
 	<h1>
 		<?php echo l('Player Chat History'); ?>
-		(<?php echo l('Last'),' ',DELETEDAYS,' ',l('Days'); ?>)
+		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 	</h1>
 <?php
 	$history = $playerObj->getChatHistory();
