@@ -22,6 +22,9 @@ HLStats ChangeLog
 		Players from current day etc.
 *) New: If no connect is recorded the "Last Connect" information is
 		taken from the last event a player has made.
+*) New: If BOTs are recored (IGNOREBOTS option) then the player overview
+		has a new option to show those too. Otherwise only non-bots are
+		shown.
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Changed: ELO Ratingsystem removed. It was never used..... :(

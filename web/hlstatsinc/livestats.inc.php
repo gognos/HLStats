@@ -325,12 +325,12 @@ while ($addon_list = mysql_fetch_assoc($query)) {
 
 				$img = "player.gif";
 				if($is_bot === 1 || $is_rcon === 1) {
-					$img = "server.gif";
+					$img = "bot.png";
 				}
 
 				echo '<tr>';
 
-				echo '<td><img src="hlstatsimg/',$img,'" alt="" width="16"/></td>';
+				echo '<td><img src="hlstatsimg/',$img,'" alt="icon" width="16"/></td>';
 				echo '<td><a href="index.php?mode=search&amp;game='.$server['game'].'&amp;q='.urlencode(makeSavePlayerName($p['name'])).'">',makeSavePlayerName($p['name']),'</a></td>';
 				echo '<td>',$p['frags'],'</td>';
 				echo '<td>',Format_Time($p['time']),'</td>';
