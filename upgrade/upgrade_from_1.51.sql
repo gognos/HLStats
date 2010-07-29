@@ -98,7 +98,7 @@ DROP TABLE `#DB_PREFIX#_Style` ;
 CREATE TABLE `#DB_PREFIX#_Awards_History` (
 `fk_award_id` INT( 10 ) NOT NULL ,
 `game` VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
-`d_winner_id` INT( 10 ) NOT NULL ,
-`d_winner_count` INT( 10 ) NOT NULL ,
+`d_winner_id` INT( 10 ) UNSIGNED NULL DEFAULT NULL,
+`d_winner_count` INT( 10 )  UNSIGNED NULL DEFAULT NULL ,
 `date` VARCHAR( 32 ) NOT NULL
 ) ENGINE = MYISAM ;
