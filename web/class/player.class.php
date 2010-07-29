@@ -1161,7 +1161,6 @@ class Player {
 
 				$this->_playerData['killstats'][] = $result;
 			}
-			var_dump($result);
 		}
 		mysql_free_result($query);
 	}
