@@ -1137,6 +1137,7 @@ class Player {
 		$query = mysql_query("SELECT ".DB_PREFIX."_Players.lastName AS name,
 					".DB_PREFIX."_Players.active,
 					".DB_PREFIX."_Players.playerId,
+					".DB_PREFIX."_PlayerUniqueIds.uniqueId,
 					Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills) AS kills,
 					Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.deaths) AS deaths,
 					".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId as victimId,
@@ -1144,6 +1145,7 @@ class Player {
 					IFNULL(FORMAT(Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills), 2), '-')) AS kpd
 				FROM ".DB_PREFIX."_".$this->playerId."_Frags_Kills
 					INNER JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId = ".DB_PREFIX."_Players.playerId
+					INNER JOIN ".DB_PREFIX."_PlayerUniqueIds ON ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId = ".DB_PREFIX."_PlayerUniqueIds.playerId
 				WHERE ".DB_PREFIX."_Players.hideranking = 0
 				GROUP BY ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId
 				HAVING Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills) >= ".mysql_escape_string($this->_option['killLimit'])."
@@ -1152,8 +1154,14 @@ class Player {
 
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
+				$result['isBot'] = 0;
+				if(strstr($result['uniqueId'],'BOT:')) {
+					$result['isBot'] = 1;
+				}
+
 				$this->_playerData['killstats'][] = $result;
 			}
+			var_dump($result);
 		}
 		mysql_free_result($query);
 	}

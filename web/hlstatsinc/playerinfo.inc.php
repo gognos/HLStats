@@ -656,7 +656,10 @@ if(!empty($playerKillStats)) { ?>
 		foreach ($playerKillStats as $entry) {
 			echo '<tr class="',toggleRowClass($rcol),'">';
 			echo '<td>';
-				if($entry['active'] == "1") {
+				if($entry['isBot']) {
+					echo '<img src="hlstatsimg/bot.png" alt="BOT" title="BOT" width="16" height="16" />&nbsp;';
+				}
+				elseif($entry['active'] == "1") {
 					echo '<img src="hlstatsimg/player.gif" width="16" height="16" alt="',l('Player'),'" alt="',l('Player'),'" />';
 				}
 				else {

@@ -389,6 +389,7 @@ Weapon Accuracy = Waffengenauigkeit
 Playtime per day = Spielzeit pro Tag
 hover over the bars to get more information = fahre über die Balken um mehr Informationen zu bekommen
 Aliases = Aliase
+Player-Player Actions = Spieler-Speiler Aktionen
 Used = Verwendet
 Last Use = Zuletzt verwendet
 Player Actions = Spieler Aktionen

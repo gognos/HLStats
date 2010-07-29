@@ -551,15 +551,10 @@ sub getPlayerId
 {
 	my ($uniqueId) = @_;
 
-	my $query = "
-		SELECT
-			playerId
-		FROM
-			${db_prefix}_PlayerUniqueIds
-		WHERE
-			uniqueId='" . &::quoteSQL($uniqueId) . "' AND
-			game='" . $g_servers{$s_addr}->{game} . "'
-	";
+	my $query = "SELECT playerId
+					FROM ${db_prefix}_PlayerUniqueIds
+					WHERE uniqueId='" . &::quoteSQL($uniqueId) . "'
+						AND game='" . $g_servers{$s_addr}->{game} . "'";
 	my $result = &doQuery($query);
 
 	if ($result->rows) {
@@ -862,8 +857,9 @@ sub getPlayerInfo
 	# Don't connect Mr. Console or HLTV or BOT, they should not be recorded as players!
 	return 0 if ($uniqueid eq "Console");
 	return 0 if ($uniqueid eq "HLTV");
+
 	if($g_ignore_bots) {
-		return 0 if ($uniqueid eq "BOT");
+		return 0 if ($uniqueid =~ /^BOT:/);
 	}
 
 	if ($forced_uniqueid) {
@@ -881,7 +877,7 @@ sub getPlayerInfo
 				team     => $team
 			};
 		}
-		elsif($uniqueid =~ /BOT/) {
+		elsif($uniqueid =~ /^BOT:/) {
 			$md5 = Digest::MD5->new;
 			$md5->add($name);
 			$md5->add($s_addr);
