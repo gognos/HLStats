@@ -72,6 +72,7 @@ Day = Tag
 Days = Tage
 Daily Awards = Tagesauszeichnung
 for = für
+Day Awards = Tagauszeichnungen
 
 Apply = Anwenden
 ID = ID
@@ -465,7 +466,7 @@ I killed teammate = Ich tötete ein Teammate
 My teammate = Mein Teammitglied
 I changed role to = Ich wechselte die Rolle zu
 I changed my name from = Ich änderte meinen Namen von
-to = zu
+to = nach
 I received a points bonus of = Ich bekam einen Bonus von
 against = gegen
 triggered = löste aus
