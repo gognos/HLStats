@@ -245,10 +245,15 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 
 	print "  - $d_winner_id ($d_winner_count)\n";
 
-	&doQuery("UPDATE ${db_prefix}_Awards
+	#&doQuery("UPDATE ${db_prefix}_Awards
+	#			SET d_winner_id=$d_winner_id,
+	#				d_winner_count=$d_winner_count
+	#			WHERE awardId=$awardId");
+	&doQuery("INSET INTO ${db_prefix}_Awards_History
 				SET d_winner_id=$d_winner_id,
-					d_winner_count=$d_winner_count
-				WHERE awardId=$awardId");
+					d_winner_count=$d_winner_count,
+					`date` = DATE_SUB(CURRENT_DATE(), INTERVAL $opt_numdays DAY),
+					fk_award_id = $awardId");
 }
 
 print "\n++ Awards generated successfully.\n";

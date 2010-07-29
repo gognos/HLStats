@@ -538,3 +538,11 @@ CREATE TABLE `#DB_PREFIX#_Weapons` (
   UNIQUE KEY `gamecode` (`game`,`code`),
   KEY `code` (`code`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+CREATE TABLE `#DB_PREFIX#_Awards_History` (
+`fk_award_id` INT( 10 ) NOT NULL ,
+`game` VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`d_winner_id` INT( 10 ) NOT NULL ,
+`d_winner_count` INT( 10 ) NOT NULL ,
+`date` VARCHAR( 32 ) NOT NULL
+) ENGINE = MYISAM ;

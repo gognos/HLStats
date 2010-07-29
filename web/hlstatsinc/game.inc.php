@@ -57,6 +57,31 @@ if(mysql_num_rows($query) > 0) {
 }
 mysql_free_result($query);
 
+$awarddata_arr = false;
+$awards_d_date = "None";
+// check if we have awards
+if (!$g_options['hideAwards']) {
+	$queryAwards = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
+									".DB_PREFIX."_Awards.verb,
+									".DB_PREFIX."_Awards_History.d_winner_id,
+									".DB_PREFIX."_Awards_History.d_winner_count,
+									".DB_PREFIX."_Players.lastName AS d_winner_name
+								FROM ".DB_PREFIX."_Awards_History
+								LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
+								LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
+								WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_escape_string($game)."'
+									AND ".DB_PREFIX."_Awards_History.date = '".$g_options['awards_d_date']."'
+								ORDER BY ".DB_PREFIX."_Awards.awardType DESC,
+									".DB_PREFIX."_Awards.name ASC");
+	if (mysql_num_rows($queryAwards) > 0) {
+		$tmptime = strtotime($g_options['awards_d_date']);
+		$awards_d_date = date('l d.m.',$tmptime);
+		while($result = mysql_fetch_assoc($queryAwards)) {
+			$awarddata_arr[] = $result;
+		}
+	}
+}
+
 pageHeader(array($gamename), array($gamename=>""));
 ?>
 <div id="sidebar" >
@@ -86,6 +111,11 @@ pageHeader(array($gamename), array($gamename=>""));
 			<li>
 				<a href="<?php echo "index.php?mode=maps&amp;game=$game"; ?>"><?php echo l('Map Statistics'); ?></a>
 			</li>
+			<?php if (!$g_options['hideAwards'] && !empty($awarddata_arr)) { ?>
+			<li>
+				<a href="<?php echo "index.php?mode=awards&amp;game=$game"; ?>"><?php echo l('Awards History'); ?></a>
+			</li>
+			<?php } ?>
 		</ul>
 	</div>
 </div>
@@ -142,38 +172,12 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 	<?php
 	}
 }
-	if (!$g_options['hideAwards']) {
-		$queryAwards = mysql_query("SELECT
-									".DB_PREFIX."_Awards.awardType,
-									".DB_PREFIX."_Awards.code,
-									".DB_PREFIX."_Awards.name,
-									".DB_PREFIX."_Awards.verb,
-									".DB_PREFIX."_Awards.d_winner_id,
-									".DB_PREFIX."_Awards.d_winner_count,
-									".DB_PREFIX."_Players.lastName AS d_winner_name
-								FROM
-									".DB_PREFIX."_Awards
-								LEFT JOIN ".DB_PREFIX."_Players ON
-									".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards.d_winner_id
-								WHERE
-									".DB_PREFIX."_Awards.game = '".mysql_escape_string($game)."'
-								ORDER BY
-									".DB_PREFIX."_Awards.awardType DESC,
-									".DB_PREFIX."_Awards.name ASC");
-
-		if (mysql_num_rows($queryAwards) > 0) {
-			$tmptime = strtotime($g_options['awards_d_date']);
-			$awards_d_date = date('l d.m.',$tmptime);
+	if (!$g_options['hideAwards'] && !empty($awarddata_arr)) {
 ?>
 <h1><?php echo l("Daily Awards")," ",l("for")," ",$awards_d_date,""; ?></h1>
 	<div class="content">
 	<table width="100%" border="1" cellspacing="0" cellpadding="4">
-<?php
-			$c = 0;
-			while ($awarddata = mysql_fetch_assoc($queryAwards)) {
-				$colour = ($c % 2) + 1;
-				$c++;
-?>
+<?php foreach($awarddata_arr as $awarddata) { ?>
 		<tr>
 			<th width="30%"><?php echo htmlspecialchars($awarddata["name"]);?></th>
 			<td width="70%">
@@ -191,16 +195,10 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 				?>
 			</td>
 		</tr>
-<?php
-			}
-?>
+<?php } ?>
 	</table>
 	</div>
 <?php
-		}
-		else {
-			// awards not created yet
-		}
 	}
 ?>
 <h1><?php echo l('Participating Servers'); ?></h1>

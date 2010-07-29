@@ -94,3 +94,11 @@ INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('INGAMEPOINTS', '
 INSERT INTO `#DB_PREFIX#_Options` (`keyname`, `value`) VALUES ('TIMEFRAME', '5');
 
 DROP TABLE `#DB_PREFIX#_Style` ;
+
+CREATE TABLE `#DB_PREFIX#_Awards_History` (
+`fk_award_id` INT( 10 ) NOT NULL ,
+`game` VARCHAR( 32 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
+`d_winner_id` INT( 10 ) NOT NULL ,
+`d_winner_count` INT( 10 ) NOT NULL ,
+`date` VARCHAR( 32 ) NOT NULL
+) ENGINE = MYISAM ;
