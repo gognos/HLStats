@@ -161,35 +161,11 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 									".DB_PREFIX."_Awards.awardType DESC,
 									".DB_PREFIX."_Awards.name ASC");
 
-		// this value comes from awards.pl
-		$awards_numdays = 1;
-		if(!empty($g_options['awards_numdays'])) {
-			$awards_numdays = (int)$g_options['awards_numdays'];
-		}
-
-		$awards_d_date = false;
-		if(!empty($g_options['awards_d_date'])) {
+		if (mysql_num_rows($queryAwards) > 0) {
 			$tmptime = strtotime($g_options['awards_d_date']);
-			if($tmptime !== false) {
-				// eliminates false dates from db
-				$awards_d_date = date('l d.m.',$tmptime);
-
-				// awards_d_date - the days configured in $awards_numdays
-				$tmptime -= $awards_numdays*86400;
-				$awards_s_date = $awards_d_date = date('l d. F Y',$tmptime);
-			}
-		}
-
-		if (mysql_num_rows($queryAwards) > 0 && $awards_d_date) {
+			$awards_d_date = date('l d.m.',$tmptime);
 ?>
-<h1><?php
-			if ($awards_numdays == 1) {
-				echo l("Daily Awards")," ",l("for")," '",$awards_s_date,"'";
-			}
-			else {
-				echo $awards_numdays," ",l('Day Awards'),": ",$awards_s_date," ",l('to')," ",$awards_d_date;
-			}
-?></h1>
+<h1><?php echo l("Daily Awards")," ",l("for")," ",$awards_d_date,""; ?></h1>
 	<div class="content">
 	<table width="100%" border="1" cellspacing="0" cellpadding="4">
 <?php
