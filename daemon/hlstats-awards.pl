@@ -249,7 +249,7 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 	#			SET d_winner_id=$d_winner_id,
 	#				d_winner_count=$d_winner_count
 	#			WHERE awardId=$awardId");
-	&doQuery("INSET INTO ${db_prefix}_Awards_History
+	&doQuery("INSERT INTO ${db_prefix}_Awards_History
 				SET d_winner_id=$d_winner_id,
 					d_winner_count=$d_winner_count,
 					`date` = DATE_SUB(CURRENT_DATE(), INTERVAL $opt_numdays DAY),
