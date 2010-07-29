@@ -153,13 +153,15 @@ class Players {
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
 			$queryStr .= " ";
 		}
-		elseif(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
-			// should we show only players from today
-			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
-		}
 		else {
 			$queryStr .= " AND t1.active = '1'";
 		}
+
+		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
+			// should we show only players from today
+			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
+		}
+
 
 		// should we hide the bots
 		if($this->_option['showBots'] === "0") {
@@ -191,7 +193,7 @@ class Players {
 				if(strstr($result['uniqueId'],'BOT:')) {
 					$result['isBot'] = 1;
 				}
-				
+
 				$pl[$result['playerId']] = $result;
 			}
 			$ret['data'] = $pl;
