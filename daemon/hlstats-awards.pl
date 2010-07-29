@@ -38,11 +38,6 @@
 # along with this program; if not, write to the Free Software
 #
 
-
-##
-## Settings
-##
-
 ##
 ##
 ################################################################################
@@ -105,7 +100,7 @@ Generate awards from Half-Life server statistics.
 Long options can be abbreviated, where such abbreviation is not ambiguous.
 
 Most options can be specified in the configuration file:
-  $opt_libdir/hlstats.conf.ini 
+  $opt_libdir/hlstats.conf.ini
 Note: Options set on the command line take precedence over options set in the
 configuration file.
 
@@ -164,6 +159,7 @@ print "connected OK\n";
 
 # Main data routine
 
+# get the awards for each game
 $resultAwards = &doQuery("
 	SELECT
 		${db_prefix}_Awards.awardId,
@@ -181,59 +177,24 @@ $resultAwards = &doQuery("
 		${db_prefix}_Awards.awardType
 ");
 
-$result = &doQuery("
-	SELECT
-		value,
-		DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
-	FROM
-		${db_prefix}_Options
-	WHERE
-		keyname='awards_d_date'
-");
+$result = &doQuery("SELECT value, DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
+					FROM ${db_prefix}_Options
+					WHERE keyname='awards_d_date'");
 
 if ($result->rows > 0) {
 	($awards_d_date, $awards_d_date_new) = $result->fetchrow_array;
 
-	&doQuery("
-		UPDATE
-			${db_prefix}_Options
-		SET
-			value='$awards_d_date_new'
-		WHERE
-			keyname='awards_d_date'
-	");
+	&doQuery("UPDATE ${db_prefix}_Options
+				SET value='$awards_d_date_new'
+				WHERE keyname='awards_d_date'");
 
 	print "\n++ Generating awards for $awards_d_date_new (previous: $awards_d_date)...\n\n";
 }
 else {
-	&doQuery("
-		INSERT INTO
-			${db_prefix}_Options
-			(
-				keyname,
-				value
-			)
-		VALUES
-		(
-			'awards_d_date',
-			DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
-		)
-	");
+	&doQuery("INSERT INTO ${db_prefix}_Options (keyname,value)
+			VALUES ('awards_d_date',DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))");
 }
 
-&doQuery("
-	REPLACE INTO
-		${db_prefix}_Options
-		(
-			keyname,
-			value
-		)
-	VALUES
-	(
-		'awards_numdays',
-		$opt_numdays
-	)
-");
 
 
 while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
@@ -284,15 +245,10 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 
 	print "  - $d_winner_id ($d_winner_count)\n";
 
-	&doQuery("
-		UPDATE
-			${db_prefix}_Awards
-		SET
-			d_winner_id=$d_winner_id,
-			d_winner_count=$d_winner_count
-		WHERE
-			awardId=$awardId
-	");
+	&doQuery("UPDATE ${db_prefix}_Awards
+				SET d_winner_id=$d_winner_id,
+					d_winner_count=$d_winner_count
+				WHERE awardId=$awardId");
 }
 
 print "\n++ Awards generated successfully.\n";
