@@ -254,7 +254,10 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 					d_winner_count=$d_winner_count,
 					`date` = DATE_SUB(CURRENT_DATE(), INTERVAL $opt_numdays DAY),
 					fk_award_id = $awardId,
-					game= '$game'");
+					game= '$game'
+				ON DUPLICATE KEY UPDATE
+					d_winner_id = $d_winner_id,
+					d_winner_count=$d_winner_count");
 }
 
 print "\n++ Awards generated successfully.\n";
