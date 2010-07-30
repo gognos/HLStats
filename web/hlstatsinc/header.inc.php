@@ -50,6 +50,9 @@
 
 $titlestr = $title;
 $tstr = array_pop($titlestr);
+if(!isset($_GET['mode'])) {
+	$_GET['mode'] = '';
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -69,7 +72,7 @@ $tstr = array_pop($titlestr);
 	<div id="header">
 		<span id="slogan"><?php echo $tstr; ?></span>
 		<ul>
-			<li <?php if(!isset($_GET['mode']) && ($_GET['mode'] != "search" || $_GET['mode'] != "help")) { ?>id="current"<?php } ?>><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
+			<li <?php if($_GET['mode'] == '' || ($_GET['mode'] != "search" && $_GET['mode'] != "help")) { ?>id="current"<?php } ?>><a href="index.php"><span><?php echo l('Content'); ?></span></a></li>
 			<li <?php if(isset($_GET['mode']) && $_GET['mode'] == "search") { ?>id="current"<?php } ?>><a href="index.php?mode=search"><span><?php echo l('Search'); ?></span></a></li>
 			<li <?php if(isset($_GET['mode']) && $_GET['mode'] == "help") { ?>id="current"<?php } ?>><a href="index.php?mode=help"><span><?php echo l('Help'); ?></span></a></li>
 		</ul>
