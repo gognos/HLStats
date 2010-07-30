@@ -49,7 +49,6 @@
 
 $rcol = "row-dark";
 $awardsHistory['data'] = array();
-$awardsHistory['pages'] = array();
 
 $page = 1;
 if (isset($_GET["page"])) {
@@ -58,33 +57,25 @@ if (isset($_GET["page"])) {
 		$page = $_GET['page'];
 	}
 }
-
-$queryStr = "SELECT IFNULL(".DB_PREFIX."_Teams.name, ".DB_PREFIX."_Events_ChangeTeam.team) AS name,
-			COUNT(".DB_PREFIX."_Events_ChangeTeam.id) AS teamcount,
-			".DB_PREFIX."_Teams.teamId
-		FROM ".DB_PREFIX."_Events_ChangeTeam
-		LEFT JOIN ".DB_PREFIX."_Teams ON
-			".DB_PREFIX."_Events_ChangeTeam.team=".DB_PREFIX."_Teams.code
-		LEFT JOIN ".DB_PREFIX."_Servers ON
-			".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_ChangeTeam.serverId
-		WHERE ".DB_PREFIX."_Teams.game='".mysql_escape_string($game)."'
-			AND ".DB_PREFIX."_Servers.game='".mysql_escape_string($game)."'
-			AND (hidden <>'1' OR hidden IS NULL)
-		GROUP BY ".DB_PREFIX."_Events_ChangeTeam.team
-		ORDER BY ".$sort." ".$sortorder;
-// calculate the limit
-if($page === 1) {
-	$queryStr .=" LIMIT 0,50";
-}
-else {
-	$start = 50*($page-1);
-	$queryStr .=" LIMIT ".$start.",50";
-}
-
-$query = mysql_query($queryStr);
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
-		$awardsHistory['data'][] = $result;
+$awards_d_date = "None";
+$queryAwards = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
+								".DB_PREFIX."_Awards.verb,
+								".DB_PREFIX."_Awards_History.d_winner_id,
+								".DB_PREFIX."_Awards_History.d_winner_count,
+								".DB_PREFIX."_Players.lastName AS d_winner_name
+							FROM ".DB_PREFIX."_Awards_History
+							LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
+							LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
+							WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_escape_string($game)."'
+								AND ".DB_PREFIX."_Awards_History.date = '".$g_options['awards_d_date']."'
+							ORDER BY ".DB_PREFIX."_Awards.awardType DESC,
+								".DB_PREFIX."_Awards.name ASC");
+if (mysql_num_rows($queryAwards) > 0) {
+		$tmptime = strtotime($g_options['awards_d_date']);
+		$awards_d_date = date('l d.m.',$tmptime);
+		while($result = mysql_fetch_assoc($queryAwards)) {
+			$awardsHistory['data'][] = $result;
+		}
 	}
 }
 
