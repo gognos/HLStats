@@ -1,7 +1,7 @@
 <?php
 /**
  * awards history file
- * display the daily awards history 
+ * display the daily awards history
  * @package HLStats
  * @author Johannes 'Banana' Keßler
  * @copyright Johannes 'Banana' Keßler
@@ -50,34 +50,50 @@
 $rcol = "row-dark";
 $awardsHistory['data'] = array();
 
-$page = 1;
-if (isset($_GET["page"])) {
-	$check = validateInput($_GET['page'],'digit');
+$date = $g_options['awards_d_date'];
+
+if (isset($_GET["date"])) {
+	$check = validateInput($_GET['date'],'nospace');
 	if($check === true) {
-		$page = $_GET['page'];
+		$date = $_GET['date'];
 	}
 }
-$awards_d_date = "None";
-$queryAwards = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
+$tmptime = strtotime($date);
+$awards_d_date = date('l d.m.',$tmptime);
+
+$query = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
 								".DB_PREFIX."_Awards.verb,
 								".DB_PREFIX."_Awards_History.d_winner_id,
 								".DB_PREFIX."_Awards_History.d_winner_count,
-								".DB_PREFIX."_Players.lastName AS d_winner_name
+								".DB_PREFIX."_Players.lastName AS d_winner_name,
+								".DB_PREFIX."_Awards_History.date
 							FROM ".DB_PREFIX."_Awards_History
 							LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
 							LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
 							WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_escape_string($game)."'
-								AND ".DB_PREFIX."_Awards_History.date = '".$g_options['awards_d_date']."'
+								AND ".DB_PREFIX."_Awards_History.date = '".$date."'
 							ORDER BY ".DB_PREFIX."_Awards.awardType DESC,
 								".DB_PREFIX."_Awards.name ASC");
-if (mysql_num_rows($queryAwards) > 0) {
-		$tmptime = strtotime($g_options['awards_d_date']);
-		$awards_d_date = date('l d.m.',$tmptime);
-		while($result = mysql_fetch_assoc($queryAwards)) {
-			$awardsHistory['data'][] = $result;
-		}
+if (mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$awardsHistory['data'][] = $result;
 	}
+	unset($result);
 }
+mysql_free_result($query);
+
+// get the dates for the date selection
+$dateSelect = array();
+$query = mysql_query("SELECT `date` FROM ".DB_PREFIX."_Awards_History
+						GROUP BY `date`");
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$dateSelect[$result['date']] = $result['date'];
+	}
+	unset($result);
+}
+mysql_free_result($query);
+
 
 pageHeader(
 	array($gamename, l("Awards History")),
@@ -96,24 +112,36 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l("Awards History"); ?></h1>
+	<h1><?php echo l("Awards History"),' ',l('for'),' ',$awards_d_date; ?></h1>
+	<form method="get" action="index.php">
+	<input type="hidden" name="mode" value="awards" />
+	<input type="hidden" name="game" value="<?php echo $game; ?>" />
+	<?php
+if(!empty($dateSelect)) {
+echo l('Date selection');
+?>
+
+	: <select name="date">
+	<?php
+		foreach($dateSelect as $ds) {
+			$selected = '';
+			if($date == $ds) $selected ='selected="1"';
+			echo '<option value="',$ds,'" ',$selected,'>',$ds,'</option>';
+		}
+	?>
+	</select>
+	<button type="submit" title="<?php echo l('Show'); ?>">
+		<?php echo l('Show'); ?>
+	</button>
+	</form>
+<?php }	?>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
-			<th class="<?php echo $rcol; ?>">
-				<a href="index.php?<?php echo makeQueryString(array('sort'=>'name','sortorder'=>$newSort)); ?>">
-					<?php echo l('Team'); ?>
-				</a>
-				<?php if($sort == "name") { ?>
-				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
-				<?php } ?>
+			<th width="200" class="<?php echo $rcol; ?>">
+				<?php echo l('Name'); ?>
 			</th>
 			<th class="<?php echo $rcol; ?>">
-				<a href="index.php?<?php echo makeQueryString(array('sort'=>'teamcount','sortorder'=>$newSort)); ?>">
-					<?php echo l('Selected'); ?>
-				</a>
-				<?php if($sort == "teamcount") { ?>
-				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
-				<?php } ?>
+				<?php echo l('Player'); ?>
 			</th>
 		</tr>
 		<?php
@@ -128,7 +156,14 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo $entry['teamcount'];
+				if($entry['d_winner_id']) {
+					echo '<img src="hlstatsimg/player.gif" width="16" height="16" alt="player.gif">&nbsp;';
+					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry["d_winner_id"],'"><b>',htmlspecialchars($entry["d_winner_name"]),'</b></a>';
+					echo '&nbsp;(',$entry["d_winner_count"],' ',htmlspecialchars($entry["verb"]),')';
+				}
+				else {
+					echo '(',l('Nobody').')';
+				}
 				echo '</td>',"\n";
 
 				echo '</tr>';

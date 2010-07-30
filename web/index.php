@@ -166,7 +166,8 @@ $modes = array(
 	"livestats",
 	"playerchathistory",
 	"teams",
-	"roles"
+	"roles",
+	"awards"
 );
 
 $mode = '';

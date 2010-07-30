@@ -73,6 +73,8 @@ Days = Tage
 Daily Awards = Tagesauszeichnung
 for = für
 Day Awards = Tagauszeichnungen
+Date selection = Datumsauswahl
+Show = Anzeigen
 
 Apply = Anwenden
 ID = ID
