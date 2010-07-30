@@ -25,6 +25,8 @@ HLStats ChangeLog
 *) New: If BOTs are recored (IGNOREBOTS option) then the player overview
 		has a new option to show those too. Otherwise only non-bots are
 		shown.
+*) New: Daily awards have a history. The data will be kept as log as
+		DELETEDAYS is defined.
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Changed: Options moved from conf files into DB, but information

@@ -174,4 +174,7 @@ echo l('Date selection');
 		}
 		?>
 	</table>
+	<p><b><?php echo l('Note'); ?>:</b><br />
+	<?php echo l('Award history cover only the last'),'&nbsp;',$g_options['DELETEDAYS'],' ',l('days')?>
+	</p>
 </div>

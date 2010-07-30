@@ -75,6 +75,7 @@ for = für
 Day Awards = Tagauszeichnungen
 Date selection = Datumsauswahl
 Show = Anzeigen
+Award history cover only the last = Der Zeitraum für die History sind
 
 Apply = Anwenden
 ID = ID

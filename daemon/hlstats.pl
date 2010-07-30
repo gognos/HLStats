@@ -1264,7 +1264,6 @@ EOT
 
 
 	# Delete events over $g_deletedays days old, at every 5000th iteration of the main loop
-
 	if ($c % 5000 == 0 && $g_deletedays != 0) {
 		if ($g_debug > 0) {
 			print "\n-- Cleaning up database: deleting events older than $g_deletedays days ...\n";
@@ -1278,17 +1277,17 @@ EOT
 				print "-> ${db_prefix}_Events_$eventTable ... "
 			}
 
-			&doQuery("
-				DELETE$deleteType FROM
-					${db_prefix}_Events_$eventTable
-				WHERE
-					eventTime < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL $g_deletedays DAY)
-			");
+			&doQuery("DELETE$deleteType FROM ${db_prefix}_Events_$eventTable
+						WHERE eventTime < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL $g_deletedays DAY)");
 
 			if ($g_debug > 0) {
 				print "OK\n";
 			}
 		}
+
+		# clean the awards_history
+		&doQuery("DELETE FROM ${db_prefix}_Awards_History
+					WHERE `date` < DATE_SUB(CURRENT_DATE(), INTERVAL $g_deletedays DAY)");
 
 		if ($g_debug > 0) {
 			print "-- Database cleanup complete.\n\n";
