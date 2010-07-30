@@ -51,13 +51,6 @@ $rcol = "row-dark";
 $teams['data'] = array();
 $teams['pages'] = array();
 
-$page = 1;
-if (isset($_GET["page"])) {
-	$check = validateInput($_GET['page'],'digit');
-	if($check === true) {
-		$page = $_GET['page'];
-	}
-}
 $sort = 'teamcount';
 if (isset($_GET["sort"])) {
 	$check = validateInput($_GET['sort'],'nospace');
@@ -92,14 +85,6 @@ $queryStr = "SELECT IFNULL(".DB_PREFIX."_Teams.name, ".DB_PREFIX."_Events_Change
 			AND (hidden <>'1' OR hidden IS NULL)
 		GROUP BY ".DB_PREFIX."_Events_ChangeTeam.team
 		ORDER BY ".$sort." ".$sortorder;
-// calculate the limit
-if($page === 1) {
-	$queryStr .=" LIMIT 0,50";
-}
-else {
-	$start = 50*($page-1);
-	$queryStr .=" LIMIT ".$start.",50";
-}
 
 $query = mysql_query($queryStr);
 if(mysql_num_rows($query) > 0) {
@@ -107,13 +92,6 @@ if(mysql_num_rows($query) > 0) {
 		$teams['data'][] = $result;
 	}
 }
-
-// get the max count for pagination
-$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-$result = mysql_fetch_assoc($query);
-$teams['pages'] = (int)ceil($result['rows']/50);
-mysql_freeresult($query);
-
 
 pageHeader(
 	array($gamename, l("Team Statistics")),
@@ -169,20 +147,6 @@ pageHeader(
 
 				echo '</tr>';
 			}
-			echo '<tr><td colspan="3" align="right">';
-				if($teams['pages'] > 1) {
-					for($i=1;$i<=$teams['pages'];$i++) {
-						if($page == ($i)) {
-							echo "[",$i,"]";
-						}
-						else {
-							echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
-						}
-					}
-				}
-				else {
-					echo "[1]";
-				}
 		}
 		else {
 			echo '<tr><td colspan="3">',l('No data recorded'),'</td></tr>';
