@@ -324,7 +324,7 @@ $xmlReturn .= '<root>';
 $xmlReturn .= $xmlBody;
 $xmlReturn .= '</root>';
 
-header('Content-type: text/xml');
 // return the xml data
+header('Content-type: text/xml');
 echo $xmlReturn;
 ?>
