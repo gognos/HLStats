@@ -120,6 +120,7 @@ Action = Aktion
 actions = Aktionen
 Achieved = Erreicht
 Skill Bonus = Punkte Bonus
+Roles for = Rollen für
 
 Nobody = Keiner
 
