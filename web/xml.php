@@ -107,7 +107,7 @@ if($g_options['allowXML'] == "1") {
 			    			hlstats_Players as t1 INNER JOIN hlstats_PlayerUniqueIds as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE
-			    			t1.game='".$gameCode."'
+			    			t1.game='".mysql_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY skill DESC
@@ -137,7 +137,7 @@ if($g_options['allowXML'] == "1") {
 			    			hlstats_Players as t1 INNER JOIN hlstats_PlayerUniqueIds as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE
-			    			t1.game='".$gameCode."'
+			    			t1.game='".mysql_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY skill DESC
@@ -171,7 +171,7 @@ if($g_options['allowXML'] == "1") {
 						ON
 							s.game=g.code
 						WHERE
-							serverId=".$serverId."
+							serverId=".mysql_escape_string($serverId)."
 							");
 				if (mysql_num_rows($query) === 1) {
 					// get the server data
