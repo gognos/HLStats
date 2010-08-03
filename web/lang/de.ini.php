@@ -130,7 +130,7 @@ Address = Adresse
 Statistics = Statistik
 View = Ansehen
 players = Spieler
-clans ranked on = Clans gelistet auf
+ranked on = gelistet auf
 servers = Server
 Last kill = Letzter Frag
 All statistics are generated in real-time. Event history data expires after = Alle Statistiken sind in Echtzeit erstellt. Events werden gelöscht nach
@@ -147,6 +147,8 @@ or more kills = oder mehr Frags
 Find a clan = Finde einen Clan
 Only show clans with = Zeige Clans mit nur
 or more members = oder mehr Mitglieder
+Show all clans without a player limit of 2 = Zeige alle Clans ohne das Mitgliederlimit von 2
+Show only clans with 2 or more members = Zeige alle Clans mit 2 oder mehr Mitglieder
 
 From a total of = Von gesamt
 

@@ -256,10 +256,6 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 	$result = mysql_fetch_assoc($query);
 	$num_players = $result['plc'];
 
-	$query = mysql_query("SELECT COUNT(*) AS cc FROM ".DB_PREFIX."_Clans WHERE game='".mysql_escape_string($game)."'");
-	$result = mysql_fetch_assoc($query);
-	$num_clans = $result['cc'];
-
 	$query = mysql_query("SELECT COUNT(*) AS sc FROM ".DB_PREFIX."_Servers WHERE game='".mysql_escape_string($game)."'");
 	$result = mysql_fetch_assoc($query);
 	$num_servers = $result['sc'];
@@ -277,7 +273,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 <p>
 	<ul>
 		<li>
-			<?php echo "<b>$num_players</b> ",l('players'),"  <b>$num_clans</b> ",l('clans ranked on')," <b>$num_servers</b> ",l('servers'),"."; ?>
+			<?php echo "<b>$num_players</b> ",l('players')," ",l('ranked on')," <b>$num_servers</b> ",l('servers'),"."; ?>
 		</li>
 <?php
 	if ($lastevent) {
