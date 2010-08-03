@@ -502,7 +502,8 @@ if(!empty($weaponUsage)) { ?>
 		foreach ($weaponUsage as $entry) {
 			echo '<tr class="',toggleRowClass($rcol),'">',"\n";
 			echo '<td align="center">',"\n";
-			echo '<a href="index.php?mode=weaponinfo&amp;weapon='.$entry['weapon'].'&amp;game='.$game.'"><img src="hlstatsimg/weapons/',$game,'/',$entry['weapon'],'.png" alt="',$entry['weapon'],'" title="',$entry['weapon'],'" /></a>',"\n";
+			echo '<a href="index.php?mode=weaponinfo&amp;weapon='.$entry['weapon'].'&amp;game='.$game.'"><img src="hlstatsimg/weapons/',$game,'/',$entry['weapon'],'.png" alt="',$entry['name'],'" title="',$entry['name'],'" /></a><br />',"\n";
+			echo '<small>',$entry['name'],'</small>';
 			echo '</td>',"\n";
 			echo '<td>',$entry['modifier'],'</td>',"\n";
 			echo '<td>',$entry['kills'],'</td>',"\n";
