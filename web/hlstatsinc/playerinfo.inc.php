@@ -247,7 +247,10 @@ $rcol = "row-dark";
 	</h1>
 	<table border="1" cellspacing="0" cellpadding="4" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th><?php echo l("Real Name"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/user.png" alt="Username" width="24" style="float: left;" />
+				&nbsp;<?php echo l("Real Name"); ?>
+				</th>
 			<td>
 			   <?php
 				if ($playerObj->getParam("fullName")) {
@@ -257,7 +260,10 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
-			<th><?php echo l("MySpace"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/myspace.png" alt="myspace" width="24" style="float: left;" />
+				&nbsp;<?php echo l("MySpace"); ?>
+			</th>
 			<td><?php
 				$url = getLink($playerObj->getParam("myspace"));
 				if (!empty($url)) {
@@ -269,7 +275,10 @@ $rcol = "row-dark";
 			</td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th><?php echo l("E-mail Address"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/email.png" alt="email" width="24" style="float: left;" />
+				&nbsp;<?php echo l("E-mail Address"); ?>
+			</th>
 			<td>
 			   <?php
 				$email = getEmailLink($playerObj->getParam("email"));
@@ -280,7 +289,10 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
-			<th><?php echo l("Facebook"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/facebook.png" alt="Facebook" width="24" style="float: left;" />
+				&nbsp;<?php echo l("Facebook"); ?>
+			</th>
 			<td><?php
 				$url = getLink($playerObj->getParam("facebook"));
 				if (!empty($url)) {
@@ -292,7 +304,10 @@ $rcol = "row-dark";
 			</td>
 		</tr>
 		<tr>
-			<th><?php echo l("Home Page"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/website.png" alt="website" width="24" style="float: left;" />
+				&nbsp;<?php echo l("Home Page"); ?>
+			</th>
 			<td>
 				<?php
 				$url = getLink($playerObj->getParam("homepage"));
@@ -303,7 +318,10 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
-			<th><?php echo l("Jabber"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/jabber.png" alt="jabber" width="24" style="float: left;" />
+				&nbsp;<?php echo l("Jabber"); ?>
+			</th>
 			<td>
 			   <?php
 				if ($playerObj->getParam("jabber")) {
@@ -315,7 +333,10 @@ $rcol = "row-dark";
 			</td>
 		</tr>
 		<tr>
-			<th><?php echo l("ICQ Number"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/icq.png" alt="ICQ" width="24" style="float: left;" />
+				&nbsp;<?php echo l("ICQ Number"); ?>
+			</th>
 			<td>
 			   <?php
 				if ($playerObj->getParam("icq")) {
@@ -327,7 +348,10 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
-			<th><?php echo l("Steam Profile"); ?></th>
+			<th>
+				<img src="hlstatsimg/site/steam.png" alt="steam" width="24" style="float: left;" />
+				&nbsp;<?php echo l("Steam Profile"); ?>
+				</th>
 			<td><?php
 				$url = getLink($playerObj->getParam("steamprofile"));
 				if (!empty($url)) {
