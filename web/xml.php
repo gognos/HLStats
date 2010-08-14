@@ -79,7 +79,17 @@ $db_sel = mysql_select_db(DB_NAME,$db_con);
 $g_options = getOptions();
 
 // hlstats url
-$hlsUrl = "http://www.".$_SERVER['SERVER_NAME'].str_replace("xml.php","",$_SERVER['SCRIPT_NAME']);
+$hlsUrl = "http://".$_SERVER['SERVER_NAME'].str_replace("xml.php","",$_SERVER['SCRIPT_NAME']);
+
+if(!isset($_GET['mode'])) {
+	$_GET['mode'] = false;
+}
+if(!isset($_GET['serverId'])) {
+	$_GET['serverId'] = false;
+}
+if(!isset($_GET['gameCode'])) {
+	$_GET['gameCode'] = false;
+}
 
 // check if we are allowed to use this feature
 if($g_options['allowXML'] == "1") {
@@ -97,7 +107,7 @@ if($g_options['allowXML'] == "1") {
 			    			hlstats_Players as t1 INNER JOIN hlstats_PlayerUniqueIds as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE
-			    			t1.game='".$gameCode."'
+			    			t1.game='".mysql_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY skill DESC
@@ -107,7 +117,7 @@ if($g_options['allowXML'] == "1") {
 					$xmlBody .="<player>";
 					$xmlBody .="<name><![CDATA[".htmlentities($playerData['lastName'],ENT_COMPAT,"UTF-8")."]]></name>";
 					$xmlBody .="<skill>".$playerData['skill']."</skill>";
-					$xmlBody .="<profile><![CDATA[".$hlsUrl."index.php&mode=playerinfo&player=".$playerData['playerId']."]]></profile>";
+					$xmlBody .="<profile><![CDATA[".$hlsUrl."index.php?mode=playerinfo&player=".$playerData['playerId']."]]></profile>";
 					$xmlBody .="</player>";
 				}
 				$xmlBody .= "</players>";
@@ -127,7 +137,7 @@ if($g_options['allowXML'] == "1") {
 			    			hlstats_Players as t1 INNER JOIN hlstats_PlayerUniqueIds as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE
-			    			t1.game='".$gameCode."'
+			    			t1.game='".mysql_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY skill DESC
@@ -161,7 +171,7 @@ if($g_options['allowXML'] == "1") {
 						ON
 							s.game=g.code
 						WHERE
-							serverId=".$serverId."
+							serverId=".mysql_escape_string($serverId)."
 							");
 				if (mysql_num_rows($query) === 1) {
 					// get the server data
@@ -315,5 +325,6 @@ $xmlReturn .= $xmlBody;
 $xmlReturn .= '</root>';
 
 // return the xml data
+header('Content-type: text/xml');
 echo $xmlReturn;
 ?>

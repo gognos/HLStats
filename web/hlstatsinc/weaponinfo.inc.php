@@ -96,40 +96,40 @@ mysql_free_result($query);
 
 // get the weapon info
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		".DB_PREFIX."_Events_Frags.killerId,
-		".DB_PREFIX."_Players.lastName AS killerName,
-		".DB_PREFIX."_Players.active,
-		COUNT(".DB_PREFIX."_Events_Frags.weapon) AS frags
-	FROM ".DB_PREFIX."_Events_Frags
-	LEFT JOIN ".DB_PREFIX."_Players
-		ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
-	WHERE ".DB_PREFIX."_Events_Frags.weapon='".mysql_escape_string($weapon)."'
-		AND ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
-		AND ".DB_PREFIX."_Players.hideranking = 0
-	GROUP BY ".DB_PREFIX."_Events_Frags.killerId
-	ORDER BY ".$sort." ".$sortorder;
+	".DB_PREFIX."_Events_Frags.killerId,
+	".DB_PREFIX."_Players.lastName AS killerName,
+	".DB_PREFIX."_Players.active,
+	COUNT(".DB_PREFIX."_Events_Frags.weapon) AS frags
+FROM ".DB_PREFIX."_Events_Frags
+LEFT JOIN ".DB_PREFIX."_Players
+	ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
+WHERE ".DB_PREFIX."_Events_Frags.weapon='".mysql_escape_string($weapon)."'
+	AND ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
+	AND ".DB_PREFIX."_Players.hideranking = 0
+GROUP BY ".DB_PREFIX."_Events_Frags.killerId
+ORDER BY ".$sort." ".$sortorder;
 
-	// calculate the limit
-	if($page === 1) {
-		$queryStr .=" LIMIT 0,50";
-	}
-	else {
-		$start = 50*($page-1);
-		$queryStr .=" LIMIT ".$start.",50";
-	}
+// calculate the limit
+if($page === 1) {
+	$queryStr .=" LIMIT 0,50";
+}
+else {
+	$start = 50*($page-1);
+	$queryStr .=" LIMIT ".$start.",50";
+}
 
-	$query = mysql_query($queryStr);
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
-			$players['data'][] = $result;
-		}
+$query = mysql_query($queryStr);
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$players['data'][] = $result;
 	}
+}
 
-	// get the max count for pagination
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
-	$players['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+// get the max count for pagination
+$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
+$result = mysql_fetch_assoc($query);
+$players['pages'] = (int)ceil($result['rows']/50);
+mysql_freeresult($query);
 
 $query = mysql_query($queryStr);
 
@@ -177,7 +177,9 @@ pageHeader(
 		<?php echo l("From a total of"); ?> <b><?php echo intval($totalkills); ?></b> <?php echo l('kills'); ?>
 		(<?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days'); ?>)
 	</h1>
-	<img src="hlstatsimg/weapons/<?php echo $game; ?>/<?php echo $weapon; ?>.png" alt="<?php echo $wep_name; ?>" title="<?php echo $wep_name; ?>"border="0" />
+	<img src="hlstatsimg/weapons/<?php echo $game; ?>/<?php echo $weapon; ?>.png" alt="<?php echo $wep_name; ?>" title="<?php echo $wep_name; ?>" border="0" /><br />
+	<small><?php echo $wep_name; ?></small><br />
+	<br />
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
 			<th class="<?php echo $rcol; ?>"><?php echo l('Rank'); ?></th>

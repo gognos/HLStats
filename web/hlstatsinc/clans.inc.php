@@ -89,10 +89,10 @@ if (isset($_GET["sortorder"])) {
 
 // minimum mebers count to show
 $minmembers = 2;
-if (isset($_GET["minmembers"])) {
-	$check = validateInput($_GET['minmembers'],'digit');
+if (isset($_GET["showAll"])) {
+	$check = validateInput($_GET['showAll'],'digit');
 	if($check === true)
-		$minmembers = $_GET["minmembers"];
+		$minmembers = false;
 }
 
 // query to get the data from the db with the given options
@@ -104,15 +104,16 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 		SUM(".DB_PREFIX."_Players.kills) AS kills,
 		SUM(".DB_PREFIX."_Players.deaths) AS deaths,
 		ROUND(AVG(".DB_PREFIX."_Players.skill)) AS skill,
-		IFNULL(SUM(".DB_PREFIX."_Players.kills)/SUM(".DB_PREFIX."_Players.deaths), '-') AS kpd
+		IFNULL(SUM(".DB_PREFIX."_Players.kills) / SUM(".DB_PREFIX."_Players.deaths), '-') AS kpd
 	FROM ".DB_PREFIX."_Clans
-	LEFT JOIN ".DB_PREFIX."_Players
-		ON ".DB_PREFIX."_Players.clan=".DB_PREFIX."_Clans.clanId
+	LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.clan=".DB_PREFIX."_Clans.clanId
 	WHERE ".DB_PREFIX."_Clans.game='".mysql_escape_string($game)."'
 		AND ".DB_PREFIX."_Players.hideranking = 0
-	GROUP BY ".DB_PREFIX."_Clans.clanId
-	HAVING nummembers >= ".mysql_escape_string($minmembers)."
-	ORDER BY ".$sort." ".$sortorder;
+	GROUP BY ".DB_PREFIX."_Clans.clanId";
+if(!empty($minmembers)) {
+	$queryStr .= " HAVING nummembers >= ".mysql_escape_string($minmembers);
+}
+	$queryStr .= " ORDER BY ".$sort." ".$sortorder;
 
 // calculate the limit
 if($page === 1) {
@@ -149,7 +150,7 @@ pageHeader(
 	<div class="left-box">
 		<ul class="sidemenu">
 			<li>
-				<a href="<?php echo "index.php?mode=players&amp;game=$game"; ?>"><?php echo l('Back to game overview'); ?></a>
+				<a href="<?php echo "index.php?game=$game"; ?>"><?php echo l('Back to game overview'); ?></a>
 			</li>
 		</ul>
 		<form method="GET" action="index.php">
@@ -168,6 +169,13 @@ pageHeader(
 	<h1>
 		<?php echo l("Clan Rankings"); ?>
 	</h1>
+	<p>
+	<?php if(empty($minmembers)) { ?>
+		<a href="index.php?mode=clans&game=<?php echo $game; ?>"><?php echo l('Show only clans with 2 or more members') ?></a>
+	<?php } else { ?>
+		<a href="index.php?mode=clans&game=<?php echo $game; ?>&showAll=1"><?php echo l('Show all clans without a player limit of 2') ?></a>
+	<?php } ?>
+	</p>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<?php
 		echo '<tr><td colspan="8" align="right">';

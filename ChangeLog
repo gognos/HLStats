@@ -58,7 +58,9 @@ HLStats ChangeLog
 *) Fixed: remove the ; in rcon commands (thx to Par0noid)
 *) Fixed: Issue #23
 *) Fixed: Issue #26
-
+*) Fixed: Issue #32
+*) Fixed: Issue #31
+*) Fixed: Issue #40
 
 
 1.51 (2009-11-23)
