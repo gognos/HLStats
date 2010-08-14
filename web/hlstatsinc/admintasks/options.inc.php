@@ -238,6 +238,51 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 					</small>
 				</td>
 			</tr>
+			<tr>
+				<th>
+					<?php echo l("Country lookup"); ?><br />
+					<small>USEGEOIP</small>
+				</th>
+				<td>
+					<select name="option[USEGEOIP]">
+						<option value="0" <?php if($g_options['USEGEOIP'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['USEGEOIP'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Use Maxmind GEO IP Database to get the country from each player. Please read the documentation how to achive this.'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Use Rcon"); ?><br />
+					<small>RCON</small>
+				</th>
+				<td>
+					<select name="option[RCON]">
+						<option value="0" <?php if($g_options['RCON'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['RCON'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Allow HLStats to send Rcon commands to the game servers.'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Record Rcon"); ?><br />
+					<small>RCONRECORD</small>
+				</th>
+				<td>
+					<select name="option[RCONRECORD]">
+						<option value="0" <?php if($g_options['RCONRECORD'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['RCONRECORD'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Sets whether to record Rcon commands to the Admin event table'); ?>
+					</small>
+				</td>
+			</tr>
 		</table>
 		<h2><?php echo l('Paths'); ?></h2>
 		<table cellpadding="2" cellspacing="0" border="0">
