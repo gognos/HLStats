@@ -237,6 +237,12 @@ NameTrack = Name
 Options updated successfully = Optionen erfolgreich gespeichert
 Operation successful = Aktion Erfolgreich
 No games available = Kein Spiel installiert
+Country lookup = Geolocation
+Use Maxmind GEO IP Database to get the country from each player. Please read the documentation how to achive this. = Verwendung von Maxmin GEOIP Datenbank um herauszufinden woher die Spieler kommen. Bitte die Dokumentation durchlesen, was man dazu alles benötigt.
+Use Rcon = Rcon verwenden
+Allow HLStats to send Rcon commands to the game servers. = Erlaube HLStats Rcon  Befehle zu de Spielservern zu senden.
+Record Rcon = Rcon aufzeichnen
+Sets whether to record Rcon commands to the Admin event table = Sollen die Rcon Befehle in die Admin Events Tabelle aufgenommen werden oder nicht
 
 Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field = Passwörter werden verschlüsselt in der Datenbank abgespeichert und können nicht wieder hergestellt werden. Es kann daher nur ein neues Passwort vergeben werden.
 Note: After changing the admin password you need to authenticate again. = Hinweis: Nach Änderung des Passwortes muss man sich neu anmelden.
