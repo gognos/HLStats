@@ -74,6 +74,8 @@ require("hlstatsinc/classes.inc.php");
 // deb class and options
 $db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS);
 $db_sel = mysql_select_db(DB_NAME,$db_con);
+mysql_query("SET NAMES utf8");
+mysql_query("SET collation_connection = 'utf8_unicode_ci'");
 
 // get the hlstats options
 $g_options = getOptions();
