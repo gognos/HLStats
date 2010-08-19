@@ -55,7 +55,7 @@ if(isset($_POST['sub']['saveOptions'])) {
 	$error = false;
 	foreach($_POST['option'] as $k=>$v) {
 		$v = trim($v);
-		
+
 		$query = mysql_query("UPDATE `".DB_PREFIX."_Options`
 							SET `value` = '".mysql_escape_string($v)."'
 							WHERE `keyname` = '".mysql_escape_string($k)."'");
@@ -100,7 +100,7 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 	?>
 	<form method="post" action="">
 		<h2><?php echo l('General'); ?></h2>
-		<table cellpadding="2" cellspacing="0" border="0">
+		<table cellpadding="2" cellspacing="0" border="1" width="100%">
 			<tr>
 				<th width="220"><?php echo l("Site Name"); ?></th>
 				<td>
@@ -191,11 +191,12 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 		<blockquote>
 			<?php echo l('This settings are also used by the daemon (hlstats.pl). If you change these the daemon have to be stopped and started again !!'); ?>
 		</blockquote>
-		<table cellpadding="2" cellspacing="0" border="0">
+		<table cellpadding="2" cellspacing="0" border="1" width="100%">
 			<tr>
 				<th width="220">
 					<?php echo l("Deletedays"); ?><br />
-					<small>DELETEDAYS</small>
+					<small>DELETEDAYS</small><br 7>
+					<small><?php echo l('Default'); ?> 5</small>
 				</th>
 				<td>
 					<input type="text" size="4" name="option[DELETEDAYS]" value="<?php echo $g_options['DELETEDAYS']; ?>"> <?php echo l('Days'); ?><br />
@@ -206,8 +207,35 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			</tr>
 			<tr>
 				<th>
+					<?php echo l("Min players"); ?><br />
+					<small>MINPLAYERS</small><br />
+					<small><?php echo l('Default'); ?> 2</small>
+				</th>
+				<td>
+					<input type="text" size="4" name="option[MINPLAYERS]" value="<?php echo $g_options['MINPLAYERS']; ?>"> <br />
+					<small>
+						<?php echo l('Specifies the minimum number of players required in the server for player events to be recorded'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Max change at one time"); ?><br />
+					<small>SKILLMAXCHANGE</small><br />
+					<small><?php echo l('Default'); ?> 100</small>
+				</th>
+				<td>
+					<input type="text" size="4" name="option[SKILLMAXCHANGE]" value="<?php echo $g_options['SKILLMAXCHANGE']; ?>"> <br />
+					<small>
+						<?php echo l('Specifies the maximum number of skill points a player can gain at one time through frags/events. Because players with low skill ratings gain more for killing players with high skill ratings'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
 					<?php echo l("Ignore BOT"); ?><br />
-					<small>IGNOREBOTS</small>
+					<small>IGNOREBOTS</small><br />
+					<small><?php echo l('Default'); ?> 1</small>
 				</th>
 				<td>
 					<select name="option[IGNOREBOTS]">
@@ -222,7 +250,8 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			<tr>
 				<th>
 					<?php echo l("Mode"); ?><br />
-					<small>MODE</small>
+					<small>MODE</small><br />
+					<small><?php echo l('Default'); ?> Normal</small>
 				</th>
 				<td>
 					<select name="option[MODE]">
@@ -241,7 +270,8 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			<tr>
 				<th>
 					<?php echo l("Country lookup"); ?><br />
-					<small>USEGEOIP</small>
+					<small>USEGEOIP</small><br />
+					<small><?php echo l('Default'); ?> 0</small>
 				</th>
 				<td>
 					<select name="option[USEGEOIP]">
@@ -256,7 +286,8 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			<tr>
 				<th>
 					<?php echo l("Use Rcon"); ?><br />
-					<small>RCON</small>
+					<small>RCON</small><br />
+					<small><?php echo l('Default'); ?> 1</small>
 				</th>
 				<td>
 					<select name="option[RCON]">
@@ -271,7 +302,8 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			<tr>
 				<th>
 					<?php echo l("Record Rcon"); ?><br />
-					<small>RCONRECORD</small>
+					<small>RCONRECORD</small><br />
+					<small><?php echo l('Default'); ?> 0</small>
 				</th>
 				<td>
 					<select name="option[RCONRECORD]">
@@ -283,9 +315,59 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 					</small>
 				</td>
 			</tr>
+			<tr>
+				<th>
+					<?php echo l("Rcon Ignore self"); ?><br />
+					<small>RCONIGNORESELF</small><br />
+					<small><?php echo l('Default'); ?> 0</small>
+				</th>
+				<td>
+					<select name="option[RCONIGNORESELF]">
+						<option value="0" <?php if($g_options['RCONIGNORESELF'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['RCONIGNORESELF'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Ignore (do not log) Rcon commands originating from the same IP as the server being Rcon'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Rcon reply format"); ?><br />
+					<small>RCONSAY</small><br />
+					<small><?php echo l('Default'); ?> <?php echo l('Ordinary say command'); ?></small>
+				</th>
+				<td>
+					<select name="option[RCONSAY]">
+						<option value="0" <?php if($g_options['RCONSAY'] === "say") echo 'selected="1"'; ?>><?php echo l('Ordinary say command'); ?></option>
+						<option value="1"<?php if($g_options['RCONSAY'] === "admin_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say adminMod'); ?></option>
+						<option value="1"<?php if($g_options['RCONSAY'] === "amx_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say with amxMod'); ?></option>
+						<option value="1"<?php if($g_options['RCONSAY'] === "sm_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say with sourceMod'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('How the Rcon say command would be returned'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Log chat messages"); ?><br />
+					<small>LOGCHAT</small><br />
+					<small><?php echo l('Default'); ?> 0</small>
+				</th>
+				<td>
+					<select name="option[LOGCHAT]">
+						<option value="0" <?php if($g_options['LOGCHAT'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['LOGCHAT'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Log all your chat massages. This is conected with the DeleteDays setting. So the chat messages will be only stored in the DB for the DeleteDays value'); ?>
+					</small>
+				</td>
+			</tr>
 		</table>
 		<h2><?php echo l('Paths'); ?></h2>
-		<table cellpadding="2" cellspacing="0" border="0">
+		<table cellpadding="2" cellspacing="0" border="1" width="100%">
 			<tr>
 				<th width="220"><?php echo l("Map Download URL"); ?></th>
 				<td>
@@ -297,7 +379,7 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			</tr>
 		</table>
 		<h2><?php echo l('Preset Styles'); ?></h2>
-		<table cellpadding="2" cellspacing="0" border="0">
+		<table cellpadding="2" cellspacing="0" border="1" width="100%">
 			<tr>
 				<th width="220"><?php echo l("Style"); ?></th>
 				<td>
@@ -307,7 +389,7 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 							$sfile = str_replace('.css','',basename($styleFile));
 							$selected='';
 							if($g_options['style'] === $sfile) $selected='selected="1"';
-							
+
 							echo '<option ',$selected,' value="',$sfile,'">',$sfile,'</option>';
 						}
 						?>
