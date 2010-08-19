@@ -207,6 +207,19 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 			</tr>
 			<tr>
 				<th>
+					<?php echo l("Days after a player is inactive"); ?><br />
+					<small>TIMEFRAME</small><br />
+					<small><?php echo l('Default'); ?> 5</small>
+				</th>
+				<td>
+					<input type="text" size="4" name="option[TIMEFRAME]" value="<?php echo $g_options['TIMEFRAME']; ?>"> <br />
+					<small>
+						<?php echo l('For this player-activity.pl script needs to be executed once a day'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
 					<?php echo l("Min players"); ?><br />
 					<small>MINPLAYERS</small><br />
 					<small><?php echo l('Default'); ?> 2</small>
@@ -346,6 +359,22 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 					</select><br />
 					<small>
 						<?php echo l('How the Rcon say command would be returned'); ?>
+					</small>
+				</td>
+			</tr>
+			<tr>
+				<th>
+					<?php echo l("Show ingame stat report"); ?><br />
+					<small>INGAMEPOINTS</small><br />
+					<small><?php echo l('Default'); ?> 0</small>
+				</th>
+				<td>
+					<select name="option[INGAMEPOINTS]">
+						<option value="0" <?php if($g_options['INGAMEPOINTS'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['INGAMEPOINTS'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('The response is done via rcon and the option RCONSAY. Reports current skill points after event/frag back into game'); ?>
 					</small>
 				</td>
 			</tr>

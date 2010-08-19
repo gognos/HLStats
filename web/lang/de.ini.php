@@ -258,6 +258,10 @@ Specifies the maximum number of skill points a player can gain at one time throu
 Default = Standard
 Log chat messages = Chat speichern
 Log all your chat massages. This is conected with the DeleteDays setting. So the chat messages will be only stored in the DB for the DeleteDays value = Alle Chat Nachrichten speichern. Dies ist mit den DELETEDAYS verbunden. Die Daten werden nur so lange wie DELETEDAYS in der DB gespeichert
+Show ingame stat report = Zeige Punkte im Spiel
+The response is done via rcon and the option RCONSAY. Reports current skill points after event/frag back into game = Die Antwort wird über Rcon und der Option RCONSAY gemacht. Es werden die aktuellen Skill Punkte bei einem Frag / Event in das Spiel zurückgesendet
+For this player-activity.pl script needs to be executed once a day = Tage nach dem ein Spieler als inaktiv gewertet wird. Dazu muss player-acitivity.pl einmal pro Tag ausgeführt werden
+Days after a player is inactive = Tage nach dem ein Spieler als inaktiv gewertet wird
 
 Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field = Passwörter werden verschlüsselt in der Datenbank abgespeichert und können nicht wieder hergestellt werden. Es kann daher nur ein neues Passwort vergeben werden.
 Note: After changing the admin password you need to authenticate again. = Hinweis: Nach Änderung des Passwortes muss man sich neu anmelden.
