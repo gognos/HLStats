@@ -342,13 +342,6 @@ while ($loop = &getLine()) {
 	## unwanted chars
 	$s_output =~ s/[\r\n\0]//g;	# remove naughty characters
 
-	if($g_option_strip_tags) {
-		$s_output =~ s/\[No.C-D\]//g;	# remove [No C-D] tag
-		$s_output =~ s/\[OLD.C-D\]//g;	# remove [OLD C-D] tag
-		$s_output =~ s/\[NOCL\]//g;		# remove [NOCL] tag
-		$s_output =~ s/\([0-9]\)//g;	# strip (1) and (2) from player names
-	}
-
 	# Get the server info, if we know the server, otherwise ignore the data
 	if (!$g_servers{$s_addr}) {
 		$g_servers{$s_addr} = &getServer($s_peerhost, $s_peerport);
@@ -387,14 +380,12 @@ while ($loop = &getLine()) {
 
 		$ev_time  = "$ev_hour:$ev_min:$ev_sec";
 
-		if ($g_timestamp)
-		{
+		if ($g_timestamp) {
 			$ev_timestamp = "$ev_year-$ev_month-$ev_day $ev_time";
 			$ev_datetime  = "'$ev_timestamp'";
 			$ev_unixtime  = timelocal($ev_sec,$ev_min,$ev_hour,$ev_day,$ev_month-1,$ev_year);
 		}
-		else
-		{
+		else {
 			my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time());
 			$ev_timestamp = sprintf("%04d-%02d-%02d %02d:%02d:%02d",
 				$year+1900, $mon+1, $mday, $hour, $min, $sec);
