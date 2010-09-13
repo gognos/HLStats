@@ -103,7 +103,6 @@ $g_stdin = $Config->{System}->{Stdin};
 $g_server_ip = $Config->{System}->{ServerIP};
 $g_server_port = $Config->{System}->{ServerPort};
 $g_timestamp = $Config->{System}->{Timestamp};
-$g_option_strip_tags = $Config->{Options}->{StripTags};
 
 # Options
 # default values
@@ -218,6 +217,7 @@ $g_minplayers = $oHash{MINPLAYERS};
 $g_skill_maxchange = $oHash{SKILLMAXCHANGE};
 $g_log_chat = $oHash{LOGCHAT};
 $g_ingame_points = $oHash{INGAMEPOINTS};
+$g_option_strip_tags = $oHash{STRIPTAGS};
 
 print "OK\n";
 

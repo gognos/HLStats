@@ -394,6 +394,22 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 					</small>
 				</td>
 			</tr>
+			<tr>
+				<th>
+					<?php echo l("Strip some common tags"); ?><br />
+					<small>STRIPTAGS</small><br />
+					<small><?php echo l('Default'); ?> 1</small>
+				</th>
+				<td>
+					<select name="option[STRIPTAGS]">
+						<option value="0" <?php if($g_options['STRIPTAGS'] === "0") echo 'selected="1"'; ?>><?php echo l('No'); ?></option>
+						<option value="1"<?php if($g_options['STRIPTAGS'] === "1") echo 'selected="1"'; ?>><?php echo l('Yes'); ?></option>
+					</select><br />
+					<small>
+						<?php echo l('Strip common tags from player names eg. CD or NO-CD. See documentation for more details'); ?>
+					</small>
+				</td>
+			</tr>
 		</table>
 		<h2><?php echo l('Paths'); ?></h2>
 		<table cellpadding="2" cellspacing="0" border="1" width="100%">

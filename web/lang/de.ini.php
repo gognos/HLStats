@@ -262,6 +262,8 @@ Show ingame stat report = Zeige Punkte im Spiel
 The response is done via rcon and the option RCONSAY. Reports current skill points after event/frag back into game = Die Antwort wird über Rcon und der Option RCONSAY gemacht. Es werden die aktuellen Skill Punkte bei einem Frag / Event in das Spiel zurückgesendet
 For this player-activity.pl script needs to be executed once a day = Tage nach dem ein Spieler als inaktiv gewertet wird. Dazu muss player-acitivity.pl einmal pro Tag ausgeführt werden
 Days after a player is inactive = Tage nach dem ein Spieler als inaktiv gewertet wird
+Strip some common tags = Entferne Tags von Spielernamen
+Strip common tags from player names eg. CD or NO-CD. See documentation for more details = Entferne Tags aus Spielernamen wie CD oder NO-CD. Siehe Dokumentation für mehr Details
 
 Passwords are encrypted in the database and so cannot be viewed. However, you can change a user's password by entering a new plain text value in the Password field = Passwörter werden verschlüsselt in der Datenbank abgespeichert und können nicht wieder hergestellt werden. Es kann daher nur ein neues Passwort vergeben werden.
 Note: After changing the admin password you need to authenticate again. = Hinweis: Nach Änderung des Passwortes muss man sich neu anmelden.
