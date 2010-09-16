@@ -281,8 +281,9 @@ $rcol = "row-dark";
 			</th>
 			<td>
 			   <?php
-				$email = getEmailLink($playerObj->getParam("email"));
-				if (!empty($email)) {
+				$email = $playerObj->getParam("email");
+				if(!empty($email)) {
+					$email = getEmailLink($playerObj->getParam("email"));
 					echo $email;
 				} else {
 					echo l("Unknown");
