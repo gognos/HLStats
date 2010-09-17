@@ -110,6 +110,13 @@ $opt_help = 0;
 $opt_version = 0;
 $g_lan_hack = 1;
 
+## signint handling
+$SIG{INT} = \&endThis;
+sub endThis {
+	print "--- Ending.\n";
+	exit 1;
+}
+
 
 # Usage message
 $usage = <<EOT
