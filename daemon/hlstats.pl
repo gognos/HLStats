@@ -192,8 +192,8 @@ print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_use
 
 $db_conn = DBI->connect(
 	"DBI:mysql:$db_name:$db_host",
-	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 'mysql_auto_reconnect' => 1,
-				'ShowErrorStatement' => 1 }
+	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 
+				'mysql_auto_reconnect' => 1, 'ShowErrorStatement' => 1 }
 ) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
 	"Server error: $DBI::errstr\n");
 
