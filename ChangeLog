@@ -27,6 +27,8 @@ HLStats ChangeLog
 		shown.
 *) New: Daily awards have a history. The data will be kept as log as
 		DELETEDAYS is defined.
+*) New: hlstats-screen.sh script to start HLStats within the screen
+		command. thx to Schakal
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Changed: Options moved from conf files into DB, but information
