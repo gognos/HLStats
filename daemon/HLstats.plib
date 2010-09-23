@@ -85,14 +85,14 @@ sub doQuery
 				{ 'RaiseError' => 'mysql_enable_utf8' => 1, 'mysql_auto_reconnect' => 1,
 					'ShowErrorStatement' => 1})
 			or die("Unable to connect to MySQL server");
-		
+
 		my $rs = $db_conn->prepare("SET character set utf8");
 		$rs->execute;
-		
+
 		my $rs = $db_conn->prepare("SET NAMES utf8");
 		$rs->execute;
 	}
-	
+
 
 	my $result = $db_conn->prepare($query)
 		or die("Unable to prepare query:\n$query\n$DBI::errstr\n$callref");
@@ -868,7 +868,7 @@ sub getPlayerInfo
 	return 0 if ($uniqueid eq "HLTV");
 
 	if($g_ignore_bots) {
-		return 0 if ($uniqueid =~ /^BOT:/);
+		return 0 if ($uniqueid =~ /^BOT/);
 	}
 
 	if ($forced_uniqueid) {
@@ -886,10 +886,11 @@ sub getPlayerInfo
 				team     => $team
 			};
 		}
-		elsif($uniqueid =~ /^BOT:/) {
+		elsif($uniqueid =~ /^BOT/) {
 			$md5 = Digest::MD5->new;
 			$md5->add($name);
 			$md5->add($s_addr);
+
 
 			$uniqueid = "BOT:" . $md5->hexdigest;
 			$forced_uniqueid = $uniqueid if ($g_mode eq "LAN");

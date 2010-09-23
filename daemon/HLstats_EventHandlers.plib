@@ -106,15 +106,13 @@ sub doEvent_EnterGame
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
-	if ($player)
-	{
+	if ($player) {
 		&recordEvent(
 			"Entries", 0,
 			$player->get("playerid")
 		);
 	}
-	else
-	{
+	else {
 		$desc = "(IGNORED) NOPLAYERINFO: ";
 	}
 

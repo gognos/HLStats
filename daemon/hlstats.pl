@@ -54,6 +54,7 @@ $opt_configfile_name = "hlstats.conf.ini";
 
 use strict;
 no strict 'vars';
+
 use POSIX;
 use Getopt::Long;
 use Time::Local;
@@ -61,6 +62,11 @@ use IO::Socket;
 use DBI;
 use Digest::MD5;
 use File::Basename;
+use Encode;
+use open qw( :std :encoding(UTF-8) );
+
+# debug
+use Data::Dumper;
 
 use Config::Tiny; ## new config syntax
 
@@ -77,6 +83,8 @@ require "$opt_libdir/HLStats_ServerQueries.pm";
 
 $|=1;
 Getopt::Long::Configure ("bundling");
+
+open STDERR, ">>./hlstats_error.log" or die $!;
 
 ##
 ## MAIN
@@ -192,7 +200,7 @@ print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_use
 
 $db_conn = DBI->connect(
 	"DBI:mysql:$db_name:$db_host",
-	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 
+	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1,
 				'mysql_auto_reconnect' => 1, 'ShowErrorStatement' => 1 }
 ) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
 	"Server error: $DBI::errstr\n");
@@ -343,6 +351,8 @@ while ($loop = &getLine()) {
 		$s_peerhost = $s_socket->peerhost;
 		$s_peerport = $s_socket->peerport;
 	}
+
+	$s_output = decode_utf8($s_output);
 
 	$s_addr = "$s_peerhost:$s_peerport";
 
