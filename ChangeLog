@@ -14,7 +14,7 @@ HLStats ChangeLog
 		url
 *) New: Steam profile page lookup via SteamID. BCmath support (PHP) is
 		needed.
-	http://www.php.net/manual/en/book.bc.php
+		http://www.php.net/manual/en/book.bc.php
 *) New: Clan Profile can new enter a steam group URL
 *) New: Daemon can now looup country and city. Using Maxmind GeoIP.
 		Please read the documentation on how to use this feature !!
