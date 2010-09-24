@@ -353,7 +353,7 @@ function getEmailLink ($email, $maxlength=40) {
 	$ret = '';
 	$regs = '';
 
-	if (ereg("(.+)@(.+)", $email, $regs)) {
+	if (preg_match("/(.+)@(.+)/", $email, $regs)) {
 		if (strlen($email) > $maxlength) {
 			$email_title = substr($email, 0, $maxlength-3) . "...";
 		} else {
@@ -427,6 +427,24 @@ function getGameName($gCode) {
 	return $gamename;
 }
 
+/**
+ * retireve the data from the _Options table
+ *
+ * @return $ret array
+ */
+function getOptions() {
+	$ret = array();
+
+	$query  = mysql_query("SELECT keyname, value FROM ".DB_PREFIX."_Options");
+	if (mysql_num_rows($query) > 0) {
+		while ($rowdata = mysql_fetch_assoc($query)) {
+			$ret[$rowdata['keyname']] = $rowdata['value'];
+		}
+	}
+
+	return $ret;
+}
+
 ######## THOSE FUNCTIONS BELOW SHOULD BE CHECKED ############
 /**
  * @todo functions to be checked
@@ -453,26 +471,7 @@ function error ($message, $exit=true) {
 }
 
 
-//
-// array getOptions (void)
-//
-// Retrieves HLStats option and style settings from the database.
-//
 
-function getOptions() {
-	$query  = mysql_query("SELECT keyname, value FROM ".DB_PREFIX."_Options");
-	if (mysql_num_rows($query) > 0) {
-		while ($rowdata = mysql_fetch_assoc($query))
-		{
-			$options[$rowdata['keyname']] = $rowdata['value'];
-		}
-		return $options;
-	}
-	else
-	{
-		return array();
-	}
-}
 
 
 

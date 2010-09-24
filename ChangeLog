@@ -14,7 +14,7 @@ HLStats ChangeLog
 		url
 *) New: Steam profile page lookup via SteamID. BCmath support (PHP) is
 		needed.
-	http://www.php.net/manual/en/book.bc.php
+		http://www.php.net/manual/en/book.bc.php
 *) New: Clan Profile can new enter a steam group URL
 *) New: Daemon can now looup country and city. Using Maxmind GeoIP.
 		Please read the documentation on how to use this feature !!
@@ -27,6 +27,8 @@ HLStats ChangeLog
 		shown.
 *) New: Daily awards have a history. The data will be kept as log as
 		DELETEDAYS is defined.
+*) New: hlstats-screen.sh script to start HLStats within the screen
+		command. thx to Schakal
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Changed: Options moved from conf files into DB, but information
@@ -61,6 +63,9 @@ HLStats ChangeLog
 *) Fixed: Issue #32
 *) Fixed: Issue #31
 *) Fixed: Issue #40
+*) Fixed: Issue #42
+*) Fixed: Issue #43
+*) Fixed: Issue #51
 
 
 1.51 (2009-11-23)

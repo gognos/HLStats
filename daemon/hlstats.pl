@@ -54,6 +54,7 @@ $opt_configfile_name = "hlstats.conf.ini";
 
 use strict;
 no strict 'vars';
+
 use POSIX;
 use Getopt::Long;
 use Time::Local;
@@ -61,6 +62,11 @@ use IO::Socket;
 use DBI;
 use Digest::MD5;
 use File::Basename;
+use Encode;
+use open qw( :std :encoding(UTF-8) );
+
+# debug
+use Data::Dumper;
 
 use Config::Tiny; ## new config syntax
 
@@ -77,6 +83,8 @@ require "$opt_libdir/HLStats_ServerQueries.pm";
 
 $|=1;
 Getopt::Long::Configure ("bundling");
+
+open STDERR, ">>./hlstats_error.log" or die $!;
 
 ##
 ## MAIN
@@ -103,13 +111,19 @@ $g_stdin = $Config->{System}->{Stdin};
 $g_server_ip = $Config->{System}->{ServerIP};
 $g_server_port = $Config->{System}->{ServerPort};
 $g_timestamp = $Config->{System}->{Timestamp};
-$g_option_strip_tags = $Config->{Options}->{StripTags};
 
 # Options
 # default values
 $opt_help = 0;
 $opt_version = 0;
 $g_lan_hack = 1;
+
+## signint handling
+$SIG{INT} = \&endThis;
+sub endThis {
+	print "--- Ending.\n";
+	exit 1;
+}
 
 
 # Usage message
@@ -186,8 +200,8 @@ print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_use
 
 $db_conn = DBI->connect(
 	"DBI:mysql:$db_name:$db_host",
-	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 'mysql_auto_reconnect' => 1,
-				'ShowErrorStatement' => 1 }
+	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1,
+				'mysql_auto_reconnect' => 1, 'ShowErrorStatement' => 1 }
 ) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
 	"Server error: $DBI::errstr\n");
 
@@ -218,6 +232,7 @@ $g_minplayers = $oHash{MINPLAYERS};
 $g_skill_maxchange = $oHash{SKILLMAXCHANGE};
 $g_log_chat = $oHash{LOGCHAT};
 $g_ingame_points = $oHash{INGAMEPOINTS};
+$g_option_strip_tags = $oHash{STRIPTAGS};
 
 print "OK\n";
 
@@ -337,17 +352,12 @@ while ($loop = &getLine()) {
 		$s_peerport = $s_socket->peerport;
 	}
 
+	$s_output = decode_utf8($s_output);
+
 	$s_addr = "$s_peerhost:$s_peerport";
 
 	## unwanted chars
 	$s_output =~ s/[\r\n\0]//g;	# remove naughty characters
-
-	if($g_option_strip_tags) {
-		$s_output =~ s/\[No.C-D\]//g;	# remove [No C-D] tag
-		$s_output =~ s/\[OLD.C-D\]//g;	# remove [OLD C-D] tag
-		$s_output =~ s/\[NOCL\]//g;		# remove [NOCL] tag
-		$s_output =~ s/\([0-9]\)//g;	# strip (1) and (2) from player names
-	}
 
 	# Get the server info, if we know the server, otherwise ignore the data
 	if (!$g_servers{$s_addr}) {
@@ -387,14 +397,12 @@ while ($loop = &getLine()) {
 
 		$ev_time  = "$ev_hour:$ev_min:$ev_sec";
 
-		if ($g_timestamp)
-		{
+		if ($g_timestamp) {
 			$ev_timestamp = "$ev_year-$ev_month-$ev_day $ev_time";
 			$ev_datetime  = "'$ev_timestamp'";
 			$ev_unixtime  = timelocal($ev_sec,$ev_min,$ev_hour,$ev_day,$ev_month-1,$ev_year);
 		}
-		else
-		{
+		else {
 			my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time());
 			$ev_timestamp = sprintf("%04d-%02d-%02d %02d:%02d:%02d",
 				$year+1900, $mon+1, $mday, $hour, $min, $sec);

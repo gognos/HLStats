@@ -51,9 +51,3 @@ ServerPort = 27015
 
 # set this only if you use STDIN
 Timestamp = 0
-
-[Options]
-# Strip some common tags
-# such as CD, NO-CD or (1) etc.
-# default 1=on 0=off
-StripTags = 1

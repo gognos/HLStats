@@ -75,6 +75,13 @@ sub new
 
 	# Set Property Values
 
+	if($::g_option_strip_tags) {
+		$params{name} =~ s/\[No.C-D\]//g;	# remove [No C-D] tag
+		$params{name} =~ s/\[OLD.C-D\]//g;	# remove [OLD C-D] tag
+		$params{name} =~ s/\[NOCL\]//g;		# remove [NOCL] tag
+		$params{name} =~ s/\([0-9]\)//g;	# strip (1) and (2) from player names
+	}
+
 	die("HLstats_Player->new(): must specify player's uniqueid\n")
 		unless (defined($params{uniqueid}));
 
@@ -162,16 +169,13 @@ sub increment
 #
 # Get value of property 'key'
 #
-sub get
-{
+sub get {
 	my ($self, $key) = @_;
 
-	if (defined($self->{$key}))
-	{
+	if (defined($self->{$key})) {
 		return $self->{$key};
 	}
-	else
-	{
+	else {
 		warn("HLstats_Player->get: \"$key\" is not a valid property name\n");
 	}
 }

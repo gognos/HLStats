@@ -80,7 +80,6 @@ if (isset($_GET["sortorder"])) {
 }
 
 // get the data
-// @todo to improve the spead of this query..
 $killCount = mysql_query("SELECT COUNT(".DB_PREFIX."_Players.playerId) kc
 	FROM ".DB_PREFIX."_Events_Frags
 	LEFT JOIN ".DB_PREFIX."_Players ON
@@ -91,7 +90,6 @@ $totalkills = $result['kc'];
 mysql_free_result($killCount);
 
 if(!empty($totalkills)) {
-	// @todo to improve this query for speed
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			".DB_PREFIX."_Events_Frags.weapon,
 			".DB_PREFIX."_Weapons.modifier AS modifier,
@@ -242,44 +240,3 @@ pageHeader(
 	?>
 	</table>
 </div>
-<?php
-/*
-$tblWeapons = new Table(
-	array(
-		new TableColumn(
-			"weapon",
-			"Weapon",
-			"width=21&type=weaponimg&align=center&link=" . urlencode("mode=weaponinfo&amp;weapon=%k&amp;game=$game")
-		),
-		new TableColumn(
-			"modifier",
-			"Points Modifier",
-			"width=10&align=right"
-		),
-		new TableColumn(
-			"kills",
-			"Kills",
-			"width=12&align=right"
-		),
-		new TableColumn(
-			"percent",
-			"Percentage of Kills",
-			"width=40&sort=no&type=bargraph"
-		),
-		new TableColumn(
-			"percent",
-			"%",
-			"width=12&sort=no&align=right&append=" . urlencode("%")
-		)
-	),
-	"weapon",
-	"kills",
-	"weapon",
-	true,
-	9999,
-	"weap_page",
-	"weap_sort",
-	"weap_sortorder"
-);
-	 */
-?>

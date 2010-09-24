@@ -58,7 +58,7 @@ date_default_timezone_set('Europe/Berlin');
  * if you have problems with your installation
  * activate this paramter by setting it to true
  */
-define('SHOW_DEBUG',true);
+define('SHOW_DEBUG',false);
 
 // do not display errors in live version
 if(SHOW_DEBUG === true) {
@@ -79,11 +79,7 @@ require('hlstatsinc/hlstats.conf.php');
  * load the global functions
  */
 require("hlstatsinc/functions.inc.php");
-/**
- * the old class system
- * @todo remove
- */
-require("hlstatsinc/classes.inc.php");
+
 
 ////
 //// Initialisation

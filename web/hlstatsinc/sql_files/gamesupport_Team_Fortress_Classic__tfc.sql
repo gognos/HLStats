@@ -42,8 +42,8 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Teleporter_Exit_Fin
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Built_Dispenser',8,0,'0','Built Dispenser','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Discovered_Spy',2,0,'0','Discovered a Spy','1','0','0','0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Dispenser_Destroyed',5,0,'0','Dispenser Destroyed','1','0','0','0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Medic_Heal', '1', '0', '', 'Heal', '0', '1', '0', '0');
-INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc','Hallucination_Grenade','Hallucination_Grenade',0.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc', 'Medic_Heal', '1', '0', '', 'Heal', '0', '1', '0', '0');
+INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'tfc', 'Hallucination_Grenade', '1', '0', '', 'Hallucination', '0', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Concussion_Grenade', '1', '0', '', 'Concussion Grenade  / Shockwave' , '0', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Caltrop_Grenade', '1', '0', '', 'Caltrops' , '0', '1', '0', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL , 'tfc', 'Sentry_Upgrade_Level_1', '3', '0', '', 'Upgrade Sentry', '1', '1', '0', '0');

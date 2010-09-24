@@ -139,7 +139,6 @@ class Chart {
 	 * @return string The path to the created chart image
 	 */
 	public function getChart($mode,$extra=false) {
-		$this->_loadClasses();
 
 		$chart = false;
 		$modeString = '';
@@ -179,6 +178,8 @@ class Chart {
 			$chart = $this->_option['chartFile'];
 		}
 		else {
+			$this->_loadClasses();
+
 			// remove old charts
 			$this->_cleanOldCharts($this->_game.'-'.$modeString);
 			// create the chart
@@ -306,7 +307,7 @@ class Chart {
 				else { $xLine[] = ''; }
 				$c++;
 			}
-			
+
 			// add the players
 			$this->_pData->AddPoint($connects,'1');
 			$this->_pData->AddSerie('1');
@@ -424,14 +425,13 @@ class Chart {
 	 * @return void
 	 */
 	private function _loadClasses() {
-		require_once('class/pchart/pData.class.php');
-		require_once('class/pchart/pChart.class.php');
-
 		if($this->_pData == false) {
+			require_once('class/pchart/pData.class.php');
 			$this->_pData = new pData();
 		}
 
 		if($this->_pChart == false) {
+			require_once('class/pchart/pChart.class.php');
 			$this->_pChart = new pChart($this->_option['width'],$this->_option['height']);
 		}
 	}
