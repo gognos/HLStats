@@ -110,7 +110,7 @@ if(isset($_POST['sub']['saveAwards'])) {
 		$newOne = trim($_POST['newcode']);
 		if(!empty($newOne)) {
 			$name = trim($_POST['newname']);
-			$verb = trim($_POST['verb']);
+			$verb = trim($_POST['newverb']);
 
 			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Awards`
 									SET `code` = '".mysql_escape_string($newOne)."',
