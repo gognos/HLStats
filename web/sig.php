@@ -142,6 +142,9 @@ if($g_options['allowSig'] == "1") {
 		// check if we have already a picture.
 		// // if so use this end exit
 		if(file_exists($picPath."preRender/".$playerId.".png") && SHOW_DEBUG === false) {
+			header("Pragma: ");
+			header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+			header("Cache-Control: ");
 			header("Content-type: image/png");
 			readfile($picPath."preRender/".$playerId.".png");
 			exit();
@@ -293,6 +296,9 @@ if($g_options['allowSig'] == "1") {
 		imagettftext($imgH, 9, 0, $textPos, 40, $foreground, $font, html_entity_decode($text,ENT_COMPAT,"UTF-8"));
 
 		// display the image
+		header("Pragma: ");
+		header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+		header("Cache-Control: ");
 		header("Content-type: image/png");
 		imagepng($imgH,$picPath."preRender/".$playerId.".png");
 		imagepng($imgH);
