@@ -112,17 +112,6 @@ else {
 	$playersObj->setOption("sortorder",'DESC');
 }
 
-/**
- * the rating system
- * @todo remove
- */
-$rdlimit = 1000;
-if (isset($_GET["rdlimit"])) {
-	$check = validateInput($_GET['rdlimit'],'digit');
-	$rdlimit = $_GET["rdlimit"];
-}
-$rd2limit = $rdlimit * $rdlimit;
-
 pageHeader(
 	array($gamename, l('Player Rankings')),
 	array($gamename => "index.php?game=$game", l('Player Rankings')=>"")

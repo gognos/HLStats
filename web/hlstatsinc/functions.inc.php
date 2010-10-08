@@ -151,7 +151,7 @@ function makeXMLSave($string) {
  */
 function validateInput($string,$mode) {
 	$ret = false;
-	if(!empty($string) && !empty($mode)) {
+	if($string != "" && !empty($mode)) {
 		switch ($mode) {
 			case 'nospace':
 				$pattern = '/[^\p{L}\p{N}\p{P}]/u';

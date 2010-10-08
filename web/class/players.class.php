@@ -183,6 +183,8 @@ class Players {
 			$queryStr .=" LIMIT ".$start.",50";
 		}
 
+		var_dump($queryStr);
+
 		$query = mysql_query($queryStr);
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
