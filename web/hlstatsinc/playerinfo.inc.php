@@ -363,6 +363,19 @@ $rcol = "row-dark";
 			   ?>
 			</td>
 		</tr>
+		<?php if($g_options['allowSig'] === "1") { ?>
+		<tr>
+			<th><?php echo l('Signature'); ?></th>
+			<td colspan="3">
+				<a href="<?php echo 'sig.php?playerId='.$player.'&style=black'; ?>"><?php echo l('Black'); ?></a> |
+				<a href="<?php echo 'sig.php?playerId='.$player.'&style=red'; ?>"><?php echo l('Red'); ?></a> |
+				<a href="<?php echo 'sig.php?playerId='.$player.'&style=blue'; ?>"><?php echo l('Blue'); ?></a> |
+				<a href="<?php echo 'sig.php?playerId='.$player.'&style=green'; ?>"><?php echo l('Green'); ?></a> |
+				<a href="<?php echo 'sig.php?playerId='.$player.'&style=multi'; ?>"><?php echo l('Multi'); ?></a><br />
+				<small><?php echo l('Size: 400x100 png with transparent background'); ?></small>
+			</td>
+		</tr>
+		<?php } ?>
 	</table>
 <?php
 $aliases = $playerObj->getParam('aliases');

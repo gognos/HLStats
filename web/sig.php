@@ -85,11 +85,11 @@ $g_options = getOptions();
  * and sanitize of the get vars
  */
 $picPath = dirname(__FILE__)."/signatures/";
-if($_GET['style'] != "") {
+if(isset($_GET['style']) && !empty($_GET['style'])) {
 	$style = sanitize($_GET['style']);
 }
 else {
-	$style = "cs1";
+	$style = "black";
 }
 
 // check for playerId
@@ -141,7 +141,7 @@ if($g_options['allowSig'] == "1") {
 
 		// check if we have already a picture.
 		// // if so use this end exit
-		if(file_exists($picPath."preRender/".$playerId.".png")) {
+		if(file_exists($picPath."preRender/".$playerId.".png") && SHOW_DEBUG === false) {
 			header("Content-type: image/png");
 			readfile($picPath."preRender/".$playerId.".png");
 			exit();
@@ -177,7 +177,7 @@ if($g_options['allowSig'] == "1") {
 		// server info
 		$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Events_Connects
 					WHERE playerId = '".$playerId."' LIMIT 1");
-		$result = mysql_fetch_assco($query);
+		$result = mysql_fetch_assoc($query);
 		$serverId = $result['serverId'];
 		mysql_free_result($query);
 

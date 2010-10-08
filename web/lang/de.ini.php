@@ -599,6 +599,14 @@ MySpace = MySpace
 Facebook = Facebook
 Jabber = Jabber
 Steam Profile = Steam Profil
+Signature = Signatur
+Use this link to get the signature = Verwenden diesen Link für die Signatur
+Black = Schwarz
+Red = Rot
+Green = Grün
+Multi = Bunt
+Blue = Blau
+Size: 400x100 png with transparent background = Größe: 400x100 png mit transparentem Hintergrund
 
 Event History = Aktion Verlauf
 Host Statistics = Host Statistiken
