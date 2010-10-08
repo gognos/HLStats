@@ -325,6 +325,9 @@ $xmlReturn .= $xmlBody;
 $xmlReturn .= '</root>';
 
 // return the xml data
+header("Pragma: ");
+header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+header("Cache-Control: ");
 header('Content-type: text/xml');
 echo $xmlReturn;
 ?>
