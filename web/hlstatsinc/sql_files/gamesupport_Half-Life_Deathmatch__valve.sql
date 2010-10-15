@@ -29,6 +29,7 @@ INSERT IGNORE INTO ++DB_PREFIX++_Awards VALUES (NULL,'W','valve','satchel','Lord
 INSERT IGNORE INTO ++DB_PREFIX++_Awards VALUES (NULL,'W','valve','shotgun','Redneck','kills with shotgun',NULL,NULL);
 INSERT IGNORE INTO ++DB_PREFIX++_Awards VALUES (NULL,'W','valve','snark','Snark Master','kills with snark',NULL,NULL);
 INSERT IGNORE INTO ++DB_PREFIX++_Awards VALUES (NULL,'W','valve','tripmine','Shady Assassin','kills with tripmine',NULL,NULL);
+INSERT IGNORE INTO ++DB_PREFIX++_Awards VALUES (NULL,'W','valve','snownball','News Years Dwarf','kills with snowball',NULL,NULL);
 
 
 #
@@ -49,3 +50,5 @@ INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'valve','satchel','Satchel
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'valve','shotgun','Shotgun',1.20);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'valve','snark','Snark',1.80);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'valve','tripmine','Trip Mine',1.60);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'valve','Tank','Tank',1.20);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'valve','snowball','Snow Ball',1.20);
