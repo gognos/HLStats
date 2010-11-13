@@ -66,7 +66,7 @@ if(isset($_POST['saveNews'])) {
 		$result = mysql_query("INSERT INTO ".DB_PREFIX."_News
 							VALUES ('',
 									'".$newsdate."',
-									'".mysql_escape_string($adminObj-getUsername())."',
+									'".mysql_escape_string($adminObj->getUsername())."',
 									'".mysql_escape_string($_POST["email"])."',
 									'".mysql_escape_string($subject)."',
 									'".mysql_escape_string($message)."')
