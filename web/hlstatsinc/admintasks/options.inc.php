@@ -352,10 +352,10 @@ pageHeader(array(l("Admin"),l('Options')), array(l("Admin")=>"index.php?mode=adm
 				</th>
 				<td>
 					<select name="option[RCONSAY]">
-						<option value="0" <?php if($g_options['RCONSAY'] === "say") echo 'selected="1"'; ?>><?php echo l('Ordinary say command'); ?></option>
-						<option value="1"<?php if($g_options['RCONSAY'] === "admin_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say adminMod'); ?></option>
-						<option value="1"<?php if($g_options['RCONSAY'] === "amx_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say with amxMod'); ?></option>
-						<option value="1"<?php if($g_options['RCONSAY'] === "sm_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say with sourceMod'); ?></option>
+						<option value="say" <?php if($g_options['RCONSAY'] === "say") echo 'selected="1"'; ?>><?php echo l('Ordinary say command'); ?></option>
+						<option value="admin_psay"<?php if($g_options['RCONSAY'] === "admin_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say adminMod'); ?></option>
+						<option value="amx_psay"<?php if($g_options['RCONSAY'] === "amx_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say with amxMod'); ?></option>
+						<option value="sm_psay"<?php if($g_options['RCONSAY'] === "sm_psay") echo 'selected="1"'; ?>><?php echo l('Return a private say with sourceMod'); ?></option>
 					</select><br />
 					<small>
 						<?php echo l('How the Rcon say command would be returned'); ?>
