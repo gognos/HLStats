@@ -62,11 +62,11 @@ define('SHOW_DEBUG',true);
 
 // do not display errors in live version
 if(SHOW_DEBUG === true) {
-	error_reporting(8191);
+	error_reporting(-1);
 	ini_set('display_errors',true);
 }
 else {
-	error_reporting(8191);
+	error_reporting(-1);
 	ini_set('display_errors',false);
 }
 

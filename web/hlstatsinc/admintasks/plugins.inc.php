@@ -83,7 +83,7 @@ if(isset($_POST['sub']['saveAddons'])) {
 			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Server_Addons`
 									SET `rule` = '".mysql_escape_string($newOne)."',
 										`addon` = '".mysql_escape_string($newAdd)."',
-										`url` = '".mysql_escape_string($newurl)."'");
+										`url` = '".mysql_escape_string($newURL)."'");
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
