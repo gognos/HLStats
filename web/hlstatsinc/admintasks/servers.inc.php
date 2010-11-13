@@ -199,7 +199,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				</td>
 				<td class="<?php echo ($rcol); ?>" valign="top">
 					<b><?php echo l('IP Address'); ?> :</b><br />
-					<input size="10" type="text" name="server[<?php echo $s['serverId']; ?>]" value="<?php echo $s['address']; ?>" /><br />
+					<input type="text" name="server[<?php echo $s['serverId']; ?>]" value="<?php echo $s['address']; ?>" /><br />
 					<b><?php echo l('Port'); ?> :</b><br />
 					<input size="5" type="text" name="port[<?php echo $s['serverId']; ?>]" value="<?php echo $s['port']; ?>" /><br />
 					<b><?php echo l('Server Name'); ?> :</b><br />
@@ -207,7 +207,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				</td>
 				<td class="<?php echo ($rcol); ?>" valign="top">
 					<?php echo l('Rcon Password'); ?> :<br />
-					<input size="10"  type="text" name="rcon[<?php echo $s['serverId']; ?>]" value="<?php echo $s['rcon_password']; ?>" /><br />
+					<input type="text" name="rcon[<?php echo $s['serverId']; ?>]" value="<?php echo $s['rcon_password']; ?>" /><br />
 					<?php echo l('Public Address'); ?> :<br />
 					<input type="text" name="pub[<?php echo $s['serverId']; ?>]" value="<?php echo $s['publicaddress']; ?>" /><br />
 					<?php echo l('Status URL'); ?> :<br />
@@ -225,7 +225,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				</td>
 				<td class="<?php echo ($rcol); ?>" valign="top">
 					<b><?php echo l('IP Address'); ?> :</b><br />
-					<input size="10" type="text" name="newIP" value="" /><br />
+					<input type="text" name="newIP" value="" /><br />
 					<b><?php echo l('Port'); ?> :</b><br />
 					<input size="5" type="text" name="newport" value="" /><br />
 					<b><?php echo l('Server Name'); ?> :</b><br />
@@ -233,7 +233,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 				</td>
 				<td class="<?php echo ($rcol); ?>">
 					<?php echo l('Rcon Password'); ?> :<br />
-					<input size="10"  type="text" name="newrcon" value="" /><br />
+					<input type="text" name="newrcon" value="" /><br />
 					<?php echo l('Public Address'); ?> :<br />
 					<input type="text" name="newpub" value="" /><br />
 					<?php echo l('Status URL'); ?> :<br />
