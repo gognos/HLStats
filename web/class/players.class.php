@@ -186,7 +186,7 @@ class Players {
 		$query = mysql_query($queryStr);
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
-				$result['kpd'] = number_format((int)$result['kpd'],1,'.','');
+				$result['kpd'] = number_format($result['kpd'],2,'.','');
 				$result['lastName'] = makeSavePlayerName($result['lastName']);
 
 				$result['isBot'] = 0;

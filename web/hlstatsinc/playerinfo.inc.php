@@ -227,7 +227,7 @@ $rcol = "row-dark";
 			<th><?php echo l("Average Ping"); ?></th>
 			<td><?php echo $playerObj->getParam('avgPing'); ?></td>
 			<th><?php echo l("Kills per Death"); ?></th>
-			<td><?php echo number_format((int)$playerObj->getParam("kpd"),1); ?></t>
+			<td><?php echo number_format($playerObj->getParam("kpd"),2); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<td colspan="2">&nbsp;</td>
@@ -237,7 +237,7 @@ $rcol = "row-dark";
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<td colspan="2">&nbsp;</td>
 			<th><?php echo l("Weapon Accuracy"); ?></th>
-			<td><?php echo number_format((int)$playerObj->getParam("accuracy"),1); ?>%</td>
+			<td><?php echo number_format($playerObj->getParam("accuracy"),2); ?>%</td>
 		</tr>
 	</table>
 	<a name="profile"></a>
@@ -403,7 +403,7 @@ if(!empty($aliases)) { ?>
 			echo '<td>',$entry['lastuse'],'</td>';
 			echo '<td>',$entry['kills'],'</td>';
 			echo '<td>',$entry['deaths'],'</td>';
-			echo '<td>',number_format((int)$entry['kpd'],1),'</td>';
+			echo '<td>',number_format($entry['kpd'],2),'</td>';
 			echo '<td>',$entry['suicides'],'</td>';
 			echo '</tr>';
 		}
@@ -591,10 +591,10 @@ if(!empty($weaponStats)) { ?>
 			echo '<td>',$entry['smheadshots'],'</td>';
 			echo '<td>',$entry['smkills'],'</td>';
 			echo '<td>',$entry['smdeaths'],'</td>';
-			echo '<td>',number_format((int)$entry['smkdr'],1),'</td>';
-			echo '<td>',number_format((int)$entry['smaccuracy'],1),'%</td>';
-			echo '<td>',number_format((int)$entry['smdhr'],1),'</td>';
-			echo '<td>',number_format((int)$entry['smspk'],1),'</td>';
+			echo '<td>',number_format($entry['smkdr'],2),'</td>';
+			echo '<td>',number_format($entry['smaccuracy'],2),'%</td>';
+			echo '<td>',number_format($entry['smdhr'],2),'</td>';
+			echo '<td>',number_format($entry['smspk'],2),'</td>';
 			echo '</tr>';
 		}
 		?>
@@ -668,7 +668,7 @@ if(!empty($maps)) { ?>
 			echo '<div class="percentBar"><div class="barContent" style="width:',number_format((int)$entry['percentage'],0),'px"></div></div>',"\n";
 			echo '</td>';
 			echo '<td>',$entry['deaths'],'</td>';
-			echo '<td>',number_format((int)$entry['kpd'],1),'</td>';
+			echo '<td>',number_format($entry['kpd'],2),'</td>';
 			echo '</tr>';
 		}
 		?>
@@ -708,7 +708,7 @@ if(!empty($playerKillStats)) { ?>
 			echo '</td>';
 			echo '<td>',$entry['kills'],'</td>';
 			echo '<td>',$entry['deaths'],'</td>';
-			echo '<td>',number_format((int)$entry['kpd'],1),'</td>';
+			echo '<td>',number_format($entry['kpd'],2),'</td>';
 			echo '</tr>';
 		}
 		?>

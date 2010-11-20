@@ -297,7 +297,7 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo number_format((int)$entry['kpd'],1);
+				echo number_format($entry['kpd'],2);
 				echo '</td>',"\n";
 
 				echo '</tr>';
