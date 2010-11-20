@@ -660,7 +660,7 @@ class Player {
 					".DB_PREFIX."_Players.kills,
 					".DB_PREFIX."_Players.deaths,
 					".DB_PREFIX."_Players.hideranking,
-					IFNULL(kills/deaths, '-') AS kpd,
+					IFNULL(kills/deaths, 0) AS kpd,
 					".DB_PREFIX."_Players.suicides,
 					CONCAT(".DB_PREFIX."_Clans.tag, ' ', ".DB_PREFIX."_Clans.name) AS clan_name
 				FROM
@@ -864,7 +864,7 @@ class Player {
 	private function _getAliasTable() {
 		$this->_playerData['aliases'] = array();
 		$query = mysql_query("SELECT name, lastuse, numuses, kills,
-								  deaths, IFNULL(kills / deaths,'-') AS kpd,suicides
+								  deaths, IFNULL(kills / deaths,0) AS kpd,suicides
 							  FROM ".DB_PREFIX."_PlayerNames
 							  WHERE playerId='".mysql_escape_string($this->playerId)."'
 							  ORDER BY lastuse DESC
@@ -1029,7 +1029,7 @@ class Player {
 							(SUM(".DB_PREFIX."_Events_Statsme.deaths))
 						) as smkdr,
 					(SUM(".DB_PREFIX."_Events_Statsme.hits) / SUM(".DB_PREFIX."_Events_Statsme.shots) * 100) as smaccuracy,
-					IFNULL(((SUM(".DB_PREFIX."_Events_Statsme.shots) / SUM(".DB_PREFIX."_Events_Statsme.kills))), '-') as smspk
+					IFNULL(((SUM(".DB_PREFIX."_Events_Statsme.shots) / SUM(".DB_PREFIX."_Events_Statsme.kills))), 0) as smspk
 				FROM ".DB_PREFIX."_Events_Statsme
 					LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Statsme.serverId
 					LEFT JOIN ".DB_PREFIX."_Weapons ON ".DB_PREFIX."_Weapons.code = ".DB_PREFIX."_Events_Statsme.weapon
@@ -1088,7 +1088,7 @@ class Player {
 		$query = mysql_query("SELECT IF(map='', '(Unaccounted)', map) AS map,
 			SUM(killerId=".mysql_escape_string($this->playerId).") AS kills,
 			SUM(victimId=".mysql_escape_string($this->playerId).") AS deaths,
-			IFNULL(SUM(killerId=".mysql_escape_string($this->playerId).") / SUM(victimId=".mysql_escape_string($this->playerId)."), '-') AS kpd,
+			IFNULL(SUM(killerId=".mysql_escape_string($this->playerId).") / SUM(victimId=".mysql_escape_string($this->playerId)."), 0) AS kpd,
 			CONCAT(SUM(killerId=".mysql_escape_string($this->playerId).")) / ".mysql_escape_string($this->_playerData['kills'])." * 100 AS percentage
 		FROM ".DB_PREFIX."_Events_Frags
 		LEFT JOIN ".DB_PREFIX."_Servers ON
@@ -1142,7 +1142,7 @@ class Player {
 					Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.deaths) AS deaths,
 					".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId as victimId,
 					IFNULL(Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills)/Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.deaths),
-					IFNULL(FORMAT(Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills), 2), '-')) AS kpd
+					IFNULL(FORMAT(Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills), 2), 0)) AS kpd
 				FROM ".DB_PREFIX."_".$this->playerId."_Frags_Kills
 					INNER JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId = ".DB_PREFIX."_Players.playerId
 					INNER JOIN ".DB_PREFIX."_PlayerUniqueIds ON ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId = ".DB_PREFIX."_PlayerUniqueIds.playerId

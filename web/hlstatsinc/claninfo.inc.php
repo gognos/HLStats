@@ -131,7 +131,7 @@ $cl_full = $cl_tag . " " . $cl_name;
 // now get the clan memebers
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			playerId, lastName, skill, oldSkill, kills, deaths, active,
-			IFNULL(kills/deaths, '-') AS kpd,
+			IFNULL(kills/deaths, 0) AS kpd,
 			(kills/" . mysql_escape_string($clandata["kills"]) . ") * 100 AS percent
 		FROM ".DB_PREFIX."_Players
 		WHERE clan=".mysql_escape_string($clan)."

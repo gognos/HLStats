@@ -810,7 +810,7 @@ sub doEvent_Chat
 		my $result = &doQuery("
 				SELECT
 					skill,
-					IFNULL(kills/deaths, '-') AS kpd
+					IFNULL(kills/deaths,0) AS kpd
 				FROM
 					${db_prefix}_Players
 				WHERE
@@ -838,7 +838,7 @@ sub doEvent_Chat
 		my $result = &doQuery("
 				SELECT
 					skill,
-					IFNULL(kills/deaths, '-') AS kpd
+					IFNULL(kills/deaths,0) AS kpd
 				FROM
 					${db_prefix}_Players
 				WHERE

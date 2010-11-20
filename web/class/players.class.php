@@ -137,7 +137,7 @@ class Players {
 				t1.kills,
 				t1.deaths,
 				t1.active,
-				IFNULL(t1.kills/t1.deaths, '-') AS kpd,
+				IFNULL(t1.kills/t1.deaths,0) AS kpd,
 				DATE(t1.lastUpdate) AS lastUpdate,
 				t2.uniqueId
 			FROM

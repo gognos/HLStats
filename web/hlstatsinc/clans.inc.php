@@ -104,7 +104,7 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 		SUM(".DB_PREFIX."_Players.kills) AS kills,
 		SUM(".DB_PREFIX."_Players.deaths) AS deaths,
 		ROUND(AVG(".DB_PREFIX."_Players.skill)) AS skill,
-		IFNULL(SUM(".DB_PREFIX."_Players.kills) / SUM(".DB_PREFIX."_Players.deaths), '-') AS kpd
+		IFNULL(SUM(".DB_PREFIX."_Players.kills) / SUM(".DB_PREFIX."_Players.deaths), 0) AS kpd
 	FROM ".DB_PREFIX."_Clans
 	LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.clan=".DB_PREFIX."_Clans.clanId
 	WHERE ".DB_PREFIX."_Clans.game='".mysql_escape_string($game)."'
