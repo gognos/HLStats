@@ -20,6 +20,7 @@ Currently disabled ! = Aktuell nicht aktiv.
 Could not save data = Daten konnten nicht gespeichert werden
 Data saved = Daten gespeichert
 Data could not be saved = Daten konnten nicht gespeichert werden
+Invalid Input = Ungültige Angabe
 
 Contents = Übersicht
 Games = Spiele

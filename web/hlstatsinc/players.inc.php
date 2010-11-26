@@ -176,7 +176,19 @@ pageHeader(
 		<?php
 		echo '<tr><td colspan="6" align="right">';
 		if($pData['pages'] > 1) {
-			for($i=1;$i<=$pData['pages'];$i++) {
+			$si = 1;
+			$ei = $pData['pages'];
+			if($playersObj->getOption('page') > 10) {
+				echo "<a href='index.php?",makeQueryString(array('page'=>1)),"'>[1]</a>...";
+				echo "<a href='index.php?",makeQueryString(array('page'=>$playersObj->getOption('page')-2)),"'>[",$playersObj->getOption('page')-2,"]</a>";
+				echo "<a href='index.php?",makeQueryString(array('page'=>$playersObj->getOption('page')-1)),"'>[",$playersObj->getOption('page')-1,"]</a>";
+				$si = $playersObj->getOption('page');
+			}
+			if($playersObj->getOption('page') < $pData['pages']-13) {
+				$si = 
+				$ei = $playersObj->getOption('page')+10;
+			}
+			for($i=$si;$i<=$ei;$i++) {
 				if($playersObj->getOption('page') == ($i)) {
 					echo "[",$i,"]";
 				}
@@ -452,5 +464,5 @@ pageHeader(
 		}
  */
     }
-	?>
+?>
 </div>
