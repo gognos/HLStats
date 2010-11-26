@@ -68,6 +68,14 @@ hours = Stunden
 mins = Minuten
 secs = Sekunden
 
+Monday = Montag
+Tuesday = Dienstag
+Wednesday = Mittwoch
+Thursday = Donnerstag
+Friday = Freitag
+Saturday = Samstag
+Sunday = Sonntag
+
 Awards = Auszeichnungen
 Daily = Tägliche
 Day = Tag

@@ -59,7 +59,7 @@ if (isset($_GET["date"])) {
 	}
 }
 $tmptime = strtotime($date);
-$awards_d_date = date('l d.m.',$tmptime);
+$awards_d_date = l(date('l',$tmptime).' '.date('d.m.',$tmptime);
 
 $query = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
 								".DB_PREFIX."_Awards.verb,

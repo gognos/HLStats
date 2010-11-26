@@ -75,7 +75,7 @@ if (!$g_options['hideAwards']) {
 									".DB_PREFIX."_Awards.name ASC");
 	if (mysql_num_rows($queryAwards) > 0) {
 		$tmptime = strtotime($g_options['awards_d_date']);
-		$awards_d_date = date('l d.m.',$tmptime);
+		$awards_d_date = l(date('l',$tmptime)).' '.date('d.m.',$tmptime);
 		while($result = mysql_fetch_assoc($queryAwards)) {
 			$awarddata_arr[] = $result;
 		}
@@ -267,7 +267,6 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		WHERE ".DB_PREFIX."_Servers.game='$game'");
 	$result = mysql_fetch_assoc($query);
 	$lastevent = $result['lastEvent'];
-	$lastevent = date("l d. F Y H:i:s T",strtotime($lastevent));
 	mysql_free_result($query);
 ?>
 <p>
@@ -276,7 +275,8 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 			<?php echo "<b>$num_players</b> ",l('players')," ",l('ranked on')," <b>$num_servers</b> ",l('servers'),"."; ?>
 		</li>
 <?php
-	if ($lastevent) {
+	if (!empty($lastevent)) {
+		$lastevent = l(date('l',strtotime($lastevent))).' '.date("d. m Y H:i:s T",strtotime($lastevent));
 ?>
 		<li>
 			<?php echo l("Last kill")," <b>$lastevent</b>"; ?>
