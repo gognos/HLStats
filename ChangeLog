@@ -29,6 +29,7 @@ HLStats ChangeLog
 		DELETEDAYS is defined.
 *) New: hlstats-screen.sh script to start HLStats within the screen
 		command. thx to Schakal
+*) New: Russian transaltion by E][tremist
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Changed: Options moved from conf files into DB, but information
