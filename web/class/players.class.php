@@ -213,16 +213,32 @@ class Players {
 	 * @return array
 	 */
 	public function getPlayerCountPerDay() {
-		//$data['connect'] = array();
-		//$data['disconnect'] = array();
 		$data = array();
 
-		$queryStr = "SELECT `playerId`,
-								DATE(lastUpdate) AS lastUpdate
-								FROM `".DB_PREFIX."_Players`
-								WHERE `game` = '".mysql_escape_string($this->_game)."'";
+		$queryStr = "SELECT `t1`.`playerId`,
+								DATE(t1.lastUpdate) AS lastUpdate
+								FROM `".DB_PREFIX."_Players` AS t1
+								INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId
+								WHERE `t1`.`game` = '".mysql_escape_string($this->_game)."'";
 
-		if($this->g_options['DELETEDAYS'] !== "0") {
+		// should we show all the players or not
+		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
+			$queryStr .= " ";
+		}
+		else {
+			$queryStr .= " AND t1.active = '1'";
+		}
+		
+		// should we hide the bots
+		if($this->_option['showBots'] === "0") {
+			$queryStr .= " AND `t2`.`uniqueID` not like 'BOT:%'";
+		}
+
+		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
+			// should we show only players from today
+			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
+		}
+		elseif($this->g_options['DELETEDAYS'] !== "0") {
 			$startTime = time()-(86400*$this->g_options['DELETEDAYS']);
 			$startDay = date("Y-m-d",$startTime);
 			$queryStr .= " HAVING lastUpdate > '".$startDay."'";

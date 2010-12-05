@@ -60,6 +60,7 @@ if (isset($_GET["minkills"])) {
 	}
 }
 if (isset($_GET["showall"])) {
+	
 	$check = validateInput($_GET['showall'],'digit');
 	if($check === true) {
 		$playersObj->setOption("showall",$_GET['showall']);
@@ -329,7 +330,7 @@ pageHeader(
 		require('class/chart.class.php');
 		$chartObj = new Chart($game);
 
-		$chart = $chartObj->getChart('playerActivity');
+		$chart = $chartObj->getChart('playerActivity',$playersObj);
 		echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
 		echo '<img src="',$chart,'" />';
 

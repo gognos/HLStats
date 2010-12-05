@@ -278,16 +278,19 @@ class Chart {
 
 	/**
 	 * get the chart for player activity
+	 * @param object $playersObj The already existing players Object
 	 *
 	 * @return the path to the image
 	 */
-	private function _getPlayerActivity() {
+	private function _getPlayerActivity($playersObj=false) {
 		$ret = false;
 
 		if(!in_array('Players',get_declared_classes())) {
 			require 'players.class.php';
 		}
-		$playersObj = new Players($this->_game);
+		if(!is_a($playersObj,'Players')) {
+			$playersObj = new Players($this->_game);
+		}
 		$data = $playersObj->getPlayerCountPerDay();
 
 		if(!empty($data)) {
