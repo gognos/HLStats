@@ -93,7 +93,7 @@ else {
 }
 
 // check for playerId
-if($_GET['playerId'] != "") {
+if($_GET['playerId'] != "" && validateInput($_GET['playerId'],'digit') === true) {
 	$playerId = sanitize($_GET['playerId']);
 	$playerId = (int)$playerId;
 }
@@ -151,7 +151,8 @@ if($g_options['allowSig'] == "1") {
 		}
 
 		// get the player data
-		$query = mysql_query("SELECT * FROM ".DB_PREFIX."_Players WHERE playerId = '".$playerId."'");
+		$query = mysql_query("SELECT * FROM ".DB_PREFIX."_Players
+							WHERE playerId = '".mysql_escape_string($playerId)."'");
 		$playerData = mysql_fetch_assoc($query);
 		if($playerData === false) {
 			// no player data !
@@ -165,7 +166,7 @@ if($g_options['allowSig'] == "1") {
 			FROM
 				".DB_PREFIX."_Players
 			WHERE
-				game='".$playerData['game']."'
+				game='".mysql_escape_string($playerData['game'])."'
 			ORDER BY skill DESC
 		");
 		$ranKnum = 1;
@@ -179,13 +180,16 @@ if($g_options['allowSig'] == "1") {
 
 		// server info
 		$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Events_Connects
-					WHERE playerId = '".$playerId."' LIMIT 1");
+					WHERE playerId = '".mysql_escape_string($playerId)."'
+					LIMIT 1");
 		$result = mysql_fetch_assoc($query);
 		$serverId = $result['serverId'];
 		mysql_free_result($query);
 
 		// now get the server info
-		$query = mysql_query("SELECT address,port,name FROM ".DB_PREFIX."_Servers WHERE serverId = ".$serverId['serverId']);
+		$query = mysql_query("SELECT address,port,name
+					FROM ".DB_PREFIX."_Servers
+					WHERE serverId = ".mysql_escape_string($serverId['serverId']));
 		$serverData = mysql_fetch_assoc($query);
 		mysql_free_result($query);
 
@@ -307,7 +311,7 @@ if($g_options['allowSig'] == "1") {
 	else {
 		// no jpeg support
 		// // we exit here.
-		echo "No support for creation a signature.";
+		echo "No support to create a signature.";
 		exit();
 	}
 }
