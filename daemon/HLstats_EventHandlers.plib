@@ -358,6 +358,7 @@ sub doEvent_Frag {
 			$killerName = $killer->get("name");
 			$victimName = $victim->get("name");
 
+			# if we have set to prive msg but have RconSay to "say" then do nothing
 			if($g_ingame_points) {
 				&rcon("$killerName \"You got $killerskill\(+$killerdiff\) for killing $victimName\"",1);
 			}
