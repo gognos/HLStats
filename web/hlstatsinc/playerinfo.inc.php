@@ -304,7 +304,7 @@ $rcol = "row-dark";
 			   ?>
 			</td>
 		</tr>
-		<tr>
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
 				<img src="hlstatsimg/site/website.png" alt="website" width="24" style="float: left;" />
 				&nbsp;<?php echo l("Home Page"); ?>
@@ -333,7 +333,7 @@ $rcol = "row-dark";
 			   ?>
 			</td>
 		</tr>
-		<tr>
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
 				<img src="hlstatsimg/site/icq.png" alt="ICQ" width="24" style="float: left;" />
 				&nbsp;<?php echo l("ICQ Number"); ?>
@@ -484,7 +484,7 @@ if(!empty($teamSelection)) { ?>
 			echo '<td>',$entry['name'],'</td>';
 			echo '<td>',$entry['teamcount'],'</td>';
 			echo '<td>';
-			echo '<div class="percentBar"><div class="barContent" style="width:',number_format((int)$entry['percent'],0),'px"></div></div>',"\n";
+			echo '<div class="percentBar" title="',number_format((int)$entry['percent'],0),'%"><div class="barContent" style="width:',number_format((int)$entry['percent'],0),'px"></div></div>',"\n";
 			echo '</td>';
 			echo '</tr>';
 		}
@@ -514,7 +514,7 @@ if(!empty($roleSelection)) { ?>
 			echo '<td>',$entry['name'],'</td>';
 			echo '<td>',$entry['rolecount'],'</td>';
 			echo '<td>';
-			echo '<div class="percentBar"><div class="barContent" style="width:',number_format((int)$entry['percent'],0),'px"></div></div>',"\n";
+			echo '<div class="percentBar" title="',number_format((int)$entry['percent'],0),'%"><div class="barContent" style="width:',number_format((int)$entry['percent'],0),'px"></div></div>',"\n";
 			echo '</td>';
 			echo '</tr>';
 		}
@@ -547,7 +547,7 @@ if(!empty($weaponUsage)) { ?>
 			echo '<td>',$entry['modifier'],'</td>',"\n";
 			echo '<td>',$entry['kills'],'</td>',"\n";
 			echo '<td>',"\n";
-			echo '<div class="percentBar"><div class="barContent" style="width:',number_format((int)$entry['percent'],0),'px"></div></div>',"\n";
+			echo '<div class="percentBar" title="',number_format((int)$entry['percent'],0),'%"><div class="barContent" style="width:',number_format((int)$entry['percent'],0),'px"></div></div>',"\n";
 			echo '</td>',"\n";
 			echo '</tr>',"\n";
 		}
@@ -666,7 +666,7 @@ if(!empty($maps)) { ?>
 			echo '<td><a href="index.php?mode=mapinfo&game=',$game,'&map=',$entry['map'],'">',$entry['map'],'</a></td>';
 			echo '<td>',$entry['kills'],'</td>';
 			echo '<td>';
-			echo '<div class="percentBar"><div class="barContent" style="width:',number_format((int)$entry['percentage'],0),'px"></div></div>',"\n";
+			echo '<div class="percentBar" title="',number_format((int)$entry['percentage'],0),'%"><div class="barContent" style="width:',number_format((int)$entry['percentage'],0),'px"></div></div>',"\n";
 			echo '</td>';
 			echo '<td>',$entry['deaths'],'</td>';
 			echo '<td>',number_format($entry['kpd'],2),'</td>';
