@@ -239,6 +239,17 @@ if($g_options['allowSig'] == "1") {
 				$foreground = imagecolorallocate($imgH, 255, 255, 255);
 				$background = imagecolorallocate($imgH, 0, 0, 0);
 			break;
+			
+			case 'css_nitro':
+				// 400x100
+				$imgH = imagecreatefrompng($picPath."css_by_nitrocium.png");
+				imagealphablending($imgH, true);
+				imagesavealpha($imgH, true);
+
+				// colors
+				$foreground = imagecolorallocate($imgH, 255, 255, 255);
+				$background = imagecolorallocate($imgH, 0, 0, 0);
+			break;
 
 			case 'green':
 			default:

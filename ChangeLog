@@ -30,6 +30,8 @@ HLStats ChangeLog
 *) New: hlstats-screen.sh script to start HLStats within the screen
 		command. thx to Schakal
 *) New: Russian translation by E][tremist
+*) New: New signature background image: css_nitro
+		Copyright by Nitrocium @ deviantart
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Update: TF2 gamesupport
