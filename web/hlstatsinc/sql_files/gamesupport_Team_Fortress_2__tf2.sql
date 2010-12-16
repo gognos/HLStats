@@ -194,5 +194,6 @@ INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','letranger','L\'Etra
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','holy_mackerel','The Holy Mackerel',1.00);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','frontier_justice','Frontier Justice',1.00);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','degreaser','The Degreaser',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','rocketlauncher_directhit','Direct Hit',1.00);
 
 # end of file
