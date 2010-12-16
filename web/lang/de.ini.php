@@ -561,9 +561,10 @@ Chat History = Chat Historie
 Say = Sprechen
 I said = Ich sagte
 
+You can search for a exact or a part of a player/clan name. The uniqe IDs are either IP or steam ID = Gesucht kann nach einem exakten oder nur nach einem Teil des Spieler oder Clan Namens. Die Eindeutigen IDs sind entweder die IP oder die Steam ID
 Player names = Spielernamen
-Player Unique IDs = Spieler Unique IDs
 Clan names = Clan Namen
+Uniqe IDs = Eindeutige IDs
 Find Now = Jetzt suchen
 Unique ID = Uniqe ID
 Search results = Suchergebnisse

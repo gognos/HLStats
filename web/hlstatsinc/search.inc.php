@@ -124,6 +124,23 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					ORDER BY `name`";
 			break;
 
+			case 'ids':
+				$queryStr = "SELECT ".DB_PREFIX."_PlayerNames.playerId,
+						".DB_PREFIX."_PlayerNames.name,
+						".DB_PREFIX."_Games.name AS gamename
+					FROM ".DB_PREFIX."_PlayerNames
+					LEFT JOIN ".DB_PREFIX."_Players ON
+						".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_PlayerNames.playerId
+					LEFT JOIN ".DB_PREFIX."_PlayerUniqueIds ON
+						".DB_PREFIX."_PlayerUniqueIds.playerId = ".DB_PREFIX."_PlayerNames.playerId
+					LEFT JOIN ".DB_PREFIX."_Games ON
+						".DB_PREFIX."_Games.code = ".DB_PREFIX."_Players.game
+					WHERE ".DB_PREFIX."_Games.hidden='0' AND
+						".DB_PREFIX."_PlayerUniqueIds.uniqueId LIKE '%".mysql_escape_string($sr_query)."%'
+						".$andgame."
+					ORDER BY `name`";
+			break;
+
 			case 'player':
 			default:
 				$queryStr = "SELECT ".DB_PREFIX."_PlayerNames.playerId,
@@ -140,6 +157,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					ORDER BY `name`";
 			break;
 		}
+
 		if(!empty($queryStr)) {
 			$searchResults = array();
 			$query = mysql_query($queryStr);
@@ -170,6 +188,9 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 <div id="main">
 	<h1><?php echo l('Find a Player or Clan'); ?></h1>
 	<form method="post" action="">
+		<p>
+			<?php echo l('You can search for a exact or a part of a player/clan name. The uniqe IDs are either IP or steam ID'); ?>
+		</p>
 		<b><?php echo l('Search For'); ?></b>:<br />
 		<input type="text" name="search[input]" value="" /><br />
 		<br />
@@ -177,6 +198,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 		<select name="search[area]">
 			<option value="player" <?php if($sr_type == "player") echo 'selected="1"'; ?>><?php echo l('Player names'); ?></option>
 			<option value="clan" <?php if($sr_type == "clan") echo 'selected="1"'; ?>><?php echo l('Clan names'); ?></option>
+			<option value="ids" <?php if($sr_type == "ids") echo 'selected="1"'; ?>><?php echo l('Uniqe IDs'); ?></option>
 		</select><br />
 		<br />
 		<b><?php echo l('Game'); ?></b>:<br />
