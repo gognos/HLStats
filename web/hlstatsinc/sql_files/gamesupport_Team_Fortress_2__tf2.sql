@@ -167,5 +167,32 @@ INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','sandman','The Sandm
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','force_a_nature','Force-A-Nature',1.00);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','ambassador','Ambassador',1.00);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','tf_projectile_arrow','Huntsman',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','robot_arm_blender_kill','Engineer Taunt (Gunslinger)',5.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','taunt_demoman','Demoman Taunt',5.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','ball','Baseball',2.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','wrench_golden','Golden Wrench',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','unique_pickaxe','Equalizer',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','tribalkukri','Tribalman\'s Shiv',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','tf_pumpkin_bomb','Pumpkin Bomb',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','taunt_guitar_kill','Engineer Taunt (Guitar)',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','sword','Eyelander',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','southern_hospitality','Southern Hospitality',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','sledgehammer','The Homewrecker',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','robot_arm_combo_kill','Gunslinger Combo',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','robot_arm','Gunslinger',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','paintrain','The Pain Train',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','glovesurgent','Gloves of Running Urgently',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','fryingpan','Frying Pan',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','bushwacka','The Bushwacka',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','battleaxe','Skullcutter',2.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','maxgun','Lugermorph',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','wrangler_kill','Wrangler',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','sydneysleeper','The Sydney Sleeper',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','samrevolver','Big Kill',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','powerjack','The Powerjack',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','letranger','L\'Etranger',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','holy_mackerel','The Holy Mackerel',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','frontier_justice','Frontier Justice',1.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'tf2','degreaser','The Degreaser',1.00);
 
 # end of file

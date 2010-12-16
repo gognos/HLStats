@@ -76,3 +76,32 @@ INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','entityflame','Blaze
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','hunter_claw','Hunter\'s Claws',3.00);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','smoker_claw','Smoker\'s Claws',3.00);
 INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','tank_claw','Tank\'s Claws',3.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','spitter_claw','Spitter\'s Claws',3.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','jockey_claw','Jockey\'s Claws',3.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','charger_claw','Charger\'s Claws',3.00);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','vomitjar','Vomit Jar Smash',1.20);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','upgradepack_incendiary','Incendiary Pack Smash',1.20);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','upgradepack_explosive','Explosive Pack',1.20);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','tonfa','Tonfa',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','katana','Katana',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','insect_swarm','Insect Swarm',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','grenade_launcher','Grenade Launcher Smash',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','golfclub','Golf Club',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','gnome','Gnome Smash',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','frying_pan','Frying Pan',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','first_aid_kit','First Aid Kit',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','fireworkcrate','Fireworks Crate',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','fireaxe','Fireaxe',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','env_fire','Fire',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','env_explosion','Explosion',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','electric_guitar','Electric Guitar',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','defibrillator','Defibrillator',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','crowbar','Crowbar',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','cricket_bat','Cricket Bat',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','cola_bottles','Cola Bottles',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','baseball_bat','Baseball Bat',1.50);
+INSERT IGNORE INTO ++DB_PREFIX++_Weapons VALUES (NULL,'l4d','adrenaline','Adrenaline Smash',1.50);
+
+
+
+
