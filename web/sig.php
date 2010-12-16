@@ -247,8 +247,8 @@ if($g_options['allowSig'] == "1") {
 				imagesavealpha($imgH, true);
 
 				// colors
-				$foreground = imagecolorallocate($imgH, 255, 255, 255);
-				$background = imagecolorallocate($imgH, 0, 0, 0);
+				$foreground = imagecolorallocate($imgH, 165, 42, 42);
+				$background = imagecolorallocate($imgH, 255, 255, 255);
 			break;
 
 			case 'green':
