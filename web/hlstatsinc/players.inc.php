@@ -166,6 +166,10 @@ pageHeader(
 		<?php echo l('BOTs will show only if the are not ignored.'); ?>
 		</small>
 	</div>
+	<h1><?php echo l('Game'); ?></h1>
+	<div class="left-box">
+		<img src="hlstatsimg/game-<?php echo $game; ?>-big.png" alt="<?php echo $game; ?>" title="<?php echo $game; ?>" />
+	</div>
 </div>
 <div id="main">
 <?php

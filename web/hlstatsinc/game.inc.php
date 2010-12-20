@@ -118,6 +118,10 @@ pageHeader(array($gamename), array($gamename=>""));
 			<?php } ?>
 		</ul>
 	</div>
+	<h1><?php echo l('Game'); ?></h1>
+	<div class="left-box">
+		<img src="hlstatsimg/game-<?php echo $game; ?>-big.png" alt="<?php echo $game; ?>" title="<?php echo $game; ?>" />
+	</div>
 </div>
 <div id="main">
 <?php
