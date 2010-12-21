@@ -175,9 +175,9 @@ pageHeader(
 	</h1>
 	<p>
 	<?php if(empty($minmembers)) { ?>
-		<a href="index.php?mode=clans&game=<?php echo $game; ?>"><?php echo l('Show only clans with 2 or more members') ?></a>
+		<a href="index.php?mode=clans&amp;game=<?php echo $game; ?>"><?php echo l('Show only clans with 2 or more members') ?></a>
 	<?php } else { ?>
-		<a href="index.php?mode=clans&game=<?php echo $game; ?>&showAll=1"><?php echo l('Show all clans without a player limit of 2') ?></a>
+		<a href="index.php?mode=clans&amp;game=<?php echo $game; ?>&amp;showAll=1"><?php echo l('Show all clans without a player limit of 2') ?></a>
 	<?php } ?>
 	</p>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
