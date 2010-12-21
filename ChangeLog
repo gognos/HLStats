@@ -16,7 +16,7 @@ HLStats ChangeLog
 		needed.
 		http://www.php.net/manual/en/book.bc.php
 *) New: Clan Profile can new enter a steam group URL
-*) New: Daemon can now looup country and city. Using Maxmind GeoIP.
+*) New: Daemon can now lookup country and city. Using Maxmind GeoIP.
 		Please read the documentation on how to use this feature !!
 *) New: Players table gets a date on updates. This can be used to show
 		Players from current day etc.
@@ -36,6 +36,7 @@ HLStats ChangeLog
 *) Update: TFC gamesupport
 *) Update: TF2 gamesupport
 *) Update: L4D gamesupport
+*) Update: Big game picture at right side, which shows the current selected game
 *) Changed: Options moved from conf files into DB, but information
 			about DB access is still in those files. Needed to make sure
 			the daemon and webinterface can still be apart.
