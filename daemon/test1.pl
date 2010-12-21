@@ -2,10 +2,10 @@ require "./HLStats_ServerQueries.pm";
 
 use Data::Dumper;
 
-#my $port = 27111;
-#my $addr = '88.198.59.207';
-my $port = 27016;
-my $addr = '127.0.0.1';
+my $port = 27015;
+my $addr = '91.144.164.241';
+#my $port = 27016;
+#my $addr = '127.0.0.1';
 
 
 my $q = HLstats_ServerQueries->new(encoding => 'utf-8',
