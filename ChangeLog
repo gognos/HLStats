@@ -45,7 +45,7 @@ HLStats ChangeLog
 *) Changed: Only one admin user is now possible. Dropped admin rights
 			for now.
 *) Changed: Design options removed from options table
-*) Changed: imgpaht and imgdir option removed
+*) Changed: imgpath and imgdir option removed
 *) Changed: Host statistics in admin disabled. New version will include
 			this again.
 *) Changed: Constant INCLUDE_PATH removed.
@@ -59,9 +59,9 @@ HLStats ChangeLog
 			Replaced by UseGEOIP
 *) Changed: Dropped hlstats_Server defaultMap.
 			While loading servers from DB we get the current map via
-			ServerQueries. This should avaid "unknown" maps
+			ServerQueries. This should avoid "unknown" maps
 *) Changed: Dropped MailTo and MailPath setting for daemon.
-*) Chnaged: Filters at players overview are applied to chart, too.
+*) Changed: Filters at players overview are applied to chart, too.
 *) Fixed: typo in lang (thx to LuBJe)
 *) Fixed: bug in admin -> Tools -> Reset (thx to conan)
 *) Fixed: remove the ; in rcon commands (thx to Par0noid)
@@ -82,7 +82,7 @@ HLStats ChangeLog
 		is set in the hlstats.conf.php file. Update the configuration !
 		Help and some graphics are still missing
 *) New: Visitors can now change the language of the web content via cookies
-*) New: Player are now seperated into "active" and "inactive" Players
+*) New: Player are now separated into "active" and "inactive" Players
 		The players which have now activity (skill change) in a given timeframe
 		are set to inactive and will not be show in players overview.
 *) New: Role pictures in player info page if available.
@@ -93,7 +93,7 @@ HLStats ChangeLog
 *) Changed: Period for event deletion in hlstats.pl increased.
 *) Changed: import-tools.sh removed (can be found in the docs now)
 *) Changed: HLstats is now HLStats
-*) Chnaged: Moved functions from hlstats.pl to HLstats.plib
+*) Changed: Moved functions from hlstats.pl to HLstats.plib
 *) Changed: hlstats.conf is now hlstats.conf.ini and uses the ini format.
 	http://search.cpan.org/~adamk/Config-Tiny/
 	The perl module Config::Tiny is now required for running HLStats daemon
@@ -150,7 +150,7 @@ HLStats ChangeLog
 *) Fixed: TF2 SQl cleanup ( ticket: 2190031 )
 *) Fixed: Ingame messages printed to many information ( ticket: 2222115 )
 *) Fixed: Possible bug ( ticket: 2224659 )
-*) Changed: Player Chat history on a seperate page ( ticket: 2249905 )
+*) Changed: Player Chat history on a separate page ( ticket: 2249905 )
 *) Changed: Live stats works again but only with limited features ( ticket: 2182620,2190025,2206898)
 *) Updated: Some new weapon pics
 	1.40beta2 (2008-10-31)
@@ -170,7 +170,7 @@ HLStats ChangeLog
 *) New: historical awards in the Delete Days period (Feature Request: 1872588)
 *) New: xml interface for retrieving some information (default is deactivated)
 *) New: Signature gererator (sig.php) ( See documentation for more details )
-*) New: Players view can be now seperated by server (Feature Request: 451340)
+*) New: Players view can be now separated by server (Feature Request: 451340)
 *) New: Possibility to log all say messages. Option LogChat in hlstats.conf (default 0) (Feature Request: 2073578,2224660)
 *) New: skill messages can be also returned as private messages /hls_psay (Feature Request: 2073578)
 *) Changed: DeleteDays can be 0 now. Which means data will be kept forever
@@ -194,7 +194,7 @@ HLStats ChangeLog
             installer folder, since the daemon can be seperate from the hlstats.php
 *) Changed: The /set commands are now /hls_set and /hls_hideranking
 *) Updated: Improved TF2 gamesupport file
-*) Updated: Impreoved help page
+*) Updated: Improved help page
 *) Updated: Installation and other documentation files
 *) Fixed: TF2 team codes were wrong. (Bug: 1962361)
 *) Fixed: Advanced server view was not saving the data (Bug: 1966096)
@@ -217,7 +217,7 @@ HLStats ChangeLog
 *) Changed: Fixed layout bugs
 *) Changed: Login settings, should be saver now
 *) Changed: Constant PLATFORM was never used
-*) Alot of stuff I can't even remember..
+*) A lot stuff I can't even remember..
 
 
 1.35a beta (released 2008-01-22) (beta release !)
@@ -228,7 +228,7 @@ HLStats ChangeLog
 *) Fix: Bug 1455683
 *) Fix: Bug 1008758
 *) Fix: Player rank in playerinfo page were the kills instead the rank
-*) Fix: wapons row in hlstats_Events_Frags was too short
+*) Fix: weapons row in hlstats_Events_Frags was too short
    Weapon Names were shortened and not correctly stored.
 *) New: Patch 1822124
 *) New: Patch 1822072
@@ -236,12 +236,12 @@ HLStats ChangeLog
 *) New: News plugin working correctly
 *) New: Small arrows indicate the process of skill change (Feature request: 419869)
 *) New: The stats can be reseted by game
-*) New: Show last reset Date (at the gobal reset funktion) (Feature request: 441345)
+*) New: Show last reset Date (at the gobal reset function) (Feature request: 441345)
 *) New: Delete a Player from a Clan (Feature reuqest: 423813)
 *) New: Adding gamesupport files via the web-interface
 *) Update: hideranking option not only at players page. (Reature request: 471156)
 *) Update: Various Weapon Images and Maps
-*) Changed: Configuration hase been moved from hlstats.php
+*) Changed: Configuration has been moved from hlstats.php
    to hltstatsinc/hlstats.conf.inc.php
 *) Changed: all include file have now .php at the end
 
@@ -258,10 +258,10 @@ HLStats ChangeLog
 *) New: Gamesupport for Vampire Slayer
 *) Fix: NumPlayers/Auto-Disconnecting bug. (thanks timeout)
 *) Fix: Livestats search error.
-*) Fix: Windows DNS Resolving finnaly works.
+*) Fix: Windows DNS Resolving finally works.
 *) Fix: Claninfo page now displays a nice error if a clan has 0 members.
 *) Changed: HLTV no longer recorded as a player.
-*) Changed: Server cvars are now recognised if they are empty.
+*) Changed: Server cvars are now recognized if they are empty.
 *) Changed: Better Rcon command recognition.
 *) Changed: Unresolved IP Addresses are now grouped together.
 *) Changed: Better UTF-8 support.
@@ -317,13 +317,13 @@ HLStats ChangeLog
 
 
 1.30 (released 2004-10-14)
-*) Fix: Timeleft worked incorrectly with AMX/CM
+*) Fix: Time left worked incorrectly with AMX/CM
 *) Fix: Include paths missed out of live stats
 *) Fix: Player count with bots on server
 *) Fix: Corrupt DMC images
 *) New: MySQL 4.0 support added
-*) Changed: If no public address port, live stats uses pivate address port
-*) Changed: General optimisations/tweaks to live stats
+*) Changed: If no public address port, live stats uses private address port
+*) Changed: General optimizations/tweaks to live stats
 *) Changed: User password encryption to MD5
 
 
@@ -352,10 +352,10 @@ HLStats ChangeLog
 *) Fix: MOD logos not being displayed when tracking multiple mods
 *) New: Full support for Natural Selection 2.01.
 *) New: Full support for Day of Defeat 1.0.
-*) New: Full support for Team Fortess Classic 1.5.
-*) New: Defineable Roles.
+*) New: Full support for Team Fortress Classic 1.5.
+*) New: Definable Roles.
 *) New: Ability to hide selected Teams & Roles.
-*) New: Kill Ratio Addon.
+*) New: Kill Ratio Add-on.
 *) New: Action Statistics page.
 *) New: Added "triggered a" event
 *) Changed: Weapon Image column color now definable.
