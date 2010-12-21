@@ -151,7 +151,7 @@ sub resolveIp {
 #
 # string resolveCountry (string ip)
 #
-# do an ip to country looup via maxmind geoip
+# do an ip to country lookup via maxmind geoip
 # see documentation for more details
 #
 sub resolveCountry {
