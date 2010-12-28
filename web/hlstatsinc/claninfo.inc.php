@@ -174,8 +174,21 @@ pageHeader(
 );
 
 ?>
-
-<div id="main-full">
+<div id="sidebar">
+	<h1><?php echo l('Options'); ?></h1>
+	<div class="left-box">
+		<ul class="sidemenu">
+			<li>
+				<a href="<?php echo "index.php?game=$game"; ?>"><?php echo l('Back to game overview'); ?></a>
+			</li>
+		</ul>
+	</div>
+	<h1><?php echo l('Game'); ?></h1>
+	<div class="left-box">
+		<img src="hlstatsimg/game-<?php echo $game; ?>-big.png" alt="<?php echo $game; ?>" title="<?php echo $game; ?>" width="100px" height="100px" />
+	</div>
+</div>
+<div id="main">
 	<h1><?php echo l('Clan Profile and Statistics Summary'); ?></h1>
 	<table width="100%" border="1" cellspacing="0" cellpadding="2">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">

@@ -144,6 +144,10 @@ $rcol = "row-dark";
 			</li>
 		</ul>
 	</div>
+	<h1><?php echo l('Game'); ?></h1>
+	<div class="left-box">
+		<img src="hlstatsimg/game-<?php echo $game; ?>-big.png" alt="<?php echo $game; ?>" title="<?php echo $game; ?>" width="100px" height="100px" />
+	</div>
 </div>
 <div id="main">
 	<h2><?php echo $pl_name; ?></h2>
