@@ -164,6 +164,8 @@ if (isset($_POST['sub']['reset'])) {
 	$return .= "Clearing awards ... <br />";
 	if (mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL
 				WHERE game = '".$gc."'")) {
+		mysql_query("DELETE FROM ".DB_PREFIX."_Awards_History
+				WHERE game = '".$gc."'");
 		$return .= "Awards OK<br />";
 	}
 	else {

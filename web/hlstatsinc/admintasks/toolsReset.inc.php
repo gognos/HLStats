@@ -94,6 +94,7 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 
 			echo "<li>Clearing awards ... ";
 			mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL");
+			mysql_query("TRUNCATE TABLE ".DB_PREFIX."_Awards_History");
 			echo "OK\n";
 
 			echo "</ul>\n";
