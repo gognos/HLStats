@@ -960,15 +960,13 @@ sub doEvent_ChangeMap {
 # 020. Rcon
 #
 
-sub doEvent_Rcon
-{
+sub doEvent_Rcon {
 	my ($type, $command, $password, $remoteAddr) = @_;
 
 	my $ipAddr;
 	my $port;
 
-	if ($remoteAddr =~ /([\d.]+):(\d+)/)
-	{
+	if ($remoteAddr =~ /([\d.]+):(\d+)/) {
 		$ipAddr = $1;
 		$port = $2;
 	}
@@ -979,16 +977,16 @@ sub doEvent_Rcon
 			"Rcon", 0,
 			$type,
 			$ipAddr,
-			$password,
+			'-',
 			$command
 		);
 	}
-	else
-	{
+	else {
 		$desc = "(IGNORED) ";
 	}
 
-	return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
+	#return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
+	return $desc . "$type Rcon from \"$ipAddr\", \"$command\"";
 }
 
 

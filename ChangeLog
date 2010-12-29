@@ -62,6 +62,7 @@ HLStats ChangeLog
 			ServerQueries. This should avoid "unknown" maps
 *) Changed: Dropped MailTo and MailPath setting for daemon.
 *) Changed: Filters at players overview are applied to chart, too.
+*) Changed: RCON password hot shown in logs anymore
 *) Fixed: typo in lang (thx to LuBJe)
 *) Fixed: bug in admin -> Tools -> Reset (thx to conan)
 *) Fixed: remove the ; in rcon commands (thx to Par0noid)
