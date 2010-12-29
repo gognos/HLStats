@@ -649,12 +649,6 @@ sub doEvent_WorldAction
 
 	$action =~ s/ /_/g;
 
-	#print "### debug ###";
-	#print $ev_prop;
-	#print "##";
-	#print $ev_prop{winner};
-
-
     # tf2 extensions
 	if($ev_prop{winner}) {
 		$action .= "_" . $ev_prop{winner};
@@ -985,8 +979,12 @@ sub doEvent_Rcon {
 		$desc = "(IGNORED) ";
 	}
 
-	#return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
-	return $desc . "$type Rcon from \"$ipAddr\", \"$command\"";
+	if($g_debug > 1) {
+		return $desc . "$type Rcon from \"$ipAddr\", \"$command\"";
+	}
+	else {	
+		return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
+	}
 }
 
 
