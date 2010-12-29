@@ -161,7 +161,7 @@ sub resolveCountry {
 	print "-- Resolving country for IP \"$ip\" ... "  if ($g_debug > 0);
 
 	if ($ip) {
-		my $gi = Geo::IP::PurePerl->open( "./GeoLiteCity.dat" );
+		my $gi = Geo::IP::PurePerl->open( "./GeoIP.dat" );
 
 		my (
 		   $country_code, $country_code3, $country_name, $region,

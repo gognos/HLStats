@@ -216,10 +216,10 @@ class Players {
 		$data = array();
 
 		$queryStr = "SELECT `t1`.`playerId`,
-								DATE(t1.lastUpdate) AS lastUpdate
-								FROM `".DB_PREFIX."_Players` AS t1
-								INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId
-								WHERE `t1`.`game` = '".mysql_escape_string($this->_game)."'";
+						DATE(t1.lastUpdate) AS lastUpdate
+						FROM `".DB_PREFIX."_Players` AS t1
+						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId
+						WHERE `t1`.`game` = '".mysql_escape_string($this->_game)."'";
 
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
