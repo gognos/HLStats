@@ -288,7 +288,7 @@ class Chart {
 		if(!in_array('Players',get_declared_classes())) {
 			require 'players.class.php';
 		}
-		if(!instanceof($playersObj,'Players')) {
+		if(!($playersObj instanceof 'Players')) {
 			$playersObj = new Players($this->_game);
 		}
 		$data = $playersObj->getPlayerCountPerDay();
