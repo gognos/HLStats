@@ -980,10 +980,10 @@ sub doEvent_Rcon {
 	}
 
 	if($g_debug > 1) {
-		return $desc . "$type Rcon from \"$ipAddr\", \"$command\"";
+		return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
 	}
 	else {	
-		return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
+		return $desc . "$type Rcon from \"$ipAddr\", \"$command\"";
 	}
 }
 
