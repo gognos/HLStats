@@ -18,6 +18,7 @@ HLStats ChangeLog
 *) New: Clan Profile can new enter a steam group URL
 *) New: Daemon can now lookup country and city. Using Maxmind GeoIP.
 		Please read the documentation on how to use this feature !!
+		flags provided by famfamfam
 *) New: Players table gets a date on updates. This can be used to show
 		Players from current day etc.
 *) New: If no connect is recorded the "Last Connect" information is
