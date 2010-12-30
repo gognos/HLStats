@@ -732,12 +732,17 @@ class Player {
 	 */
 	private function _getLastConnect() {
 		$this->_playerData['lastConnect'] = l('No info');
-		$query = mysql_query("SELECT MAX(eventTime) AS eventTime
-								country, countryCode
+		$query = mysql_query("SELECT country, countryCode,eventTime
 					FROM ".DB_PREFIX."_Events_Connects
-					WHERE playerId='".mysql_escape_string($this->playerId)."'");
+					WHERE playerId='".mysql_escape_string($this->playerId)."'
+						AND eventTime = (
+							select MAX(eventTime) FROM ".DB_PREFIX."_Events_Connects
+						)
+					");
+		var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
+			var_dump($result);
 			if(empty($result['eventTime'])) {
 				// no connect recorded ?
 				$this->_playerData['lastConnect'] = $this->getEventHistory('lastEvent');
@@ -747,7 +752,7 @@ class Player {
 			else {
 				$this->_playerData['lastConnect'] = $result['eventTime'];
 				$this->_playerData['country'] = $result['country'];
-				$this->_playerData['countryCode'] = $result['countryCode'];	
+				$this->_playerData['countryCode'] = strtolower($result['countryCode']);	
 			}
 			mysql_free_result($query);
 		}
