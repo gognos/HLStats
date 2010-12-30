@@ -221,7 +221,7 @@ $rcol = "row-dark";
 			<?php
 				echo $playerObj->getParam('lastConnect');
 				if($playerObj->getParam('country')) {
-					echo '<img src="hlstatsimg/site/flag/'.$playerObj->getParam('countryCode').'.png" alt="'.$playerObj->getParam('country').'" title="'.$playerObj->getParam('country').'" height="11" width="16" />';
+					echo '&nbsp;<img src="hlstatsimg/site/flag/'.$playerObj->getParam('countryCode').'.png" alt="'.$playerObj->getParam('country').'" title="'.$playerObj->getParam('country').'" height="11" width="16" />';
 				}
 			?>
 			</td>

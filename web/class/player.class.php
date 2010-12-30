@@ -739,10 +739,8 @@ class Player {
 							select MAX(eventTime) FROM ".DB_PREFIX."_Events_Connects
 						)
 					");
-		var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
-			var_dump($result);
 			if(empty($result['eventTime'])) {
 				// no connect recorded ?
 				$this->_playerData['lastConnect'] = $this->getEventHistory('lastEvent');
