@@ -55,7 +55,6 @@ sub doEvent_Connect
 
 	my $country;
 	my $countryCode;
-	my $countryCity;
 
 	if ($player) {
 
@@ -63,12 +62,10 @@ sub doEvent_Connect
 			my @countryData = &resolveCountry($ipAddr);
 			$country = $countryData[0];
 			$countryCode = $countryData[1];
-			$countryCity = $countryData[2];
 		}
 		else {
 			$country = "";
 			$countryCode = "";
-			$countryCity = "";
 		}
 
 		if ($g_mode eq "LAN") {
@@ -81,7 +78,6 @@ sub doEvent_Connect
 			$ipAddr,
 			$country,
 			$countryCode,
-			$countryCity
 		);
 	}
 	else

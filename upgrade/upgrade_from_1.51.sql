@@ -72,7 +72,6 @@ ALTER TABLE `#DB_PREFIX#_Events_Connects` CHANGE `hostname` `country` VARCHAR( 1
 ALTER TABLE `#DB_PREFIX#_Events_Connects` CHANGE `hostgroup` `countrycode` CHAR( 2 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '';
 UPDATE `#DB_PREFIX#_Events_Connects` SET `country` = '';
 UPDATE `#DB_PREFIX#_Events_Connects` SET `countryCode` = '';
-ALTER TABLE `#DB_PREFIX#_Events_Connects` ADD `city` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
 
 ALTER TABLE `#DB_PREFIX#_Servers` DROP `defaultMap`;
 

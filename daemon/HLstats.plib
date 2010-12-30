@@ -153,6 +153,7 @@ sub resolveIp {
 #
 # do an ip to country lookup via maxmind geoip
 # see documentation for more details
+#@todo Open file only once ?
 #
 sub resolveCountry {
 	my ($ip) = @_;
@@ -161,26 +162,12 @@ sub resolveCountry {
 	print "-- Resolving country for IP \"$ip\" ... "  if ($g_debug > 0);
 
 	if ($ip) {
-		my $gi = Geo::IP::PurePerl->open( "./GeoIP.dat" );
+		my $gi = Geo::IP::PurePerl->open( "./geoip/GeoIP.dat" );
 
-		my (
-		   $country_code, $country_code3, $country_name, $region,
-		   $city,         $postal_code,   $latitude,     $longitude,
-		   $metro_code,   $area_code
-		) = $gi->get_city_record($ip);
+		my $country_code = $gi->country_code_by_addr($ip);
+		my $country_name = $gi->country_name_by_addr($ip);
 
-		#print $country_code . "\n";
-		#print $country_code3 . "\n";
-		#print $country_name . "\n";
-		#print $region . "\n";
-		#print $city . "\n";
-		#print $postal_code . "\n";
-		#print $latitude . "\n";
-		#print $longitude . "\n";
-		#print $area_code . "\n";
-		#print $metro_code . "\n";
-
-		@ret = ($country_name, $country_code, $city);
+´		@ret = ($country_name, $country_code);
 	}
 
 	print join("\n",@countryData) if ($g_debug > 0);
