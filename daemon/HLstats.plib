@@ -167,7 +167,7 @@ sub resolveCountry {
 		my $country_code = $gi->country_code_by_addr($ip);
 		my $country_name = $gi->country_name_by_addr($ip);
 
-´		@ret = ($country_name, $country_code);
+		@ret = ($country_name, $country_code);
 	}
 
 	print join("\n",@countryData) if ($g_debug > 0);
