@@ -405,8 +405,6 @@ class Player {
 			}
 		}
 		else {
-
-
 			$queryStr .= " ORDER BY ";
 			if(!empty($this->_option['sort']) && !empty($this->_option['sortorder'])) {
 				$queryStr .= " ".$this->_option['sort']." ".$this->_option['sortorder']."";
@@ -735,6 +733,7 @@ class Player {
 	private function _getLastConnect() {
 		$this->_playerData['lastConnect'] = l('No info');
 		$query = mysql_query("SELECT MAX(eventTime) AS eventTime
+								country, countryCode
 					FROM ".DB_PREFIX."_Events_Connects
 					WHERE playerId='".mysql_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
@@ -742,11 +741,15 @@ class Player {
 			if(empty($result['eventTime'])) {
 				// no connect recorded ?
 				$this->_playerData['lastConnect'] = $this->getEventHistory('lastEvent');
+				$this->_playerData['country'] = false;
+				$this->_playerData['countryCode'] = false;
 			}
 			else {
 				$this->_playerData['lastConnect'] = $result['eventTime'];
-				mysql_free_result($query);
+				$this->_playerData['country'] = $result['country'];
+				$this->_playerData['countryCode'] = $result['countryCode'];	
 			}
+			mysql_free_result($query);
 		}
 	}
 

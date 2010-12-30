@@ -217,7 +217,14 @@ $rcol = "row-dark";
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l("Last Connect"); ?>*</th>
-			<td><?php echo $playerObj->getParam('lastConnect'); ?></td>
+			<td>
+			<?php
+				echo $playerObj->getParam('lastConnect');
+				if($playerObj->getParam('country')) {
+					echo '<img src="hlstatsimg/site/'.$playerObj->getParam('countryCode').'.png" alt="'.$playerObj->getParam('country').'" title="'.$playerObj->getParam('country').'" height="11" width="16" />';
+				}
+			?>
+			</td>
 			<th><?php echo l("Deaths"); ?></th>
 			<td><?php echo $playerObj->getParam("deaths"); ?></td>
 		</tr>
