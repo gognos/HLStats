@@ -295,7 +295,7 @@ else {
 	"ChangeTeam",
 		["playerId", "team"],
 	"Connects",
-		["playerId", "ipAddress", "country", "countrycode", "city"],
+		["playerId", "ipAddress", "country", "countrycode"],
 	"Disconnects",
 		["playerId"],
 	"Entries",
@@ -364,7 +364,7 @@ while ($loop = &getLine()) {
 		$g_servers{$s_addr} = &getServer($s_peerhost, $s_peerport);
 
 		if (!$g_servers{$s_addr}) {
-			&printEvent(997, "UNRECOGNISED SERVER: " . $s_output);
+			&printEvent(997, "UNRECOGNISED SERVER: ".$s_output);
 			next;
 		}
 	}
