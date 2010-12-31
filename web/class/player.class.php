@@ -736,7 +736,8 @@ class Player {
 					FROM ".DB_PREFIX."_Events_Connects
 					WHERE playerId='".mysql_escape_string($this->playerId)."'
 						AND eventTime = (
-							select MAX(eventTime) FROM ".DB_PREFIX."_Events_Connects
+							SELECT MAX(eventTime) FROM ".DB_PREFIX."_Events_Connects
+							WHERE playerId='".mysql_escape_string($this->playerId)."'
 						)
 					");
 		if(mysql_num_rows($query) > 0) {
