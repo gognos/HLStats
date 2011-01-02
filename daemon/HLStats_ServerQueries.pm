@@ -21,7 +21,7 @@ package HLstats_ServerQueries;
 # +
 # + Johannes 'Banana' Keßler
 # + http://hlstats.sourceforge.net
-# + 2007 - 2010
+# + 2007 - 2011
 # +
 #
 # HLStats - Real-time player and clan rankings and statistics for Half-Life

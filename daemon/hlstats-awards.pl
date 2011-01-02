@@ -21,7 +21,7 @@
 # +
 # + Johannes 'Banana' Keßler
 # + http://hlstats.sourceforge.net
-# + 2007 - 2010
+# + 2007 - 2011
 # +
 #
 # This program is free software; you can redistribute it and/or

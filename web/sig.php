@@ -20,7 +20,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2010
+ * + 2007 - 2011
  * +
  *
  * This program is free software; you can redistribute it and/or
@@ -69,7 +69,6 @@ require('hlstatsinc/hlstats.conf.php');
  * general classes like table class
  */
 require("hlstatsinc/functions.inc.php");
-require("hlstatsinc/classes.inc.php");
 
 // deb class and options
 $db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS);

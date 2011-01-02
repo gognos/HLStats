@@ -20,7 +20,7 @@
 # +
 # + Johannes 'Banana' Keßler
 # + http://hlstats.sourceforge.net
-# + 2007 - 2010
+# + 2007 - 2011
 # +
 #
 #
@@ -187,7 +187,7 @@ if ($opt_version) {
 	print "\nhlstats.pl (HLStats) $g_version\n"
 		. "Real-time player and clan rankings and statistics for Half-Life\n"
 		. "Copyright (C) 2001  Simon Garner\n"
-		. "Copyright (C) 2007 - 2010  Johannes Keßler\n\n";
+		. "Copyright (C) 2007 - 2011  Johannes Keßler\n\n";
 
 	print "\nThis is free software; see the source for copying conditions.  There is NO\n"
 		. "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n";
