@@ -85,6 +85,7 @@ mysql_free_result($query);
 // get the dates for the date selection
 $dateSelect = array();
 $query = mysql_query("SELECT `date` FROM ".DB_PREFIX."_Awards_History
+						WHERE game = '".mysql_escape_string($game)."'
 						GROUP BY `date`");
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
