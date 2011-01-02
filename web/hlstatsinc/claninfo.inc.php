@@ -123,12 +123,14 @@ if (mysql_num_rows($query) != 1) {
 $clandata = mysql_fetch_assoc($query);
 mysql_free_result($query);
 
+$game = $clandata['game'];
 
-$cl_name = ereg_replace(" ", "&nbsp;", htmlspecialchars($clandata["name"]));
-$cl_tag  = ereg_replace(" ", "&nbsp;", htmlspecialchars($clandata["tag"]));
+
+$cl_name = str_replace(" ", "&nbsp;", htmlspecialchars($clandata["name"]));
+$cl_tag  = str_replace(" ", "&nbsp;", htmlspecialchars($clandata["tag"]));
 $cl_full = $cl_tag . " " . $cl_name;
 
-// now get the clan memebers
+// now get the clan members
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			playerId, lastName, skill, oldSkill, kills, deaths, active,
 			IFNULL(kills/deaths, 0) AS kpd,
@@ -161,7 +163,6 @@ $query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
 $result = mysql_fetch_assoc($query);
 $members['pages'] = (int)ceil($result['rows']/50);
 mysql_freeresult($query);
-
 
 pageHeader(
 	array($gamename, l("Clan Details"), $cl_full),
