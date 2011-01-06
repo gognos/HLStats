@@ -60,7 +60,7 @@ mysql_free_result($query);
 $awarddata_arr = false;
 $awards_d_date = "None";
 // check if we have awards
-if (!$g_options['hideAwards']) {
+if (!$g_options['hideAwards'] && ($g_options['awards_d_date'] != "") ) {
 	$queryAwards = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
 									".DB_PREFIX."_Awards.verb,
 									".DB_PREFIX."_Awards_History.d_winner_id,
