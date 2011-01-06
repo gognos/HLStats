@@ -163,7 +163,7 @@ pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin
 	</div>
 </div>
 <div id="main">
-	<h1><?php echo l('Teams for '); ?>: <?php echo $gName; ?></h1>
+	<h1><?php echo l('Teams for'); ?>: <?php echo $gName; ?></h1>
 	<p>
 		<?php echo l("You can specify descriptive names for each game's team codes"); ?>
 	</p>

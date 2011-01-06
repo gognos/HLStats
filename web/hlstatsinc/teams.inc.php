@@ -95,7 +95,7 @@ if(mysql_num_rows($query) > 0) {
 
 pageHeader(
 	array($gamename, l("Team Statistics")),
-	array($gamename=>"index.php?game=$game", l("Team Statistics")=>"")
+	array($gamename => "index.php?game=$game", l("Team Statistics")=>"")
 );
 ?>
 

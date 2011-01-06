@@ -654,3 +654,4 @@ Team Reward = Teamlohn
 
 Team Statistics = Team Statistiken
 Selected = Ausgewählt
+Teams for = Teams für
