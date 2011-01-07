@@ -7,7 +7,6 @@ HLStats ChangeLog
 *) New: HLStats needs MySQL 4.1 and MySQL is the only supported DB yet.
 *) New: HLStats needs PHP > 5.2.0 now.
 *) New: New design and overall re-write of the web-interface
-*) New: phpDoc documentation available for the web-interface
 *) New: Team statistics overview page (thx to goose for the idea)
 *) New: Player profile has new myspace field /hls_set myspace url
 *) New: Player profile has new facebook field /hls_set facebook url
