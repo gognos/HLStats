@@ -90,8 +90,8 @@ require("hlstatsinc/functions.inc.php");
  */
 define("VERSION", "development version");
 
-$db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS);
-$db_sel = mysql_select_db(DB_NAME,$db_con);
+$db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS) OR die('Could not connect to the MySQL Server. Check your configuration.');
+$db_sel = mysql_select_db(DB_NAME,$db_con) OR die('Could not select database. Check your configuration.');
 mysql_query("SET NAMES utf8");
 mysql_query("SET collation_connection = 'utf8_unicode_ci'");
 

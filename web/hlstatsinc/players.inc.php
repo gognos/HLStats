@@ -190,7 +190,7 @@ pageHeader(
 				$si = $playersObj->getOption('page');
 			}
 			if($playersObj->getOption('page') < $pData['pages']-13) {
-				$si = 
+				$si = $playersObj->getOption('page');
 				$ei = $playersObj->getOption('page')+10;
 			}
 			for($i=$si;$i<=$ei;$i++) {
@@ -200,6 +200,9 @@ pageHeader(
 				else {
 					echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
 				}
+			}
+			if($playersObj->getOption('page') < ($pData['pages']-13)) {
+				echo '&nbsp;[>>]';
 			}
 		}
 		else {
