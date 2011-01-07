@@ -230,7 +230,7 @@ pageHeader(
 							echo "[",$i,"]";
 						}
 						else {
-							echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
+							echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a> ";
 						}
 					}
 				}
