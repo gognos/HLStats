@@ -714,6 +714,7 @@ class Player {
 						FROM ".DB_PREFIX."_PlayerUniqueIds
 						WHERE playerId='".mysql_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
+			$ret = '';
 			while ($result = mysql_fetch_assoc($query)) {
 
 				if(strstr($result['uniqueId'],'STEAM_')) {
