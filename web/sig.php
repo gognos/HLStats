@@ -131,7 +131,7 @@ if($g_options['allowSig'] == "1") {
 			}
 		}
 		else {
-			// we dont hava stamp file yet
+			// we dont have a stamp file yet
 			// // create one and continue
 			$fh = fopen($picPath."create.stamp","w+");
 			fwrite($fh,time()+1800);
