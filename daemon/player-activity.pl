@@ -163,6 +163,7 @@ while( ($keyname, $value) = $result->fetchrow_array ) {
 }
 $result->finish();
 
+# we need only this one
 my $conf_timeFrame = $oHash{TIMEFRAME};
 
 GetOptions(

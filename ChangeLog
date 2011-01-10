@@ -81,6 +81,7 @@ HLStats ChangeLog
 *) Fixed: Issue #63
 *) Fixed: Edit player details. Hiding a player was not saved
 *) Fixed: Issue #62
+*) Fixed: Parse error in player-activity.pl script....
 
 1.51 (2009-11-23)
 *) New: HLStats can now be translated via ini files. The default language
