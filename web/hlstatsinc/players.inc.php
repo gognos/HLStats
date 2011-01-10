@@ -279,10 +279,10 @@ pageHeader(
 						echo '<img src="hlstatsimg/bot.png" alt="BOT" title="BOT" width="16" height="16" />&nbsp;';
 					}
 					elseif($entry['active'] === "1") {
-						echo '<img src="hlstatsimg/player.gif" alt="active Player" title="active Player" width="16" height="16" />&nbsp;';
+						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />&nbsp;';
 					}
 					else {
-						echo '<img src="hlstatsimg/player_inactive.gif" alt="inactive Player" title="inactive Player" width="16" height="16" />&nbsp;';
+						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />&nbsp;';
 					}
 
 					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">',$entry['lastName'],'</a></td>',"\n";

@@ -711,10 +711,10 @@ if(!empty($playerKillStats)) { ?>
 					echo '<img src="hlstatsimg/bot.png" alt="BOT" title="BOT" width="16" height="16" />&nbsp;';
 				}
 				elseif($entry['active'] == "1") {
-					echo '<img src="hlstatsimg/player.gif" width="16" height="16" alt="',l('Player'),'" alt="',l('Player'),'" />';
+					echo '<img src="hlstatsimg/player.gif" width="16" height="16" alt="',l('active Player'),'" alt="',l('active Player'),'" />';
 				}
 				else {
-					echo '<img src="hlstatsimg/player_inactive.gif" width="16" height="16" alt="',l('Player'),'" alt="',l('Player'),'" />';
+					echo '<img src="hlstatsimg/player_inactive.gif" width="16" height="16" alt="',l('inactive Player'),'" alt="',l('inactive Player'),'" />';
 				}
 				echo '<a href="index.php?mode=playerinfo&player=',$entry['playerId'],'">',makeSavePlayerName($entry['name']),'</a>';
 			echo '</td>';

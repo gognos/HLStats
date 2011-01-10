@@ -66,6 +66,7 @@ $query = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
 								".DB_PREFIX."_Awards_History.d_winner_id,
 								".DB_PREFIX."_Awards_History.d_winner_count,
 								".DB_PREFIX."_Players.lastName AS d_winner_name,
+								".DB_PREFIX."_Players.active AS active,
 								".DB_PREFIX."_Awards_History.date
 							FROM ".DB_PREFIX."_Awards_History
 							LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
@@ -162,8 +163,13 @@ echo l('Date selection');
 
 				echo '<td class="',$rcol,'">';
 				if($entry['d_winner_id']) {
-					echo '<img src="hlstatsimg/player.gif" width="16" height="16" alt="player.gif">&nbsp;';
-					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry["d_winner_id"],'"><b>',htmlspecialchars($entry["d_winner_name"]),'</b></a>';
+					if($entry['active'] === "1") {
+						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+					}
+					else {
+						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
+					}
+					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry["d_winner_id"],'"><b>',makeSavePlayerName($entry["d_winner_name"]),'</b></a>';
 					echo '&nbsp;(',$entry["d_winner_count"],' ',htmlspecialchars($entry["verb"]),')';
 				}
 				else {

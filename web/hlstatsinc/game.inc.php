@@ -65,7 +65,8 @@ if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_optio
 									".DB_PREFIX."_Awards.verb,
 									".DB_PREFIX."_Awards_History.d_winner_id,
 									".DB_PREFIX."_Awards_History.d_winner_count,
-									".DB_PREFIX."_Players.lastName AS d_winner_name
+									".DB_PREFIX."_Players.lastName AS d_winner_name,
+									".DB_PREFIX."_Players.active AS active
 								FROM ".DB_PREFIX."_Awards_History
 								LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
 								LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
@@ -187,11 +188,14 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 			<td width="70%">
 			<?php
 				if ($awarddata["d_winner_id"]) {
-					echo "<a href=\"index.php?mode=playerinfo&amp;player="
-						. $awarddata["d_winner_id"] . "\"><img src=\"hlstatsimg/player.gif\" width='16' height='16' "
-						. "alt=\"player.gif\">&nbsp;<b>"
-						. htmlspecialchars($awarddata["d_winner_name"]) . "</b></a> ("
-						. $awarddata["d_winner_count"] . " " . htmlspecialchars($awarddata["verb"]) . ")";
+					if($awarddata['active'] === "1") {
+						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+					}
+					else {
+						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
+					}
+					echo "<a href=\"index.php?mode=playerinfo&amp;player=".$awarddata["d_winner_id"]."\"><b>";
+					echo makeSavePlayerName($awarddata["d_winner_name"]) . "</b></a> (".$awarddata["d_winner_count"]." ".htmlspecialchars($awarddata["verb"]).")";
 				}
 				else {
 					echo "(",l('Nobody').')';

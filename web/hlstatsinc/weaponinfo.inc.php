@@ -222,8 +222,14 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
+				if($entry['active'] === "1") {
+					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+				}
+				else {
+					echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
+				}
 				echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['killerId'],'">';
-				echo '<img src="hlstatsimg/player.gif" width="16" height="16" /> ',makeSavePlayerName($entry['killerName']);
+				echo makeSavePlayerName($entry['killerName']);
 				echo '</a>';
 				echo '</td>',"\n";
 

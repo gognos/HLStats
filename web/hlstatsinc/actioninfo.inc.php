@@ -130,6 +130,7 @@ if(!empty($totalact)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			".DB_PREFIX."_Events_PlayerActions.playerId,
 			".DB_PREFIX."_Players.lastName AS playerName,
+			".DB_PREFIX."_Players.active AS active,
 			COUNT(".DB_PREFIX."_Events_PlayerActions.id) AS obj_count,
 			COUNT(".DB_PREFIX."_Events_PlayerActions.id) * ".DB_PREFIX."_Actions.reward_player AS obj_bonus
 		FROM ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players, ".DB_PREFIX."_Actions
@@ -137,7 +138,7 @@ if(!empty($totalact)) {
 			".DB_PREFIX."_Players.game = '".mysql_escape_string($game)."' AND
 			".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_PlayerActions.playerId AND
 			".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id AND
-			".DB_PREFIX."_Players.hideranking<>'1'
+			".DB_PREFIX."_Players.hideranking <> '1'
 		GROUP BY ".DB_PREFIX."_Events_PlayerActions.playerId
 		ORDER BY ".$sort." ".$sortorder;
 
@@ -240,8 +241,14 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
+				if($entry['active'] === "1") {
+					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+				}
+				else {
+					echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
+				}
 				echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">';
-				echo '<img src="hlstatsimg/player.gif" width="16" height="16" /> ',makeSavePlayerName($entry['playerName']);
+				echo makeSavePlayerName($entry['playerName']);
 				echo '</a>';
 				echo '</td>',"\n";
 
