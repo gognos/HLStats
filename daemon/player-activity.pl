@@ -163,7 +163,7 @@ while( ($keyname, $value) = $result->fetchrow_array ) {
 }
 $result->finish();
 
-$conf_timeFrame = $oHash{TIMEFRAME};
+my $conf_timeFrame = $oHash{TIMEFRAME};
 
 GetOptions(
 	"period=i"			=> \$conf_timeFrame,
