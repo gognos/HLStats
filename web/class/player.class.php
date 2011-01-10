@@ -641,6 +641,7 @@ class Player {
 	 */
 	private function _load() {
 		if(!empty($this->playerId)) {
+			$this->_playerData['isBot'] = false;
 			$query = mysql_query("SELECT
 					".DB_PREFIX."_Players.lastName AS name,
 					".DB_PREFIX."_Players.clan,
@@ -718,7 +719,10 @@ class Player {
 				if(strstr($result['uniqueId'],'STEAM_')) {
 					$result['uniqueId'] = getSteamProfileUrl($result['uniqueId']);
 				}
-				$ret = $result['uniqueId'].", ";
+				if(strstr($result['uniqueId'],'BOT:')) {
+					$this->_playerData['isBot'] = true;
+				}
+				$ret .= $result['uniqueId'].",<br />";
 			}
 			$this->_playerData['uniqueIds'] = trim($ret,', ');
 			mysql_free_result($query);

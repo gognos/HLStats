@@ -184,11 +184,12 @@ if($g_options['allowSig'] == "1") {
 		$result = mysql_fetch_assoc($query);
 		$serverId = $result['serverId'];
 		mysql_free_result($query);
+		if(empty($serverId)) exit('Incorrect player info. This does not work.');
 
 		// now get the server info
 		$query = mysql_query("SELECT address,port,name
 					FROM ".DB_PREFIX."_Servers
-					WHERE serverId = ".mysql_escape_string($serverId['serverId']));
+					WHERE serverId = ".mysql_escape_string($serverId));
 		$serverData = mysql_fetch_assoc($query);
 		mysql_free_result($query);
 
