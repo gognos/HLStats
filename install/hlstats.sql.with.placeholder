@@ -122,7 +122,7 @@ CREATE TABLE `#DB_PREFIX#_Events_ChangeRole` (
   `role` varchar(32) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `playerId` (`playerId`),
-  KEY `playerId` (`serverId`)
+  KEY `serverId` (`serverId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
