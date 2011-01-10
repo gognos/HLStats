@@ -69,7 +69,6 @@ require('./hlstatsinc/hlstats.conf.php');
  * general classes like table class
  */
 require("hlstatsinc/functions.inc.php");
-require("hlstatsinc/classes.inc.php");
 
 // deb class and options
 $db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS);
