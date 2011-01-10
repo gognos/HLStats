@@ -140,7 +140,7 @@ pageHeader(
 <?php
 	$history = $playerObj->getEventHistory();
 	$rcol = "row-dark";
-	if(!empty($history)) {
+	if(!empty($history['data'])) {
 ?>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<?php

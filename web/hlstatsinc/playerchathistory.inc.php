@@ -40,7 +40,7 @@
  */
 
 $player = '';
-
+$pl_name = '';
 
 if(!empty($_GET["player"])) {
 	if(validateInput($_GET["player"],'digit') === true) {
@@ -137,7 +137,7 @@ pageHeader(
 <?php
 	$history = $playerObj->getChatHistory();
 	$rcol = "row-dark";
-	if(!empty($history)) {
+	if(!empty($history['data'])) {
 ?>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<?php
