@@ -374,7 +374,7 @@ $rcol = "row-dark";
 			   ?>
 			</td>
 		</tr>
-		<?php if($g_options['allowSig'] === "1") { ?>
+		<?php if($g_options['allowSig'] === "1" && $playerObj->getParam('isBot') === false) { ?>
 		<tr>
 			<th><?php echo l('Signature'); ?></th>
 			<td colspan="3">
