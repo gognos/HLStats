@@ -169,7 +169,7 @@ echo l('Date selection');
 					else {
 						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
 					}
-					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry["d_winner_id"],'"><b>',makeSavePlayerName($entry["d_winner_name"]),'</b></a>';
+					echo '&nbsp;<a href="index.php?mode=playerinfo&amp;player=',$entry["d_winner_id"],'"><b>',makeSavePlayerName($entry["d_winner_name"]),'</b></a>';
 					echo '&nbsp;(',$entry["d_winner_count"],' ',htmlspecialchars($entry["verb"]),')';
 				}
 				else {

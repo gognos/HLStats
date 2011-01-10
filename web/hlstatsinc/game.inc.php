@@ -194,7 +194,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 					else {
 						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
 					}
-					echo "<a href=\"index.php?mode=playerinfo&amp;player=".$awarddata["d_winner_id"]."\"><b>";
+					echo "&nbsp;<a href=\"index.php?mode=playerinfo&amp;player=".$awarddata["d_winner_id"]."\"><b>";
 					echo makeSavePlayerName($awarddata["d_winner_name"]) . "</b></a> (".$awarddata["d_winner_count"]." ".htmlspecialchars($awarddata["verb"]).")";
 				}
 				else {

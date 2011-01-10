@@ -716,7 +716,7 @@ if(!empty($playerKillStats)) { ?>
 				else {
 					echo '<img src="hlstatsimg/player_inactive.gif" width="16" height="16" alt="',l('inactive Player'),'" alt="',l('inactive Player'),'" />';
 				}
-				echo '<a href="index.php?mode=playerinfo&player=',$entry['playerId'],'">',makeSavePlayerName($entry['name']),'</a>';
+				echo '&nbsp;<a href="index.php?mode=playerinfo&player=',$entry['playerId'],'">',makeSavePlayerName($entry['name']),'</a>';
 			echo '</td>';
 			echo '<td>',$entry['kills'],'</td>';
 			echo '<td>',$entry['deaths'],'</td>';

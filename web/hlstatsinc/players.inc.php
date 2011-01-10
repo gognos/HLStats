@@ -285,7 +285,7 @@ pageHeader(
 						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />&nbsp;';
 					}
 
-					echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">',$entry['lastName'],'</a></td>',"\n";
+					echo '&nbsp;<a href="index.php?mode=playerinfo&amp;player=',$entry['playerId'],'">',$entry['lastName'],'</a></td>',"\n";
 
 					echo '<td class="',toggleRowClass($rcol),'">';
 					echo '<img width="16" height="16" ';

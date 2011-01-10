@@ -228,7 +228,7 @@ pageHeader(
 				else {
 					echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
 				}
-				echo '<a href="index.php?mode=playerinfo&amp;player=',$entry['killerId'],'">';
+				echo '&nbsp;<a href="index.php?mode=playerinfo&amp;player=',$entry['killerId'],'">';
 				echo makeSavePlayerName($entry['killerName']);
 				echo '</a>';
 				echo '</td>',"\n";
