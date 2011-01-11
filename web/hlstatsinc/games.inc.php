@@ -172,7 +172,7 @@ if(!$g_options['hideNews']) {
 				<a href="<?php echo "index.php?game=".$gamedata['code']; ?>"><img src="hlstatsimg/game-<?php echo $gamedata['code']; ?>.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="<?php echo $gamedata['code']; ?>">&nbsp;<?php echo $gamedata['name']; ?></a>
 			</td>
 			<td>
-				<a href="<?php echo "index.php?mode=players&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/<?php if($topplayer['isBot']) echo 'bot.png'; else echo 'player.gif'; ?>" width="16" height="16" hspace="3" alt="<?php echo l('Player Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Players'); ?></a>
+				<a href="<?php echo "index.php?mode=players&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/player.gif" width="16" height="16" hspace="3" alt="<?php echo l('Player Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Players'); ?></a>
 			</td>
 			<td>
 				<a href="<?php echo "index.php?mode=clans&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" alt="<?php echo l('Clan Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Clans'); ?></a>
@@ -180,6 +180,9 @@ if(!$g_options['hideNews']) {
 			<td>
 	<?php
 		if ($topplayer !== false) {
+			echo '<img src="hlstatsimg/';
+				if($topplayer['isBot']) echo 'bot.png'; else echo 'player.gif';
+			echo '" width="16" height="16" hspace="3" alt="'.l('Player').'" border="0" align="middle"> ';
 			echo '<a href="index.php?mode=playerinfo&amp;player='
 				. $topplayer['playerId'] . '">' . makeSavePlayerName($topplayer['lastName']) . '</a>';
 		}
