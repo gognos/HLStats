@@ -120,7 +120,7 @@ if(!$g_options['hideNews']) {
 			FROM `".DB_PREFIX."_Players`
 			LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds`
 				ON ".DB_PREFIX."_PlayerUniqueIds.playerId = ".DB_PREFIX."_Players.playerId
-			WHERE `game`= '".mysql_escape_string($gamedata['code'])."'
+			WHERE `".DB_PREFIX."_Players`.`game`= '".mysql_escape_string($gamedata['code'])."'
 				AND `".DB_PREFIX."_Players`.`hideranking` = 0";
 
 			if($g_options['IGNOREBOTS'] === 1) {
