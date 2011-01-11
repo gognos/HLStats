@@ -114,18 +114,30 @@ if(!$g_options['hideNews']) {
 		</tr>
 	<?php
 		while ($gamedata = mysql_fetch_assoc($queryAllGames)) {
-			$queryTopPlayer = mysql_query("
-				SELECT `playerId`,`lastName`
-				FROM `".DB_PREFIX."_Players`
-				WHERE `game`= '".mysql_escape_string($gamedata['code'])."'
-					AND `hideranking` = 0
-				ORDER BY `skill` DESC
-				LIMIT 1
-			");
+			$queryStr = "SELECT `".DB_PREFIX."_Players`.`playerId` AS playerId,
+				`".DB_PREFIX."_Players`.`lastName` AS lastname,
+				`".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` AS uniqueId
+			FROM `".DB_PREFIX."_Players`
+			LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds`
+				ON ".DB_PREFIX."_PlayerUniqueIds.playerId = ".DB_PREFIX."_Players.playerId
+			WHERE `game`= '".mysql_escape_string($gamedata['code'])."'
+				AND `".DB_PREFIX."_Players`.`hideranking` = 0";
+
+			if($g_options['IGNOREBOTS'] === 1) {
+				$queryStr .= " AND uniqueId NOT LIKE 'BOT:%'";
+			}
+			
+			$queryStr .= " ORDER BY `skill` DESC LIMIT 1";
+			
+			$queryTopPlayer = mysql_query($queryStr);
 
 			$topplayer = false;
+			$topplayer['isBot'] = false;
 			if (mysql_num_rows($queryTopPlayer) === 1) {
 				$topplayer = mysql_fetch_assoc($queryTopPlayer);
+				if(strstr($topplayer['uniqueId'],'BOT:')) {
+					$topplayer['isBot'] = true;
+				}
 			}
 
 			$queryTopClan = mysql_query("
@@ -160,7 +172,7 @@ if(!$g_options['hideNews']) {
 				<a href="<?php echo "index.php?game=".$gamedata['code']; ?>"><img src="hlstatsimg/game-<?php echo $gamedata['code']; ?>.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="<?php echo $gamedata['code']; ?>">&nbsp;<?php echo $gamedata['name']; ?></a>
 			</td>
 			<td>
-				<a href="<?php echo "index.php?mode=players&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/player.gif" width="16" height="16" hspace="3" alt="<?php echo l('Player Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Players'); ?></a>
+				<a href="<?php echo "index.php?mode=players&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/<?php if($topplayer['isBot']) echo 'bot'; else echo 'player'; ?>.gif" width="16" height="16" hspace="3" alt="<?php echo l('Player Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Players'); ?></a>
 			</td>
 			<td>
 				<a href="<?php echo "index.php?mode=clans&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" alt="<?php echo l('Clan Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Clans'); ?></a>
@@ -169,7 +181,7 @@ if(!$g_options['hideNews']) {
 	<?php
 		if ($topplayer !== false) {
 			echo '<a href="index.php?mode=playerinfo&amp;player='
-				. $topplayer['playerId'] . '">' . htmlentities($topplayer['lastName'], ENT_COMPAT, "UTF-8") . '</a>';
+				. $topplayer['playerId'] . '">' . makeSavePlayerName($topplayer['lastName']) . '</a>';
 		}
 		else {
 			echo '-';
@@ -180,7 +192,7 @@ if(!$g_options['hideNews']) {
 	<?php
 		if ($topclan !== false) {
 			echo '<a href="index.php?mode=claninfo&amp;clan='
-				. $topclan['clanId'] . '">' . htmlentities($topclan['name'], ENT_COMPAT, "UTF-8") . '</a>';
+				. $topclan['clanId'] . '">' . makeSavePlayerName($topclan['name']) . '</a>';
 		}
 		else {
 			echo '-';
@@ -198,19 +210,23 @@ if(!$g_options['hideNews']) {
 	$query = mysql_query("SELECT COUNT(*) AS pc FROM ".DB_PREFIX."_Players");
 	$result = mysql_fetch_assoc($query);
 	$num_players = $result['pc'];
+	mysql_free_result($query);
 
 	$query = mysql_query("SELECT COUNT(*) AS cc FROM ".DB_PREFIX."_Clans");
 	$result = mysql_fetch_assoc($query);
 	$num_clans = $result['cc'];
+	mysql_free_result($query);
 
 	$query = mysql_query("SELECT COUNT(*) AS sc FROM ".DB_PREFIX."_Servers");
 	$result = mysql_fetch_assoc($query);
 	$num_servers = $result['sc'];
+	mysql_free_result($query);
 
 	$query = mysql_query("SELECT MAX(eventTime) AS lastEvent FROM ".DB_PREFIX."_Events_Frags");
 	$result = mysql_fetch_assoc($query);
 	$timstamp = strtotime($result['lastEvent']);
 	$lastevent = getInterval($timstamp);
+	mysql_free_result($query);
 ?>
 	<ul>
 		<li>
