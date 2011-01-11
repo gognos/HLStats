@@ -115,7 +115,7 @@ if(!$g_options['hideNews']) {
 	<?php
 		while ($gamedata = mysql_fetch_assoc($queryAllGames)) {
 			$queryStr = "SELECT `".DB_PREFIX."_Players`.`playerId` AS playerId,
-				`".DB_PREFIX."_Players`.`lastName` AS lastname,
+				`".DB_PREFIX."_Players`.`lastName` AS lastName,
 				`".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` AS uniqueId
 			FROM `".DB_PREFIX."_Players`
 			LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds`
@@ -172,7 +172,7 @@ if(!$g_options['hideNews']) {
 				<a href="<?php echo "index.php?game=".$gamedata['code']; ?>"><img src="hlstatsimg/game-<?php echo $gamedata['code']; ?>.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="<?php echo $gamedata['code']; ?>">&nbsp;<?php echo $gamedata['name']; ?></a>
 			</td>
 			<td>
-				<a href="<?php echo "index.php?mode=players&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/<?php if($topplayer['isBot']) echo 'bot'; else echo 'player'; ?>.gif" width="16" height="16" hspace="3" alt="<?php echo l('Player Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Players'); ?></a>
+				<a href="<?php echo "index.php?mode=players&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/<?php if($topplayer['isBot']) echo 'bot.png'; else echo 'player.gif'; ?>" width="16" height="16" hspace="3" alt="<?php echo l('Player Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Players'); ?></a>
 			</td>
 			<td>
 				<a href="<?php echo "index.php?mode=clans&amp;game=".$gamedata['code']; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" alt="<?php echo l('Clan Rankings'); ?>" border="0" align="middle">&nbsp;<?php echo l('Clans'); ?></a>
