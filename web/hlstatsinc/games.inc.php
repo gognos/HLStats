@@ -46,6 +46,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
+require('class/players.class.php');
+
 pageHeader(array(l("Contents")), array(l("Contents")=>""));
 ?>
 <div id="main-full">
@@ -114,51 +116,24 @@ if(!$g_options['hideNews']) {
 		</tr>
 	<?php
 		while ($gamedata = mysql_fetch_assoc($queryAllGames)) {
-			$queryStr = "SELECT `".DB_PREFIX."_Players`.`playerId` AS playerId,
-				`".DB_PREFIX."_Players`.`lastName` AS lastName,
-				`".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` AS uniqueId
-			FROM `".DB_PREFIX."_Players`
-			LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds`
-				ON ".DB_PREFIX."_PlayerUniqueIds.playerId = ".DB_PREFIX."_Players.playerId
-			WHERE `".DB_PREFIX."_Players`.`game`= '".mysql_escape_string($gamedata['code'])."'
-				AND `".DB_PREFIX."_Players`.`hideranking` = 0";
-
-			if($g_options['IGNOREBOTS'] === 1) {
-				$queryStr .= " AND uniqueId NOT LIKE 'BOT:%'";
-			}
 			
-			$queryStr .= " ORDER BY `skill` DESC LIMIT 1";
+			# get the top player
+			$playersObj = new Players($gamedata['code']);
+			$topplayer = $playersObj->topPlayer();
 			
-			$queryTopPlayer = mysql_query($queryStr);
-
-			$topplayer = false;
-			$topplayer['isBot'] = '';
-			if (mysql_num_rows($queryTopPlayer) === 1) {
-				$topplayer = mysql_fetch_assoc($queryTopPlayer);
-				if(strstr($topplayer['uniqueId'],'BOT:')) {
-					$topplayer['isBot'] = true;
-				}
-			}
-
 			$queryTopClan = mysql_query("
 				SELECT
 					".DB_PREFIX."_Clans.clanId,
 					".DB_PREFIX."_Clans.name,
 					AVG(".DB_PREFIX."_Players.skill) AS skill,
 					COUNT(".DB_PREFIX."_Players.playerId) AS numplayers
-				FROM
-					".DB_PREFIX."_Clans
+				FROM ".DB_PREFIX."_Clans
 				LEFT JOIN ".DB_PREFIX."_Players ON
 					".DB_PREFIX."_Players.clan = ".DB_PREFIX."_Clans.clanId
-				WHERE
-					".DB_PREFIX."_Clans.game='".$gamedata['code']."'
-				GROUP BY
-					".DB_PREFIX."_Clans.clanId
-				HAVING
-					skill IS NOT NULL
-					AND numplayers > 1
-				ORDER BY
-					skill DESC
+				WHERE ".DB_PREFIX."_Clans.game='".mysql_escape_string($gamedata['code'])."'
+				GROUP BY ".DB_PREFIX."_Clans.clanId
+				HAVING skill IS NOT NULL AND numplayers > 1
+				ORDER BY skill DESC
 				LIMIT 1
 			");
 
@@ -180,11 +155,10 @@ if(!$g_options['hideNews']) {
 			<td>
 	<?php
 		if ($topplayer !== false) {
-			echo '<img src="hlstatsimg/';
-				if(isset($topplayer['isBot']) && $topplayer['isBot'] === true) echo 'bot.png'; else echo 'player.gif';
-			echo '" width="16" height="16" hspace="3" alt="'.l('Player').'" border="0" align="middle"> ';
-			echo '<a href="index.php?mode=playerinfo&amp;player='
-				. $topplayer['playerId'] . '">' . makeSavePlayerName($topplayer['lastName']) . '</a>';
+			if(isset($topplayer['isBot']) && $topplayer['isBot'] === true) {
+				echo '<img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" alt="'.l('BOT').'" border="0" align="middle" />' ;
+			}
+			echo '<a href="index.php?mode=playerinfo&amp;player='.$topplayer['playerId'].'">'.makeSavePlayerName($topplayer['lastName']).'</a>';
 		}
 		else {
 			echo '-';

@@ -117,6 +117,42 @@ class Players {
 
 		return $ret;
 	}
+	
+	/**
+	 * get the top player for this game
+	 * @todo: right now sorted by skill. Future could be other sorting stuff
+	 *
+	 * @return array The playerinformation
+	 */
+	public function topPlayer() {
+		$ret = false;
+		
+		$queryStr = "SELECT t1.playerId AS playerId,
+						t1.lastName AS lastName,
+						t2.uniqueId AS uniqueId
+					FROM ".DB_PREFIX."_Players AS t1
+					LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS t2
+						ON t2.playerId = t1.playerId
+					WHERE t1.game= '".mysql_escape_string($this->_game)."'
+					AND t1.hideranking = 0";
+
+			if($this->g_options['IGNOREBOTS'] === "1") {
+				$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
+			}
+			
+			$queryStr .= " ORDER BY t1.skill DESC LIMIT 1";
+		
+		$query = mysql_query($queryStr);
+		if(!empty($query) && mysql_num_rows($query) > 0) {
+			$ret = mysql_fetch_assoc($query);
+			$ret['isBot'] = false;
+			if(strstr($ret['uniqueId'],'BOT:')) {
+				$ret['isBot'] = true;
+			}
+		}
+		
+		return $ret;
+	}
 
 	/**
 	 * get the players for the current game

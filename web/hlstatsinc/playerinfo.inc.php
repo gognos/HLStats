@@ -159,7 +159,7 @@ $rcol = "row-dark";
 			</th>
 			<td>
 				<?php if ($playerObj->getParam("clan")) { ?>
-					<a href="index.php?mode=claninfo&clan=<?php echo $playerObj->getParam("clan"); ?>&amp;game=<?php echo $game; ?>">
+					<a href="index.php?mode=claninfo&amp;clan=<?php echo $playerObj->getParam("clan"); ?>&amp;game=<?php echo $game; ?>">
 					<img src="hlstatsimg/clan.gif" width="16" height="16" hspace="4"
 							border="0" align="middle" alt="clan.gif" />
 					<?php echo makeSavePlayerName($playerObj->getParam("clan_name")); ?>
@@ -190,8 +190,19 @@ $rcol = "row-dark";
 			<td><?php echo $player; ?></td>
 			<th align="right"><?php echo l("Rank"); ?></th>
 			<td>
-				<b><?php echo $playerObj->getParam('rankPoints'); ?></b>
-				(<?php echo l('ordered by Points'); ?>)
+				<?php
+					if($playerObj->getParam('isBot') === true) {
+						echo "<b>".l('BOT')."</b>";
+					}
+					elseif($playerObj->getParam('active') === "0") {
+						echo "<b>".l('inactive Player')."</b>";
+					}
+					else {
+						echo "<b>".$playerObj->getParam('rankPoints')."</b> ";
+						echo "(".l('ordered by Points').")";
+					}
+					
+				?>
 			</td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">

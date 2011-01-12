@@ -85,6 +85,13 @@ class Player {
 	 * @var array $_saveFields
 	 */
 	private $_saveFields = array();
+	
+	/**
+	 * the system options
+	 *
+	 * @var array The system options
+	 */
+	private $g_options = array();
 
 	/**
 	 * load the player id
@@ -123,6 +130,9 @@ class Player {
 
 		// set some default values
 		$this->setOption('page',1);
+		
+		global $g_options;
+		$this->g_options = $g_options;
 
 		return $ret;
 	}
@@ -659,6 +669,7 @@ class Player {
 					".DB_PREFIX."_Players.kills,
 					".DB_PREFIX."_Players.deaths,
 					".DB_PREFIX."_Players.hideranking,
+					".DB_PREFIX."_Players.active,
 					IFNULL(kills/deaths, 0) AS kpd,
 					".DB_PREFIX."_Players.suicides,
 					CONCAT(".DB_PREFIX."_Clans.tag, ' ', ".DB_PREFIX."_Clans.name) AS clan_name
@@ -809,15 +820,23 @@ class Player {
 		switch($mode) {
 			case 'rankPoints':
 			default:
-				$query = mysql_query("SELECT count(*) AS rank
-							FROM ".DB_PREFIX."_Players
-							WHERE active = '1'
-								AND hideranking = '0'
-								AND kills >= '1'
-								AND game = '".mysql_escape_string($this->_game)."'
-								AND skill >
-							(SELECT skill FROM ".DB_PREFIX."_Players
-								WHERE playerId = '".mysql_escape_string($this->playerId)."')");
+				$queryStr = "SELECT count(*) AS rank
+							FROM ".DB_PREFIX."_Players AS t1
+							LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS t2
+								ON t2.playerId = t1.playerId
+							WHERE t1.active = '1'
+								AND t1.hideranking = '0'
+								AND t1.kills >= '1'
+								AND t1.game = '".mysql_escape_string($this->_game)."'";
+								
+				#if($this->g_options['IGNOREBOTS'] === "1") {
+					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
+				#}
+				
+				$queryStr .= " AND t1.skill >
+									(SELECT skill FROM ".DB_PREFIX."_Players
+										WHERE playerId = '".mysql_escape_string($this->playerId)."')";
+				$query = mysql_query($queryStr);
 		}
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
