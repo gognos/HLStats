@@ -444,6 +444,7 @@ CREATE TABLE `#DB_PREFIX#_Players` (
   `game` varchar(16) NOT NULL default '',
   `hideranking` int(1) unsigned NOT NULL default '0',
   `lastUpdate` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `isBot` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`playerId`),
   KEY `clan` (`clan`),
   KEY `game` (`game`),

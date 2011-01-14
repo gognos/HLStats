@@ -266,7 +266,7 @@ class Players {
 		}
 		
 		// should we hide the bots
-		if($this->_option['showBots'] === "0") {
+		if($this->_option['showBots'] === "0") { # this is not the config setting, it is the link setting
 			$queryStr .= " AND `t2`.`uniqueID` not like 'BOT:%'";
 		}
 

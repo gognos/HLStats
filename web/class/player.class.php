@@ -829,9 +829,9 @@ class Player {
 								AND t1.kills >= '1'
 								AND t1.game = '".mysql_escape_string($this->_game)."'";
 								
-				#if($this->g_options['IGNOREBOTS'] === "1") {
+				if($this->g_options['IGNOREBOTS'] === "1") {
 					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
-				#}
+				}
 				
 				$queryStr .= " AND t1.skill >
 									(SELECT skill FROM ".DB_PREFIX."_Players

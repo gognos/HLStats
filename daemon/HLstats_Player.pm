@@ -48,8 +48,7 @@ package HLstats_Player;
 # Constructor
 #
 
-sub new
-{
+sub new {
 	my $class_name = shift;
 	my %params = @_;
 
@@ -72,9 +71,11 @@ sub new
 	$self->{team}   = "";
 	$self->{role}   = "";
 	$self->{timestamp} = 0;
+	$self->{isBot} = 0;
 
 	# Set Property Values
 
+	# tag remove
 	if($::g_option_strip_tags) {
 		$params{name} =~ s/\[No.C-D\]//g;	# remove [No C-D] tag
 		$params{name} =~ s/\[OLD.C-D\]//g;	# remove [OLD C-D] tag
@@ -109,42 +110,33 @@ sub new
 # Set property 'key' to 'value'
 #
 
-sub set
-{
+sub set {
 	my ($self, $key, $value, $no_updatetime) = @_;
 
-	if (defined($self->{$key}))
-	{
-		unless ($no_updatetime)
-		{
+	if (defined($self->{$key})) {
+		unless ($no_updatetime) {
 			$self->{timestamp} = $::ev_unixtime;
 		}
 
-		if ($self->get($key) eq $value)
-		{
-			if ($g_debug > 2)
-			{
+		if ($self->get($key) eq $value) {
+			if ($g_debug > 2) {
 				&printNotice("Hlstats_Player->set ignored: Value of \"$key\" is already \"$value\"");
 			}
 			return 0;
 		}
 
-		if ($key eq "uniqueid")
-		{
+		if ($key eq "uniqueid") {
 			return $self->setUniqueId($value);
 		}
-		elsif ($key eq "name")
-		{
+		elsif ($key eq "name") {
 			return $self->setName($value);
 		}
-		else
-		{
+		else {
 			$self->{$key} = $value;
 			return 1;
 		}
 	}
-	else
-	{
+	else {
 		warn("HLstats_Player->set: \"$key\" is not a valid property name\n");
 		return 0;
 	}
