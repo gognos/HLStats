@@ -733,7 +733,7 @@ class Player {
 				}
 				$ret .= $result['uniqueId'].",<br />";
 			}
-			$this->_playerData['uniqueIds'] = $ret
+			$this->_playerData['uniqueIds'] = $ret;
 			mysql_free_result($query);
 		}
 	}
