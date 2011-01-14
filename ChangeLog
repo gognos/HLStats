@@ -35,6 +35,11 @@ HLStats ChangeLog
 *) New: Russian translation by E][tremist
 *) New: New signature background image: css_nitro
 		Copyright by Nitrocium @ deviantart
+*) New: The information if a player is a bot or not is now stored in the
+		_Players table. This avoids the additional scan via uniqueIds.
+		If we include Bots we now can show if a player is a bot or not
+		with the bot picture (bot.png)
+		If we ignore bots, the bot should be ignored now in the most cases.
 *) Update: TFC images
 *) Update: TFC gamesupport
 *) Update: TF2 gamesupport
