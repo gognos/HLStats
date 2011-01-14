@@ -899,6 +899,7 @@ sub getPlayerInfo
 
 		$player->set("name", $name);
 		$player->set("team", $team);
+		$player->set("isBot", $isBot);
 
 		$player->updateTimestamp();
 	}

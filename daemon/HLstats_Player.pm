@@ -338,6 +338,7 @@ sub updateDB
 	my $deaths = $self->get("deaths");
 	my $suicides = $self->get("suicides");
 	my $skill  = $self->get("skill");
+	my $isBot = $self->get("isBot");
 
 	unless ($playerid)
 	{
@@ -358,7 +359,8 @@ sub updateDB
 			oldSkill=skill,
 			skillchangeDate='".time()."',
 			active = '1',
-			skill=$skill
+			skill=$skill,
+			isBot=$isBot
 		WHERE
 			playerId='$playerid'
 	";
