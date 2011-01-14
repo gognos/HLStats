@@ -275,7 +275,7 @@ pageHeader(
 					echo '</td>',"\n";
 
 					echo '<td class="',toggleRowClass($rcol),'">';
-					if($entry['isBot']) {
+					if($entry['isBot'] === "1") {
 						echo '<img src="hlstatsimg/bot.png" alt="BOT" title="BOT" width="16" height="16" />&nbsp;';
 					}
 					elseif($entry['active'] === "1") {

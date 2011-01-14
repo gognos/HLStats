@@ -167,12 +167,11 @@ class Players {
 				t1.kills,
 				t1.deaths,
 				t1.active,
+				t1.isBot,
 				IFNULL(t1.kills/t1.deaths,0) AS kpd,
 				DATE(t1.lastUpdate) AS lastUpdate,
 				t2.uniqueId
-			FROM
-				".DB_PREFIX."_Players as t1
-			INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId";
+			FROM ".DB_PREFIX."_Players as t1";
 
 		$queryStr .= " WHERE
 				t1.game='".mysql_escape_string($this->_game)."'
@@ -195,7 +194,7 @@ class Players {
 
 		// should we hide the bots
 		if($this->_option['showBots'] === "0") {
-			$queryStr .= " AND t2.uniqueID not like 'BOT:%'";
+			$queryStr .= " AND t1.isBot = 0";
 		}
 
 		$queryStr .= " ORDER BY ";
