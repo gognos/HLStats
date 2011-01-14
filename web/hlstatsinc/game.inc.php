@@ -189,10 +189,10 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 			<td width="70%">
 			<?php
 				if ($awarddata["d_winner_id"]) {
-					if($awarddata['active'] === "1") {
+					if($awarddata['isBot'] === "1") {
 						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 					}
-					elseif($awarddata['isBot'] === "1") {
+					elseif($awarddata['active'] === "1") {
 						echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
 					}
 					else {

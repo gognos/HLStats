@@ -241,10 +241,10 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				if($entry['active'] === "1") {
+				if($entry['isBot'] === "1") {
 					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 				}
-				elseif($entry['isBot'] === "1") {
+				elseif($entry['active'] === "1") {
 					echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
 				}
 				else {
