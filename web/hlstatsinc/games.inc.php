@@ -168,8 +168,7 @@ if(!$g_options['hideNews']) {
 			<td>
 	<?php
 		if ($topclan !== false) {
-			echo '<a href="index.php?mode=claninfo&amp;clan='
-				. $topclan['clanId'] . '">' . makeSavePlayerName($topclan['name']) . '</a>';
+			echo '<a href="index.php?mode=claninfo&amp;clan='.$topclan['clanId'].'&amp;game='.$gamedata['code'].'">'.makeSavePlayerName($topclan['name']).'</a>';
 		}
 		else {
 			echo '-';
