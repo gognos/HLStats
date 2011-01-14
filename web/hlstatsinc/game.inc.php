@@ -190,10 +190,10 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 			<?php
 				if ($awarddata["d_winner_id"]) {
 					if($awarddata['isBot'] === "1") {
-						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+						echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
 					}
 					elseif($awarddata['active'] === "1") {
-						echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
+						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 					}
 					else {
 						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
