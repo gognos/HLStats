@@ -169,8 +169,7 @@ class Players {
 				t1.active,
 				t1.isBot,
 				IFNULL(t1.kills/t1.deaths,0) AS kpd,
-				DATE(t1.lastUpdate) AS lastUpdate,
-				t2.uniqueId
+				DATE(t1.lastUpdate) AS lastUpdate
 			FROM ".DB_PREFIX."_Players as t1";
 
 		$queryStr .= " WHERE

@@ -66,7 +66,8 @@ if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_optio
 									".DB_PREFIX."_Awards_History.d_winner_id,
 									".DB_PREFIX."_Awards_History.d_winner_count,
 									".DB_PREFIX."_Players.lastName AS d_winner_name,
-									".DB_PREFIX."_Players.active AS active
+									".DB_PREFIX."_Players.active AS active,
+									".DB_PREFIX."_Players.isBot AS active
 								FROM ".DB_PREFIX."_Awards_History
 								LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
 								LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
@@ -190,6 +191,9 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 				if ($awarddata["d_winner_id"]) {
 					if($awarddata['active'] === "1") {
 						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+					}
+					elseif($awarddata['isBot'] === "1") {
+						echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
 					}
 					else {
 						echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';
