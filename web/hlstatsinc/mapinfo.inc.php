@@ -118,7 +118,8 @@ if(!empty($totalkills)) {
 		".DB_PREFIX."_Events_Frags.killerId,
 		".DB_PREFIX."_Players.lastName AS killerName,
 		COUNT(".DB_PREFIX."_Events_Frags.map) AS frags,
-		".DB_PREFIX."_Players.active
+		".DB_PREFIX."_Players.active,
+		".DB_PREFIX."_Players.isBot
 	FROM ".DB_PREFIX."_Events_Frags
 	LEFT JOIN ".DB_PREFIX."_Players ON
 		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
@@ -237,7 +238,10 @@ if(!file_exists($mapImage)) {
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				if($entry['active'] === "1") {
+				if($entry['isBot'] === "1") {
+					echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
+				}
+				elseif($entry['active'] === "1") {
 					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 				}
 				else {

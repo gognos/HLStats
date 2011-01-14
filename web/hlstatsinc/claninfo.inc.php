@@ -132,7 +132,7 @@ $cl_full = $cl_tag . " " . $cl_name;
 
 // now get the clan members
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
-			playerId, lastName, skill, oldSkill, kills, deaths, active,
+			playerId, lastName, skill, oldSkill, kills, deaths, active, isBot,
 			IFNULL(kills/deaths, 0) AS kpd,
 			(kills/" . mysql_escape_string($clandata["kills"]) . ") * 100 AS percent
 		FROM ".DB_PREFIX."_Players
@@ -332,7 +332,10 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				if($entry['active'] === "1") {
+				if($entry['isBot'] === "1") {
+					echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
+				}
+				elseif($entry['active'] === "1") {
 					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 				}
 				else {

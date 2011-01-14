@@ -131,6 +131,7 @@ if(!empty($totalact)) {
 			".DB_PREFIX."_Events_PlayerActions.playerId,
 			".DB_PREFIX."_Players.lastName AS playerName,
 			".DB_PREFIX."_Players.active AS active,
+			".DB_PREFIX."_Players.isBot AS isBot,
 			COUNT(".DB_PREFIX."_Events_PlayerActions.id) AS obj_count,
 			COUNT(".DB_PREFIX."_Events_PlayerActions.id) * ".DB_PREFIX."_Actions.reward_player AS obj_bonus
 		FROM ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players, ".DB_PREFIX."_Actions
@@ -242,10 +243,10 @@ pageHeader(
 
 				echo '<td class="',$rcol,'">';
 				if($entry['isBot'] === "1") {
-					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
+					echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
 				}
 				elseif($entry['active'] === "1") {
-					echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
+					echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';					
 				}
 				else {
 					echo '<img src="hlstatsimg/player_inactive.gif" alt="'.l('inactive Player').'" title="'.l('inactive Player').'" width="16" height="16" />';

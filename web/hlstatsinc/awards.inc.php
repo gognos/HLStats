@@ -67,6 +67,7 @@ $query = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
 								".DB_PREFIX."_Awards_History.d_winner_count,
 								".DB_PREFIX."_Players.lastName AS d_winner_name,
 								".DB_PREFIX."_Players.active AS active,
+								".DB_PREFIX."_Players.isBot AS isBot,
 								".DB_PREFIX."_Awards_History.date
 							FROM ".DB_PREFIX."_Awards_History
 							LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
@@ -163,7 +164,10 @@ echo l('Date selection');
 
 				echo '<td class="',$rcol,'">';
 				if($entry['d_winner_id']) {
-					if($entry['active'] === "1") {
+					if($entry['isBot'] === "1") {
+						echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
+					}	
+					elseif($entry['active'] === "1") {
 						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 					}
 					else {
