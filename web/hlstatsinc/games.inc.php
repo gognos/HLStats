@@ -155,7 +155,7 @@ if(!$g_options['hideNews']) {
 			<td>
 	<?php
 		if ($topplayer !== false) {
-			if(isset($topplayer['isBot']) && $topplayer['isBot'] === true) {
+			if($topplayer['isBot'] === "1") {
 				echo '<img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" alt="'.l('BOT').'" border="0" align="middle" />' ;
 			}
 			echo '<a href="index.php?mode=playerinfo&amp;player='.$topplayer['playerId'].'">'.makeSavePlayerName($topplayer['lastName']).'</a>';

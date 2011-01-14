@@ -191,7 +191,7 @@ $rcol = "row-dark";
 			<th align="right"><?php echo l("Rank"); ?></th>
 			<td>
 				<?php
-					if($playerObj->getParam('isBot') === true) {
+					if($playerObj->getParam('isBot') === "1") {
 						echo "<b>".l('BOT')."</b>";
 					}
 					elseif($playerObj->getParam('active') === "0") {
@@ -385,7 +385,7 @@ $rcol = "row-dark";
 			   ?>
 			</td>
 		</tr>
-		<?php if($g_options['allowSig'] === "1" && $playerObj->getParam('isBot') === false) { ?>
+		<?php if($g_options['allowSig'] === "1" && $playerObj->getParam('isBot') === "0") { ?>
 		<tr>
 			<th><?php echo l('Signature'); ?></th>
 			<td colspan="3">
@@ -718,7 +718,7 @@ if(!empty($playerKillStats)) { ?>
 		foreach ($playerKillStats as $entry) {
 			echo '<tr class="',toggleRowClass($rcol),'">';
 			echo '<td>';
-				if($entry['isBot']) {
+				if($entry['isBot'] === "1") {
 					echo '<img src="hlstatsimg/bot.png" alt="BOT" title="BOT" width="16" height="16" />&nbsp;';
 				}
 				elseif($entry['active'] == "1") {

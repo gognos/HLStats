@@ -745,7 +745,7 @@ class Player {
 	 */
 	private function _getLastConnect() {
 		$this->_playerData['lastConnect'] = l('No info');
-		$query = mysql_query("SELECT country, countryCode,eventTime
+		$query = mysql_query("SELECT country, countryCode, eventTime
 					FROM ".DB_PREFIX."_Events_Connects
 					WHERE playerId='".mysql_escape_string($this->playerId)."'
 						AND eventTime = (
