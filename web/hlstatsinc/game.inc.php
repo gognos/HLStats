@@ -67,7 +67,7 @@ if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_optio
 									".DB_PREFIX."_Awards_History.d_winner_count,
 									".DB_PREFIX."_Players.lastName AS d_winner_name,
 									".DB_PREFIX."_Players.active AS active,
-									".DB_PREFIX."_Players.isBot AS active
+									".DB_PREFIX."_Players.isBot AS isBot
 								FROM ".DB_PREFIX."_Awards_History
 								LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
 								LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
