@@ -129,15 +129,13 @@ class Players {
 		
 		$queryStr = "SELECT t1.playerId AS playerId,
 						t1.lastName AS lastName,
-						t2.uniqueId AS uniqueId
+						t1.isBot AS isBot
 					FROM ".DB_PREFIX."_Players AS t1
-					LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS t2
-						ON t2.playerId = t1.playerId
 					WHERE t1.game= '".mysql_escape_string($this->_game)."'
 					AND t1.hideranking = 0";
 
 			if($this->g_options['IGNOREBOTS'] === "1") {
-				$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
+				$queryStr .= " AND t1.isBot = 0";
 			}
 			
 			$queryStr .= " ORDER BY t1.skill DESC LIMIT 1";
@@ -145,10 +143,6 @@ class Players {
 		$query = mysql_query($queryStr);
 		if(!empty($query) && mysql_num_rows($query) > 0) {
 			$ret = mysql_fetch_assoc($query);
-			$ret['isBot'] = false;
-			if(strstr($ret['uniqueId'],'BOT:')) {
-				$ret['isBot'] = true;
-			}
 		}
 		
 		return $ret;
@@ -224,11 +218,6 @@ class Players {
 			while($result = mysql_fetch_assoc($query)) {
 				$result['kpd'] = number_format($result['kpd'],2,'.','');
 				$result['lastName'] = makeSavePlayerName($result['lastName']);
-
-				$result['isBot'] = 0;
-				if(strstr($result['uniqueId'],'BOT:')) {
-					$result['isBot'] = 1;
-				}
 
 				$pl[$result['playerId']] = $result;
 			}
