@@ -105,3 +105,5 @@ CREATE TABLE `#DB_PREFIX#_Awards_History` (
   `date` varchar(32) NOT NULL,
   UNIQUE KEY `fk_award_id` (`fk_award_id`,`date`,`game`)
 ) ENGINE = MYISAM ;
+
+UPDATE `#DB_PREFIX#_Players` SET isBot=1 WHERE playerId IN (SELECT playerId FROM `#DB_PREFIX#`_PlayerUniqueIds WHERE uniqueId LIKE 'BOT%');
