@@ -51,3 +51,12 @@ ServerPort = 27015
 
 # set this only if you use STDIN
 Timestamp = 0
+
+##
+## General Settings
+##
+
+[General]
+# the amount a player gets removed from its skill for
+# a teamkill
+TKPoints = 60

@@ -111,6 +111,7 @@ $g_stdin = $Config->{System}->{Stdin};
 $g_server_ip = $Config->{System}->{ServerIP};
 $g_server_port = $Config->{System}->{ServerPort};
 $g_timestamp = $Config->{System}->{Timestamp};
+$g_tkpoints = $Config->{General}->{TKPoints};
 
 # Options
 # default values

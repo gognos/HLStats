@@ -321,7 +321,6 @@ sub doEvent_Frag {
 		if (!&sameTeam($killer->{team}, $victim->{team}))
 		{
 			# Frag
-
 			&recordEvent(
 				"Frags", 0,
 				$killer->get("playerid"),
@@ -359,10 +358,8 @@ sub doEvent_Frag {
 				&rcon("$killerName \"You got $killerskill\(+$killerdiff\) for killing $victimName\"",1);
 			}
 		}
-		else
-		{
+		else {
 			# Teamkill
-
 			&recordEvent(
 				"Teamkills", 0,
 				$killer->get("playerid"),
@@ -370,7 +367,7 @@ sub doEvent_Frag {
 				$weapon
 			);
 
-			$killer->increment("skill", -60);
+			$killer->increment("skill", -$g_tkpoints);
 
 			$killer->updateDB();
 
