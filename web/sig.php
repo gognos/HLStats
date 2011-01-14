@@ -180,6 +180,7 @@ if($g_options['allowSig'] == "1") {
 		// server info
 		$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Events_Connects
 					WHERE playerId = '".mysql_escape_string($playerId)."'
+					ORDER BY eventTime DESC
 					LIMIT 1");
 		$result = mysql_fetch_assoc($query);
 		$serverId = $result['serverId'];
@@ -303,7 +304,12 @@ if($g_options['allowSig'] == "1") {
 		imagettftext($imgH, 9, 0, 20, 75, $foreground, $font, html_entity_decode($text,ENT_COMPAT,"UTF-8"));
 
 		// server IP and port etc
-		$text = $serverData['name']."\nIP: ".$serverData['address']." ".$serverData['port'];
+		if(empty($serverData)) {
+			$text = "Unknown Server\nIP: -";
+		}
+		else {
+			$text = $serverData['name']."\nIP: ".$serverData['address']." ".$serverData['port'];
+		}
 		$textInfo = imagettfbbox(9,0,$font,$text);
 		$textWitdh = $textInfo[2];
 		$textPos = (400-$textWitdh)-10;
