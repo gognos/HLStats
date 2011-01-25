@@ -23,24 +23,11 @@
 # + 2007 - 2011
 # +
 #
-# HLStats - Real-time player and clan rankings and statistics for Half-Life
-# http://sourceforge.net/projects/hlstats/
+# This program is free software is lincesed under the
+# COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 #
-# Copyright (C) 2001  Simon Garner
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+# You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
+# along with this program; if not, visit http://hlstats-community.org/License.html
 #
 
 # Name of the screen
@@ -57,7 +44,7 @@ DAEMON=hlstats.pl
 PARAMS=""
 
 # text for the output on the console
-DESC="HLStats"
+DESC="HLStats 1.60"
 
 # check if the directory
 if [ ! -e $DIR ] ; then
@@ -76,23 +63,23 @@ fi
 case "$1" in
 start)
      echo "Starting $DESC...";
-     if [ -f /tmp/hlstats.pid ]; then
-        kill -0 `cat /tmp/hlstats.pid` >/dev/null 2>&1
+     if [ -f /tmp/hlstats160.pid ]; then
+        kill -0 `cat /tmp/hlstats160.pid` >/dev/null 2>&1
         if [ "$?" == "0" ]; then
             echo "$DESC already running!"
         else
-            rm -rf /tmp/hlstats.pid
+            rm -rf /tmp/hlstats160.pid
             cd $DIR;
             screen -A -m -d -S $NAME perl ./$DAEMON $PARAMS
 
-            echo $! > /tmp/hlstats.pid
+            echo $! > /tmp/hlstats160.pid
             echo "PID file created."
             echo "$DESC started successfully!"
         fi
      else
         cd $DIR;
         screen -A -m -d -S $NAME perl ./$DAEMON $PARAMS
-        echo $! > /tmp/hlstats.pid
+        echo $! > /tmp/hlstats160.pid
         echo "PID file created."
         echo "$DESC started successfully!"
      fi
@@ -102,7 +89,7 @@ stop)
      screen -S $NAME -X quit
 
      if [ "$?" == "0" ]; then
-        rm -rf /tmp/hlstats.pid
+        rm -rf /tmp/hlstats160.pid
         echo "$DESC stopped successfully."
      else
         echo "$DESC is not running!"
@@ -114,7 +101,7 @@ restart)
        echo -n "Stopping $DESC."
        screen -S $NAME -X quit
 
-       rm -rf /tmp/hlstats.pid
+       rm -rf /tmp/hlstats160.pid
        echo " ... done."
      else
        echo "Coulnd't find a running $DESC!"
@@ -123,7 +110,7 @@ restart)
      echo "Starting $DESC."
      cd $DIR; screen -A -m -d -S $NAME perl ./$DAEMON $PARAMS
 
-     echo $! > /tmp/hlstats.pid
+     echo $! > /tmp/hlstats160.pid
      echo "PID file created."
      echo "$DESC restarted successfully!"
     ;;
