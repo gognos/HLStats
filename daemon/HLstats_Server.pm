@@ -23,7 +23,7 @@ package HLstats_Server;
 # + 2007 - 2011
 # +
 #
-# This program is free software is lincensed under the
+# This program is free software is licensed under the
 # COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 #
 # You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
