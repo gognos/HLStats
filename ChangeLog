@@ -1,10 +1,11 @@
 HLStats ChangeLog
 =================
 
-1.60 (2011-01-10)
+1.60 (tba)
 *) Note: Works with Perl v5.10.1, MySQL 5.0.51a, Apache 2.2.16
 		PHP 5.3.3-6
 *) Note: Thx to Schakal for all his help making this release ready !
+*) Note: Changed license: CDDL http://www.sun.com/cddl/cddl.html
 *) New: HLStats needs MySQL 4.1 and MySQL is the only supported DB yet.
 *) New: HLStats needs PHP > 5.2.0 now.
 *) New: New design and overall re-write of the web-interface
