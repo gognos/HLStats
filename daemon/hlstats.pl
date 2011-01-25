@@ -24,7 +24,7 @@
 # +
 #
 #
-# This program is free software is lincesed under the
+# This program is free software is lincensed under the
 # COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
 #
 # You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
