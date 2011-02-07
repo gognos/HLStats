@@ -25,6 +25,8 @@ UPDATE `#DB_PREFIX#_Server_Addons` SET `url` = 'http://sourceforge.net/projects/
 UPDATE `#DB_PREFIX#_Server_Addons` SET `url` = 'http://sourceforge.net/projects/statsme/' WHERE `#DB_PREFIX#_Server_Addons`.`rule` = 'statsme_version';
 UPDATE `#DB_PREFIX#_Server_Addons` SET `url` = 'http://phpua.sourceforge.net/' WHERE `#DB_PREFIX#_Server_Addons`.`rule` = 'phpua_mm_version';
 UPDATE `#DB_PREFIX#_Server_Addons` SET `url` = 'http://de.wikipedia.org/wiki/Cheating-Death'  WHERE `#DB_PREFIX#_Server_Addons`.`rule` = 'cdversion';
+INSERT INTO `#DB_PREFIX#_Server_Addons` SET `url` = 'http://www.steambans.com', `rule` = 'sbguardian_version', `addon` = 'SBGuardian %';
+INSERT INTO `#DB_PREFIX#_Server_Addons` SET `url` = 'http://wiki.hlsw.org/index.php/GunGame_AMXX', `rule` = 'gg_version', `addon` = 'GunGame AMXX %';
 
 ALTER TABLE `#DB_PREFIX#_Players` ADD `myspace` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `icq`;
 ALTER TABLE `#DB_PREFIX#_Players` ADD `facebook` VARCHAR( 128 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `myspace` ;

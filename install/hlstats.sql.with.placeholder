@@ -507,6 +507,8 @@ INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`, `addon`, `url`) VALUES
 ('amxmodx_version', 'AMXX %', 'http://www.amxmodx.org'),
 ('sbsrv_version', 'Steambans %', 'http://www.steambans.com'),
 ('sourcemod_version', 'SourceMod %', 'http://www.sourcemod.net'),
+('sbguardian_version', 'SBGuardian %', 'http://www.steambans.com'),
+('gg_version', 'GunGame AMXX %', 'http://wiki.hlsw.org/index.php/GunGame_AMXX'),
 ('logmod_version', 'LogMod %', 'http://wiki.hlsw.net/index.php/LogMod_Information');
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Teams`;
