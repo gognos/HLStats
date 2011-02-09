@@ -1,6 +1,7 @@
 News = Новости
 from = от
 Author = Автор
+written by = написанные
 Subject = Сабж
 Message = Сообщение
 Posted at = Запостил
@@ -13,6 +14,14 @@ Help = Помощь
 No = Нет
 Yes = Да
 None = Никого
+No Data = Нет данных
+Percent = Процентов
+Currently disabled ! = Не активные
+Could not save data = Данные не могут быть сохранены
+Data saved = Данные, хранящиеся
+Data could not be saved = Данные не могут быть сохранены
+Invalid Input = Неверный номер
+BOT = BOT
 
 Contents = Контент
 Games = Игры
@@ -21,6 +30,8 @@ Top Player = Лучший Игрок
 Top Clan = Лучший Клан
 Players = Игроки
 Player = Игрок
+active Player = Активных Игроков
+inactive Player = Неактивные игроки
 Clans = Кланы
 General Statistics = Общая Статистика
 players and = игроки и
@@ -32,6 +43,7 @@ Map = Карта
 ago = назад
 Type = Тип
 Change sorting order = Отсортировать по
+No players recorded = Нет данных
 
 Change language = Сменить язык
 
@@ -58,6 +70,14 @@ days = дней
 hours = часы
 mins = минуты
 secs = секунды
+
+Monday = Понедельник
+Tuesday = Вторник
+Wednesday = Среда
+Thursday = Четверг
+Friday = Пятница
+Saturday = Суббота
+Sunday = Воскресенье
 
 Awards = Награды
 Daily = Ежедневно
