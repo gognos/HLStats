@@ -1,7 +1,7 @@
 HLStats ChangeLog
 =================
 
-1.60 (tba)
+1.60 (2011-02-10)
 *) Note: Works with Perl v5.10.1, MySQL 5.0.51a, Apache 2.2.16
 		PHP 5.3.3-6
 *) Note: Thx to Schakal for all his help making this release ready !
