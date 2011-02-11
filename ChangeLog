@@ -1,7 +1,11 @@
 HLStats ChangeLog
 =================
 
-1.60 (tba)
+1.61 (tba)
+*) New: Russian translation by E][tremist
+
+
+1.60 (2011-02-10)
 *) Note: Works with Perl v5.10.1, MySQL 5.0.51a, Apache 2.2.16
 		PHP 5.3.3-6
 *) Note: Thx to Schakal for all his help making this release ready !
@@ -33,7 +37,6 @@ HLStats ChangeLog
 		DELETEDAYS is defined.
 *) New: hlstats-screen.sh script to start HLStats within the screen
 		command. thx to Schakal
-*) New: Russian translation by E][tremist
 *) New: New signature background image: css_nitro
 		Copyright by Nitrocium @ deviantart
 *) New: The information if a player is a bot or not is now stored in the

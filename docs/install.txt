@@ -1,2 +1,2 @@
 The Installation Documentation can be found here:
-http://half-life-statistics.org/Documentation.html
+http://hlstats-community.org/Documentation.html
