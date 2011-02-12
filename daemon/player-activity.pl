@@ -45,6 +45,7 @@ my $opt_configfile_name = "hlstats.conf.ini";
 ##
 
 use strict;
+no strict 'vars';
 use warnings; #DEBUG
 use DBI;
 use File::Basename;
