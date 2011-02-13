@@ -281,7 +281,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		</li>
 <?php
 	if (!empty($lastevent)) {
-		$lastevent = l(date('l',strtotime($lastevent))).' '.date("d. m Y H:i:s T",strtotime($lastevent));
+		$lastevent = l(date('l',strtotime($lastevent))).' '.date("d. m. Y H:i:s T",strtotime($lastevent));
 ?>
 		<li>
 			<?php echo l("Last kill")," <b>$lastevent</b>"; ?>

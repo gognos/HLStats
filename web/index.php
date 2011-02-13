@@ -78,7 +78,7 @@ require("hlstatsinc/functions.inc.php");
 /**
  * the release version
  */
-define("VERSION", "development version");
+define("VERSION", "1.61");
 
 $db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS) OR die('Could not connect to the MySQL Server. Check your configuration.');
 $db_sel = mysql_select_db(DB_NAME,$db_con) OR die('Could not select database. Check your configuration.');
