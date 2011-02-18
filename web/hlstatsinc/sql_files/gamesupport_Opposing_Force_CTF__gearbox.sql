@@ -94,6 +94,29 @@ INSERT IGNORE INTO ++DB_PREFIX++_Actions VALUES (NULL,'gearbox','op4cp_park_tc4_
 INSERT IGNORE INTO ++DB_PREFIX++_Teams VALUES (NULL,'gearbox','Black Mesa','Black Mesa', '0');
 INSERT IGNORE INTO ++DB_PREFIX++_Teams VALUES (NULL,'gearbox','Opposing Force','Opposing Force', '0');
 
+#
+# Roles
+#
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','shephard','Shephard','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','beret','Beret','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','ctf_beret','Beret','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','barney','Barney','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','ctf_barney','Barney','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','gina','Gina','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','ctf_gina','Gina','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','gordon','Gordon','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','ctf_gordon','Gordon','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','scientist','Scientist','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','ctf_scientist','Scientist','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','drill','Drill Sergeant','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','fassn','Female Assassin','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','grunt','Grunt','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','massn','Male Assassin','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','otis','Otis','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','recruit','Recruit','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','tower','Tower','0');
+INSERT IGNORE INTO ++DB_PREFIX++_Roles VALUES (NULL,'gearbox','zombie','Zombie','0');
+
 
 #
 # Weapons
