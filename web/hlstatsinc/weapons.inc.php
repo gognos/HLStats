@@ -73,30 +73,30 @@ if (isset($_GET["sortorder"])) {
 }
 
 // get the data
-$killCount = mysql_query("SELECT COUNT(".DB_PREFIX."_Players.playerId) kc
-	FROM ".DB_PREFIX."_Events_Frags
-	LEFT JOIN ".DB_PREFIX."_Players ON
-		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
-	WHERE ".DB_PREFIX."_Players.game = '".mysql_escape_string($game)."'");
+$killCount = mysql_query("SELECT COUNT(`".DB_PREFIX."_Players`.`playerId`) kc
+	FROM `".DB_PREFIX."_Events_Frags`
+	LEFT JOIN `".DB_PREFIX."_Players` ON
+		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
+	WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'");
 $result = mysql_fetch_assoc($killCount);
 $totalkills = $result['kc'];
 mysql_free_result($killCount);
 
 if(!empty($totalkills)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-			".DB_PREFIX."_Events_Frags.weapon,
-			".DB_PREFIX."_Weapons.modifier AS modifier,
-			".DB_PREFIX."_Weapons.name,
-			COUNT(".DB_PREFIX."_Events_Frags.weapon) AS kills
-		FROM ".DB_PREFIX."_Events_Frags
-		LEFT JOIN ".DB_PREFIX."_Weapons
-			ON ".DB_PREFIX."_Weapons.code = ".DB_PREFIX."_Events_Frags.weapon
-		LEFT JOIN ".DB_PREFIX."_Players
-			ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
-		WHERE ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
-			AND ".DB_PREFIX."_Players.hideranking = 0
-		GROUP BY ".DB_PREFIX."_Events_Frags.weapon
-		ORDER BY ".$sort." ".$sortorder;
+			`".DB_PREFIX."_Events_Frags`.`weapon`,
+			`".DB_PREFIX."_Weapons`.`modifier` AS modifier,
+			`".DB_PREFIX."_Weapons`.`name`,
+			COUNT(`".DB_PREFIX."_Events_Frags`.`weapon`) AS kills
+		FROM `".DB_PREFIX."_Events_Frags`
+		LEFT JOIN `".DB_PREFIX."_Weapons`
+			ON `".DB_PREFIX."_Weapons`.`code` = `".DB_PREFIX."_Events_Frags`.`weapon`
+		LEFT JOIN `".DB_PREFIX."_Players`
+			ON `".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
+		WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+			AND `".DB_PREFIX."_Players`.`hideranking` = 0
+		GROUP BY `".DB_PREFIX."_Events_Frags`.`weapon`
+		ORDER BY `".$sort."` `".$sortorder."`";
 
 	// calculate the limit
 	if($page === 1) {

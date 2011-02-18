@@ -75,9 +75,9 @@ if (isset($_GET["sortorder"])) {
 }
 
 
-$query = mysql_query("SELECT name FROM ".DB_PREFIX."_Weapons
-				WHERE code='".mysql_escape_string($weapon)."'
-				AND game='".mysql_escape_string($game)."'");
+$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Weapons`
+				WHERE code = '".mysql_escape_string($weapon)."'
+				AND game = '".mysql_escape_string($game)."'");
 if (mysql_num_rows($query) != 1) {
 	$wep_name = ucfirst($weapon);
 }
@@ -89,19 +89,19 @@ mysql_free_result($query);
 
 // get the weapon info
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
-	".DB_PREFIX."_Events_Frags.killerId,
-	".DB_PREFIX."_Players.lastName AS killerName,
-	".DB_PREFIX."_Players.active,
-	".DB_PREFIX."_Players.isBot,
-	COUNT(".DB_PREFIX."_Events_Frags.weapon) AS frags
-FROM ".DB_PREFIX."_Events_Frags
-LEFT JOIN ".DB_PREFIX."_Players
-	ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
-WHERE ".DB_PREFIX."_Events_Frags.weapon='".mysql_escape_string($weapon)."'
-	AND ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
-	AND ".DB_PREFIX."_Players.hideranking = 0
-GROUP BY ".DB_PREFIX."_Events_Frags.killerId
-ORDER BY ".$sort." ".$sortorder;
+	`".DB_PREFIX."_Events_Frags`.`killerId`,
+	`".DB_PREFIX."_Players`.`lastName` AS killerName,
+	`".DB_PREFIX."_Players`.`active`,
+	`".DB_PREFIX."_Players`.`isBot`,
+	COUNT(`".DB_PREFIX."_Events_Frags`.`weapon`) AS frags
+FROM `".DB_PREFIX."_Events_Frags`
+LEFT JOIN `".DB_PREFIX."_Players`
+	ON `".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
+WHERE `".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_escape_string($weapon)."'
+	AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+	AND `".DB_PREFIX."_Players`.`hideranking` = 0
+GROUP BY `".DB_PREFIX."_Events_Frags`.`killerId`
+ORDER BY `".$sort."` `".$sortorder."`";
 
 // calculate the limit
 if($page === 1) {
@@ -128,18 +128,16 @@ mysql_freeresult($query);
 $query = mysql_query($queryStr);
 
 // get the total kills
-$queryCount = mysql_query("
-	SELECT
-		COUNT(DISTINCT ".DB_PREFIX."_Events_Frags.killerId) AS wc,
-		SUM(".DB_PREFIX."_Events_Frags.weapon='$weapon') AS tc
-	FROM
-		".DB_PREFIX."_Events_Frags
-	LEFT JOIN ".DB_PREFIX."_Players ON
-		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
+$queryCount = mysql_query(" SELECT
+		COUNT(DISTINCT `".DB_PREFIX."_Events_Frags`.`killerId`) AS wc,
+		SUM(`".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_escape_string($weapon)."') AS tc
+	FROM `".DB_PREFIX."_Events_Frags`
+	LEFT JOIN `".DB_PREFIX."_Players` ON
+		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
 	WHERE
-		".DB_PREFIX."_Events_Frags.weapon='$weapon'
-		AND ".DB_PREFIX."_Players.game='$game'
-		AND ".DB_PREFIX."_Players.hideranking = 0
+		`".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_escape_string($weapon)."'
+		AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+		AND `".DB_PREFIX."_Players`.`hideranking` = 0
 ");
 $result = mysql_fetch_assoc($queryCount);
 $numitems = $result['wc'];

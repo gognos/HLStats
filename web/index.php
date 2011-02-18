@@ -164,7 +164,7 @@ if(!empty($_GET["mode"])) {
 }
 
 // decide if we show the games or the game file
-$queryAllGames = mysql_query("SELECT code,name FROM ".DB_PREFIX."_Games WHERE hidden='0' ORDER BY name ASC");
+$queryAllGames = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games` WHERE hidden='0' ORDER BY name");
 $num_games = mysql_num_rows($queryAllGames);
 
 $game = '';
@@ -173,7 +173,8 @@ if(isset($_GET['game'])) {
 	if($check === true) {
 		$game = $_GET['game'];
 
-		$query = mysql_query("SELECT name FROM ".DB_PREFIX."_Games WHERE code='".mysql_escape_string($game)."' AND `hidden` = '0'");
+		$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games` 
+			`					WHERE code='".mysql_escape_string($game)."' AND `hidden` = '0'");
 		if(mysql_num_rows($query) < 1) {
 			error("No such game '$game'.");
 		}
