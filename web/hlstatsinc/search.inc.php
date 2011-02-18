@@ -75,7 +75,7 @@ if(!empty($sr_query) && !empty($sr_type) && !empty($sr_game)) {
 
 // get the game list
 $gamesArr = array();
-$query = mysql_query("SELECT code, name FROM ".DB_PREFIX."_Games WHERE hidden='0' ORDER BY name");
+$query = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games` WHERE hidden='0' ORDER BY name");
 while ($result = mysql_fetch_assoc($query)) {
 	$gamesArr[$result['code']] = $result['name'];
 }
@@ -94,57 +94,59 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 	if(!empty($sr_query)) {
 		$andgame = "";
 		if ($sr_game !== "---") {
-			$andgame = "AND ".DB_PREFIX."_Games.code = '".mysql_escape_string($sr_game)."'";
+			$andgame = "AND `".DB_PREFIX."_Games`.`code` = '".mysql_escape_string($sr_game)."'";
 		}
 
 		switch($sr_type) {
 			case 'clan':
 				$queryStr = "SELECT
-						".DB_PREFIX."_Clans.clanId,
-						".DB_PREFIX."_Clans.tag,
-						".DB_PREFIX."_Clans.name,
-						".DB_PREFIX."_Games.name AS gamename
-					FROM ".DB_PREFIX."_Clans
-					LEFT JOIN ".DB_PREFIX."_Games ON
-						".DB_PREFIX."_Games.code = ".DB_PREFIX."_Clans.game
-					WHERE ".DB_PREFIX."_Games.hidden='0' AND
+						`".DB_PREFIX."_Clans`.`clanId`,
+						`".DB_PREFIX."_Clans`.`tag`,
+						`".DB_PREFIX."_Clans`.`name`,
+						`".DB_PREFIX."_Games`.`name` AS gamename
+					FROM `".DB_PREFIX."_Clans`
+					LEFT JOIN `".DB_PREFIX."_Games` ON
+						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Clans`.`game`
+					WHERE `".DB_PREFIX."_Games`.`hidden`= '0' 
+						AND
 						(
-							".DB_PREFIX."_Clans.tag LIKE '%".mysql_escape_string($sr_query)."%'
-							OR ".DB_PREFIX."_Clans.name LIKE '%".mysql_escape_string($sr_query)."%'
+							`".DB_PREFIX."_Clans`.`tag` LIKE '%".mysql_escape_string($sr_query)."%'
+							OR 
+							`".DB_PREFIX."_Clans`.`name` LIKE '%".mysql_escape_string($sr_query)."%'
 						)
 						".$andgame."
 					ORDER BY `name`";
 			break;
 
 			case 'ids':
-				$queryStr = "SELECT ".DB_PREFIX."_PlayerNames.playerId,
-						".DB_PREFIX."_PlayerNames.name,
-						".DB_PREFIX."_Games.name AS gamename
-					FROM ".DB_PREFIX."_PlayerNames
-					LEFT JOIN ".DB_PREFIX."_Players ON
-						".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_PlayerNames.playerId
-					LEFT JOIN ".DB_PREFIX."_PlayerUniqueIds ON
-						".DB_PREFIX."_PlayerUniqueIds.playerId = ".DB_PREFIX."_PlayerNames.playerId
-					LEFT JOIN ".DB_PREFIX."_Games ON
-						".DB_PREFIX."_Games.code = ".DB_PREFIX."_Players.game
-					WHERE ".DB_PREFIX."_Games.hidden='0' AND
-						".DB_PREFIX."_PlayerUniqueIds.uniqueId LIKE '%".mysql_escape_string($sr_query)."%'
+				$queryStr = "SELECT `".DB_PREFIX."_PlayerNames`.`playerId`,
+						`".DB_PREFIX."_PlayerNames`.`name`,
+						`".DB_PREFIX."_Games`.`name` AS gamename
+					FROM `".DB_PREFIX."_PlayerNames`
+					LEFT JOIN `".DB_PREFIX."_Players` ON
+						`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_PlayerNames`.`playerId`
+					LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` ON
+						`".DB_PREFIX."_PlayerUniqueIds`.`playerId` = `".DB_PREFIX."_PlayerNames`.`playerId`
+					LEFT JOIN `".DB_PREFIX."_Games` ON
+						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Players`.`game`
+					WHERE `".DB_PREFIX."_Games`.`hidden` = '0' 
+						AND `".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` LIKE '%".mysql_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY `name`";
 			break;
 
 			case 'player':
 			default:
-				$queryStr = "SELECT ".DB_PREFIX."_PlayerNames.playerId,
-						".DB_PREFIX."_PlayerNames.name,
-						".DB_PREFIX."_Games.name AS gamename
-					FROM ".DB_PREFIX."_PlayerNames
-					LEFT JOIN ".DB_PREFIX."_Players ON
-						".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_PlayerNames.playerId
-					LEFT JOIN ".DB_PREFIX."_Games ON
-						".DB_PREFIX."_Games.code = ".DB_PREFIX."_Players.game
-					WHERE ".DB_PREFIX."_Games.hidden='0' AND
-						".DB_PREFIX."_PlayerNames.name LIKE '%".mysql_escape_string($sr_query)."%'
+				$queryStr = "SELECT `".DB_PREFIX."_PlayerNames`.`playerId`,
+						`".DB_PREFIX."_PlayerNames`.`name`,
+						`".DB_PREFIX."_Games`.`name` AS gamename
+					FROM `".DB_PREFIX."_PlayerNames`
+					LEFT JOIN `".DB_PREFIX."_Players` ON
+						`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_PlayerNames`.`playerId`
+					LEFT JOIN `".DB_PREFIX."_Games` ON
+						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Players`.`game`
+					WHERE `".DB_PREFIX."_Games`.`hidden` = '0' 
+						AND `".DB_PREFIX."_PlayerNames`.`name` LIKE '%".mysql_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY `name`";
 			break;
