@@ -56,36 +56,7 @@ if(!empty($_GET['killLimit'])) {
 		$killLimit = $_GET['killLimit'];
 	}
 }
-/*
-@todo: remove
-if (!$player && $uniqueid) {
-	if (!$game) {
-		header("Location: index.php?mode=search&st=uniqueid&q=$uniqueid");
-		exit;
-	}
 
-	$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_PlayerUniqueIds
-		WHERE uniqueId='".mysql_escape_string($uniqueid)."'
-			AND game='".mysql_escape_string($game)."'
-	");
-
-	if (mysql_num_rows($query) > 1) {
-		header("Location: index.php?mode=search&st=uniqueid&q=$uniqueid&game=$game");
-		exit;
-	}
-	elseif (mysql_num_rows($query) < 1) {
-		error("No players found matching uniqueId '$uniqueid'");
-	}
-	else {
-		$result = mysql_fetch_assoc($query);
-		$player = $result['playerId'];
-	}
-	mysql_free_result($query);
-}
-elseif (!$player && !$uniqueid) {
-	error("No player ID specified.");
-}
-*/
 require('class/player.class.php');
 $playerObj = new Player($player,$mode,$game);
 if($playerObj === false) {
@@ -101,7 +72,7 @@ $pl_urlname = urlencode($playerObj->getParam('lastName'));
 // get the game name
 // if it fails we use the game code which is stored in the player table
 $game = $playerObj->getParam("game");
-$query = mysql_query("SELECT name FROM ".DB_PREFIX."_Games WHERE code='".mysql_escape_string($game)."'");
+$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games` WHERE code='".mysql_escape_string($game)."'");
 if (mysql_num_rows($query) != 1) {
 	$gamename = ucfirst($game);
 }
