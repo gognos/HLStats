@@ -92,14 +92,14 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the total kills count for this map
-$queryCount = mysql_query("SELECT COUNT(DISTINCT ".DB_PREFIX."_Events_Frags.killerId) AS cc,
-		SUM(".DB_PREFIX."_Events_Frags.map='".mysql_escape_string($map)."') AS tc
-	FROM ".DB_PREFIX."_Events_Frags
-	LEFT JOIN ".DB_PREFIX."_Players ON
-		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
-	WHERE ".DB_PREFIX."_Events_Frags.map='".mysql_escape_string($map)."'
-		AND ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
-		AND ".DB_PREFIX."_Players.hideranking = 0
+$queryCount = mysql_query("SELECT COUNT(DISTINCT `".DB_PREFIX."_Events_Frags`.`killerId`) AS cc,
+		SUM(`".DB_PREFIX."_Events_Frags`.`map` = '".mysql_escape_string($map)."') AS tc
+	FROM `".DB_PREFIX."_Events_Frags`
+	LEFT JOIN `".DB_PREFIX."_Players` ON
+		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
+	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_escape_string($map)."'
+		AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+		AND `".DB_PREFIX."_Players`.`hideranking` = 0
 ");
 $result = mysql_fetch_assoc($queryCount);
 // the total kills for this map
@@ -108,19 +108,19 @@ mysql_freeresult($queryCount);
 
 if(!empty($totalkills)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		".DB_PREFIX."_Events_Frags.killerId,
-		".DB_PREFIX."_Players.lastName AS killerName,
-		COUNT(".DB_PREFIX."_Events_Frags.map) AS frags,
-		".DB_PREFIX."_Players.active,
-		".DB_PREFIX."_Players.isBot
-	FROM ".DB_PREFIX."_Events_Frags
-	LEFT JOIN ".DB_PREFIX."_Players ON
-		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_Frags.killerId
-	WHERE ".DB_PREFIX."_Events_Frags.map='".mysql_escape_string($map)."'
-		AND ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
-		AND ".DB_PREFIX."_Players.hideranking = 0
-	GROUP BY ".DB_PREFIX."_Events_Frags.killerId
-	ORDER BY ".$sort." ".$sortorder;
+		`".DB_PREFIX."_Events_Frags`.`killerId`,
+		`".DB_PREFIX."_Players`.`lastName` AS killerName,
+		COUNT(".DB_PREFIX."_Events_Frags`.`map`) AS frags,
+		`".DB_PREFIX."_Players`.`active`,
+		`".DB_PREFIX."_Players`.`isBot`
+	FROM ".DB_PREFIX."_Events_Frags`
+	LEFT JOIN `".DB_PREFIX."_Players` ON
+		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
+	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_escape_string($map)."'
+		AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+		AND `".DB_PREFIX."_Players`.`hideranking` = 0
+	GROUP BY `".DB_PREFIX."_Events_Frags`.`killerId`
+	ORDER BY `".$sort."` `".$sortorder."`";
 
 	// calculate the limit
 	if($page === 1) {
