@@ -68,8 +68,8 @@ include('hlstatsinc/hlquery_funcs.inc.php');
 $query = mysql_query("SELECT s.serverId, s.name, s.address,
 			s.port, s.publicaddress, s.game, s.rcon_password,
 			g.name gamename
-		FROM ".DB_PREFIX."_Servers AS s
-		LEFT JOIN ".DB_PREFIX."_Games AS g ON s.game=g.code
+		FROM `".DB_PREFIX."_Servers` AS s
+		LEFT JOIN `".DB_PREFIX."_Games` AS g ON s.game=g.code
 		WHERE serverId = '".mysql_escape_string($serverId)."'");
 if (mysql_num_rows($query) != 1) {
 	die("Invalid or no server specified.");
@@ -208,7 +208,7 @@ elseif (isset($server_rules['mp_timeleft']) && !empty($server_rules['mp_timeleft
 
 // Load our plugin list
 $server_details['addon_count'] = 0;
-$query = mysql_query("SELECT * FROM ".DB_PREFIX."_Server_Addons");
+$query = mysql_query("SELECT * FROM `".DB_PREFIX."_Server_Addons`");
 while ($addon_list = mysql_fetch_assoc($query)) {
 	$server_addon[$addon_list['rule']] = array('addon' => $addon_list['addon'], 'url' => $addon_list['url']);
 }
