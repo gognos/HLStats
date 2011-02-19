@@ -75,7 +75,9 @@ if(!empty($sr_query) && !empty($sr_type) && !empty($sr_game)) {
 
 // get the game list
 $gamesArr = array();
-$query = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games` WHERE hidden='0' ORDER BY name");
+$query = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games`
+						WHERE hidden='0' ORDER BY name");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 while ($result = mysql_fetch_assoc($query)) {
 	$gamesArr[$result['code']] = $result['name'];
 }
@@ -94,68 +96,68 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 	if(!empty($sr_query)) {
 		$andgame = "";
 		if ($sr_game !== "---") {
-			$andgame = "AND `".DB_PREFIX."_Games`.`code` = '".mysql_real_escape_string($sr_game)."'";
+			$andgame = "AND g.code = '".mysql_real_escape_string($sr_game)."'";
 		}
 
 		switch($sr_type) {
 			case 'clan':
 				$queryStr = "SELECT
-						`".DB_PREFIX."_Clans`.`clanId`,
-						`".DB_PREFIX."_Clans`.`tag`,
-						`".DB_PREFIX."_Clans`.`name`,
-						`".DB_PREFIX."_Games`.`name` AS gamename
-					FROM `".DB_PREFIX."_Clans`
-					LEFT JOIN `".DB_PREFIX."_Games` ON
-						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Clans`.`game`
-					WHERE `".DB_PREFIX."_Games`.`hidden`= '0' 
+						c.clanId,
+						c.tag,
+						c.name,
+						c.game AS gamename
+					FROM `".DB_PREFIX."_Clans` AS c
+					LEFT JOIN `".DB_PREFIX."_Games` AS g
+						ON g.code = c.game
+					WHERE g.hidden = '0' 
 						AND
 						(
-							`".DB_PREFIX."_Clans`.`tag` LIKE '%".mysql_real_escape_string($sr_query)."%'
+							c.tag LIKE '%".mysql_real_escape_string($sr_query)."%'
 							OR 
-							`".DB_PREFIX."_Clans`.`name` LIKE '%".mysql_real_escape_string($sr_query)."%'
+							c.name LIKE '%".mysql_real_escape_string($sr_query)."%'
 						)
 						".$andgame."
-					ORDER BY `name`";
+					ORDER BY name";
 			break;
 
 			case 'ids':
-				$queryStr = "SELECT `".DB_PREFIX."_PlayerNames`.`playerId`,
-						`".DB_PREFIX."_PlayerNames`.`name`,
-						`".DB_PREFIX."_Games`.`name` AS gamename
-					FROM `".DB_PREFIX."_PlayerNames`
-					LEFT JOIN `".DB_PREFIX."_Players` ON
-						`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_PlayerNames`.`playerId`
-					LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` ON
-						`".DB_PREFIX."_PlayerUniqueIds`.`playerId` = `".DB_PREFIX."_PlayerNames`.`playerId`
-					LEFT JOIN `".DB_PREFIX."_Games` ON
-						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Players`.`game`
-					WHERE `".DB_PREFIX."_Games`.`hidden` = '0' 
-						AND `".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` LIKE '%".mysql_real_escape_string($sr_query)."%'
+				$queryStr = "SELECT pn.playerId,
+						pn.name,
+						g.name AS gamename
+					FROM `".DB_PREFIX."_PlayerNames` AS pn
+					LEFT JOIN `".DB_PREFIX."_Players` AS p
+						ON p.playerId = pn.playerId
+					LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS pu
+						ON pu.playerId = pn.playerId
+					LEFT JOIN `".DB_PREFIX."_Games` AS g
+						ON g.code = p.game
+					WHERE g.hidden = '0' 
+						AND pu.uniqueId LIKE '%".mysql_real_escape_string($sr_query)."%'
 						".$andgame."
-					ORDER BY `name`";
+					ORDER BY name";
 			break;
 
 			case 'player':
 			default:
-				$queryStr = "SELECT `".DB_PREFIX."_PlayerNames`.`playerId`,
-						`".DB_PREFIX."_PlayerNames`.`name`,
-						`".DB_PREFIX."_Games`.`name` AS gamename
-					FROM `".DB_PREFIX."_PlayerNames`
-					LEFT JOIN `".DB_PREFIX."_Players` ON
-						`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_PlayerNames`.`playerId`
-					LEFT JOIN `".DB_PREFIX."_Games` ON
-						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Players`.`game`
-					WHERE `".DB_PREFIX."_Games`.`hidden` = '0' 
-						AND `".DB_PREFIX."_PlayerNames`.`name` LIKE '%".mysql_real_escape_string($sr_query)."%'
+				$queryStr = "SELECT pn.playerId,
+						pn.name,
+						g.name AS gamename
+					FROM `".DB_PREFIX."_PlayerNames` AS pn
+					LEFT JOIN `".DB_PREFIX."_Players` AS p
+						ON p.playerId = pn.playerId
+					LEFT JOIN `".DB_PREFIX."_Games` AS g
+						ON g.code = p.game
+					WHERE g.hidden = '0' 
+						AND pn.name LIKE '%".mysql_real_escape_string($sr_query)."%'
 						".$andgame."
-					ORDER BY `name`";
+					ORDER BY name";
 			break;
 		}
 
 		if(!empty($queryStr)) {
 			$searchResults = array();
 			$query = mysql_query($queryStr);
-
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if(mysql_num_rows($query) > 0) {
 				while($result = mysql_fetch_assoc($query)) {
 					$searchResults[$result['gamename']][] = $result;

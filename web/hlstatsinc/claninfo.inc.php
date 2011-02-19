@@ -92,23 +92,23 @@ if (isset($_GET["sortorder"])) {
 }
 
 $query = mysql_query("SELECT
-		".DB_PREFIX."_Clans.tag,
-		".DB_PREFIX."_Clans.name,
-		".DB_PREFIX."_Clans.homepage,
-		".DB_PREFIX."_Clans.steamGroup,
-		".DB_PREFIX."_Clans.game,
-		SUM(".DB_PREFIX."_Players.kills) AS kills,
-		SUM(".DB_PREFIX."_Players.deaths) AS deaths,
-		COUNT(".DB_PREFIX."_Players.playerId) AS nummembers,
-		ROUND(AVG(".DB_PREFIX."_Players.skill)) AS avgskill
-	FROM ".DB_PREFIX."_Clans
-	LEFT JOIN ".DB_PREFIX."_Players
-		ON ".DB_PREFIX."_Players.clan = ".DB_PREFIX."_Clans.clanId
-	WHERE ".DB_PREFIX."_Clans.clanId=".mysql_real_escape_string($clan)."
-		AND ".DB_PREFIX."_Players.hideranking = 0
-	GROUP BY ".DB_PREFIX."_Clans.clanId
+		c.tag,
+		c.name,
+		c.homepage,
+		c.steamGroup,
+		c.game,
+		SUM(p.kills) AS kills,
+		SUM(p.deaths) AS deaths,
+		COUNT(p.playerId) AS nummembers,
+		ROUND(AVG(p.skill)) AS avgskill
+	FROM `".DB_PREFIX."_Clans` AS c
+	LEFT JOIN `".DB_PREFIX."_Players` AS p
+		ON p.clan = c.clanId
+	WHERE c.clanId=".mysql_real_escape_string($clan)."
+		AND p.hideranking = 0
+	GROUP BY c.clanId
 ");
-
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if (mysql_num_rows($query) != 1) {
 	die("No such clan '$clan'.");
 }
@@ -128,8 +128,8 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			playerId, lastName, skill, oldSkill, kills, deaths, active, isBot,
 			IFNULL(kills/deaths, 0) AS kpd,
 			(kills/" . mysql_real_escape_string($clandata["kills"]) . ") * 100 AS percent
-		FROM ".DB_PREFIX."_Players
-		WHERE clan=".mysql_real_escape_string($clan)."
+		FROM `".DB_PREFIX."_Players`
+		WHERE clan = ".mysql_real_escape_string($clan)."
 			AND hideranking = 0
 		ORDER BY ".$sort." ".$sortorder;
 
@@ -143,6 +143,7 @@ else {
 }
 
 $query = mysql_query($queryStr);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$members['data'][] = $result;

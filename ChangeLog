@@ -5,6 +5,8 @@ HLStats ChangeLog
 *) New: Russian translation by E][tremist
 *) Opposing Force CTF/DM role models added
 *) Changed: New Bug Tracker. Now FlySpray
+*) Changed: Mysql escape function on PHP now mysql_real_escape_string
+*) Changed: cleaner mysql query strings
 *) Fixed: Ticket #28
 
 

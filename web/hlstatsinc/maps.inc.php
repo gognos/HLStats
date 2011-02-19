@@ -82,11 +82,12 @@ if (isset($_GET["sortorder"])) {
 
 // query to get the total kills count for this game
 $queryKillsCount = mysql_query("SELECT COUNT(*) as kc
-	FROM `".DB_PREFIX."_Events_Frags`
-	LEFT JOIN `".DB_PREFIX."_Players`
-		ON `".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
-		AND `".DB_PREFIX."_Players`.`hideranking` = 0");
+	FROM `".DB_PREFIX."_Events_Frags` AS ef
+	LEFT JOIN `".DB_PREFIX."_Players` AS p
+		ON p.playerId = ef.killerId
+	WHERE p.game = '".mysql_real_escape_string($game)."'
+		AND p.hideranking = 0");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $result = mysql_fetch_assoc($queryKillsCount);
 // get the total kill count for this game
 $totalkills = $result['kc'];
@@ -95,14 +96,14 @@ mysql_free_result($queryKillsCount);
 if(!empty($totalkills)) {
 	// query to get the data from the db with the given options
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		IF(`".DB_PREFIX."_Events_Frags`.`map` = '', 'Unaccounted', `".DB_PREFIX."_Events_Frags`.`map`) AS map,
-		COUNT(`".DB_PREFIX."_Events_Frags`.`map`) AS kills
-	FROM `".DB_PREFIX."_Events_Frags`
-	LEFT JOIN `".DB_PREFIX."_Players`
-		ON `".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
-		AND `".DB_PREFIX."_Players`.`hideranking` = 0
-	GROUP BY `".DB_PREFIX."_Events_Frags`.`map`
+		IF(ef.map = '', 'Unaccounted', ef.map) AS map,
+		COUNT(ef.map) AS kills
+	FROM `".DB_PREFIX."_Events_Frags` AS ef
+	LEFT JOIN `".DB_PREFIX."_Players` AS p
+		ON p.playerId = ef.killerId
+	WHERE p.game = '".mysql_real_escape_string($game)."'
+		AND p.hideranking = 0
+	GROUP BY ef.map
 	ORDER BY `".$sort."` `".$sortorder."`";
 
 	// calculate the limit
@@ -115,6 +116,7 @@ if(!empty($totalkills)) {
 	}
 
 	$query = mysql_query($queryStr);
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	if(mysql_num_rows($query) > 0) {
 		while($result = mysql_fetch_assoc($query)) {
 			$result['percent'] = $result['kills']/$totalkills*100;

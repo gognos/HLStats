@@ -164,7 +164,9 @@ if(!empty($_GET["mode"])) {
 }
 
 // decide if we show the games or the game file
-$queryAllGames = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games` WHERE hidden='0' ORDER BY name");
+$queryAllGames = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games`
+								WHERE hidden='0' ORDER BY name");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $num_games = mysql_num_rows($queryAllGames);
 
 $game = '';
