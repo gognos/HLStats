@@ -93,12 +93,12 @@ if (isset($_GET["sortorder"])) {
 
 // query to get the total kills count for this map
 $queryCount = mysql_query("SELECT COUNT(DISTINCT `".DB_PREFIX."_Events_Frags`.`killerId`) AS cc,
-		SUM(`".DB_PREFIX."_Events_Frags`.`map` = '".mysql_escape_string($map)."') AS tc
+		SUM(`".DB_PREFIX."_Events_Frags`.`map` = '".mysql_real_escape_string($map)."') AS tc
 	FROM `".DB_PREFIX."_Events_Frags`
 	LEFT JOIN `".DB_PREFIX."_Players` ON
 		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_escape_string($map)."'
-		AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_real_escape_string($map)."'
+		AND `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
 		AND `".DB_PREFIX."_Players`.`hideranking` = 0
 ");
 $result = mysql_fetch_assoc($queryCount);
@@ -116,8 +116,8 @@ if(!empty($totalkills)) {
 	FROM ".DB_PREFIX."_Events_Frags`
 	LEFT JOIN `".DB_PREFIX."_Players` ON
 		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_escape_string($map)."'
-		AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_real_escape_string($map)."'
+		AND `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
 		AND `".DB_PREFIX."_Players`.`hideranking` = 0
 	GROUP BY `".DB_PREFIX."_Events_Frags`.`killerId`
 	ORDER BY `".$sort."` `".$sortorder."`";

@@ -59,10 +59,10 @@ if(isset($_POST['saveNews'])) {
 		$result = mysql_query("INSERT INTO ".DB_PREFIX."_News
 							VALUES ('',
 									'".$newsdate."',
-									'".mysql_escape_string($adminObj->getUsername())."',
-									'".mysql_escape_string($_POST["email"])."',
-									'".mysql_escape_string($subject)."',
-									'".mysql_escape_string($message)."')
+									'".mysql_real_escape_string($adminObj->getUsername())."',
+									'".mysql_real_escape_string($_POST["email"])."',
+									'".mysql_real_escape_string($subject)."',
+									'".mysql_real_escape_string($message)."')
 							");
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
@@ -83,7 +83,7 @@ if(!empty($_GET['editpost']) || !empty($_GET['deletepost'])) {
 	$check = validateInput($postnr,'digit');
 	if(!empty($postnr) && $check === true) {
 		$query = mysql_query("SELECT * FROM ".DB_PREFIX."_News
-						WHERE `id` = '".mysql_escape_string($postnr)."'");
+						WHERE `id` = '".mysql_real_escape_string($postnr)."'");
 		$post = mysql_fetch_array($query);
 		mysql_free_result($query);
 	}
@@ -107,11 +107,11 @@ if(isset($_POST['editNews']) && !empty($_GET['editpost'])) {
 		$newsdate = date("Y-m-d H:i:s");
 		$result = mysql_query("UPDATE `".DB_PREFIX."_News`
 								SET `date` = '".$newsdate."',
-									`user` = '".mysql_escape_string($adminObj->getUsername())."',
-									`email` = '".mysql_escape_string($_POST["email"])."',
-									`subject` = '".mysql_escape_string($_POST["subject"])."',
-									`message` = '".mysql_escape_string($_POST["message"])."'
-								WHERE `id` = '".mysql_escape_string($newsID)."'
+									`user` = '".mysql_real_escape_string($adminObj->getUsername())."',
+									`email` = '".mysql_real_escape_string($_POST["email"])."',
+									`subject` = '".mysql_real_escape_string($_POST["subject"])."',
+									`message` = '".mysql_real_escape_string($_POST["message"])."'
+								WHERE `id` = '".mysql_real_escape_string($newsID)."'
 							");
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
@@ -125,7 +125,7 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 
 	if(!empty($newsId) && $check === true) {
 		$query = mysql_query("DELETE FROM `".DB_PREFIX."_News`
-								WHERE `id` = '".mysql_escape_string($newsId)."'");
+								WHERE `id` = '".mysql_real_escape_string($newsId)."'");
 		if($query !== false) {
 			$return['msg'] = l('News item deleted');
 			$return['status'] = "2";

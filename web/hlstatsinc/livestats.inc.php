@@ -70,7 +70,7 @@ $query = mysql_query("SELECT s.serverId, s.name, s.address,
 			g.name gamename
 		FROM `".DB_PREFIX."_Servers` AS s
 		LEFT JOIN `".DB_PREFIX."_Games` AS g ON s.game=g.code
-		WHERE serverId = '".mysql_escape_string($serverId)."'");
+		WHERE serverId = '".mysql_real_escape_string($serverId)."'");
 if (mysql_num_rows($query) != 1) {
 	die("Invalid or no server specified.");
 }

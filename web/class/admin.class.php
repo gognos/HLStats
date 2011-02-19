@@ -93,7 +93,7 @@ class Admin {
 		if(!empty($username) && !empty($pass)) {
 			$query = mysql_query("SELECT `username`,`password`
 									FROM `".DB_PREFIX."_Users`
-									WHERE `username` = '".mysql_escape_string($username)."'");
+									WHERE `username` = '".mysql_real_escape_string($username)."'");
 			if(mysql_num_rows($query) > 0) {
 				// we have such user, now check pass
 				$result = mysql_fetch_assoc($query);
@@ -103,8 +103,8 @@ class Admin {
 					// create auth code
 					$authCode = sha1($_SERVER["REMOTE_ADDR"].$_SERVER['HTTP_USER_AGENT'].$lPass);
 					$query = mysql_query("UPDATE `".DB_PREFIX."_Users`
-											SET `authCode` = '".mysql_escape_string($authCode)."'
-											WHERE `username` = '".mysql_escape_string($username)."'");
+											SET `authCode` = '".mysql_real_escape_string($authCode)."'
+											WHERE `username` = '".mysql_real_escape_string($username)."'");
 					if($query !== false) {
 						$_SESSION['hlstatsAuth']['authCode'] = $authCode;
 						$ret = true;
@@ -128,7 +128,7 @@ class Admin {
 			if(validateInput($authCode,'nospace') === true) {
 				$query = mysql_query("UPDATE`".DB_PREFIX."_Users`
 										SET `authCode` = ''
-										WHERE `authCode` = '".mysql_escape_string($authCode)."'");
+										WHERE `authCode` = '".mysql_real_escape_string($authCode)."'");
 			}
 		}
 
@@ -147,10 +147,10 @@ class Admin {
 		
 		if(!empty($username)) {
 			$queryStr = "UPDATE `".DB_PREFIX."_Users`
-							SET `username` = '".mysql_escape_string($username)."'";
+							SET `username` = '".mysql_real_escape_string($username)."'";
 			if(!empty($pw)) {
 				$pw = md5($pw);
-				$queryStr .= ", `password` = '".mysql_escape_string($pw)."'";
+				$queryStr .= ", `password` = '".mysql_real_escape_string($pw)."'";
 			}
 
 			$queryStr .= " WHERE `username` = '".$this->_userData['username']."'";
@@ -196,7 +196,7 @@ class Admin {
 
 		$query = mysql_query("SELECT `username`,`password`
 								FROM `".DB_PREFIX."_Users`
-								WHERE `authCode` = '".mysql_escape_string($authCode)."'");
+								WHERE `authCode` = '".mysql_real_escape_string($authCode)."'");
 		if(mysql_num_rows($query) > 0) {
 			$ret = mysql_fetch_assoc($query);
 		}

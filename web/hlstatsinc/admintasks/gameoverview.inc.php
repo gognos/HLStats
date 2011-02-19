@@ -46,7 +46,7 @@ if(isset($_GET['code'])) {
 	$gc = trim($_GET['code']);
 	if(!empty($gc)) {
 		$query = mysql_query("SELECT code,name,hidden FROM `".DB_PREFIX."_Games`
-								WHERE `code` = '".mysql_escape_string($gc)."'");
+								WHERE `code` = '".mysql_real_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
 			$gameData = mysql_fetch_assoc($query);
 		}

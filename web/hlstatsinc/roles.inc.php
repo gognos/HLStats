@@ -81,8 +81,8 @@ $queryStr = "SELECT IFNULL(`".DB_PREFIX."_Roles`.`name`, `".DB_PREFIX."_Events_C
 			`".DB_PREFIX."_Events_ChangeRole`.`role` = `".DB_PREFIX."_Roles`.`code`
 		LEFT JOIN `".DB_PREFIX."_Servers` ON
 			`".DB_PREFIX."_Servers`.`serverId` = `".DB_PREFIX."_Events_ChangeRole`.`serverId`
-		WHERE `".DB_PREFIX."_Roles`.`game` = '".mysql_escape_string($game)."'
-			AND `".DB_PREFIX."_Servers`.`game` = '".mysql_escape_string($game)."'
+		WHERE `".DB_PREFIX."_Roles`.`game` = '".mysql_real_escape_string($game)."'
+			AND `".DB_PREFIX."_Servers`.`game` = '".mysql_real_escape_string($game)."'
 			AND (hidden <>'1' OR hidden IS NULL)
 		GROUP BY `".DB_PREFIX."_Events_ChangeRole`.`role`
 		ORDER BY `".$sort."` `".$sortorder."`";

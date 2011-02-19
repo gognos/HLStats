@@ -65,7 +65,7 @@ $query = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
 							FROM ".DB_PREFIX."_Awards_History
 							LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
 							LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
-							WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_escape_string($game)."'
+							WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_real_escape_string($game)."'
 								AND ".DB_PREFIX."_Awards_History.date = '".$date."'
 							ORDER BY ".DB_PREFIX."_Awards.awardType DESC,
 								".DB_PREFIX."_Awards.name ASC");
@@ -80,7 +80,7 @@ mysql_free_result($query);
 // get the dates for the date selection
 $dateSelect = array();
 $query = mysql_query("SELECT `date` FROM ".DB_PREFIX."_Awards_History
-						WHERE game = '".mysql_escape_string($game)."'
+						WHERE game = '".mysql_real_escape_string($game)."'
 						GROUP BY `date`");
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {

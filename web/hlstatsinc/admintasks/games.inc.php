@@ -85,7 +85,7 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 		// we need first the playids for this game
 		$players = array();
 		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players
-								WHERE game = '".mysql_escape_string($gametodelete)."'");
+								WHERE game = '".mysql_real_escape_string($gametodelete)."'");
 		while($result = mysql_fetch_assoc($query)) {
 			$players[]= $result['playerId'];
 		}
@@ -128,7 +128,7 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 		}
 
 		mysql_query("DELETE FROM `".DB_PREFIX."_Games`
-						WHERE code='".mysql_escape_string($gametodelete)."'");
+						WHERE code='".mysql_real_escape_string($gametodelete)."'");
 
 		// delete the players
 		if(!empty($players)) {

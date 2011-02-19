@@ -51,7 +51,7 @@ if(isset($_GET['gc'])) {
 		// load the game info
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_escape_string($gc)."'");
+							WHERE code = '".mysql_real_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];
@@ -68,7 +68,7 @@ if(empty($gc) || empty($check)) {
 // get the teams for this game
 $teams = false;
 $query = mysql_query("SELECT code,name FROM `".DB_PREFIX."_Teams`
-						WHERE `game` = '".mysql_escape_string($gc)."'");
+						WHERE `game` = '".mysql_real_escape_string($gc)."'");
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$teams[] = $result;
@@ -82,7 +82,7 @@ if(isset($_POST['sub']['saveActions'])) {
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Actions`
-									WHERE `id` = '".mysql_escape_string($k)."'");
+									WHERE `id` = '".mysql_real_escape_string($k)."'");
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -106,16 +106,16 @@ if(isset($_POST['sub']['saveActions'])) {
 				if(isset($_POST['for_WorldActions'][$k])) $fwa = 1;
 
 				$query = mysql_query("UPDATE `".DB_PREFIX."_Actions`
-										SET `code` = '".mysql_escape_string($c)."',
-											reward_player = '".mysql_escape_string($rp)."',
-											reward_team = '".mysql_escape_string($rt)."',
-											team  = '".mysql_escape_string($_POST['team'][$k])."',
-											description  = '".mysql_escape_string($d)."',
-											for_PlayerActions  = '".mysql_escape_string($fpa)."',
-											for_PlayerPlayerActions  = '".mysql_escape_string($fppa)."',
-											for_TeamActions  = '".mysql_escape_string($fta)."',
-											for_WorldActions = '".mysql_escape_string($fwa)."'
-										WHERE `id` = '".mysql_escape_string($k)."'");
+										SET `code` = '".mysql_real_escape_string($c)."',
+											reward_player = '".mysql_real_escape_string($rp)."',
+											reward_team = '".mysql_real_escape_string($rt)."',
+											team  = '".mysql_real_escape_string($_POST['team'][$k])."',
+											description  = '".mysql_real_escape_string($d)."',
+											for_PlayerActions  = '".mysql_real_escape_string($fpa)."',
+											for_PlayerPlayerActions  = '".mysql_real_escape_string($fppa)."',
+											for_TeamActions  = '".mysql_real_escape_string($fta)."',
+											for_WorldActions = '".mysql_real_escape_string($fwa)."'
+										WHERE `id` = '".mysql_real_escape_string($k)."'");
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -142,16 +142,16 @@ if(isset($_POST['sub']['saveActions'])) {
 			if(isset($_POST['newfor_WorldActions'])) $fwa = 1;
 
 			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Actions`
-									SET `code` = '".mysql_escape_string($newOne)."',
-										reward_player = '".mysql_escape_string($rp)."',
-										reward_team = '".mysql_escape_string($rt)."',
-										team  = '".mysql_escape_string($_POST['newteam'])."',
-										description  = '".mysql_escape_string($d)."',
-										for_PlayerActions  = '".mysql_escape_string($fpa)."',
-										for_PlayerPlayerActions  = '".mysql_escape_string($fppa)."',
-										for_TeamActions  = '".mysql_escape_string($fta)."',
-										for_WorldActions = '".mysql_escape_string($fwa)."',
-										game = '".mysql_escape_string($gc)."'
+									SET `code` = '".mysql_real_escape_string($newOne)."',
+										reward_player = '".mysql_real_escape_string($rp)."',
+										reward_team = '".mysql_real_escape_string($rt)."',
+										team  = '".mysql_real_escape_string($_POST['newteam'])."',
+										description  = '".mysql_real_escape_string($d)."',
+										for_PlayerActions  = '".mysql_real_escape_string($fpa)."',
+										for_PlayerPlayerActions  = '".mysql_real_escape_string($fppa)."',
+										for_TeamActions  = '".mysql_real_escape_string($fta)."',
+										for_WorldActions = '".mysql_real_escape_string($fwa)."',
+										game = '".mysql_real_escape_string($gc)."'
 									");
 			if($query === false) {
 				$return['status'] = "1";
@@ -172,7 +172,7 @@ $query = mysql_query("SELECT id, code, reward_player, reward_team,
 						for_PlayerPlayerActions,for_TeamActions,
 						for_WorldActions
 					FROM `".DB_PREFIX."_Actions`
-					WHERE game='".mysql_escape_string($gc)."'
+					WHERE game='".mysql_real_escape_string($gc)."'
 					ORDER BY code ASC");
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {

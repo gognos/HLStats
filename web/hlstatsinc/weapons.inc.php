@@ -77,7 +77,7 @@ $killCount = mysql_query("SELECT COUNT(`".DB_PREFIX."_Players`.`playerId`) kc
 	FROM `".DB_PREFIX."_Events_Frags`
 	LEFT JOIN `".DB_PREFIX."_Players` ON
 		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'");
+	WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'");
 $result = mysql_fetch_assoc($killCount);
 $totalkills = $result['kc'];
 mysql_free_result($killCount);
@@ -93,7 +93,7 @@ if(!empty($totalkills)) {
 			ON `".DB_PREFIX."_Weapons`.`code` = `".DB_PREFIX."_Events_Frags`.`weapon`
 		LEFT JOIN `".DB_PREFIX."_Players`
 			ON `".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-		WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+		WHERE `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
 			AND `".DB_PREFIX."_Players`.`hideranking` = 0
 		GROUP BY `".DB_PREFIX."_Events_Frags`.`weapon`
 		ORDER BY `".$sort."` `".$sortorder."`";

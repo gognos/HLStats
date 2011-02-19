@@ -52,7 +52,7 @@ if(isset($_GET['gc'])) {
 		// load the game info
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_escape_string($gc)."'");
+							WHERE code = '".mysql_real_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];
@@ -70,7 +70,7 @@ $weapons = false;
 // get the teams
 $query = mysql_query("SELECT weaponId, code, name, modifier
 						FROM `".DB_PREFIX."_Weapons`
-						WHERE game='".mysql_escape_string($gc)."'
+						WHERE game='".mysql_real_escape_string($gc)."'
 						ORDER BY code ASC");
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
@@ -84,7 +84,7 @@ if(isset($_POST['sub']['saveWeapon'])) {
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Weapons`
-									WHERE `weaponId` = '".mysql_escape_string($k)."'");
+									WHERE `weaponId` = '".mysql_real_escape_string($k)."'");
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -98,10 +98,10 @@ if(isset($_POST['sub']['saveWeapon'])) {
 				$mod = trim($_POST['modifier'][$k]);
 
 				$query = mysql_query("UPDATE `".DB_PREFIX."_Weapons`
-										SET `code` = '".mysql_escape_string($c)."',
-											`name` = '".mysql_escape_string($name)."',
-											`modifier` = '".mysql_escape_string($mod)."'
-										WHERE `weaponId` = '".mysql_escape_string($k)."'");
+										SET `code` = '".mysql_real_escape_string($c)."',
+											`name` = '".mysql_real_escape_string($name)."',
+											`modifier` = '".mysql_real_escape_string($mod)."'
+										WHERE `weaponId` = '".mysql_real_escape_string($k)."'");
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -118,10 +118,10 @@ if(isset($_POST['sub']['saveWeapon'])) {
 			$mod = trim($_POST['newmodifier']);
 
 			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Weapons`
-									SET `code` = '".mysql_escape_string($newOne)."',
-										`name` = '".mysql_escape_string($name)."',
-										`modifier` = '".mysql_escape_string($mod)."',
-										`game` = '".mysql_escape_string($gc)."'");
+									SET `code` = '".mysql_real_escape_string($newOne)."',
+										`name` = '".mysql_real_escape_string($name)."',
+										`modifier` = '".mysql_real_escape_string($mod)."',
+										`game` = '".mysql_real_escape_string($gc)."'");
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');

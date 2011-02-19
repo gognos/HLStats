@@ -76,8 +76,8 @@ if (isset($_GET["sortorder"])) {
 
 
 $query = mysql_query("SELECT name FROM `".DB_PREFIX."_Weapons`
-				WHERE code = '".mysql_escape_string($weapon)."'
-				AND game = '".mysql_escape_string($game)."'");
+				WHERE code = '".mysql_real_escape_string($weapon)."'
+				AND game = '".mysql_real_escape_string($game)."'");
 if (mysql_num_rows($query) != 1) {
 	$wep_name = ucfirst($weapon);
 }
@@ -97,8 +97,8 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 FROM `".DB_PREFIX."_Events_Frags`
 LEFT JOIN `".DB_PREFIX."_Players`
 	ON `".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-WHERE `".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_escape_string($weapon)."'
-	AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+WHERE `".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_real_escape_string($weapon)."'
+	AND `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
 	AND `".DB_PREFIX."_Players`.`hideranking` = 0
 GROUP BY `".DB_PREFIX."_Events_Frags`.`killerId`
 ORDER BY `".$sort."` `".$sortorder."`";
@@ -130,13 +130,13 @@ $query = mysql_query($queryStr);
 // get the total kills
 $queryCount = mysql_query(" SELECT
 		COUNT(DISTINCT `".DB_PREFIX."_Events_Frags`.`killerId`) AS wc,
-		SUM(`".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_escape_string($weapon)."') AS tc
+		SUM(`".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_real_escape_string($weapon)."') AS tc
 	FROM `".DB_PREFIX."_Events_Frags`
 	LEFT JOIN `".DB_PREFIX."_Players` ON
 		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
 	WHERE
-		`".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_escape_string($weapon)."'
-		AND `".DB_PREFIX."_Players`.`game` = '".mysql_escape_string($game)."'
+		`".DB_PREFIX."_Events_Frags`.`weapon` = '".mysql_real_escape_string($weapon)."'
+		AND `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
 		AND `".DB_PREFIX."_Players`.`hideranking` = 0
 ");
 $result = mysql_fetch_assoc($queryCount);

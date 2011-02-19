@@ -123,7 +123,7 @@ class Players {
 						t1.lastName AS lastName,
 						t1.isBot AS isBot
 					FROM ".DB_PREFIX."_Players AS t1
-					WHERE t1.game= '".mysql_escape_string($this->_game)."'
+					WHERE t1.game= '".mysql_real_escape_string($this->_game)."'
 					AND t1.hideranking = 0";
 
 			if($this->g_options['IGNOREBOTS'] === "1") {
@@ -165,9 +165,9 @@ class Players {
 			FROM ".DB_PREFIX."_Players as t1";
 
 		$queryStr .= " WHERE
-				t1.game='".mysql_escape_string($this->_game)."'
+				t1.game='".mysql_real_escape_string($this->_game)."'
 				AND t1.hideranking=0
-				AND t1.kills >= '".mysql_escape_string($this->_option['minkills'])."'";
+				AND t1.kills >= '".mysql_real_escape_string($this->_option['minkills'])."'";
 
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
@@ -234,7 +234,7 @@ class Players {
 						DATE(t1.lastUpdate) AS lastUpdate
 						FROM `".DB_PREFIX."_Players` AS t1
 						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId
-						WHERE `t1`.`game` = '".mysql_escape_string($this->_game)."'";
+						WHERE `t1`.`game` = '".mysql_real_escape_string($this->_game)."'";
 
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
@@ -287,7 +287,7 @@ class Players {
 					FROM ".DB_PREFIX."_Events_StatsmeTime
 					LEFT JOIN ".DB_PREFIX."_Servers
 						ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_StatsmeTime.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'");
+					WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'");
 
 		while($result = mysql_fetch_assoc($query)) {
 			$onlineArr[$result['playerId']][] = $result;

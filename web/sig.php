@@ -144,7 +144,7 @@ if($g_options['allowSig'] == "1") {
 
 		// get the player data
 		$query = mysql_query("SELECT * FROM `".DB_PREFIX."_Players`
-							WHERE playerId = '".mysql_escape_string($playerId)."'");
+							WHERE playerId = '".mysql_real_escape_string($playerId)."'");
 		$playerData = mysql_fetch_assoc($query);
 		if($playerData === false) {
 			// no player data !
@@ -154,7 +154,7 @@ if($g_options['allowSig'] == "1") {
 		// rank
 		$query = mysql_query("SELECT skill, playerId
 								FROM `".DB_PREFIX."_Players`
-								WHERE game = '".mysql_escape_string($playerData['game'])."'
+								WHERE game = '".mysql_real_escape_string($playerData['game'])."'
 								ORDER BY skill DESC");
 		$ranKnum = 1;
 		while ($row = mysql_fetch_assoc($query)) {
@@ -167,7 +167,7 @@ if($g_options['allowSig'] == "1") {
 
 		// server info
 		$query = mysql_query("SELECT serverId FROM `".DB_PREFIX."_Events_Connects`
-					WHERE playerId = '".mysql_escape_string($playerId)."'
+					WHERE playerId = '".mysql_real_escape_string($playerId)."'
 					ORDER BY eventTime DESC
 					LIMIT 1");
 		$result = mysql_fetch_assoc($query);
@@ -178,7 +178,7 @@ if($g_options['allowSig'] == "1") {
 		// now get the server info
 		$query = mysql_query("SELECT address,port,name
 					FROM `".DB_PREFIX."_Servers`
-					WHERE serverId = ".mysql_escape_string($serverId));
+					WHERE serverId = ".mysql_real_escape_string($serverId));
 		$serverData = mysql_fetch_assoc($query);
 		mysql_free_result($query);
 

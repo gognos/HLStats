@@ -104,7 +104,7 @@ $query = mysql_query("SELECT
 	FROM ".DB_PREFIX."_Clans
 	LEFT JOIN ".DB_PREFIX."_Players
 		ON ".DB_PREFIX."_Players.clan = ".DB_PREFIX."_Clans.clanId
-	WHERE ".DB_PREFIX."_Clans.clanId=".mysql_escape_string($clan)."
+	WHERE ".DB_PREFIX."_Clans.clanId=".mysql_real_escape_string($clan)."
 		AND ".DB_PREFIX."_Players.hideranking = 0
 	GROUP BY ".DB_PREFIX."_Clans.clanId
 ");
@@ -127,9 +127,9 @@ $cl_full = $cl_tag . " " . $cl_name;
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			playerId, lastName, skill, oldSkill, kills, deaths, active, isBot,
 			IFNULL(kills/deaths, 0) AS kpd,
-			(kills/" . mysql_escape_string($clandata["kills"]) . ") * 100 AS percent
+			(kills/" . mysql_real_escape_string($clandata["kills"]) . ") * 100 AS percent
 		FROM ".DB_PREFIX."_Players
-		WHERE clan=".mysql_escape_string($clan)."
+		WHERE clan=".mysql_real_escape_string($clan)."
 			AND hideranking = 0
 		ORDER BY ".$sort." ".$sortorder;
 

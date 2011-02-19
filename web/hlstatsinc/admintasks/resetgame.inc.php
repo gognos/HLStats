@@ -53,7 +53,7 @@ if(isset($_GET['gc'])) {
 		// load the game info
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_escape_string($gc)."'");
+							WHERE code = '".mysql_real_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];

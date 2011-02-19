@@ -410,7 +410,7 @@ function getLink ($url, $maxlength=40, $type="http://", $target="_blank") {
  */
 function getGameName($gCode) {
 	$gamename = ucfirst($gCode);
-	$query = mysql_query("SELECT name FROM ".DB_PREFIX."_Games WHERE code='".mysql_escape_string($gCode)."'");
+	$query = mysql_query("SELECT name FROM ".DB_PREFIX."_Games WHERE code='".mysql_real_escape_string($gCode)."'");
 	if (mysql_num_rows($query) > 0) {
 		$result = mysql_fetch_assoc($query);
 		$gamename = $result['name'];

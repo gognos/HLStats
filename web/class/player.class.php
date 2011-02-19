@@ -201,7 +201,7 @@ class Player {
 					LEFT JOIN ".DB_PREFIX."_Servers ON
 						".DB_PREFIX."_Servers.serverId = t.serverId
 					WHERE
-						t.playerId=".mysql_escape_string($this->playerId)."";
+						t.playerId=".mysql_real_escape_string($this->playerId)."";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Connect')."' AS eventType,
 				eventTime,
@@ -212,7 +212,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId = t.serverId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Disconnect')."' AS eventType,
@@ -224,7 +224,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId = t.serverId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT 'Entry' AS eventType,
@@ -236,7 +236,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId = t.serverId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Kill')."' As eventType,
@@ -250,7 +250,7 @@ class Player {
 		LEFT JOIN ".DB_PREFIX."_Players ON
 			".DB_PREFIX."_Players.playerId = t.victimId
 		WHERE
-			t.killerId=".mysql_escape_string($this->playerId)."
+			t.killerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Death')."' AS eventType,
@@ -264,7 +264,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Players On
 				".DB_PREFIX."_Players.playerId = t.killerId
 			WHERE
-				t.victimId=".mysql_escape_string($this->playerId)."
+				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Team Kill')."' AS eventType,
@@ -278,7 +278,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Players On
 				".DB_PREFIX."_Players.playerId = t.victimId
 			WHERE
-				t.killerId=".mysql_escape_string($this->playerId)."
+				t.killerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Friendly Fire')."' AS eventType,
@@ -292,7 +292,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Players On
 				".DB_PREFIX."_Players.playerId = t.killerId
 			WHERE
-				t.victimId=".mysql_escape_string($this->playerId)."
+				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Role')."' AS eventType,
@@ -304,7 +304,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId = t.serverId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Name')."' AS eventTpe,
@@ -316,7 +316,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId = t.serverId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Action')."' AS eventType,
@@ -330,7 +330,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Actions ON
 				".DB_PREFIX."_Actions.id = t.actionId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Action')."' AS eventType,
@@ -346,7 +346,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Players ON
 				".DB_PREFIX."_Players.playerId = t.victimId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Action')."' AS eventType,
@@ -362,7 +362,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Players ON
 				".DB_PREFIX."_Players.playerId = t.playerId
 			WHERE
-				t.victimId=".mysql_escape_string($this->playerId)."
+				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Suicide')."' AS eventType,
@@ -374,7 +374,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId = t.serverId
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Team')."' AS eventType,
@@ -391,7 +391,7 @@ class Player {
 			LEFT JOIN ".DB_PREFIX."_Teams ON
 				".DB_PREFIX."_Teams.code = t.team
 			WHERE
-				t.playerId=".mysql_escape_string($this->playerId)."
+				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 
 		if(!empty($special)) {
@@ -453,7 +453,7 @@ class Player {
 				FROM ".DB_PREFIX."_Events_Chat
 				LEFT JOIN ".DB_PREFIX."_Servers ON
 	 			".DB_PREFIX."_Servers.serverId = ".DB_PREFIX."_Events_Chat.serverId
-			WHERE ".DB_PREFIX."_Events_Chat.playerId=".mysql_escape_string($this->playerId)."";
+			WHERE ".DB_PREFIX."_Events_Chat.playerId=".mysql_real_escape_string($this->playerId)."";
 
 		if($this->_option['page'] === 1) {
 			$queryStr .= " LIMIT 0,50";
@@ -518,8 +518,8 @@ class Player {
 			FROM ".DB_PREFIX."_Events_StatsmeTime
 			LEFT JOIN ".DB_PREFIX."_Servers ON
 				".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_StatsmeTime.serverId
-			WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-				AND playerId='".mysql_escape_string($this->playerId)."'");
+			WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+				AND playerId='".mysql_real_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
 				$ret[] = $result;
@@ -541,7 +541,7 @@ class Player {
 		$query = mysql_query("SELECT COUNT(*) AS dayEvents,
 							 CONCAT(EXTRACT(YEAR FROM `eventTime`),'-',EXTRACT(MONTH FROM `eventTime`),'-',EXTRACT(DAY FROM `eventTime`)) AS eventDay
 							 FROM `".DB_PREFIX."_Events_Frags`
-							 WHERE `killerId` = '".mysql_escape_string($this->playerId)."'
+							 WHERE `killerId` = '".mysql_real_escape_string($this->playerId)."'
 							 GROUP BY eventDay
 							 ORDER BY eventTime");
 		if(mysql_num_rows($query) > 0) {
@@ -620,11 +620,11 @@ class Player {
 			$queryStr = "UPDATE `".DB_PREFIX."_Players` SET";
 
 			foreach($this->_saveFields as $k=>$v) {
-				$queryStr .= " `".$k."` = '".mysql_escape_string($v)."',";
+				$queryStr .= " `".$k."` = '".mysql_real_escape_string($v)."',";
 			}
 			$queryStr = trim($queryStr,",");
 
-			$queryStr .= " WHERE `playerId` = '".mysql_escape_string($this->playerId)."'";
+			$queryStr .= " WHERE `playerId` = '".mysql_real_escape_string($this->playerId)."'";
 
 			$run = mysql_query($queryStr);
 			if($run !== false) {
@@ -669,7 +669,7 @@ class Player {
 				LEFT JOIN ".DB_PREFIX."_Clans ON
 					".DB_PREFIX."_Clans.clanId = ".DB_PREFIX."_Players.clan
 				WHERE
-					playerId='".mysql_escape_string($this->playerId)."'");
+					playerId='".mysql_real_escape_string($this->playerId)."'");
 			if(mysql_num_rows($query)) {
 				$result = mysql_fetch_assoc($query);
 				$this->_playerData = $result;
@@ -692,8 +692,8 @@ class Player {
 		$ret = false;
 
 		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_PlayerUniqueIds
-					WHERE uniqueId='".mysql_escape_string($id)."'
-						AND game='".mysql_escape_string($this->_game)."'");
+					WHERE uniqueId='".mysql_real_escape_string($id)."'
+						AND game='".mysql_real_escape_string($this->_game)."'");
 
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
@@ -714,7 +714,7 @@ class Player {
 		$this->_playerData['uniqueIds'] = '-';
 		$query = mysql_query("SELECT uniqueId
 						FROM ".DB_PREFIX."_PlayerUniqueIds
-						WHERE playerId='".mysql_escape_string($this->playerId)."'");
+						WHERE playerId='".mysql_real_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			$ret = '';
 			while ($result = mysql_fetch_assoc($query)) {
@@ -738,10 +738,10 @@ class Player {
 		$this->_playerData['lastConnect'] = l('No info');
 		$query = mysql_query("SELECT country, countryCode, eventTime
 					FROM ".DB_PREFIX."_Events_Connects
-					WHERE playerId='".mysql_escape_string($this->playerId)."'
+					WHERE playerId='".mysql_real_escape_string($this->playerId)."'
 						AND eventTime = (
 							SELECT MAX(eventTime) FROM ".DB_PREFIX."_Events_Connects
-							WHERE playerId='".mysql_escape_string($this->playerId)."'
+							WHERE playerId='".mysql_real_escape_string($this->playerId)."'
 						)
 					");
 		if(mysql_num_rows($query) > 0) {
@@ -771,7 +771,7 @@ class Player {
 		$this->_playerData['maxTime'] = l('No info');
 		$query = mysql_query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(time))) AS tTime
 					FROM ".DB_PREFIX."_Events_StatsmeTime
-					WHERE playerId='".mysql_escape_string($this->playerId)."'");
+					WHERE playerId='".mysql_real_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['maxTime'] = $result['tTime'];
@@ -789,7 +789,7 @@ class Player {
 		$this->_playerData['avgPing'] = l('No info');
 		$query = mysql_query("SELECT ROUND(SUM(ping) / COUNT(ping), 1) AS av_ping
 					FROM ".DB_PREFIX."_Events_StatsmeLatency
-					WHERE playerId='".mysql_escape_string($this->playerId)."'");
+					WHERE playerId='".mysql_real_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['avgPing'] = $result['av_ping'];
@@ -815,7 +815,7 @@ class Player {
 							WHERE t1.active = '1'
 								AND t1.hideranking = '0'
 								AND t1.kills >= '1'
-								AND t1.game = '".mysql_escape_string($this->_game)."'";
+								AND t1.game = '".mysql_real_escape_string($this->_game)."'";
 								
 				if($this->g_options['IGNOREBOTS'] === "1") {
 					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
@@ -823,7 +823,7 @@ class Player {
 				
 				$queryStr .= " AND t1.skill >
 									(SELECT skill FROM ".DB_PREFIX."_Players
-										WHERE playerId = '".mysql_escape_string($this->playerId)."')";
+										WHERE playerId = '".mysql_real_escape_string($this->playerId)."')";
 				$query = mysql_query($queryStr);
 		}
 		if(mysql_num_rows($query) > 0) {
@@ -845,8 +845,8 @@ class Player {
 		$query = mysql_query("SELECT COUNT(*) tk
 				FROM ".DB_PREFIX."_Events_Teamkills
 				LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Teamkills.serverId
-				WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-					AND killerId='".mysql_escape_string($this->playerId)."'");
+				WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+					AND killerId='".mysql_real_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['teamkills'] = $result['tk'];
@@ -866,8 +866,8 @@ class Player {
 						/ SUM(".DB_PREFIX."_Events_Statsme.shots) * 100), 1), 0.0) AS accuracy
 					FROM ".DB_PREFIX."_Events_Statsme
 				LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Statsme.serverId
-				WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-					AND playerId='".mysql_escape_string($this->playerId)."'");
+				WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+					AND playerId='".mysql_real_escape_string($this->playerId)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['accuracy'] = $result['accuracy'];
@@ -885,7 +885,7 @@ class Player {
 		$query = mysql_query("SELECT name, lastuse, numuses, kills,
 								  deaths, IFNULL(kills / deaths,0) AS kpd,suicides
 							  FROM ".DB_PREFIX."_PlayerNames
-							  WHERE playerId='".mysql_escape_string($this->playerId)."'
+							  WHERE playerId='".mysql_real_escape_string($this->playerId)."'
 							  ORDER BY lastuse DESC
 							  LIMIT 10");
 		if(mysql_num_rows($query) > 0) {
@@ -911,8 +911,8 @@ class Player {
 						".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id
 					LEFT JOIN ".DB_PREFIX."_Servers ON
 						".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_PlayerActions.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-						AND ".DB_PREFIX."_Events_PlayerActions.playerId=".mysql_escape_string($this->playerId)."
+					WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+						AND ".DB_PREFIX."_Events_PlayerActions.playerId=".mysql_real_escape_string($this->playerId)."
 					GROUP BY ".DB_PREFIX."_Actions.id
 					ORDER BY obj_count DESC");
 		if(mysql_num_rows($query) > 0) {
@@ -938,8 +938,8 @@ class Player {
 						".DB_PREFIX."_Events_PlayerPlayerActions.actionId = ".DB_PREFIX."_Actions.id
 					LEFT JOIN ".DB_PREFIX."_Servers ON
 						".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_PlayerPlayerActions.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-						AND ".DB_PREFIX."_Events_PlayerPlayerActions.playerId=".mysql_escape_string($this->playerId)."
+					WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+						AND ".DB_PREFIX."_Events_PlayerPlayerActions.playerId=".mysql_real_escape_string($this->playerId)."
 					GROUP BY ".DB_PREFIX."_Actions.id
 					ORDER BY obj_count DESC");
 		if(mysql_num_rows($query) > 0) {
@@ -960,7 +960,7 @@ class Player {
 
 		$queryTjoins = mysql_query("SELECT COUNT(*) AS tj
 							FROM ".DB_PREFIX."_Events_ChangeTeam
-							WHERE playerId=".mysql_escape_string($this->playerId)."");
+							WHERE playerId=".mysql_real_escape_string($this->playerId)."");
 		$result = mysql_fetch_assoc($queryTjoins);
 		$numteamjoins = $result['tj'];
 
@@ -972,9 +972,9 @@ class Player {
 					".DB_PREFIX."_Events_ChangeTeam.team=".DB_PREFIX."_Teams.code
 				LEFT JOIN ".DB_PREFIX."_Servers ON
 					".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_ChangeTeam.serverId
-				WHERE ".DB_PREFIX."_Teams.game='".mysql_escape_string($this->_game)."'
-					AND ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-					AND ".DB_PREFIX."_Events_ChangeTeam.playerId=".mysql_escape_string($this->playerId)."
+				WHERE ".DB_PREFIX."_Teams.game='".mysql_real_escape_string($this->_game)."'
+					AND ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+					AND ".DB_PREFIX."_Events_ChangeTeam.playerId=".mysql_real_escape_string($this->playerId)."
 					AND (hidden <>'1' OR hidden IS NULL)
 				GROUP BY ".DB_PREFIX."_Events_ChangeTeam.team
 				ORDER BY teamcount DESC");
@@ -1003,9 +1003,9 @@ class Player {
 							".DB_PREFIX."_Weapons.code = ".DB_PREFIX."_Events_Frags.weapon
 						LEFT JOIN ".DB_PREFIX."_Servers ON
 							".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Frags.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-						AND ".DB_PREFIX."_Events_Frags.killerId='".mysql_escape_string($this->playerId)."'
-						AND (".DB_PREFIX."_Weapons.game='".mysql_escape_string($this->_game)."' OR ".DB_PREFIX."_Weapons.weaponId IS NULL)
+					WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+						AND ".DB_PREFIX."_Events_Frags.killerId='".mysql_real_escape_string($this->playerId)."'
+						AND (".DB_PREFIX."_Weapons.game='".mysql_real_escape_string($this->_game)."' OR ".DB_PREFIX."_Weapons.weaponId IS NULL)
 					GROUP BY ".DB_PREFIX."_Events_Frags.weapon
 					ORDER BY kills DESC");
 		if(mysql_num_rows($query) > 0) {
@@ -1052,8 +1052,8 @@ class Player {
 				FROM ".DB_PREFIX."_Events_Statsme
 					LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Statsme.serverId
 					LEFT JOIN ".DB_PREFIX."_Weapons ON ".DB_PREFIX."_Weapons.code = ".DB_PREFIX."_Events_Statsme.weapon
-				WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-					AND ".DB_PREFIX."_Events_Statsme.PlayerId=".mysql_escape_string($this->playerId)."
+				WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+					AND ".DB_PREFIX."_Events_Statsme.PlayerId=".mysql_real_escape_string($this->playerId)."
 				GROUP BY ".DB_PREFIX."_Events_Statsme.weapon
 				ORDER BY smaccuracy DESC");
 		if(mysql_num_rows($query) > 0) {
@@ -1084,8 +1084,8 @@ class Player {
 				FROM ".DB_PREFIX."_Events_Statsme2
 				LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Statsme2.serverId
 				LEFT JOIN ".DB_PREFIX."_Weapons ON ".DB_PREFIX."_Weapons.code = ".DB_PREFIX."_Events_Statsme2.weapon
-				WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-					AND ".DB_PREFIX."_Events_Statsme2.PlayerId=".mysql_escape_string($this->playerId)."
+				WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+					AND ".DB_PREFIX."_Events_Statsme2.PlayerId=".mysql_real_escape_string($this->playerId)."
 				GROUP BY ".DB_PREFIX."_Events_Statsme2.weapon
 				ORDER BY smhead DESC, smweapon DESC");
 		if(mysql_num_rows($query) > 0) {
@@ -1105,15 +1105,15 @@ class Player {
 		$this->_playerData['maps'] = array();
 
 		$query = mysql_query("SELECT IF(map='', '(Unaccounted)', map) AS map,
-			SUM(killerId=".mysql_escape_string($this->playerId).") AS kills,
-			SUM(victimId=".mysql_escape_string($this->playerId).") AS deaths,
-			IFNULL(SUM(killerId=".mysql_escape_string($this->playerId).") / SUM(victimId=".mysql_escape_string($this->playerId)."), 0) AS kpd,
-			CONCAT(SUM(killerId=".mysql_escape_string($this->playerId).")) / ".mysql_escape_string($this->_playerData['kills'])." * 100 AS percentage
+			SUM(killerId=".mysql_real_escape_string($this->playerId).") AS kills,
+			SUM(victimId=".mysql_real_escape_string($this->playerId).") AS deaths,
+			IFNULL(SUM(killerId=".mysql_real_escape_string($this->playerId).") / SUM(victimId=".mysql_real_escape_string($this->playerId)."), 0) AS kpd,
+			CONCAT(SUM(killerId=".mysql_real_escape_string($this->playerId).")) / ".mysql_real_escape_string($this->_playerData['kills'])." * 100 AS percentage
 		FROM ".DB_PREFIX."_Events_Frags
 		LEFT JOIN ".DB_PREFIX."_Servers ON
 			".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Frags.serverId
-		WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."' AND killerId='".mysql_escape_string($this->playerId)."'
-			OR victimId='".mysql_escape_string($this->playerId)."'
+		WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."' AND killerId='".mysql_real_escape_string($this->playerId)."'
+			OR victimId='".mysql_real_escape_string($this->playerId)."'
 		GROUP BY map
 		ORDER BY kills DESC, percentage DESC");
 
@@ -1142,15 +1142,15 @@ class Player {
 					   SELECT victimId, killerId
 					   FROM ".DB_PREFIX."_Events_Frags
 					   LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Frags.serverId
-					   WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-						   AND killerId = ".mysql_escape_string($this->playerId)."");
+					   WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+						   AND killerId = ".mysql_real_escape_string($this->playerId)."");
 
 		mysql_query("INSERT INTO ".DB_PREFIX."_".$this->playerId."_Frags_Kills (playerId,deaths)
 						SELECT killerId,victimId
 						FROM ".DB_PREFIX."_Events_Frags
 						LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Frags.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-						AND victimId = ".mysql_escape_string($this->playerId)."
+					WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+						AND victimId = ".mysql_real_escape_string($this->playerId)."
 		");
 
 		$query = mysql_query("SELECT ".DB_PREFIX."_Players.lastName AS name,
@@ -1166,7 +1166,7 @@ class Player {
 					INNER JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId = ".DB_PREFIX."_Players.playerId
 				WHERE ".DB_PREFIX."_Players.hideranking = 0
 				GROUP BY ".DB_PREFIX."_".$this->playerId."_Frags_Kills.playerId
-				HAVING Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills) >= ".mysql_escape_string($this->_option['killLimit'])."
+				HAVING Count(".DB_PREFIX."_".$this->playerId."_Frags_Kills.kills) >= ".mysql_real_escape_string($this->_option['killLimit'])."
 				ORDER BY kills DESC, deaths DESC
 				LIMIT 10");
 
@@ -1188,7 +1188,7 @@ class Player {
 
 		$queryRoles = mysql_query("SELECT COUNT(*) AS rj FROM
 									".DB_PREFIX."_Events_ChangeRole
-									WHERE playerId=".mysql_escape_string($this->playerId)."");
+									WHERE playerId=".mysql_real_escape_string($this->playerId)."");
 		$result = mysql_fetch_assoc($queryRoles);
 		$numrolejoins = $result['rj'];
 		mysql_free_result($queryRoles);
@@ -1206,8 +1206,8 @@ class Player {
 					LEFT JOIN ".DB_PREFIX."_Servers ON
 						".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_ChangeRole.serverId
 					WHERE
-						".DB_PREFIX."_Servers.game='".mysql_escape_string($this->_game)."'
-						AND ".DB_PREFIX."_Events_ChangeRole.playerId=".mysql_escape_string($this->playerId)."
+						".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+						AND ".DB_PREFIX."_Events_ChangeRole.playerId=".mysql_real_escape_string($this->playerId)."
 						AND (hidden <>'1' OR hidden IS NULL)
 					GROUP BY
 						".DB_PREFIX."_Events_ChangeRole.role

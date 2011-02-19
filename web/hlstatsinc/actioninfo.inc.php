@@ -94,8 +94,8 @@ if (isset($_GET["sortorder"])) {
 
 // query to get the full action name
 $queryActionName = mysql_query("SELECT description FROM ".DB_PREFIX."_Actions
-					WHERE code='".mysql_escape_string($action)."'
-						AND game='".mysql_escape_string($game)."'");
+					WHERE code='".mysql_real_escape_string($action)."'
+						AND game='".mysql_real_escape_string($game)."'");
 if (mysql_num_rows($query) != 1) {
 	$act_name = ucfirst($action);
 }
@@ -110,8 +110,8 @@ mysql_free_result($query);
 $queryCount = mysql_query("SELECT
 		COUNT(".DB_PREFIX."_Events_PlayerActions.Id) AS tc
 	FROM ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players, ".DB_PREFIX."_Actions
-	WHERE ".DB_PREFIX."_Actions.code = '".mysql_escape_string($action)."' AND
-		".DB_PREFIX."_Players.game = '".mysql_escape_string($game)."' AND
+	WHERE ".DB_PREFIX."_Actions.code = '".mysql_real_escape_string($action)."' AND
+		".DB_PREFIX."_Players.game = '".mysql_real_escape_string($game)."' AND
 		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_PlayerActions.playerId AND
 		".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id");
 $result = mysql_fetch_assoc($queryCount);
@@ -128,8 +128,8 @@ if(!empty($totalact)) {
 			COUNT(".DB_PREFIX."_Events_PlayerActions.id) AS obj_count,
 			COUNT(".DB_PREFIX."_Events_PlayerActions.id) * ".DB_PREFIX."_Actions.reward_player AS obj_bonus
 		FROM ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players, ".DB_PREFIX."_Actions
-		WHERE ".DB_PREFIX."_Actions.code = '".mysql_escape_string($action)."' AND
-			".DB_PREFIX."_Players.game = '".mysql_escape_string($game)."' AND
+		WHERE ".DB_PREFIX."_Actions.code = '".mysql_real_escape_string($action)."' AND
+			".DB_PREFIX."_Players.game = '".mysql_real_escape_string($game)."' AND
 			".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_PlayerActions.playerId AND
 			".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id AND
 			".DB_PREFIX."_Players.hideranking <> '1'

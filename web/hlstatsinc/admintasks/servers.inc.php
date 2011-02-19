@@ -50,7 +50,7 @@ if(isset($_GET['gc'])) {
 		// load the game info
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_escape_string($gc)."'");
+							WHERE code = '".mysql_real_escape_string($gc)."'");
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];
@@ -70,7 +70,7 @@ if(isset($_POST['sub']['saveServer'])) {
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
-									WHERE `serverId` = '".mysql_escape_string($k)."'");
+									WHERE `serverId` = '".mysql_real_escape_string($k)."'");
 			unset($_POST['server'][$k]);
 		}
 	}
@@ -82,14 +82,14 @@ if(isset($_POST['sub']['saveServer'])) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['port'][$k]) && isset($_POST['name'][$k])) {
 				$query = mysql_query("UPDATE `".DB_PREFIX."_Servers`
-										SET `address` = '".$v."',
-											`port` = '".mysql_escape_string(trim($_POST['port'][$k]))."',
-											`name` = '".mysql_escape_string(trim($_POST['name'][$k]))."',
-											`game` = '".mysql_escape_string($gc)."',
-											`publicaddress` = '".mysql_escape_string(trim($_POST['pub'][$k]))."',
-											`statusurl` = '".mysql_escape_string(trim($_POST['stat'][$k]))."',
-											`rcon_password` = '".mysql_escape_string(trim($_POST['rcon'][$k]))."'
-										WHERE `serverId` = '".$k."'");
+										SET `address` = '".mysql_real_escape_string($v)."',
+											`port` = '".mysql_real_escape_string(trim($_POST['port'][$k]))."',
+											`name` = '".mysql_real_escape_string(trim($_POST['name'][$k]))."',
+											`game` = '".mysql_real_escape_string($gc)."',
+											`publicaddress` = '".mysql_real_escape_string(trim($_POST['pub'][$k]))."',
+											`statusurl` = '".mysql_real_escape_string(trim($_POST['stat'][$k]))."',
+											`rcon_password` = '".mysql_real_escape_string(trim($_POST['rcon'][$k]))."'
+										WHERE `serverId` = '".mysql_real_escape_string($k)."'");
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be updated');
@@ -103,13 +103,13 @@ if(isset($_POST['sub']['saveServer'])) {
 		$newOne = trim($_POST['newIP']);
 		if(!empty($newOne) && !empty($_POST['newport']) && !empty($_POST['newname'])) {
 			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Servers`
-									SET `address` = '".mysql_escape_string(trim($_POST['newIP']))."',
-										`port` = '".mysql_escape_string(trim($_POST['newport']))."',
-										`name` = '".mysql_escape_string(trim($_POST['newname']))."',
-										`publicaddress` = '".mysql_escape_string(trim($_POST['newpub']))."',
-										`statusurl` = '".mysql_escape_string(trim($_POST['newstat']))."',
-										`rcon_password` = '".mysql_escape_string(trim($_POST['newrcon']))."',
-										`game` = '".mysql_escape_string($gc)."'");
+									SET `address` = '".mysql_real_escape_string(trim($_POST['newIP']))."',
+										`port` = '".mysql_real_escape_string(trim($_POST['newport']))."',
+										`name` = '".mysql_real_escape_string(trim($_POST['newname']))."',
+										`publicaddress` = '".mysql_real_escape_string(trim($_POST['newpub']))."',
+										`statusurl` = '".mysql_real_escape_string(trim($_POST['newstat']))."',
+										`rcon_password` = '".mysql_real_escape_string(trim($_POST['newrcon']))."',
+										`game` = '".mysql_real_escape_string($gc)."'");
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -131,7 +131,7 @@ $query = mysql_query("SELECT s.serverId, s.address, s.port,
 						g.name AS gameName
 					FROM `".DB_PREFIX."_Servers` AS s
 					LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
-					WHERE s.game = '".mysql_escape_string($gc)."'
+					WHERE s.game = '".mysql_real_escape_string($gc)."'
 					ORDER BY address ASC, port ASC");
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {

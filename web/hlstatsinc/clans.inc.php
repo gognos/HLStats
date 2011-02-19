@@ -100,11 +100,11 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 		IFNULL(SUM(".DB_PREFIX."_Players.kills) / SUM(".DB_PREFIX."_Players.deaths), 0) AS kpd
 	FROM ".DB_PREFIX."_Clans
 	LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.clan=".DB_PREFIX."_Clans.clanId
-	WHERE ".DB_PREFIX."_Clans.game='".mysql_escape_string($game)."'
+	WHERE ".DB_PREFIX."_Clans.game='".mysql_real_escape_string($game)."'
 		AND ".DB_PREFIX."_Players.hideranking = 0
 	GROUP BY ".DB_PREFIX."_Clans.clanId";
 if(!empty($minmembers)) {
-	$queryStr .= " HAVING nummembers >= ".mysql_escape_string($minmembers);
+	$queryStr .= " HAVING nummembers >= ".mysql_real_escape_string($minmembers);
 }
 	$queryStr .= " ORDER BY ".$sort." ".$sortorder;
 

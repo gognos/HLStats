@@ -123,7 +123,7 @@ if(!$g_options['hideNews']) {
 				FROM ".DB_PREFIX."_Clans
 				LEFT JOIN ".DB_PREFIX."_Players ON
 					".DB_PREFIX."_Players.clan = ".DB_PREFIX."_Clans.clanId
-				WHERE ".DB_PREFIX."_Clans.game='".mysql_escape_string($gamedata['code'])."'
+				WHERE ".DB_PREFIX."_Clans.game='".mysql_real_escape_string($gamedata['code'])."'
 				GROUP BY ".DB_PREFIX."_Clans.clanId
 				HAVING skill IS NOT NULL AND numplayers > 1
 				ORDER BY skill DESC

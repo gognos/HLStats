@@ -84,7 +84,7 @@ if (isset($_GET["sortorder"])) {
 $queryActionsCount = mysql_query("SELECT COUNT(*) ac
 	FROM ".DB_PREFIX."_Actions, ".DB_PREFIX."_Events_PlayerActions
 	WHERE ".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id
-		AND ".DB_PREFIX."_Actions.game='".mysql_escape_string($game)."'");
+		AND ".DB_PREFIX."_Actions.game='".mysql_real_escape_string($game)."'");
 $result = mysql_fetch_assoc($queryActionsCount);
 // get the total actions count for this game
 $totalactions = $result['ac'];
@@ -99,9 +99,9 @@ if(!empty($totalactions)) {
 		".DB_PREFIX."_Actions.reward_player AS obj_bonus
 	FROM ".DB_PREFIX."_Actions, ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players
 	WHERE ".DB_PREFIX."_Events_PlayerActions.playerId = ".DB_PREFIX."_Players.playerId
-		AND ".DB_PREFIX."_Players.game='".mysql_escape_string($game)."'
+		AND ".DB_PREFIX."_Players.game='".mysql_real_escape_string($game)."'
 		AND ".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id
-		AND ".DB_PREFIX."_Actions.game='".mysql_escape_string($game)."'
+		AND ".DB_PREFIX."_Actions.game='".mysql_real_escape_string($game)."'
 		AND ".DB_PREFIX."_Players.hideranking = 0
 	GROUP BY ".DB_PREFIX."_Actions.id
 	ORDER BY ".$sort." ".$sortorder;

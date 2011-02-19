@@ -94,7 +94,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 	if(!empty($sr_query)) {
 		$andgame = "";
 		if ($sr_game !== "---") {
-			$andgame = "AND `".DB_PREFIX."_Games`.`code` = '".mysql_escape_string($sr_game)."'";
+			$andgame = "AND `".DB_PREFIX."_Games`.`code` = '".mysql_real_escape_string($sr_game)."'";
 		}
 
 		switch($sr_type) {
@@ -110,9 +110,9 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					WHERE `".DB_PREFIX."_Games`.`hidden`= '0' 
 						AND
 						(
-							`".DB_PREFIX."_Clans`.`tag` LIKE '%".mysql_escape_string($sr_query)."%'
+							`".DB_PREFIX."_Clans`.`tag` LIKE '%".mysql_real_escape_string($sr_query)."%'
 							OR 
-							`".DB_PREFIX."_Clans`.`name` LIKE '%".mysql_escape_string($sr_query)."%'
+							`".DB_PREFIX."_Clans`.`name` LIKE '%".mysql_real_escape_string($sr_query)."%'
 						)
 						".$andgame."
 					ORDER BY `name`";
@@ -130,7 +130,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					LEFT JOIN `".DB_PREFIX."_Games` ON
 						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Players`.`game`
 					WHERE `".DB_PREFIX."_Games`.`hidden` = '0' 
-						AND `".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` LIKE '%".mysql_escape_string($sr_query)."%'
+						AND `".DB_PREFIX."_PlayerUniqueIds`.`uniqueId` LIKE '%".mysql_real_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY `name`";
 			break;
@@ -146,7 +146,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					LEFT JOIN `".DB_PREFIX."_Games` ON
 						`".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Players`.`game`
 					WHERE `".DB_PREFIX."_Games`.`hidden` = '0' 
-						AND `".DB_PREFIX."_PlayerNames`.`name` LIKE '%".mysql_escape_string($sr_query)."%'
+						AND `".DB_PREFIX."_PlayerNames`.`name` LIKE '%".mysql_real_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY `name`";
 			break;

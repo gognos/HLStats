@@ -72,7 +72,7 @@ $pl_urlname = urlencode($playerObj->getParam('lastName'));
 // get the game name
 // if it fails we use the game code which is stored in the player table
 $game = $playerObj->getParam("game");
-$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games` WHERE code='".mysql_escape_string($game)."'");
+$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games` WHERE code='".mysql_real_escape_string($game)."'");
 if (mysql_num_rows($query) != 1) {
 	$gamename = ucfirst($game);
 }

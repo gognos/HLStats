@@ -50,8 +50,8 @@ if(isset($_POST['sub']['saveOptions'])) {
 		$v = trim($v);
 
 		$query = mysql_query("UPDATE `".DB_PREFIX."_Options`
-							SET `value` = '".mysql_escape_string($v)."'
-							WHERE `keyname` = '".mysql_escape_string($k)."'");
+							SET `value` = '".mysql_real_escape_string($v)."'
+							WHERE `keyname` = '".mysql_real_escape_string($k)."'");
 		if($query !== true) {
 			$return['msg'] = l('Could not save data');
 			$return['status'] = "1";

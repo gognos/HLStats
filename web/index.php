@@ -174,7 +174,9 @@ if(isset($_GET['game'])) {
 		$game = $_GET['game'];
 
 		$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games` 
-			`					WHERE code='".mysql_escape_string($game)."' AND `hidden` = '0'");
+								WHERE code = '".mysql_real_escape_string($game)."'
+								AND `hidden` = '0'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) < 1) {
 			error("No such game '$game'.");
 		}

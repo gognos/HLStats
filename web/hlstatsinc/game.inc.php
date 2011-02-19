@@ -44,7 +44,7 @@
 $hasRoles = false;
 $query = mysql_query("SELECT `roleId`
 						FROM `".DB_PREFIX."_Roles`
-						WHERE `game` = '".mysql_escape_string($game)."'");
+						WHERE `game` = '".mysql_real_escape_string($game)."'");
 if(mysql_num_rows($query) > 0) {
 	$hasRoles = true;
 }
@@ -64,7 +64,7 @@ if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_optio
 								FROM ".DB_PREFIX."_Awards_History
 								LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
 								LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
-								WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_escape_string($game)."'
+								WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_real_escape_string($game)."'
 									AND ".DB_PREFIX."_Awards_History.date = '".$g_options['awards_d_date']."'
 								ORDER BY ".DB_PREFIX."_Awards.awardType DESC,
 									".DB_PREFIX."_Awards.name ASC");
@@ -225,7 +225,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 						FROM
 							".DB_PREFIX."_Servers
 						WHERE
-							game = '".mysql_escape_string($game)."'
+							game = '".mysql_real_escape_string($game)."'
 						ORDER BY
 							name ASC,
 							addr ASC");
@@ -257,11 +257,11 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 </div>
 <h1><?php echo $gamename; ?> <?php echo l('Statistics'); ?></h1>
 <?php
-	$query = mysql_query("SELECT COUNT(*) AS plc FROM ".DB_PREFIX."_Players WHERE game='".mysql_escape_string($game)."'");
+	$query = mysql_query("SELECT COUNT(*) AS plc FROM ".DB_PREFIX."_Players WHERE game='".mysql_real_escape_string($game)."'");
 	$result = mysql_fetch_assoc($query);
 	$num_players = $result['plc'];
 
-	$query = mysql_query("SELECT COUNT(*) AS sc FROM ".DB_PREFIX."_Servers WHERE game='".mysql_escape_string($game)."'");
+	$query = mysql_query("SELECT COUNT(*) AS sc FROM ".DB_PREFIX."_Servers WHERE game='".mysql_real_escape_string($game)."'");
 	$result = mysql_fetch_assoc($query);
 	$num_servers = $result['sc'];
 
