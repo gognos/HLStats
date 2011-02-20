@@ -76,18 +76,22 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 			echo "<ul>\n";
 			foreach ($dbtables as $dbt) {
 				echo "<li>$dbt ... ";
-				if (mysql_query("TRUNCATE TABLE $dbt")) {
+				if (mysql_query("TRUNCATE TABLE `$dbt`")) {
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					echo "OK\n";
 				}
 				else {
-					mysql_query("DELETE FROM $dbt");
+					mysql_query("DELETE FROM `$dbt`");
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					echo "OK\n";
 				}
 			}
 
 			echo "<li>Clearing awards ... ";
-			mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL");
-			mysql_query("TRUNCATE TABLE ".DB_PREFIX."_Awards_History");
+			mysql_query("UPDATE `".DB_PREFIX."_Awards` SET d_winner_id=NULL, d_winner_count=NULL");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			mysql_query("TRUNCATE TABLE `".DB_PREFIX."_Awards_History`");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			echo "OK\n";
 
 			echo "</ul>\n";
@@ -95,8 +99,9 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 			echo l("Done"),"<p>";
 
 			// add a last reset row into hlstats_options
-			mysql_query("UPDATE ".DB_PREFIX."_Options SET value = '".time()."'
+			mysql_query("UPDATE `".DB_PREFIX."_Options` SET value = '".time()."'
 							WHERE `keyname` = 'reset_date'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			$g_options['reset_date'] = date("d.m.Y");
 		}
 		else {

@@ -46,6 +46,7 @@ if(isset($_POST['sub']['saveAddons'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Server_Addons`
 									WHERE `rule` = '".mysql_real_escape_string($k)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			unset($_POST['rule'][$k]);
 		}
 	}
@@ -56,10 +57,11 @@ if(isset($_POST['sub']['saveAddons'])) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['add'][$k])) {
 				$query = mysql_query("UPDATE `".DB_PREFIX."_Server_Addons`
-										SET `rule` = '".$v."',
+										SET `rule` = '".mysql_real_escape_string($v)."',
 											`addon` = '".mysql_real_escape_string($_POST['add'][$k])."',
 											`url` = '".mysql_real_escape_string($_POST['url'][$k])."'
-										WHERE `rule` = '".$k."'");
+										WHERE `rule` = '".mysql_real_escape_string($k)."'");
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -77,6 +79,7 @@ if(isset($_POST['sub']['saveAddons'])) {
 									SET `rule` = '".mysql_real_escape_string($newOne)."',
 										`addon` = '".mysql_real_escape_string($newAdd)."',
 										`url` = '".mysql_real_escape_string($newURL)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -94,6 +97,7 @@ $addons = false;
 $query = mysql_query("SELECT rule,addon,url
 						FROM `".DB_PREFIX."_Server_Addons`
 						ORDER BY rule ASC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	unset($result);
 	while($result = mysql_fetch_assoc($query)) {

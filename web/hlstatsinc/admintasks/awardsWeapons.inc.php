@@ -53,6 +53,7 @@ if(isset($_GET['gc'])) {
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
 							WHERE code = '".mysql_real_escape_string($gc)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];
@@ -73,6 +74,7 @@ if(isset($_POST['sub']['saveAwards'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Awards`
 									WHERE `awardId` = '".mysql_real_escape_string($k)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -90,6 +92,7 @@ if(isset($_POST['sub']['saveAwards'])) {
 											`name` = '".mysql_real_escape_string($name)."',
 											`verb` = '".mysql_real_escape_string($verb)."'
 										WHERE `awardId` = '".mysql_real_escape_string($k)."'");
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -111,6 +114,7 @@ if(isset($_POST['sub']['saveAwards'])) {
 										`verb` = '".mysql_real_escape_string($verb)."',
 										`game` = '".mysql_real_escape_string($gc)."',
 										`awardType` = 'W'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -130,6 +134,7 @@ $query = mysql_query("SELECT awardId, code,name,verb
 						WHERE game='".mysql_real_escape_string($gc)."'
 					AND awardType='W'
 					ORDER BY code ASC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$awards[] = $result;

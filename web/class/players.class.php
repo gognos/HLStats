@@ -122,17 +122,18 @@ class Players {
 		$queryStr = "SELECT t1.playerId AS playerId,
 						t1.lastName AS lastName,
 						t1.isBot AS isBot
-					FROM ".DB_PREFIX."_Players AS t1
+					FROM `".DB_PREFIX."_Players` AS t1
 					WHERE t1.game= '".mysql_real_escape_string($this->_game)."'
 					AND t1.hideranking = 0";
 
-			if($this->g_options['IGNOREBOTS'] === "1") {
-				$queryStr .= " AND t1.isBot = 0";
-			}
-			
-			$queryStr .= " ORDER BY t1.skill DESC LIMIT 1";
+		if($this->g_options['IGNOREBOTS'] === "1") {
+			$queryStr .= " AND t1.isBot = 0";
+		}
+		
+		$queryStr .= " ORDER BY t1.skill DESC LIMIT 1";
 		
 		$query = mysql_query($queryStr);
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(!empty($query) && mysql_num_rows($query) > 0) {
 			$ret = mysql_fetch_assoc($query);
 		}
@@ -162,7 +163,7 @@ class Players {
 				t1.isBot,
 				IFNULL(t1.kills/t1.deaths,0) AS kpd,
 				DATE(t1.lastUpdate) AS lastUpdate
-			FROM ".DB_PREFIX."_Players as t1";
+			FROM `".DB_PREFIX."_Players` as t1";
 
 		$queryStr .= " WHERE
 				t1.game='".mysql_real_escape_string($this->_game)."'
@@ -204,6 +205,7 @@ class Players {
 		}
 
 		$query = mysql_query($queryStr);
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
 				$result['kpd'] = number_format($result['kpd'],2,'.','');
@@ -260,6 +262,7 @@ class Players {
 		}
 
 		$query = mysql_query($queryStr);
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while ($result = mysql_fetch_assoc($query)) {
 				// we group by day
@@ -282,13 +285,13 @@ class Players {
 		exit('not wroking yet');
 		$data = array();
 
-		$query = mysql_query("SELECT ".DB_PREFIX."_Events_StatsmeTime.*,
-					TIME_TO_SEC(".DB_PREFIX."_Events_StatsmeTime.time) as tTime
-					FROM ".DB_PREFIX."_Events_StatsmeTime
-					LEFT JOIN ".DB_PREFIX."_Servers
-						ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_StatsmeTime.serverId
-					WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'");
-
+		$query = mysql_query("SELECT est.*,
+					TIME_TO_SEC(est.time) as tTime
+					FROM `".DB_PREFIX."_Events_StatsmeTime` AS est
+					LEFT JOIN `".DB_PREFIX."_Servers` AS s
+						ON s.serverId = est.serverId
+					WHERE s.game = '".mysql_real_escape_string($this->_game)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		while($result = mysql_fetch_assoc($query)) {
 			$onlineArr[$result['playerId']][] = $result;
 		}

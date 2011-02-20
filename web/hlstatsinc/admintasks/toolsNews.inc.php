@@ -64,6 +64,7 @@ if(isset($_POST['saveNews'])) {
 									'".mysql_real_escape_string($subject)."',
 									'".mysql_real_escape_string($message)."')
 							");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
 	}
@@ -82,8 +83,9 @@ if(!empty($_GET['editpost']) || !empty($_GET['deletepost'])) {
 
 	$check = validateInput($postnr,'digit');
 	if(!empty($postnr) && $check === true) {
-		$query = mysql_query("SELECT * FROM ".DB_PREFIX."_News
+		$query = mysql_query("SELECT * FROM `".DB_PREFIX."_News`
 						WHERE `id` = '".mysql_real_escape_string($postnr)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$post = mysql_fetch_array($query);
 		mysql_free_result($query);
 	}
@@ -113,6 +115,7 @@ if(isset($_POST['editNews']) && !empty($_GET['editpost'])) {
 									`message` = '".mysql_real_escape_string($_POST["message"])."'
 								WHERE `id` = '".mysql_real_escape_string($newsID)."'
 							");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
 	}
@@ -126,6 +129,7 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 	if(!empty($newsId) && $check === true) {
 		$query = mysql_query("DELETE FROM `".DB_PREFIX."_News`
 								WHERE `id` = '".mysql_real_escape_string($newsId)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if($query !== false) {
 			$return['msg'] = l('News item deleted');
 			$return['status'] = "2";
@@ -139,7 +143,8 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 
 // load existing news
 $newsArray = false;
-$query = mysql_query("SELECT * FROM ".DB_PREFIX."_News ORDER BY `date` DESC");
+$query = mysql_query("SELECT * FROM `".DB_PREFIX."_News` ORDER BY `date` DESC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$newsArray[] = $result;

@@ -94,6 +94,7 @@ class Admin {
 			$query = mysql_query("SELECT `username`,`password`
 									FROM `".DB_PREFIX."_Users`
 									WHERE `username` = '".mysql_real_escape_string($username)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if(mysql_num_rows($query) > 0) {
 				// we have such user, now check pass
 				$result = mysql_fetch_assoc($query);
@@ -105,6 +106,7 @@ class Admin {
 					$query = mysql_query("UPDATE `".DB_PREFIX."_Users`
 											SET `authCode` = '".mysql_real_escape_string($authCode)."'
 											WHERE `username` = '".mysql_real_escape_string($username)."'");
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					if($query !== false) {
 						$_SESSION['hlstatsAuth']['authCode'] = $authCode;
 						$ret = true;
@@ -126,9 +128,10 @@ class Admin {
 		if(isset($_SESSION['hlstatsAuth']['authCode'])) {
 			$authCode = $_SESSION['hlstatsAuth']['authCode'];
 			if(validateInput($authCode,'nospace') === true) {
-				$query = mysql_query("UPDATE`".DB_PREFIX."_Users`
+				$query = mysql_query("UPDATE `".DB_PREFIX."_Users`
 										SET `authCode` = ''
 										WHERE `authCode` = '".mysql_real_escape_string($authCode)."'");
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			}
 		}
 
@@ -153,9 +156,10 @@ class Admin {
 				$queryStr .= ", `password` = '".mysql_real_escape_string($pw)."'";
 			}
 
-			$queryStr .= " WHERE `username` = '".$this->_userData['username']."'";
+			$queryStr .= " WHERE `username` = '".mysql_real_escape_string($this->_userData['username'])."'";
 
 			$query = mysql_query($queryStr);
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if($query !== false) {
 				$ret = true;
 			}
@@ -197,6 +201,7 @@ class Admin {
 		$query = mysql_query("SELECT `username`,`password`
 								FROM `".DB_PREFIX."_Users`
 								WHERE `authCode` = '".mysql_real_escape_string($authCode)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$ret = mysql_fetch_assoc($query);
 		}

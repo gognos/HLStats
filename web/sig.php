@@ -145,6 +145,7 @@ if($g_options['allowSig'] == "1") {
 		// get the player data
 		$query = mysql_query("SELECT * FROM `".DB_PREFIX."_Players`
 							WHERE playerId = '".mysql_real_escape_string($playerId)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$playerData = mysql_fetch_assoc($query);
 		if($playerData === false) {
 			// no player data !
@@ -156,6 +157,7 @@ if($g_options['allowSig'] == "1") {
 								FROM `".DB_PREFIX."_Players`
 								WHERE game = '".mysql_real_escape_string($playerData['game'])."'
 								ORDER BY skill DESC");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$ranKnum = 1;
 		while ($row = mysql_fetch_assoc($query)) {
 			$statsArr[$row['playerId']] = $ranKnum;
@@ -170,6 +172,7 @@ if($g_options['allowSig'] == "1") {
 					WHERE playerId = '".mysql_real_escape_string($playerId)."'
 					ORDER BY eventTime DESC
 					LIMIT 1");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$result = mysql_fetch_assoc($query);
 		$serverId = $result['serverId'];
 		mysql_free_result($query);
@@ -179,6 +182,7 @@ if($g_options['allowSig'] == "1") {
 		$query = mysql_query("SELECT address,port,name
 					FROM `".DB_PREFIX."_Servers`
 					WHERE serverId = ".mysql_real_escape_string($serverId));
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		$serverData = mysql_fetch_assoc($query);
 		mysql_free_result($query);
 

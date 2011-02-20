@@ -61,12 +61,13 @@ if(!empty($_GET["clanId"])) {
 		// now get the clan details
 		// since we do not have a clan class we make it this way
 		$query = mysql_query("SELECT
-				".DB_PREFIX."_Clans.tag,
-				".DB_PREFIX."_Clans.name,
-				".DB_PREFIX."_Clans.homepage,
-				".DB_PREFIX."_Clans.steamGroup
-			FROM ".DB_PREFIX."_Clans
-			WHERE ".DB_PREFIX."_Clans.clanId=".mysql_real_escape_string($_GET["clanId"])."");
+				c.tag,
+				c.name,
+				c.homepage,
+				c.steamGroup
+			FROM ".DB_PREFIX."_Clans AS c
+			WHERE c.clanId=".mysql_real_escape_string($_GET["clanId"])."");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 
 		if (mysql_num_rows($query) > 0) {
 			$clanData = mysql_fetch_assoc($query);
@@ -111,6 +112,7 @@ if(isset($_POST['submit']['editClan']) && !empty($clanData)) {
 							`homepage` = '".mysql_real_escape_string($_POST['details']['homepage'])."',
 							`steamGroup` = '".mysql_real_escape_string($_POST['details']['steamGroup'])."'
 					WHERE `clanId` = '".mysql_real_escape_string($_GET["clanId"])."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if($query !== false) {
 			header('Location: index.php?mode=admin&task=toolsEditdetails&clanId='.$_GET["clanId"]);
 		}
@@ -133,6 +135,7 @@ if(isset($_POST['submit']['searchForId'])) {
 			$query = mysql_query("SELECT `playerId`
 									FROM `".DB_PREFIX."_Players`
 									WHERE `playerId` = '".mysql_real_escape_string($searchFor)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if(mysql_num_rows($query) > 0) {
 				$result = mysql_fetch_assoc($query);
 				header('Location: index.php?mode=admin&task=toolsEditdetails&playerId='.$result['playerId']);
@@ -146,6 +149,7 @@ if(isset($_POST['submit']['searchForId'])) {
 			$query = mysql_query("SELECT `clanId`
 									FROM `".DB_PREFIX."_Clans`
 									WHERE `clanId` = '".mysql_real_escape_string($searchFor)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if(mysql_num_rows($query) > 0) {
 				$result = mysql_fetch_assoc($query);
 				header('Location: index.php?mode=admin&task=toolsEditdetails&clanId='.$result['clanId']);

@@ -52,6 +52,7 @@ if(isset($_GET['gc'])) {
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
 							WHERE code = '".mysql_real_escape_string($gc)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];
@@ -73,6 +74,7 @@ if(isset($_POST['sub']['saveRoles'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Roles`
 									WHERE `roleId` = '".mysql_real_escape_string($k)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -92,6 +94,7 @@ if(isset($_POST['sub']['saveRoles'])) {
 											`name` = '".mysql_real_escape_string($name)."',
 											`hidden` = '".mysql_real_escape_string($hide)."'
 										WHERE `roleId` = '".mysql_real_escape_string($k)."'");
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -132,6 +135,7 @@ $query = mysql_query("SELECT roleId, code, name, hidden
 						FROM `".DB_PREFIX."_Roles`
 						WHERE game='".mysql_real_escape_string($gc)."'
 						ORDER BY code ASC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$roles[] = $result;

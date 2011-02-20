@@ -86,6 +86,7 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 		$players = array();
 		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players
 								WHERE game = '".mysql_real_escape_string($gametodelete)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		while($result = mysql_fetch_assoc($query)) {
 			$players[]= $result['playerId'];
 		}
@@ -93,6 +94,7 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 			#die("Fatal error: No players found for this game.");
 			$playerIdString = implode(",",$players);
 			$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if (mysql_num_rows($query) < 1) {
 				die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
 					There may be something wrong with your hlstats database or your version of MySQL.");
@@ -108,10 +110,12 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 					mysql_query("DELETE FROM `".$table."`
 									WHERE killerId IN (".$playerIdString.")
 										OR victimId IN (".$playerIdString.")");
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 				}
 				else {
 					mysql_query("DELETE FROM `".$table."`
 									WHERE playerId IN (".$playerIdString.")");
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 				}
 			}
 		}
@@ -121,7 +125,8 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 								DB_PREFIX.'_Roles', DB_PREFIX.'_Servers',
 								DB_PREFIX.'_Teams', DB_PREFIX.'_Weapons');
 		foreach($gameTables as $gt) {
-			$do = mysql_query("DELETE FROM ".$gt." WHERE game = '".$_POST['gameToDelete']."'");
+			$do = mysql_query("DELETE FROM `".$gt."` WHERE game = '".mysql_real_escape_string($_POST['gameToDelete'])."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if($do === false) {
 				echo $gt,' ',l("ERROR");
 			}
@@ -129,10 +134,12 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 
 		mysql_query("DELETE FROM `".DB_PREFIX."_Games`
 						WHERE code='".mysql_real_escape_string($gametodelete)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 
 		// delete the players
 		if(!empty($players)) {
-			mysql_query("DELETE FROM ".DB_PREFIX."_Players WHERE playerId IN (".$playerIdString.")");
+			mysql_query("DELETE FROM `".DB_PREFIX."_Players` WHERE playerId IN (".$playerIdString.")");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		}
 
 		header('Location: index.php?mode=admin&task=games');
