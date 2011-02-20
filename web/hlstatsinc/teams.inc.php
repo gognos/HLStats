@@ -65,21 +65,22 @@ if (isset($_GET["sortorder"])) {
 	}
 }
 
-$queryStr = "SELECT IFNULL(`".DB_PREFIX."_Teams`.`name`, `".DB_PREFIX."_Events_ChangeTeam`.`team`) AS name,
-			COUNT(`".DB_PREFIX."_Events_ChangeTeam`.`id`) AS teamcount,
-			`".DB_PREFIX."_Teams`.`teamId`
-		FROM `".DB_PREFIX."_Events_ChangeTeam`
-		LEFT JOIN `".DB_PREFIX."_Teams` ON
-			`".DB_PREFIX."_Events_ChangeTeam`.`team` = `".DB_PREFIX."_Teams`.`code`
-		LEFT JOIN `".DB_PREFIX."_Servers` ON
-			`".DB_PREFIX."_Servers`.`serverId` = `".DB_PREFIX."_Events_ChangeTeam`.`serverId`
-		WHERE `".DB_PREFIX."_Teams`.`game` = '".mysql_real_escape_string($game)."'
-			AND `".DB_PREFIX."_Servers`.`game` = '".mysql_real_escape_string($game)."'
-			AND (hidden <>'1' OR hidden IS NULL)
-		GROUP BY `".DB_PREFIX."_Events_ChangeTeam`.`team`
+$queryStr = "SELECT IFNULL(t.name, ect.team) AS name,
+			COUNT(ect.id) AS teamcount,
+			t.teamId
+		FROM `".DB_PREFIX."_Events_ChangeTeam` AS ect
+		LEFT JOIN `".DB_PREFIX."_Teams` AS t
+			ON ect.team = t.code
+		LEFT JOIN `".DB_PREFIX."_Servers` AS s
+			ON s.serverId = ect.serverId
+		WHERE t.game = '".mysql_real_escape_string($game)."'
+			AND s.game = '".mysql_real_escape_string($game)."'
+			AND (s.hidden <>'1' OR s.hidden IS NULL)
+		GROUP BY ect.team
 		ORDER BY `".$sort."` `".$sortorder."`";
 
 $query = mysql_query($queryStr);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$teams['data'][] = $result;

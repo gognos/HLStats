@@ -54,6 +54,7 @@ if(isset($_GET['gc'])) {
 		$query = mysql_query("SELECT name
 							FROM `".DB_PREFIX."_Games`
 							WHERE code = '".mysql_real_escape_string($gc)."'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$gName = $result['name'];
@@ -72,7 +73,8 @@ if (isset($_POST['sub']['reset'])) {
 
 	// we need first the playerids for this game
 	$players = array();
-	$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players WHERE game = '".$gc."'");
+	$query = mysql_query("SELECT playerId FROM `".DB_PREFIX."_Players` WHERE game = '".mysql_real_escape_string($gc)."'");
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	while($result = mysql_fetch_assoc($query)) {
 		$players[]= $result['playerId'];
 	}
@@ -84,7 +86,8 @@ if (isset($_POST['sub']['reset'])) {
 
 	// get the servers for this game
 	$serversArr = array();
-	$query = mysql_query("SELECT serverId FROM ".DB_PREFIX."_Servers WHERE game = '".$gc."'");
+	$query = mysql_query("SELECT serverId FROM `".DB_PREFIX."_Servers` WHERE game = '".mysql_real_escape_string($gc)."'");
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	while($result = mysql_fetch_assoc($query)) {
 		$serversArr[]= $result['serverId'];
 	}
@@ -98,6 +101,7 @@ if (isset($_POST['sub']['reset'])) {
 	if($stop === false) {
 
 		$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if (mysql_num_rows($query) < 1) {
 			die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
 				There may be something wrong with your hlstats database or your version of MySQL.");
@@ -108,16 +112,17 @@ if (isset($_POST['sub']['reset'])) {
 		}
 
 		array_push($dbtables,
-			"".DB_PREFIX."_PlayerNames",
-			"".DB_PREFIX."_PlayerUniqueIds",
-			"".DB_PREFIX."_Players"
+			DB_PREFIX."_PlayerNames",
+			DB_PREFIX."_PlayerUniqueIds",
+			DB_PREFIX."_Players"
 		);
 
 		foreach ($dbtables as $dbt) {
 			if($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
-				if (mysql_query("DELETE FROM ".$dbt."
+				if (mysql_query("DELETE FROM `".$dbt."`
 									WHERE killerId IN (".$playerIdString.")
 										OR victimId IN (".$playerIdString.")")) {
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					$return .= $dbt." OK<br />";
 				}
 				else {
@@ -126,8 +131,9 @@ if (isset($_POST['sub']['reset'])) {
 
 			}
 			elseif($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
-				if (mysql_query("DELETE FROM ".$dbt."
+				if (mysql_query("DELETE FROM `".$dbt."`
 									WHERE serverId IN (".$serversArrString.")")) {
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					$return .= $dbt." OK<br />";
 				}
 				else {
@@ -135,8 +141,9 @@ if (isset($_POST['sub']['reset'])) {
 				}
 			}
 			else {
-				if (mysql_query("DELETE FROM ".$dbt."
+				if (mysql_query("DELETE FROM `".$dbt."`
 									WHERE playerId IN (".$playerIdString.")")) {
+					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					$return .= $dbt." OK<br />";
 				}
 				else {
@@ -146,11 +153,12 @@ if (isset($_POST['sub']['reset'])) {
 		}
 
 		// now the tables which we can delete by gamecode
-		$dbtablesGamecode [] = "".DB_PREFIX."_Clans";
+		$dbtablesGamecode [] = DB_PREFIX."_Clans";
 
 		foreach ($dbtablesGamecode as $dbtGame) {
-			if (mysql_query("DELETE FROM ".$dbtGame."
-								WHERE game = '".$gc."'")) {
+			if (mysql_query("DELETE FROM `".$dbtGame."`
+								WHERE game = '".mysql_real_escape_string($gc)."'")) {
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 
 				$return .= $dbtGame." OK<br />";
 			}
@@ -160,10 +168,12 @@ if (isset($_POST['sub']['reset'])) {
 		}
 
 		$return .= "Clearing awards ... <br />";
-		if (mysql_query("UPDATE ".DB_PREFIX."_Awards SET d_winner_id=NULL, d_winner_count=NULL
-					WHERE game = '".$gc."'")) {
-			mysql_query("DELETE FROM ".DB_PREFIX."_Awards_History
-					WHERE game = '".$gc."'");
+		if (mysql_query("UPDATE `".DB_PREFIX."_Awards` SET d_winner_id=NULL, d_winner_count=NULL
+					WHERE game = '".mysql_real_escape_string($gc)."'")) {
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			mysql_query("DELETE FROM `".DB_PREFIX."_Awards_History`
+					WHERE game = '".mysql_real_escape_string($gc)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			$return .= "Awards OK<br />";
 		}
 		else {

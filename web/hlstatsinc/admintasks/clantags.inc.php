@@ -46,6 +46,7 @@ if(isset($_POST['sub']['patterns'])) {
 		foreach($_POST['del'] as $k=>$v) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_ClanTags`
 									WHERE `id` = '".mysql_real_escape_string($k)."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			unset($_POST['pat'][$k]);
 		}
 	}
@@ -58,7 +59,8 @@ if(isset($_POST['sub']['patterns'])) {
 				$query = mysql_query("UPDATE `".DB_PREFIX."_ClanTags`
 										SET `pattern` = '".$v."',
 											`position` = '".mysql_real_escape_string($_POST['sel'][$k])."'
-										WHERE `id` = '".$k."'");
+										WHERE `id` = '".mysql_real_escape_string($k)."'");
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -73,6 +75,7 @@ if(isset($_POST['sub']['patterns'])) {
 			$query = mysql_query("INSERT INTO `".DB_PREFIX."_ClanTags`
 									SET `pattern` = '".mysql_real_escape_string($newOne)."',
 										`position` = '".mysql_real_escape_string($_POST['newsel'])."'");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -91,6 +94,7 @@ $patterns = false;
 $query = mysql_query("SELECT id,pattern,position
 		FROM `".DB_PREFIX."_ClanTags`
 		ORDER BY position, pattern, id");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$patterns[] = $result;

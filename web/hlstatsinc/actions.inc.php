@@ -95,18 +95,20 @@ mysql_free_result($queryActionsCount);
 if(!empty($totalactions)) {
 	// query to get the data from the db with the given options
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		".DB_PREFIX."_Actions.code,
-		".DB_PREFIX."_Actions.description,
-		COUNT(".DB_PREFIX."_Events_PlayerActions.id) AS obj_count,
-		".DB_PREFIX."_Actions.reward_player AS obj_bonus
-	FROM ".DB_PREFIX."_Actions, ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players
-	WHERE ".DB_PREFIX."_Events_PlayerActions.playerId = ".DB_PREFIX."_Players.playerId
-		AND ".DB_PREFIX."_Players.game='".mysql_real_escape_string($game)."'
-		AND ".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id
-		AND ".DB_PREFIX."_Actions.game='".mysql_real_escape_string($game)."'
-		AND ".DB_PREFIX."_Players.hideranking = 0
-	GROUP BY ".DB_PREFIX."_Actions.id
-	ORDER BY ".$sort." ".$sortorder;
+		a.code,
+		a.description,
+		COUNT(epa.id) AS obj_count,
+		a.reward_player AS obj_bonus
+	FROM `".DB_PREFIX."_Actions` AS a,
+		`".DB_PREFIX."_Events_PlayerActions` AS epa,
+		`".DB_PREFIX."_Players` AS p
+	WHERE epa.playerId = p.playerId
+		AND p.game = '".mysql_real_escape_string($game)."'
+		AND epa.actionId = a.id
+		AND a.game = '".mysql_real_escape_string($game)."'
+		AND p.hideranking = 0
+	GROUP BY a.id
+	ORDER BY `".$sort."` `".$sortorder."`";
 
 	// calculate the limit
 	if($page === 1) {
@@ -118,6 +120,7 @@ if(!empty($totalactions)) {
 	}
 
 	$query = mysql_query($queryStr);
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	if(mysql_num_rows($query) > 0) {
 		while($result = mysql_fetch_assoc($query)) {
 			$actions['data'][] = $result;

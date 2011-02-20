@@ -102,7 +102,7 @@ $queryStr .= " UNION ALL
 		FROM `".DB_PREFIX."_Events_Admin` AS ea
 		LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId = ea.serverId";
 
-$queryStr .= " ORDER BY ".$sort." ".$sortorder;
+$queryStr .= " ORDER BY `".$sort."` `".$sortorder."`";
 
 // calculate the limit
 if($page === 1) {
@@ -114,6 +114,7 @@ else {
 }
 
 $query = mysql_query($queryStr);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$adminEvents['data'][] = $result;

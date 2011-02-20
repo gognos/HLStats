@@ -43,6 +43,7 @@ $gameList = false;
 // get the games
 $query = mysql_query("SELECT code,name FROM `".DB_PREFIX."_Games`
 					ORDER BY name ASC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$gameList[] = $result;
