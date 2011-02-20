@@ -40,16 +40,16 @@
  *
  */
 
-$query = mysql_query("SELECT `".DB_PREFIX."_Games`.`name` AS gamename,
-		`".DB_PREFIX."_Actions`.`description`,
-		IF(SIGN(`".DB_PREFIX."_Actions`.`reward_player`) > 0,
-			CONCAT('+', `".DB_PREFIX."_Actions`.`reward_player`),
-			`".DB_PREFIX."_Actions`.`reward_player`
+$query = mysql_query("SELECT g.name AS gamename,
+		a.description,
+		IF(SIGN(a.reward_player) > 0,
+			CONCAT('+', a.reward_player),
+			a.reward_player
 		) AS s_reward_player,
-		IF(`".DB_PREFIX."_Actions`.`team` != '' AND `".DB_PREFIX."_Actions`.`reward_team` != 0,
-			IF(SIGN(`".DB_PREFIX."_Actions`.`reward_team`) >= 0,
-				CONCAT(`".DB_PREFIX."_Teams`.`name, ' +', `".DB_PREFIX."_Actions`.`reward_team`),
-				CONCAT(`".DB_PREFIX."_Teams`.`name,  ' ', `".DB_PREFIX."_Actions`.`reward_team`)
+		IF(a.team != '' AND a.reward_team != 0,
+			IF(SIGN(a.reward_team) >= 0,
+				CONCAT(t.name, ' +', a.reward_team),
+				CONCAT(t.name,  ' ', a.reward_team)
 			),
 			''
 		) AS s_reward_team,
@@ -57,11 +57,14 @@ $query = mysql_query("SELECT `".DB_PREFIX."_Games`.`name` AS gamename,
 		IF(for_PlayerPlayerActions='1', 'Yes', 'No') AS for_PlayerPlayerActions,
 		IF(for_TeamActions='1', 'Yes', 'No') AS for_TeamActions,
 		IF(for_WorldActions='1', 'Yes', 'No') AS for_WorldActions
-	FROM `".DB_PREFIX."_Actions`
-	LEFT JOIN `".DB_PREFIX."_Games` ON `".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Actions`.`game`
-	LEFT JOIN `".DB_PREFIX."_Teams` ON `".DB_PREFIX."_Teams`.`code` = `".DB_PREFIX."_Actions`.`team`
-		AND `".DB_PREFIX."_Teams`.`game` = `".DB_PREFIX."_Actions`.`game`
-	ORDER BY `".DB_PREFIX."_Actions`.`game` ASC, `".DB_PREFIX."_Actions`.`description` ASC");
+	FROM `".DB_PREFIX."_Actions` AS a
+	LEFT JOIN `".DB_PREFIX."_Games` AS g
+		ON g.code = a.game
+	LEFT JOIN `".DB_PREFIX."_Teams` AS t
+		ON t.code = a.team
+		AND t.game = a.game
+	ORDER BY a.game ASC, a.description ASC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $gameActions = array();
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
@@ -71,13 +74,16 @@ if(mysql_num_rows($query) > 0) {
 }
 
 $query = mysql_query("
-		SELECT `".DB_PREFIX."_Games`.`name` AS gamename,
-			`".DB_PREFIX."_Weapons`.`code`,
-			`".DB_PREFIX."_Weapons`.`name`,
-			`".DB_PREFIX."_Weapons`.`modifier`
-		FROM `".DB_PREFIX."_Weapons`
-		LEFT JOIN `".DB_PREFIX."_Games` ON `".DB_PREFIX."_Games`.`code` = `".DB_PREFIX."_Weapons`.`game`
-		ORDER BY `game` ASC, `modifier` DESC");
+		SELECT g.name AS gamename,
+			w.code,
+			w.name,
+			w.modifier
+		FROM `".DB_PREFIX."_Weapons` AS W
+		LEFT JOIN `".DB_PREFIX."_Games` AS g
+			ON g.code = w.game
+		ORDER BY w.game ASC,
+			w.modifier DESC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $weaponModifiers = array();
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {

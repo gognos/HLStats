@@ -69,8 +69,9 @@ $query = mysql_query("SELECT s.serverId, s.name, s.address,
 			s.port, s.publicaddress, s.game, s.rcon_password,
 			g.name gamename
 		FROM `".DB_PREFIX."_Servers` AS s
-		LEFT JOIN `".DB_PREFIX."_Games` AS g ON s.game=g.code
+		LEFT JOIN `".DB_PREFIX."_Games` AS g ON s.game = g.code
 		WHERE serverId = '".mysql_real_escape_string($serverId)."'");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if (mysql_num_rows($query) != 1) {
 	die("Invalid or no server specified.");
 }
@@ -209,6 +210,7 @@ elseif (isset($server_rules['mp_timeleft']) && !empty($server_rules['mp_timeleft
 // Load our plugin list
 $server_details['addon_count'] = 0;
 $query = mysql_query("SELECT * FROM `".DB_PREFIX."_Server_Addons`");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 while ($addon_list = mysql_fetch_assoc($query)) {
 	$server_addon[$addon_list['rule']] = array('addon' => $addon_list['addon'], 'url' => $addon_list['url']);
 }

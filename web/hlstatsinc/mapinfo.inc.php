@@ -92,34 +92,35 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the total kills count for this map
-$queryCount = mysql_query("SELECT COUNT(DISTINCT `".DB_PREFIX."_Events_Frags`.`killerId`) AS cc,
-		SUM(`".DB_PREFIX."_Events_Frags`.`map` = '".mysql_real_escape_string($map)."') AS tc
-	FROM `".DB_PREFIX."_Events_Frags`
-	LEFT JOIN `".DB_PREFIX."_Players` ON
-		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_real_escape_string($map)."'
-		AND `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
-		AND `".DB_PREFIX."_Players`.`hideranking` = 0
+$queryCount = mysql_query("SELECT COUNT(DISTINCT ef.killerId) AS cc,
+		SUM(ef.map = '".mysql_real_escape_string($map)."') AS tc
+	FROM `".DB_PREFIX."_Events_Frags` AS ef
+	LEFT JOIN `".DB_PREFIX."_Players` AS p
+		ON p.playerId = ef.killerId
+	WHERE ef.map = '".mysql_real_escape_string($map)."'
+		AND p.game = '".mysql_real_escape_string($game)."'
+		AND p.hideranking = 0
 ");
 $result = mysql_fetch_assoc($queryCount);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 // the total kills for this map
 $totalkills = $result['tc'];
 mysql_freeresult($queryCount);
 
 if(!empty($totalkills)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		`".DB_PREFIX."_Events_Frags`.`killerId`,
-		`".DB_PREFIX."_Players`.`lastName` AS killerName,
-		COUNT(".DB_PREFIX."_Events_Frags`.`map`) AS frags,
-		`".DB_PREFIX."_Players`.`active`,
-		`".DB_PREFIX."_Players`.`isBot`
-	FROM ".DB_PREFIX."_Events_Frags`
-	LEFT JOIN `".DB_PREFIX."_Players` ON
-		`".DB_PREFIX."_Players`.`playerId` = `".DB_PREFIX."_Events_Frags`.`killerId`
-	WHERE `".DB_PREFIX."_Events_Frags`.`map` = '".mysql_real_escape_string($map)."'
-		AND `".DB_PREFIX."_Players`.`game` = '".mysql_real_escape_string($game)."'
-		AND `".DB_PREFIX."_Players`.`hideranking` = 0
-	GROUP BY `".DB_PREFIX."_Events_Frags`.`killerId`
+		ef.killerId,
+		p.lastName AS killerName,
+		COUNT(ef.map) AS frags,
+		p.active,
+		p.isBot
+	FROM `".DB_PREFIX."_Events_Frags` AS ef
+	LEFT JOIN `".DB_PREFIX."_Players` AS p
+		ON p.playerId = ef.killerId
+	WHERE ef.map = '".mysql_real_escape_string($map)."'
+		AND p.game = '".mysql_real_escape_string($game)."'
+		AND p.hideranking = 0
+	GROUP BY ef.killerId
 	ORDER BY `".$sort."` `".$sortorder."`";
 
 	// calculate the limit
@@ -132,6 +133,7 @@ if(!empty($totalkills)) {
 	}
 
 	$query = mysql_query($queryStr);
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	if(mysql_num_rows($query) > 0) {
 		while($result = mysql_fetch_assoc($query)) {
 			$result['percent'] = $result['frags']/$totalkills*100;

@@ -49,8 +49,9 @@ pageHeader(array(l("Contents")), array(l("Contents")=>""));
 // should we hide the news ?
 if(!$g_options['hideNews']) {
 	$queryNews = mysql_query("SELECT id,`date`,`user`,`email`,`subject`,`message`
-								FROM ".DB_PREFIX."_News
+								FROM `".DB_PREFIX."_News`
 								ORDER BY `date` DESC");
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	if(mysql_num_rows($queryNews) > 0) {
 ?>
 	<script type="text/javascript">
@@ -114,21 +115,21 @@ if(!$g_options['hideNews']) {
 			$playersObj = new Players($gamedata['code']);
 			$topplayer = $playersObj->topPlayer();
 			
-			$queryTopClan = mysql_query("
-				SELECT
-					".DB_PREFIX."_Clans.clanId,
-					".DB_PREFIX."_Clans.name,
-					AVG(".DB_PREFIX."_Players.skill) AS skill,
-					COUNT(".DB_PREFIX."_Players.playerId) AS numplayers
-				FROM ".DB_PREFIX."_Clans
-				LEFT JOIN ".DB_PREFIX."_Players ON
-					".DB_PREFIX."_Players.clan = ".DB_PREFIX."_Clans.clanId
-				WHERE ".DB_PREFIX."_Clans.game='".mysql_real_escape_string($gamedata['code'])."'
-				GROUP BY ".DB_PREFIX."_Clans.clanId
+			$queryTopClan = mysql_query("SELECT
+					c.clanId,
+					c.name,
+					AVG(p.skill) AS skill,
+					COUNT(p.playerId) AS numplayers
+				FROM `".DB_PREFIX."_Clans` AS c
+				LEFT JOIN `".DB_PREFIX."_Players` AS p
+					ON p.clan = c.clanId
+				WHERE c.game = '".mysql_real_escape_string($gamedata['code'])."'
+				GROUP BY c.clanId
 				HAVING skill IS NOT NULL AND numplayers > 1
 				ORDER BY skill DESC
 				LIMIT 1
 			");
+			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 
 			$topclan = false;
 			if (mysql_num_rows($queryTopClan) === 1) {
@@ -176,22 +177,22 @@ if(!$g_options['hideNews']) {
 <h1><?php echo l('General Statistics'); ?></h1>
 <p>
 <?php
-	$query = mysql_query("SELECT COUNT(*) AS pc FROM ".DB_PREFIX."_Players");
+	$query = mysql_query("SELECT COUNT(*) AS pc FROM `".DB_PREFIX."_Players`");
 	$result = mysql_fetch_assoc($query);
 	$num_players = $result['pc'];
 	mysql_free_result($query);
 
-	$query = mysql_query("SELECT COUNT(*) AS cc FROM ".DB_PREFIX."_Clans");
+	$query = mysql_query("SELECT COUNT(*) AS cc FROM `".DB_PREFIX."_Clans`");
 	$result = mysql_fetch_assoc($query);
 	$num_clans = $result['cc'];
 	mysql_free_result($query);
 
-	$query = mysql_query("SELECT COUNT(*) AS sc FROM ".DB_PREFIX."_Servers");
+	$query = mysql_query("SELECT COUNT(*) AS sc FROM `".DB_PREFIX."_Servers`");
 	$result = mysql_fetch_assoc($query);
 	$num_servers = $result['sc'];
 	mysql_free_result($query);
 
-	$query = mysql_query("SELECT MAX(eventTime) AS lastEvent FROM ".DB_PREFIX."_Events_Frags");
+	$query = mysql_query("SELECT MAX(eventTime) AS lastEvent FROM `".DB_PREFIX."_Events_Frags`");
 	$result = mysql_fetch_assoc($query);
 	$timstamp = strtotime($result['lastEvent']);
 	$lastevent = getInterval($timstamp);

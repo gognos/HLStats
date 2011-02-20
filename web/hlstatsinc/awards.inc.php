@@ -54,21 +54,24 @@ if (isset($_GET["date"])) {
 $tmptime = strtotime($date);
 $awards_d_date = l(date('l',$tmptime)).' '.date('d.m.',$tmptime);
 
-$query = mysql_query("SELECT ".DB_PREFIX."_Awards.name,
-								".DB_PREFIX."_Awards.verb,
-								".DB_PREFIX."_Awards_History.d_winner_id,
-								".DB_PREFIX."_Awards_History.d_winner_count,
-								".DB_PREFIX."_Players.lastName AS d_winner_name,
-								".DB_PREFIX."_Players.active AS active,
-								".DB_PREFIX."_Players.isBot AS isBot,
-								".DB_PREFIX."_Awards_History.date
-							FROM ".DB_PREFIX."_Awards_History
-							LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Awards_History.d_winner_id
-							LEFT JOIN ".DB_PREFIX."_Awards ON ".DB_PREFIX."_Awards.awardId = ".DB_PREFIX."_Awards_History.fk_award_id
-							WHERE ".DB_PREFIX."_Awards_History.game = '".mysql_real_escape_string($game)."'
-								AND ".DB_PREFIX."_Awards_History.date = '".$date."'
-							ORDER BY ".DB_PREFIX."_Awards.awardType DESC,
-								".DB_PREFIX."_Awards.name ASC");
+$query = mysql_query("SELECT a.name,
+								a.verb,
+								ah.d_winner_id,
+								ah.d_winner_count,
+								p.lastName AS d_winner_name,
+								p.active AS active,
+								p.isBot AS isBot,
+								ah.date
+							FROM `".DB_PREFIX."_Awards_History` AS ah
+							LEFT JOIN `".DB_PREFIX."_Players` AS p
+								ON p.playerId = ah.d_winner_id
+							LEFT JOIN `".DB_PREFIX."_Awards` AS a
+								ON a.awardId = ah.fk_award_id
+							WHERE ah.game = '".mysql_real_escape_string($game)."'
+								AND ah.date = '".mysql_real_escape_string($date)."'
+							ORDER BY a.awardType DESC,
+								a.name ASC");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if (mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$awardsHistory['data'][] = $result;
@@ -79,9 +82,10 @@ mysql_free_result($query);
 
 // get the dates for the date selection
 $dateSelect = array();
-$query = mysql_query("SELECT `date` FROM ".DB_PREFIX."_Awards_History
+$query = mysql_query("SELECT `date` FROM `".DB_PREFIX."_Awards_History`
 						WHERE game = '".mysql_real_escape_string($game)."'
 						GROUP BY `date`");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$dateSelect[$result['date']] = $result['date'];

@@ -93,9 +93,10 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the full action name
-$queryActionName = mysql_query("SELECT description FROM ".DB_PREFIX."_Actions
-					WHERE code='".mysql_real_escape_string($action)."'
-						AND game='".mysql_real_escape_string($game)."'");
+$queryActionName = mysql_query("SELECT description FROM `".DB_PREFIX."_Actions`
+					WHERE code = '".mysql_real_escape_string($action)."'
+						AND game = '".mysql_real_escape_string($game)."'");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if (mysql_num_rows($query) != 1) {
 	$act_name = ucfirst($action);
 }
@@ -108,12 +109,15 @@ mysql_free_result($query);
 
 // query to get the total total action count
 $queryCount = mysql_query("SELECT
-		COUNT(".DB_PREFIX."_Events_PlayerActions.Id) AS tc
-	FROM ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players, ".DB_PREFIX."_Actions
-	WHERE ".DB_PREFIX."_Actions.code = '".mysql_real_escape_string($action)."' AND
-		".DB_PREFIX."_Players.game = '".mysql_real_escape_string($game)."' AND
-		".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_PlayerActions.playerId AND
-		".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id");
+		COUNT(epa.Id) AS tc
+	FROM `".DB_PREFIX."_Events_PlayerActions` AS epa,
+		`".DB_PREFIX."_Players` AS p,
+		`".DB_PREFIX."_Actions` AS a
+	WHERE a.code = '".mysql_real_escape_string($action)."'
+		AND p.game = '".mysql_real_escape_string($game)."'
+		AND p.playerId = epa.playerId
+		AND epa.actionId = a.id");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $result = mysql_fetch_assoc($queryCount);
 // the toral action count for this specific action
 $totalact = $result['tc'];
@@ -121,20 +125,22 @@ $totalact = $result['tc'];
 if(!empty($totalact)) {
 	// query to get the data from the db with the given options
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-			".DB_PREFIX."_Events_PlayerActions.playerId,
-			".DB_PREFIX."_Players.lastName AS playerName,
-			".DB_PREFIX."_Players.active AS active,
-			".DB_PREFIX."_Players.isBot AS isBot,
-			COUNT(".DB_PREFIX."_Events_PlayerActions.id) AS obj_count,
-			COUNT(".DB_PREFIX."_Events_PlayerActions.id) * ".DB_PREFIX."_Actions.reward_player AS obj_bonus
-		FROM ".DB_PREFIX."_Events_PlayerActions, ".DB_PREFIX."_Players, ".DB_PREFIX."_Actions
-		WHERE ".DB_PREFIX."_Actions.code = '".mysql_real_escape_string($action)."' AND
-			".DB_PREFIX."_Players.game = '".mysql_real_escape_string($game)."' AND
-			".DB_PREFIX."_Players.playerId = ".DB_PREFIX."_Events_PlayerActions.playerId AND
-			".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id AND
-			".DB_PREFIX."_Players.hideranking <> '1'
-		GROUP BY ".DB_PREFIX."_Events_PlayerActions.playerId
-		ORDER BY ".$sort." ".$sortorder;
+			epa.playerId,
+			p.lastName AS playerName,
+			p.active AS active,
+			p.isBot AS isBot,
+			COUNT(epa.id) AS obj_count,
+			a.reward_player AS obj_bonus
+		FROM `".DB_PREFIX."_Events_PlayerActions` AS epa,
+			`".DB_PREFIX."_Players` AS p,
+			`".DB_PREFIX."_Actions` AS a
+		WHERE a.code = '".mysql_real_escape_string($action)."'
+			AND p.game = '".mysql_real_escape_string($game)."'
+			AND p.playerId = epa.playerId
+			AND epa.actionId = a.id
+			AND p.hideranking <> '1'
+		GROUP BY epa.playerId
+		ORDER BY `".$sort."` `".$sortorder."`";
 
 	// calculate the limit
 	if($page === 1) {
@@ -146,6 +152,7 @@ if(!empty($totalact)) {
 	}
 
 	$query = mysql_query($queryStr);
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	if(mysql_num_rows($query) > 0) {
 		while($result = mysql_fetch_assoc($query)) {
 			$players['data'][] = $result;

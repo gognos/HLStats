@@ -82,9 +82,11 @@ if (isset($_GET["sortorder"])) {
 
 // query to get the total actions count for this game
 $queryActionsCount = mysql_query("SELECT COUNT(*) ac
-	FROM ".DB_PREFIX."_Actions, ".DB_PREFIX."_Events_PlayerActions
-	WHERE ".DB_PREFIX."_Events_PlayerActions.actionId = ".DB_PREFIX."_Actions.id
-		AND ".DB_PREFIX."_Actions.game='".mysql_real_escape_string($game)."'");
+	FROM `".DB_PREFIX."_Actions` AS a,
+		`".DB_PREFIX."_Events_PlayerActions` AS epa
+	WHERE epa.actionId = a.id
+		AND a.game = '".mysql_real_escape_string($game)."'");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $result = mysql_fetch_assoc($queryActionsCount);
 // get the total actions count for this game
 $totalactions = $result['ac'];

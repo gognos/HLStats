@@ -72,19 +72,19 @@ if (isset($_GET["sortorder"])) {
 	}
 }
 
-$queryStr = "SELECT IFNULL(`".DB_PREFIX."_Roles`.`name`, `".DB_PREFIX."_Events_ChangeRole`.`role`) AS name,
-			COUNT(`".DB_PREFIX."_Events_ChangeRole`.`id`) AS rolecount,
-			`".DB_PREFIX."_Roles`.`roleId`,
-			`".DB_PREFIX."_Roles`.`code`
-		FROM `".DB_PREFIX."_Events_ChangeRole`
-		LEFT JOIN `".DB_PREFIX."_Roles` ON
-			`".DB_PREFIX."_Events_ChangeRole`.`role` = `".DB_PREFIX."_Roles`.`code`
-		LEFT JOIN `".DB_PREFIX."_Servers` ON
-			`".DB_PREFIX."_Servers`.`serverId` = `".DB_PREFIX."_Events_ChangeRole`.`serverId`
-		WHERE `".DB_PREFIX."_Roles`.`game` = '".mysql_real_escape_string($game)."'
-			AND `".DB_PREFIX."_Servers`.`game` = '".mysql_real_escape_string($game)."'
-			AND (hidden <>'1' OR hidden IS NULL)
-		GROUP BY `".DB_PREFIX."_Events_ChangeRole`.`role`
+$queryStr = "SELECT IFNULL(r.name, ecr.role) AS name,
+			COUNT(ecr.id) AS rolecount,
+			r.roleId,
+			r.code
+		FROM `".DB_PREFIX."_Events_ChangeRole` AS ecr
+		LEFT JOIN `".DB_PREFIX."_Roles` AS r
+			ON ecr.role = r.code
+		LEFT JOIN `".DB_PREFIX."_Servers` AS s
+			ON s.serverId = ecr.serverId
+		WHERE r.game = '".mysql_real_escape_string($game)."'
+			AND s.game = '".mysql_real_escape_string($game)."'
+			AND (s.hidden <>'1' OR s.hidden IS NULL)
+		GROUP BY ecr.role
 		ORDER BY `".$sort."` `".$sortorder."`";
 // calculate the limit
 if($page === 1) {
@@ -96,6 +96,7 @@ else {
 }
 
 $query = mysql_query($queryStr);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
 		$roles['data'][] = $result;

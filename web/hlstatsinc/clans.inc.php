@@ -90,23 +90,24 @@ if (isset($_GET["showAll"])) {
 
 // query to get the data from the db with the given options
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		".DB_PREFIX."_Clans.clanId,
-		".DB_PREFIX."_Clans.name,
-		".DB_PREFIX."_Clans.tag,
-		COUNT(".DB_PREFIX."_Players.playerId) AS nummembers,
-		SUM(".DB_PREFIX."_Players.kills) AS kills,
-		SUM(".DB_PREFIX."_Players.deaths) AS deaths,
-		ROUND(AVG(".DB_PREFIX."_Players.skill)) AS skill,
-		IFNULL(SUM(".DB_PREFIX."_Players.kills) / SUM(".DB_PREFIX."_Players.deaths), 0) AS kpd
-	FROM ".DB_PREFIX."_Clans
-	LEFT JOIN ".DB_PREFIX."_Players ON ".DB_PREFIX."_Players.clan=".DB_PREFIX."_Clans.clanId
-	WHERE ".DB_PREFIX."_Clans.game='".mysql_real_escape_string($game)."'
-		AND ".DB_PREFIX."_Players.hideranking = 0
-	GROUP BY ".DB_PREFIX."_Clans.clanId";
+		c.clanId,
+		c.name,
+		c.tag,
+		COUNT(p.playerId) AS nummembers,
+		SUM(p.kills) AS kills,
+		SUM(p.deaths) AS deaths,
+		ROUND(AVG(p.skill)) AS skill,
+		IFNULL(SUM(p.kills) / SUM(p.deaths), 0) AS kpd
+	FROM ".DB_PREFIX."_Clans AS c
+	LEFT JOIN ".DB_PREFIX."_Players AS p
+		ON p.clan = c.clanId
+	WHERE c.game = '".mysql_real_escape_string($game)."'
+		AND p.hideranking = 0
+	GROUP BY c.clanId";
 if(!empty($minmembers)) {
 	$queryStr .= " HAVING nummembers >= ".mysql_real_escape_string($minmembers);
 }
-	$queryStr .= " ORDER BY ".$sort." ".$sortorder;
+	$queryStr .= " ORDER BY `".$sort."` `".$sortorder."`";
 
 // calculate the limit
 if($page === 1) {
@@ -116,7 +117,7 @@ else {
 	$start = 50*($page-1);
 	$queryStr .=" LIMIT ".$start.",50";
 }
-
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 $query = mysql_query($queryStr);
 if(mysql_num_rows($query) > 0) {
 	while($result = mysql_fetch_assoc($query)) {
