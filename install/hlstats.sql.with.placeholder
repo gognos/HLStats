@@ -553,4 +553,4 @@ CREATE TABLE `#DB_PREFIX#_Awards_History` (
   `d_winner_count` int(10) unsigned DEFAULT NULL,
   `date` varchar(32) NOT NULL,
   UNIQUE KEY `fk_award_id` (`fk_award_id`,`date`,`game`)
-) ENGINE = MYISAM ;
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
