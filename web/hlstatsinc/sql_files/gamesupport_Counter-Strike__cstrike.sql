@@ -6,6 +6,7 @@
 # replace ++DB_PREFIX++ with the current table prefix !
 # and import this into your hlstats database
 
+
 #
 # Game Definition
 #

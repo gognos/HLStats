@@ -1,8 +1,9 @@
 #
 # HLstats Game Support file for Half-Life 2 Capture the Flag
 #
-# If you want to insert this manually and not via the installer
+# If you want to insert this manually and not via the admin interface
 # replace ++DB_PREFIX++ with the current table prefix !
+# and import this into your hlstats database
 
 #
 # Game Definition
