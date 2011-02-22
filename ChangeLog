@@ -8,6 +8,7 @@ HLStats ChangeLog
 *) Changed: Mysql escape function on PHP now mysql_real_escape_string
 *) Changed: cleaner mysql query strings
 *) Fixed: Ticket #28
+*) Fixed: Improved Opposing Force gamesupport ( thx to h3rbert )
 
 
 1.60 (2011-02-10)
