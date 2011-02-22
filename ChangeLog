@@ -10,6 +10,7 @@ HLStats ChangeLog
 *) Changed: Opposing Force gamesupport files merged. To upgrade an existing
 		installation import the gamesupport file manually to the database
 		( thx to h3erbert )
+*) Changed: Cleaner gamesupport sql files
 *) Fixed: Ticket #28
 *) Fixed: Improved Opposing Force gamesupport ( thx to h3rbert )
 
