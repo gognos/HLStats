@@ -733,7 +733,7 @@ if($g_options['showChart'] == "1") {
 			<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playtime"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 			(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 		</h1>
-		<img src="<?php echo $playtimeChart; ?>" />
+		<div class="chart"><img src="<?php echo $playtimeChart; ?>" /></div>
 <?php }
 
 	$chartObj = new Chart($game);
@@ -746,7 +746,7 @@ if($g_options['showChart'] == "1") {
 			<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playerkillsperday"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 			(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
 		</h1>
-		<img src="<?php echo $killDayChart; ?>" />
+		<div class="chart"><img src="<?php echo $killDayChart; ?>" /></div>
 <?php }
 }
 ?>

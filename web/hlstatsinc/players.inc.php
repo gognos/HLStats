@@ -332,7 +332,7 @@ pageHeader(
 
 		$chart = $chartObj->getChart('playerActivity',$playersObj);
 		echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
-		echo '<img src="',$chart,'" />';
+		echo '<div class="chart"><img src="',$chart,'" /></a>';
     }
 ?>
 </div>

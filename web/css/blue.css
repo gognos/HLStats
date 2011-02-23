@@ -354,3 +354,7 @@ form.search input.searchbutton {
 	border-bottom: 1px dashed #EFF0F1;
 	border-top: 1px dashed #EFF0F1;
 }
+
+.chart {
+	background-color: #fff;
+}
