@@ -3,6 +3,7 @@ HLStats ChangeLog
 
 1.61 (tba)
 *) New: Russian translation by E][tremist
+*) New: New css style blue.css
 *) Opposing Force CTF/DM role models added
 *) Changed: New Bug Tracker. Now FlySpray
 *) Changed: Mysql escape function on PHP now mysql_real_escape_string
