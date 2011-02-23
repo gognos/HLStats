@@ -192,25 +192,25 @@ class Player {
 		$queryStr = "SELECT SQL_CALC_FOUND_ROWS
 					'".l('Team Bonus')."' AS eventType,
 					eventTime,
-					CONCAT('".l('My team received a points bonus of')." ', bonus, ' ".l('for triggering')." \"', ".DB_PREFIX."_Actions.description, '\"') AS eventDesc,
-					".DB_PREFIX."_Servers.name AS serverName,
+					CONCAT('".l('My team received a points bonus of')." ', bonus, ' ".l('for triggering')." \"', `".DB_PREFIX."_Actions`.`description`, '\"') AS eventDesc,
+					`".DB_PREFIX."_Servers`.`name` AS serverName,
 					map
-					FROM ".DB_PREFIX."_Events_TeamBonuses AS t
-					LEFT JOIN ".DB_PREFIX."_Actions ON
-						t.actionId = ".DB_PREFIX."_Actions.id
-					LEFT JOIN ".DB_PREFIX."_Servers ON
-						".DB_PREFIX."_Servers.serverId = t.serverId
+					FROM `".DB_PREFIX."_Events_TeamBonuses` AS t
+					LEFT JOIN `".DB_PREFIX."_Actions` ON
+						t.actionId = `".DB_PREFIX."_Actions`.`id`
+					LEFT JOIN `".DB_PREFIX."_Servers` ON
+						`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 					WHERE
 						t.playerId=".mysql_real_escape_string($this->playerId)."";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Connect')."' AS eventType,
 				eventTime,
 				CONCAT('".l('I connected to the server')."') AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_Connects AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
+			FROM `".DB_PREFIX."_Events_Connects` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
@@ -218,11 +218,11 @@ class Player {
 			SELECT '".l('Disconnect')."' AS eventType,
 				eventTime,
 				'".l('I left the game')."' AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_Disconnects AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
+			FROM `".DB_PREFIX."_Events_Disconnects` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
@@ -230,67 +230,67 @@ class Player {
 			SELECT 'Entry' AS eventType,
 				eventTime,
 				'".l('I entered the game')."' AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_Entries AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
+			FROM `".DB_PREFIX."_Events_Entries` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Kill')."' As eventType,
 			eventTime,
-			CONCAT('".l('I killed')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', ".DB_PREFIX."_Players.lastName, '</a>', ' ".l('with')." ', weapon) AS eventDesc,
-			".DB_PREFIX."_Servers.name AS serverName,
+			CONCAT('".l('I killed')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>', ' ".l('with')." ', weapon) AS eventDesc,
+			`".DB_PREFIX."_Servers`.`name` AS serverName,
 			map
-		FROM ".DB_PREFIX."_Events_Frags AS t
-		LEFT JOIN ".DB_PREFIX."_Servers ON
-			".DB_PREFIX."_Servers.serverId = t.serverId
-		LEFT JOIN ".DB_PREFIX."_Players ON
-			".DB_PREFIX."_Players.playerId = t.victimId
+		FROM `".DB_PREFIX."_Events_Frags` AS t
+		LEFT JOIN `".DB_PREFIX."_Servers` ON
+			`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+		LEFT JOIN `".DB_PREFIX."_Players` ON
+			`".DB_PREFIX."_Players`.`playerId` = t.victimId
 		WHERE
 			t.killerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Death')."' AS eventType,
 				eventTime,
-				CONCAT('<a href=\"index.php?mode=playerinfo&player=', killerId, '\">', ".DB_PREFIX."_Players.lastName, '</a>', ' ".l('killed me with')." ', weapon) AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				CONCAT('<a href=\"index.php?mode=playerinfo&player=', killerId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>', ' ".l('killed me with')." ', weapon) AS eventDesc,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_Frags AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Players On
-				".DB_PREFIX."_Players.playerId = t.killerId
+			FROM `".DB_PREFIX."_Events_Frags` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Players` On
+				`".DB_PREFIX."_Players`.`playerId` = t.killerId
 			WHERE
 				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
-		$queryStr .= " UNION ALL
+		$queryStr .= " UNION ALL1
 			SELECT '".l('Team Kill')."' AS eventType,
 				eventTime,
-				CONCAT('".l('I killed teammate')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', ".DB_PREFIX."_Players.lastName, '</a>', ' ".l('with')." ', weapon) AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				CONCAT('".l('I killed teammate')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>', ' ".l('with')." ', weapon) AS eventDesc,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_Teamkills AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Players On
-				".DB_PREFIX."_Players.playerId = t.victimId
+			FROM `".DB_PREFIX."_Events_Teamkills` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Players` On
+				`".DB_PREFIX."_Players`.`playerId` = t.victimId
 			WHERE
 				t.killerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Friendly Fire')."' AS eventType,
 				eventTime,
-				CONCAT('".l('My teammate')." <a href=\"index.php?mode=playerinfo&player=', killerId, '\">', ".DB_PREFIX."_Players.lastName, '</a>', ' ".l('killed me with')." ', weapon) AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				CONCAT('".l('My teammate')." <a href=\"index.php?mode=playerinfo&player=', killerId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>', ' ".l('killed me with')." ', weapon) AS eventDesc,
+				`".DB_PREFIX."_Servers`.name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_Teamkills AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Players On
-				".DB_PREFIX."_Players.playerId = t.killerId
+			FROM `".DB_PREFIX."_Events_Teamkills` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Players` On
+				`".DB_PREFIX."_Players`.`playerId` = t.killerId
 			WHERE
 				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
@@ -298,69 +298,69 @@ class Player {
 			SELECT '".l('Role')."' AS eventType,
 				eventTime,
 				CONCAT('".l("I changed role to")." ', role) AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_ChangeRole AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
+			FROM `".DB_PREFIX."_Events_ChangeRole` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
-			SELECT '".l('Name')."' AS eventTpe,
+			SELECT '".l('Name')."' AS eventType,
 				eventTime,
 				CONCAT('".l('I changed my name from')." \"', oldName, '\" ".l('to')." \"', newName, '\"') AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_ChangeName AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
+			FROM `".DB_PREFIX."_Events_ChangeName` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Action')."' AS eventType,
 				eventTime,
-				CONCAT('".l('I received a points bonus of')." ', bonus, ' ".l('for triggering')." \"', ".DB_PREFIX."_Actions.description, '\"') AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				CONCAT('".l('I received a points bonus of')." ', bonus, ' ".l('for triggering')." \"', `".DB_PREFIX."_Actions`.`description`, '\"') AS eventDesc,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_PlayerActions AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Actions ON
-				".DB_PREFIX."_Actions.id = t.actionId
+			FROM `".DB_PREFIX."_Events_PlayerActions` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Actions` ON
+				`".DB_PREFIX."_Actions`.`id` = t.actionId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Action')."' AS eventType,
 				eventTime,
-				CONCAT('".l('I received a points bonus of')." ', bonus, ' ".l('for triggering')." \"', ".DB_PREFIX."_Actions.description, '\" ".l('against')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', ".DB_PREFIX."_Players.lastName, '</a>') AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				CONCAT('".l('I received a points bonus of')." ', bonus, ' ".l('for triggering')." \"', `".DB_PREFIX."_Actions`.`description`, '\" ".l('against')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>') AS eventDesc,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_PlayerPlayerActions AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Actions ON
-				".DB_PREFIX."_Actions.id = t.actionId
-			LEFT JOIN ".DB_PREFIX."_Players ON
-				".DB_PREFIX."_Players.playerId = t.victimId
+			FROM `".DB_PREFIX."_Events_PlayerPlayerActions` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Actions` ON
+				`".DB_PREFIX."_Actions`.`id` = t.actionId
+			LEFT JOIN `".DB_PREFIX."_Players` ON
+				`".DB_PREFIX."_Players`.`playerId` = t.victimId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Action')."' AS eventType,
 				eventTime,
-				CONCAT('<a href=\"index.php?mode=playerinfo&player=', t.playerId, '\">', ".DB_PREFIX."_Players.lastName, '</A> ".l('triggered')." \"', ".DB_PREFIX."_Actions.description, '\" ".l('against me')."') AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				CONCAT('<a href=\"index.php?mode=playerinfo&player=', t.playerId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</A> ".l('triggered')." \"', `".DB_PREFIX."_Actions`.`description`, '\" ".l('against me')."') AS eventDesc,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_PlayerPlayerActions AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Actions ON
-				".DB_PREFIX."_Actions.id = t.actionId
-			LEFT JOIN ".DB_PREFIX."_Players ON
-				".DB_PREFIX."_Players.playerId = t.playerId
+			FROM `".DB_PREFIX."_Events_PlayerPlayerActions` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Actions` ON
+				`".DB_PREFIX."_Actions`.`id` = t.actionId
+			LEFT JOIN `".DB_PREFIX."_Players` ON
+				`".DB_PREFIX."_Players`.`playerId` = t.playerId
 			WHERE
 				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
@@ -368,28 +368,28 @@ class Player {
 			SELECT '".l('Suicide')."' AS eventType,
 				eventTime,
 				CONCAT('".l('I committed suicide with')." \"', weapon, '\"') AS eventDesc,
-				".DB_PREFIX."_Servers.name AS servername,
+				`".DB_PREFIX."_Servers`.`name` AS servername,
 				map
-			FROM ".DB_PREFIX."_Events_Suicides AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
+			FROM `".DB_PREFIX."_Events_Suicides` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
 		$queryStr .= " UNION ALL
 			SELECT '".l('Team')."' AS eventType,
 				eventTime,
-				IF(".DB_PREFIX."_Teams.name IS NULL,
+				IF(`".DB_PREFIX."_Teams`.`name` IS NULL,
 					CONCAT('".l('I joined team')." \"', team, '\"'),
-					CONCAT('".l('I joined team')." \"', team, '\" (', ".DB_PREFIX."_Teams.name, ')')
+					CONCAT('".l('I joined team')." \"', team, '\" (', `".DB_PREFIX."_Teams`.`name`, ')')
 				) AS eventDesc,
-				".DB_PREFIX."_Servers.name AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
-			FROM ".DB_PREFIX."_Events_ChangeTeam AS t
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId = t.serverId
-			LEFT JOIN ".DB_PREFIX."_Teams ON
-				".DB_PREFIX."_Teams.code = t.team
+			FROM `".DB_PREFIX."_Events_ChangeTeam` AS t
+			LEFT JOIN `".DB_PREFIX."_Servers` ON
+				`".DB_PREFIX."_Servers`.`serverId` = t.serverId
+			LEFT JOIN `".DB_PREFIX."_Teams` ON
+				`".DB_PREFIX."_Teams`.`code` = t.team
 			WHERE
 				t.playerId=".mysql_real_escape_string($this->playerId)."
 		";
@@ -420,6 +420,7 @@ class Player {
 			}
 
 			$query = mysql_query($queryStr);
+			if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 			if(mysql_num_rows($query) > 0) {
 				while($result = mysql_fetch_assoc($query)) {
 					$ret['data'][] = $result;
@@ -446,14 +447,13 @@ class Player {
 					'pages' => false);
 
 		$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-	 			".DB_PREFIX."_Events_Chat.eventTime,
-	 			CONCAT('".l('I said')." \"', ".DB_PREFIX."_Events_Chat.message, '\"') AS message,
-	 			".DB_PREFIX."_Servers.name,
-	 			".DB_PREFIX."_Events_Chat.map
-				FROM ".DB_PREFIX."_Events_Chat
-				LEFT JOIN ".DB_PREFIX."_Servers ON
-	 			".DB_PREFIX."_Servers.serverId = ".DB_PREFIX."_Events_Chat.serverId
-			WHERE ".DB_PREFIX."_Events_Chat.playerId=".mysql_real_escape_string($this->playerId)."";
+	 			ec.eventTime,
+	 			CONCAT('".l('I said')." \"', ec.message, '\"') AS message,
+	 			s.name, ec.map
+				FROM `".DB_PREFIX."_Events_Chat` AS ec
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					ON s.serverId = ec.serverId
+			WHERE ec.playerId = ".mysql_real_escape_string($this->playerId)."";
 
 		if($this->_option['page'] === 1) {
 			$queryStr .= " LIMIT 0,50";
@@ -464,6 +464,7 @@ class Player {
 		}
 
 		$query = mysql_query($queryStr);
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
 				$ret['data'][] = $result;
@@ -513,13 +514,14 @@ class Player {
 	 */
 	public function getPlaytimePerDayData() {
 		$ret = false;
-		$query = mysql_query("SELECT ".DB_PREFIX."_Events_StatsmeTime.*,
-				TIME_TO_SEC(".DB_PREFIX."_Events_StatsmeTime.time) as tTime
-			FROM ".DB_PREFIX."_Events_StatsmeTime
-			LEFT JOIN ".DB_PREFIX."_Servers ON
-				".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_StatsmeTime.serverId
-			WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
-				AND playerId='".mysql_real_escape_string($this->playerId)."'");
+		$query = mysql_query("SELECT est.*,
+				TIME_TO_SEC(est.time) as tTime
+			FROM `".DB_PREFIX."_Events_StatsmeTime` AS est
+			LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				ON s.serverId = est.serverId
+			WHERE s.game = '".mysql_real_escape_string($this->_game)."'
+				AND est.playerId = '".mysql_real_escape_string($this->playerId)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
 				$ret[] = $result;
@@ -544,6 +546,7 @@ class Player {
 							 WHERE `killerId` = '".mysql_real_escape_string($this->playerId)."'
 							 GROUP BY eventDay
 							 ORDER BY eventTime");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while($result = mysql_fetch_assoc($query)) {
 				$ret[] = $result;
@@ -627,6 +630,7 @@ class Player {
 			$queryStr .= " WHERE `playerId` = '".mysql_real_escape_string($this->playerId)."'";
 
 			$run = mysql_query($queryStr);
+			if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 			if($run !== false) {
 				$ret = true;
 			}
@@ -643,33 +647,32 @@ class Player {
 	private function _load() {
 		if(!empty($this->playerId)) {
 			$query = mysql_query("SELECT
-					".DB_PREFIX."_Players.lastName AS name,
-					".DB_PREFIX."_Players.clan,
-					".DB_PREFIX."_Players.fullName,
-					".DB_PREFIX."_Players.email,
-					".DB_PREFIX."_Players.homepage,
-					".DB_PREFIX."_Players.icq,
-					".DB_PREFIX."_Players.myspace,
-					".DB_PREFIX."_Players.facebook,
-					".DB_PREFIX."_Players.jabber,
-					".DB_PREFIX."_Players.steamprofile,
-					".DB_PREFIX."_Players.game,
-					".DB_PREFIX."_Players.skill,
-					".DB_PREFIX."_Players.oldSkill,
-					".DB_PREFIX."_Players.kills,
-					".DB_PREFIX."_Players.deaths,
-					".DB_PREFIX."_Players.hideranking,
-					".DB_PREFIX."_Players.active,
-					".DB_PREFIX."_Players.isBot,
-					IFNULL(kills/deaths, 0) AS kpd,
-					".DB_PREFIX."_Players.suicides,
-					CONCAT(".DB_PREFIX."_Clans.tag, ' ', ".DB_PREFIX."_Clans.name) AS clan_name
-				FROM
-					".DB_PREFIX."_Players
-				LEFT JOIN ".DB_PREFIX."_Clans ON
-					".DB_PREFIX."_Clans.clanId = ".DB_PREFIX."_Players.clan
-				WHERE
-					playerId='".mysql_real_escape_string($this->playerId)."'");
+					p.lastName AS name,
+					p.clan,
+					p.fullName,
+					p.email,
+					p.homepage,
+					p.icq,
+					p.myspace,
+					p.facebook,
+					p.jabber,
+					p.steamprofile,
+					p.game,
+					p.skill,
+					p.oldSkill,
+					p.kills,
+					p.deaths,
+					p.hideranking,
+					p.active,
+					p.isBot,
+					IFNULL(p.kills/p.deaths, 0) AS kpd,
+					p.suicides,
+					CONCAT(c.tag, ' ', c.name) AS clan_name
+				FROM `".DB_PREFIX."_Players` AS p
+				LEFT JOIN `".DB_PREFIX."_Clans` AS c 
+					ON c.clanId = p.clan
+				WHERE p.playerId = '".mysql_real_escape_string($this->playerId)."'");
+			if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 			if(mysql_num_rows($query)) {
 				$result = mysql_fetch_assoc($query);
 				$this->_playerData = $result;
@@ -691,10 +694,10 @@ class Player {
 	private function _lookupPlayerIdFromUniqeId($id) {
 		$ret = false;
 
-		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_PlayerUniqueIds
-					WHERE uniqueId='".mysql_real_escape_string($id)."'
-						AND game='".mysql_real_escape_string($this->_game)."'");
-
+		$query = mysql_query("SELECT playerId FROM `".DB_PREFIX."_PlayerUniqueIds`
+					WHERE uniqueId = '".mysql_real_escape_string($id)."'
+						AND game = '".mysql_real_escape_string($this->_game)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->playerId = $result['playerId'];
@@ -713,8 +716,9 @@ class Player {
 	private function _getUniqueIds() {
 		$this->_playerData['uniqueIds'] = '-';
 		$query = mysql_query("SELECT uniqueId
-						FROM ".DB_PREFIX."_PlayerUniqueIds
-						WHERE playerId='".mysql_real_escape_string($this->playerId)."'");
+						FROM `".DB_PREFIX."_PlayerUniqueIds`
+						WHERE playerId = '".mysql_real_escape_string($this->playerId)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$ret = '';
 			while ($result = mysql_fetch_assoc($query)) {
@@ -737,13 +741,14 @@ class Player {
 	private function _getLastConnect() {
 		$this->_playerData['lastConnect'] = l('No info');
 		$query = mysql_query("SELECT country, countryCode, eventTime
-					FROM ".DB_PREFIX."_Events_Connects
-					WHERE playerId='".mysql_real_escape_string($this->playerId)."'
+					FROM `".DB_PREFIX."_Events_Connects`
+					WHERE playerId = '".mysql_real_escape_string($this->playerId)."'
 						AND eventTime = (
-							SELECT MAX(eventTime) FROM ".DB_PREFIX."_Events_Connects
-							WHERE playerId='".mysql_real_escape_string($this->playerId)."'
+							SELECT MAX(eventTime) FROM `".DB_PREFIX."_Events_Connects`
+							WHERE playerId = '".mysql_real_escape_string($this->playerId)."'
 						)
 					");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			if(empty($result['eventTime'])) {
@@ -770,8 +775,9 @@ class Player {
 	private function _getMaxConnectTime() {
 		$this->_playerData['maxTime'] = l('No info');
 		$query = mysql_query("SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(time))) AS tTime
-					FROM ".DB_PREFIX."_Events_StatsmeTime
-					WHERE playerId='".mysql_real_escape_string($this->playerId)."'");
+					FROM `".DB_PREFIX."_Events_StatsmeTime`
+					WHERE playerId = '".mysql_real_escape_string($this->playerId)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['maxTime'] = $result['tTime'];
@@ -788,8 +794,9 @@ class Player {
 	private function _getAvgPing() {
 		$this->_playerData['avgPing'] = l('No info');
 		$query = mysql_query("SELECT ROUND(SUM(ping) / COUNT(ping), 1) AS av_ping
-					FROM ".DB_PREFIX."_Events_StatsmeLatency
-					WHERE playerId='".mysql_real_escape_string($this->playerId)."'");
+					FROM `".DB_PREFIX."_Events_StatsmeLatency`
+					WHERE playerId = '".mysql_real_escape_string($this->playerId)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['avgPing'] = $result['av_ping'];
@@ -809,7 +816,7 @@ class Player {
 			case 'rankPoints':
 			default:
 				$queryStr = "SELECT count(*) AS rank
-							FROM ".DB_PREFIX."_Players AS t1
+							FROM `".DB_PREFIX."_Players` AS t1
 							LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS t2
 								ON t2.playerId = t1.playerId
 							WHERE t1.active = '1'
@@ -826,6 +833,7 @@ class Player {
 										WHERE playerId = '".mysql_real_escape_string($this->playerId)."')";
 				$query = mysql_query($queryStr);
 		}
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			// the result gives the rows which are "above" the searched row
@@ -843,10 +851,12 @@ class Player {
 	private function _getTeamkills() {
 		$this->_playerData['teamkills'] = l('No info');
 		$query = mysql_query("SELECT COUNT(*) tk
-				FROM ".DB_PREFIX."_Events_Teamkills
-				LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Teamkills.serverId
-				WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
-					AND killerId='".mysql_real_escape_string($this->playerId)."'");
+				FROM `".DB_PREFIX."_Events_Teamkills` AS et
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					ON s.serverId = et.serverId
+				WHERE s.game = '".mysql_real_escape_string($this->_game)."'
+					AND killerId = '".mysql_real_escape_string($this->playerId)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['teamkills'] = $result['tk'];
@@ -862,12 +872,14 @@ class Player {
 	private function _getWeaponaccuracy() {
 		$this->_playerData['accuracy'] = l('No info');
 		$query = mysql_query("SELECT
-					IFNULL(ROUND((SUM(".DB_PREFIX."_Events_Statsme.hits)
-						/ SUM(".DB_PREFIX."_Events_Statsme.shots) * 100), 1), 0.0) AS accuracy
-					FROM ".DB_PREFIX."_Events_Statsme
-				LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId=".DB_PREFIX."_Events_Statsme.serverId
-				WHERE ".DB_PREFIX."_Servers.game='".mysql_real_escape_string($this->_game)."'
+					IFNULL(ROUND((SUM(es.hits)
+						/ SUM(es.shots) * 100), 1), 0.0) AS accuracy
+					FROM `".DB_PREFIX."_Events_Statsme` AS es
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					ON s.serverId = es.serverId
+				WHERE s.game = '".mysql_real_escape_string($this->_game)."'
 					AND playerId='".mysql_real_escape_string($this->playerId)."'");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			$result = mysql_fetch_assoc($query);
 			$this->_playerData['accuracy'] = $result['accuracy'];
