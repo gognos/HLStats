@@ -83,7 +83,7 @@ $queryStr = "SELECT IFNULL(r.name, ecr.role) AS name,
 			ON s.serverId = ecr.serverId
 		WHERE r.game = '".mysql_real_escape_string($game)."'
 			AND s.game = '".mysql_real_escape_string($game)."'
-			AND (s.hidden <>'1' OR s.hidden IS NULL)
+			AND (r.hidden <>'1' OR r.hidden IS NULL)
 		GROUP BY ecr.role
 		ORDER BY `".$sort."` `".$sortorder."`";
 // calculate the limit
