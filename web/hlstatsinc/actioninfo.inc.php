@@ -140,7 +140,7 @@ if(!empty($totalact)) {
 			AND epa.actionId = a.id
 			AND p.hideranking <> '1'
 		GROUP BY epa.playerId
-		ORDER BY `".$sort."` `".$sortorder."`";
+		ORDER BY ".$sort." ".$sortorder."";
 
 	// calculate the limit
 	if($page === 1) {

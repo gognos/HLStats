@@ -77,7 +77,7 @@ $queryStr = "SELECT IFNULL(t.name, ect.team) AS name,
 			AND s.game = '".mysql_real_escape_string($game)."'
 			AND (s.hidden <>'1' OR s.hidden IS NULL)
 		GROUP BY ect.team
-		ORDER BY `".$sort."` `".$sortorder."`";
+		ORDER BY ".$sort." ".$sortorder."";
 
 $query = mysql_query($queryStr);
 if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());

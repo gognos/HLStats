@@ -102,7 +102,7 @@ $queryStr .= " UNION ALL
 		FROM `".DB_PREFIX."_Events_Admin` AS ea
 		LEFT JOIN ".DB_PREFIX."_Servers ON ".DB_PREFIX."_Servers.serverId = ea.serverId";
 
-$queryStr .= " ORDER BY `".$sort."` `".$sortorder."`";
+$queryStr .= " ORDER BY ".$sort." ".$sortorder."";
 
 // calculate the limit
 if($page === 1) {

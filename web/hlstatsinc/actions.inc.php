@@ -108,7 +108,7 @@ if(!empty($totalactions)) {
 		AND a.game = '".mysql_real_escape_string($game)."'
 		AND p.hideranking = 0
 	GROUP BY a.id
-	ORDER BY `".$sort."` `".$sortorder."`";
+	ORDER BY ".$sort." ".$sortorder."";
 
 	// calculate the limit
 	if($page === 1) {

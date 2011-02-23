@@ -98,8 +98,8 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 		SUM(p.deaths) AS deaths,
 		ROUND(AVG(p.skill)) AS skill,
 		IFNULL(SUM(p.kills) / SUM(p.deaths), 0) AS kpd
-	FROM ".DB_PREFIX."_Clans AS c
-	LEFT JOIN ".DB_PREFIX."_Players AS p
+	FROM `".DB_PREFIX."_Clans` AS c
+	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.clan = c.clanId
 	WHERE c.game = '".mysql_real_escape_string($game)."'
 		AND p.hideranking = 0
@@ -107,7 +107,7 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 if(!empty($minmembers)) {
 	$queryStr .= " HAVING nummembers >= ".mysql_real_escape_string($minmembers);
 }
-	$queryStr .= " ORDER BY `".$sort."` `".$sortorder."`";
+	$queryStr .= " ORDER BY ".$sort." ".$sortorder."";
 
 // calculate the limit
 if($page === 1) {

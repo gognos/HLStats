@@ -121,7 +121,7 @@ if(!empty($totalkills)) {
 		AND p.game = '".mysql_real_escape_string($game)."'
 		AND p.hideranking = 0
 	GROUP BY ef.killerId
-	ORDER BY `".$sort."` `".$sortorder."`";
+	ORDER BY ".$sort." ".$sortorder."";
 
 	// calculate the limit
 	if($page === 1) {

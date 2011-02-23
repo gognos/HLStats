@@ -85,7 +85,7 @@ $queryStr = "SELECT IFNULL(r.name, ecr.role) AS name,
 			AND s.game = '".mysql_real_escape_string($game)."'
 			AND (r.hidden <>'1' OR r.hidden IS NULL)
 		GROUP BY ecr.role
-		ORDER BY `".$sort."` `".$sortorder."`";
+		ORDER BY ".$sort." ".$sortorder."";
 // calculate the limit
 if($page === 1) {
 	$queryStr .=" LIMIT 0,50";
