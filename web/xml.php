@@ -89,20 +89,22 @@ if($g_options['allowXML'] == "1") {
 	switch ($_GET['mode']) {
 		/**
 		 * return only the top 10 players for given gameCode
+		 * BOTs are ignored
 		 */
 		case 'playerlist':
 			$gameCode = sanitize($_GET['gameCode']);
 			if(!empty($gameCode) && validateInput($gameCode,'nospace')) {
 				$query = mysql_query("SELECT
-			    			t1.playerId,lastName,skill
-			    		FROM
-			    			hlstats_Players as t1 INNER JOIN hlstats_PlayerUniqueIds as t2
+			    			t1.playerId,
+							t1.lastName,
+							t1.skill
+			    		FROM `".DB_PREFIX."_Players` as t1 
+						INNER JOIN `".DB_PREFIX."`_PlayerUniqueIds` as t2
 			    			ON t1.playerId = t2.playerId
-			    		WHERE
-			    			t1.game='".mysql_real_escape_string($gameCode)."'
+			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
 			    			AND t2.uniqueId not like 'BOT:%'
-			    		ORDER BY skill DESC
+			    		ORDER BY t1.skill DESC
 			    		LIMIT 10");
 				$xmlBody = "<players info='top 10 playerlist'>";
 				while ($playerData = mysql_fetch_assoc($query)) {
@@ -123,14 +125,13 @@ if($g_options['allowXML'] == "1") {
 		case 'worldstats':
 			$gameCode = sanitize($_GET['gameCode']);
 			if(!empty($gameCode) && validateInput($gameCode,'nospace')) {
-				$query = "SELECT
-			    			t1.playerId,lastName,skill
-			    		FROM
-			    			hlstats_Players as t1 INNER JOIN hlstats_PlayerUniqueIds as t2
+				$query = "SELECT t1.playerId,
+							t1.lastName, t1.skill
+			    		FROM `".DB_PREFIX."_Players` as t1 
+						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` as t2
 			    			ON t1.playerId = t2.playerId
-			    		WHERE
-			    			t1.game='".mysql_real_escape_string($gameCode)."'
-			    			AND t1.hideranking=0
+			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'
+			    			AND t1.hideranking = 0
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY skill DESC
 			    		LIMIT 10";
@@ -156,15 +157,11 @@ if($g_options['allowXML'] == "1") {
 							s.game,
 							s.rcon_password,
 							g.name gamename
-						FROM
-							hlstats_Servers s
-						LEFT JOIN
-							hlstats_Games g
-						ON
-							s.game=g.code
-						WHERE
-							serverId=".mysql_real_escape_string($serverId)."
-							");
+						FROM `".DB_PREFIX."_Servers` AS s
+						LEFT JOIN `".DB_PREFIX."_Games` AS g
+							ON s.game = g.code
+						WHERE s.serverId = ".mysql_real_escape_string($serverId)."
+				");
 				if (mysql_num_rows($query) === 1) {
 					// get the server data
 					$serverData = mysql_fetch_assoc($query);
