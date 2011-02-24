@@ -83,6 +83,7 @@ if(!isset($_GET['gameCode'])) {
 	$_GET['gameCode'] = false;
 }
 
+$xmlBody = '';
 // check if we are allowed to use this feature
 if($g_options['allowXML'] == "1") {
 	// we are allowed to return some xml data
@@ -125,16 +126,32 @@ if($g_options['allowXML'] == "1") {
 		case 'worldstats':
 			$gameCode = sanitize($_GET['gameCode']);
 			if(!empty($gameCode) && validateInput($gameCode,'nospace')) {
-				$query = "SELECT t1.playerId,
-							t1.lastName, t1.skill
+				$query = mysql_query("SELECT t1.playerId,
+							t1.lastName, t1.skill,
+							t1.oldSkill,
+							t2.uniqueId
 			    		FROM `".DB_PREFIX."_Players` as t1 
 						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'
 			    			AND t1.hideranking = 0
 			    			AND t2.uniqueId not like 'BOT:%'
-			    		ORDER BY skill DESC
-			    		LIMIT 10";
+			    		ORDER BY t1.skill DESC
+			    		LIMIT 100");
+				$xmlBody = "<players info='Worldstats playerlist'>";
+				while ($playerData = mysql_fetch_assoc($query)) {
+					$xmlBody .= "<player>";
+					$xmlBody .= "<name><![CDATA[".htmlentities($playerData['lastName'],ENT_COMPAT,"UTF-8")."]]></name>";
+					$xmlBody .= "<skill>".$playerData['skill']."</skill>";
+					$xmlBody .= "<oldSkill>".$playerData['oldSkill']."</oldSkill>";
+					$xmlBody .= "<profile><![CDATA[".$hlsUrl."index.php?mode=playerinfo&player=".$playerData['playerId']."]]></profile>";
+					$xmlBody .= "<uniqeId>".$playerData['uniqueId']."</uniqeId>";
+					$xmlBody .= "</player>";
+				}
+				$xmlBody .= "</players>";
+			}
+			else {
+				$xmlBody = "<message>No game code given.</message>";
 			}
 		break;
 
