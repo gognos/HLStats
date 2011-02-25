@@ -84,8 +84,38 @@ foreach (@xmlFiles) {
 	my $doc = $parser->parse_file($_);
 
 	foreach my $player ($doc->findnodes('/root/players/player')) {
-		my($pName) = $player->findnodes('./name');
-		print $pName->textContent()."\n" 
-	}
+		my $pName = $player->findnodes('./name');
+		my $pCountry = $player->findnodes('./country');
+		my $pProfile = $player->findnodes('./profile');
+		my $pDeaths = $player->findnodes('./deaths');
+		my $pCountryCode = $player->findnodes('./countryCode');
+		my $pSkill = $player->findnodes('./skill');
+		my $pOldSkill = $player->findnodes('./oldSkill');
+		my $pKills = $player->findnodes('./kills');
+		my $pLastConnect = $player->findnodes('./lastConnect');
+		my $pUniqueId = $player->findnodes('./uniqueId');
 
+		# build the query string
+		my $queryStr = "INSERT INTO `playerDataTable` 
+			(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect)
+			VALUES (
+				'".$pUniqueId."', '".$pName."','".$pProfile."','".$pCountry."','".$pCountryCode."',
+				'".$pSkill."','".$pOldSkill."','".$pKills."','".$pDeaths."','".$pLastConnect."'
+			)
+			ON DUPLICATE KEY UPDATE
+				name = VALUES(name), 
+				profile = VALUES(profile),
+				country = VALUES(country),
+				countryCode = VALUES(countryCode),
+				skill = VALUES(skill),
+				oldSkill = VALUES(oldSkill),
+				kills = VALUES(kills),
+				deaths = VALUES(deaths),
+				lastConnect = VALUES(lastConnect)
+		";
+
+		print $queryStr."\n";
+	}
 }
+
+# end of file
