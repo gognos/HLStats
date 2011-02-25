@@ -407,6 +407,8 @@ News has been deleted = Nachricht wurde gelöscht
 Here you can write and edit the news which are displayed at the front page = Hier kann man die News auf der Startseite erstellen und bearbeiten
 E-Mail = E-Mail
 Save = Speichern
+Do you want to delete the following news item ? = Wollen Sie den folgenden News Eintrag löschen ?
+News item deleted = News Eintrag gelöscht
 
 You can enter a player or clan ID number directly, or you can search for a player or clan = Geben Sie eine Spieler oder Clan ID ein, oder suchen sich danach
 Jump Direct = Springe direkt
