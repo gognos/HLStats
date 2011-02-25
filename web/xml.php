@@ -66,6 +66,8 @@ require("hlstatsinc/functions.inc.php");
 // deb class and options
 $db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS);
 $db_sel = mysql_select_db(DB_NAME,$db_con);
+mysql_query("SET NAMES utf8");
+mysql_query("SET collation_connection = 'utf8_unicode_ci'");
 
 // get the hlstats options
 $g_options = getOptions();
@@ -109,7 +111,8 @@ if($g_options['allowXML'] == "1") {
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY t1.skill DESC
 			    		LIMIT 10");
-				$xmlBody = "<players info='top 10 playerlist'>";
+				$xmlBody = "<message>Top 10 player list</message>";
+				$xmlBody .= "<players>";
 				while ($playerData = mysql_fetch_assoc($query)) {
 					$xmlBody .="<player>";
 					$xmlBody .="<name><![CDATA[".htmlentities($playerData['lastName'],ENT_COMPAT,"UTF-8")."]]></name>";
@@ -148,7 +151,9 @@ if($g_options['allowXML'] == "1") {
 						GROUP BY ec.playerId
 			    		ORDER BY p.skill DESC
 			    		LIMIT 100");
-				$xmlBody = "<players info='Worldstats playerlist'>";
+
+				$xmlBody = "<message>Top 100 player worldstats list</message>";
+				$xmlBody .= "<players>";
 				while ($playerData = mysql_fetch_assoc($query)) {
 					$xmlBody .= "<player>";
 					$xmlBody .= "<name><![CDATA[".htmlentities($playerData['lastName'],ENT_COMPAT,"UTF-8")."]]></name>";
@@ -198,7 +203,8 @@ if($g_options['allowXML'] == "1") {
 					// get the server data
 					$serverData = mysql_fetch_assoc($query);
 
-					$xmlBody = "<server>";
+					$xmlBody = "<message>Server Information</message>";
+					$xmlBody .= "<server>";
 					$xmlBody .= "<name>".$serverData['name']."</name>";
 					$xmlBody .= "<ip>".$serverData['address']."</ip>";
 					$xmlBody .= "<port>".$serverData['port']."</port>";
@@ -346,6 +352,6 @@ $xmlReturn .= '</root>'."\n";
 header("Pragma: ");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 header("Cache-Control: ");
-header('Content-type: text/xml');
+header('Content-type: text/xml; charset=UTF-8');
 echo $xmlReturn;
 ?>

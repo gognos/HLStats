@@ -1,1 +1,1 @@
-http://www.bananas-development-server.de/hlstats-demo/web/xml.php?mode=worldstats&gamecode=css|bananas-development-server
+http://localhost/code/HLStats/web/xml.php?mode=worldstats&gameCode=css|localhost-test
