@@ -83,7 +83,9 @@ if(!isset($_GET['gameCode'])) {
 	$_GET['gameCode'] = false;
 }
 
-$xmlBody = '';
+// this will also return if nothing works or the parameter are wrong
+$xmlBody = "<message>Service not available.</message>";
+
 // check if we are allowed to use this feature
 if($g_options['allowXML'] == "1") {
 	// we are allowed to return some xml data
@@ -123,20 +125,28 @@ if($g_options['allowXML'] == "1") {
 
 		break;
 
+		/**
+		 * get the information about the top 100 players to be included in the worldstats
+		 * currently only working if MODE = Normal
+		 * which means that only STEAM_IDs are working....
+		 */
 		case 'worldstats':
 			$gameCode = sanitize($_GET['gameCode']);
-			if(!empty($gameCode) && validateInput($gameCode,'nospace')) {
-				$query = mysql_query("SELECT t1.playerId,
-							t1.lastName, t1.skill,
-							t1.oldSkill,
-							t2.uniqueId
-			    		FROM `".DB_PREFIX."_Players` as t1 
-						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` as t2
-			    			ON t1.playerId = t2.playerId
-			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'
-			    			AND t1.hideranking = 0
-			    			AND t2.uniqueId not like 'BOT:%'
-			    		ORDER BY t1.skill DESC
+			if(!empty($gameCode) && validateInput($gameCode,'nospace') && $g_options['MODE'] === "Normal") {
+				$query = mysql_query("SELECT p.playerId, p.lastName, p.skill,
+									p.oldSkill, p.kills, p.deaths,
+									pu.uniqueId,
+									ec.country, ec.countryCode, MAX(ec.eventTime) AS lastConnect
+			    		FROM `".DB_PREFIX."_Players` AS p
+						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` AS pu
+			    			ON p.playerId = pu.playerId
+						INNER JOIN `".DB_PREFIX."_Events_Connects` AS ec
+							ON ec.playerId = p.playerId
+			    		WHERE p.game = '".mysql_real_escape_string($gameCode)."'
+			    			AND p.hideranking = 0
+			    			AND pu.uniqueId not like 'BOT:%'
+						GROUP BY ec.playerId
+			    		ORDER BY p.skill DESC
 			    		LIMIT 100");
 				$xmlBody = "<players info='Worldstats playerlist'>";
 				while ($playerData = mysql_fetch_assoc($query)) {
@@ -146,6 +156,11 @@ if($g_options['allowXML'] == "1") {
 					$xmlBody .= "<oldSkill>".$playerData['oldSkill']."</oldSkill>";
 					$xmlBody .= "<profile><![CDATA[".$hlsUrl."index.php?mode=playerinfo&player=".$playerData['playerId']."]]></profile>";
 					$xmlBody .= "<uniqeId>".$playerData['uniqueId']."</uniqeId>";
+					$xmlBody .= "<kills>".$playerData['kills']."</kils>";
+					$xmlBody .= "<deaths>".$playerData['deaths']."</deaths>";
+					$xmlBody .= "<country>".$playerData['country']."</country>";
+					$xmlBody .= "<countryCode>".$playerData['countryCode']."</countryCode>";
+					$xmlBody .= "<lastConnect>".$playerData['lastConnect']."</lastConnect>";
 					$xmlBody .= "</player>";
 				}
 				$xmlBody .= "</players>";
@@ -320,15 +335,12 @@ if($g_options['allowXML'] == "1") {
 			}
 	}
 }
-else {
-	$xmlBody = "<message>Service not available.</message>";
-}
 
 // prepare the xml data
 $xmlReturn = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
 $xmlReturn .= '<root>';
 $xmlReturn .= $xmlBody;
-$xmlReturn .= '</root>';
+$xmlReturn .= '</root>'."\n";
 
 // return the xml data
 header("Pragma: ");
