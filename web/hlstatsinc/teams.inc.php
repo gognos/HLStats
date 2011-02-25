@@ -75,7 +75,7 @@ $queryStr = "SELECT IFNULL(t.name, ect.team) AS name,
 			ON s.serverId = ect.serverId
 		WHERE t.game = '".mysql_real_escape_string($game)."'
 			AND s.game = '".mysql_real_escape_string($game)."'
-			AND (s.hidden <>'1' OR s.hidden IS NULL)
+			AND (t.hidden <>'1' OR t.hidden IS NULL)
 		GROUP BY ect.team
 		ORDER BY ".$sort." ".$sortorder."";
 
