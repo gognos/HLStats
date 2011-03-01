@@ -70,11 +70,13 @@ open URLHANDLE, "<", "./urls.list" or die $!;
 my $ua = LWP::UserAgent->new;
 while (<URLHANDLE>) {
 	print $_."\n" if $DEBUG;
+	
 	my @data = split(/\|/);
-	my $uri = $data[0];
-	my $siteName = $data[1];
+	my $uri = trim($data[0]);
+	my $siteName = trim($data[1]);
 
-	print $uri."\n";
+	print $uri."\n" if $DEBUG;
+	print $siteName."\n" if $DEBUG;
 
 	my $request = HTTP::Request->new( GET => $uri);
 	print "Requesting...\n" if $DEBUG;
@@ -177,6 +179,14 @@ sub doQuery {
 		or die("Unable to execute query:\n$query\n$DBI::errstr\n$callref");
 
 	return $result;
+}
+
+# remove whitespace
+sub trim() {
+	my $string = shift;
+	$string =~ s/^\s+//;
+	$string =~ s/\s+$//;
+	return $string;
 }
 
 # end of file
