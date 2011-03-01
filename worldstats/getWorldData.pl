@@ -147,7 +147,6 @@ foreach (@xmlFiles) {
 		
 		# do the query
 		my $result = doQuery($queryStr);
-		$result->finish;
 	}
 }
 
