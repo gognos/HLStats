@@ -39,6 +39,8 @@ use Encode;
 use open qw( :std :encoding(UTF-8) );
 use HTTP::Request;
 use LWP::UserAgent;
+use DBI;
+use Config::Tiny;
 
 use Data::Dumper; #debug
 
@@ -47,6 +49,21 @@ use Data::Dumper; #debug
 # missing modules !
 use lib "./lib";
 use XML::LibXML;
+
+## load config with config-tiny module
+my $Config = Config::Tiny->read("./worldstats.conf.ini");
+if($Config::Tiny::errstr ne '') {
+	print "Error in config file. Please compare with example file !\n";
+	print $Config::Tiny::errstr;
+	print "\n";
+	exit(0)
+}
+my $db_name = $Config->{Database}->{DBName};
+my $db_host = $Config->{Database}->{DBHost};
+my $db_user = $Config->{Database}->{DBUsername};
+my $db_pass = $Config->{Database}->{DBPassword};
+my $db_prefix = $Config->{Database}->{DBPrefix};
+
 
 if(!$dry_run) {
 open URLHANDLE, "<", "./urls.list" or die $!;
@@ -74,6 +91,15 @@ while (<URLHANDLE>) {
 close URLHANDLE;
 }
 
+# db connection
+my $db = DBI->connect(
+	"DBI:mysql:$db_name:$db_host",
+	$db_user, $db_pass, { 'RaiseError' => 1, 'mysql_enable_utf8' => 1, 'mysql_auto_reconnect' => 1,
+			'ShowErrorStatement' => 1 }
+) or die ("\nCan't connect to MySQL database");
+doQuery("SET character set utf8");
+doQuery("SET NAMES utf8");
+
 # read the xml data and write it into the db
 print "Parsing xml files...\n" if $DEBUG;
 my @xmlFiles = <./xmlData/*>;
@@ -96,11 +122,13 @@ foreach (@xmlFiles) {
 		my $pUniqueId = $player->findnodes('./uniqueId');
 
 		# build the query string
-		my $queryStr = "INSERT INTO `playerDataTable` 
+		my $queryStr = "INSERT INTO `".$db_prefix."_playerDataTable` 
 			(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect)
 			VALUES (
-				'".$pUniqueId."', '".$pName."','".$pProfile."','".$pCountry."','".$pCountryCode."',
-				'".$pSkill."','".$pOldSkill."','".$pKills."','".$pDeaths."','".$pLastConnect."'
+				".$db->quote($pUniqueId).", ".$db->quote($pName).", ".$db->quote($pProfile).",
+				".$db->quote($pCountry).", ".$db->quote($pCountryCode).",
+				".$db->quote($pSkill).", ".$db->quote($pOldSkill).", ".$db->quote($pKills).",
+				".$db->quote($pDeaths).", ".$db->quote($pLastConnect)."
 			)
 			ON DUPLICATE KEY UPDATE
 				name = VALUES(name), 
@@ -111,11 +139,45 @@ foreach (@xmlFiles) {
 				oldSkill = VALUES(oldSkill),
 				kills = VALUES(kills),
 				deaths = VALUES(deaths),
-				lastConnect = VALUES(lastConnect)
+				lastConnect = VALUES(lastConnect),
+				lastUpdate = CURRENT_TIMESTAMP()
 		";
 
-		print $queryStr."\n";
+		print $queryStr."\n" if $DEBUG;
+		
+		# do the query
+		my $result = doQuery($queryStr);
+		$result->finish;
 	}
+}
+
+## sub
+
+# run sql queries
+sub doQuery {
+	
+	my ($query, $callref) = @_;
+
+	if(!$db)  {
+		$db ||= DBI->connect("DBI:mysql:$db_name:$db_host",$db_user, $db_pass,
+				{ 'RaiseError' => 1, 'mysql_enable_utf8' => 1, 'mysql_auto_reconnect' => 1,
+					'ShowErrorStatement' => 1})
+			or die("Unable to connect to MySQL server");
+
+		my $rs = $db->prepare("SET character set utf8");
+		$rs->execute;
+
+		my $rs = $db->prepare("SET NAMES utf8");
+		$rs->execute;
+	}
+
+
+	my $result = $db->prepare($query)
+		or die("Unable to prepare query:\n$query\n$DBI::errstr\n$callref");
+	$result->execute
+		or die("Unable to execute query:\n$query\n$DBI::errstr\n$callref");
+
+	return $result;
 }
 
 # end of file

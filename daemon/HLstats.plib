@@ -70,7 +70,7 @@ sub doQuery
 	# fix for "mysql Server has gone away"
 	if(!$db_conn)  {
 		$db_conn ||= DBI->connect("DBI:mysql:$db_name:$db_host",$db_user, $db_pass,
-				{ 'RaiseError' => 'mysql_enable_utf8' => 1, 'mysql_auto_reconnect' => 1,
+				{ 'RaiseError' => 1, 'mysql_enable_utf8' => 1, 'mysql_auto_reconnect' => 1,
 					'ShowErrorStatement' => 1})
 			or die("Unable to connect to MySQL server");
 

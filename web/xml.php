@@ -160,7 +160,7 @@ if($g_options['allowXML'] == "1") {
 					$xmlBody .= "<skill>".$playerData['skill']."</skill>";
 					$xmlBody .= "<oldSkill>".$playerData['oldSkill']."</oldSkill>";
 					$xmlBody .= "<profile><![CDATA[".$hlsUrl."index.php?mode=playerinfo&player=".$playerData['playerId']."]]></profile>";
-					$xmlBody .= "<uniqeId>".$playerData['uniqueId']."</uniqeId>";
+					$xmlBody .= "<uniqueId>".$playerData['uniqueId']."</uniqueId>";
 					$xmlBody .= "<kills>".$playerData['kills']."</kills>";
 					$xmlBody .= "<deaths>".$playerData['deaths']."</deaths>";
 					$xmlBody .= "<country>".$playerData['country']."</country>";
