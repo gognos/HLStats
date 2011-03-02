@@ -165,7 +165,8 @@ $rcol = "row-dark";
 					}
 					else {
 						echo "<b>".$playerObj->getParam('rankPoints')."</b> ";
-						echo "(".l('ordered by Points').")";
+						echo "(".l('ordered by Points').")<br />";
+						echo "(<a href='index.php?mode=players&game=".$game."&showall=1'>".l('from all players')."</a>)";
 					}
 					
 				?>

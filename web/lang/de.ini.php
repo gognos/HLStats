@@ -434,6 +434,7 @@ Last Connect = Letzte Verbindung
 Total Connection Time = Gesamte Zeit online
 Average Ping = Durchschnittlicher Ping
 ordered by Points = Sortiert nach Punkten
+from all players = von allen Spielern
 Suicides = Selbstmord
 Teammate Kills = Teamkills
 Weapon Accuracy = Waffengenauigkeit
