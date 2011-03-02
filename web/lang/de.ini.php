@@ -124,6 +124,7 @@ Role Statistics = Rollen Statistik
 Weapon Statistics = Waffen Statistiken
 Action Statistics = Aktion Statistiken
 Map Statistics = Map Statistiken
+Country Statistics = Länder Statistik
 Awards History = Auszeichnungen Historie
 Weapon = Waffe
 Points Modifier = Modifikator

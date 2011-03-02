@@ -110,6 +110,11 @@ pageHeader(array($gamename), array($gamename=>""));
 			<li>
 				<a href="<?php echo "index.php?mode=maps&amp;game=$game"; ?>"><?php echo l('Map Statistics'); ?></a>
 			</li>
+			<?php if (!$g_options['USEGEOIP']) { ?>
+			<li>
+				<a href="<?php echo "index.php?mode=country&amp;game=$game"; ?>"><?php echo l('Country Statistics'); ?></a>
+			</li>
+			<?php } ?>
 			<?php if (!$g_options['hideAwards'] && !empty($awarddata_arr)) { ?>
 			<li>
 				<a href="<?php echo "index.php?mode=awards&amp;game=$game"; ?>"><?php echo l('Awards History'); ?></a>

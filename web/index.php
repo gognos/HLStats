@@ -153,7 +153,8 @@ $modes = array(
 	"playerchathistory",
 	"teams",
 	"roles",
-	"awards"
+	"awards",
+	"country"
 );
 
 $mode = '';
