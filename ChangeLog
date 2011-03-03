@@ -15,6 +15,7 @@ HLStats ChangeLog
 *) Fixed: Ticket #28
 *) Fixed: Improved Opposing Force gamesupport ( thx to h3rbert )
 *) Fixed: Weapon mix up now in oposing force now fixed ( thx to h3rbert )
+*) Fixed: FS#33 Old Chart images were not removed.
 
 
 1.60 (2011-02-10)
