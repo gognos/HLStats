@@ -84,7 +84,7 @@ pageHeader(array(l("Admin")), array(l("Admin")=>""));
 				foreach($gameList as $g) {
 			?>
 				<li>
-					<a href="index.php?mode=admin&task=gameoverview&code=<?php echo $g['code']; ?>"><?php echo $g['name']; ?></a>
+					<a href="index.php?mode=admin&amp;task=gameoverview&amp;code=<?php echo $g['code']; ?>"><?php echo $g['name']; ?></a>
 				</li>
 			<?php
 				}
@@ -101,28 +101,32 @@ pageHeader(array(l("Admin")), array(l("Admin")=>""));
 	<h2><?php echo l('Tools'); ?></h2>
 	<ul>
 		<li>
-			<a href="index.php?mode=admin&task=toolsEditdetails"><?php echo l('Edit Player or Clan Details'); ?></a><br />
+			<a href="index.php?mode=admin&amp;task=toolsEditdetails"><?php echo l('Edit Player or Clan Details'); ?></a><br />
 			<span class="small"><?php echo l("Edit a player or clan's profile information."); ?></span>
 		</li>
 		<li>
-			<a href="index.php?mode=admin&task=toolsAdminevents"><?php echo l('Admin-Event History'); ?></a><br />
+			<a href="index.php?mode=admin&amp;task=toolsAdminevents"><?php echo l('Admin-Event History'); ?></a><br />
 			<span class="small"><?php echo l("View event history of logged Rcon commands and Admin Mod messages."); ?></span>
 		</li>
 		<li>
-			<a href="index.php?mode=admin&task=toolsIpstats"><?php echo l('Host Statistics'); ?></a><br />
+			<a href="index.php?mode=admin&amp;task=toolsIpstats"><?php echo l('Host Statistics'); ?></a><br />
 			<span class="small"><?php echo l("See which ISPs your players are using."); ?></span>
 		</li>
 		<li>
-			<a href="index.php?mode=admin&task=toolsOptimize"><?php echo l('Optimize Database'); ?></a><br />
+			<a href="index.php?mode=admin&amp;task=toolsOptimize"><?php echo l('Optimize Database'); ?></a><br />
 			<span class="small"><?php echo l("This operation tells the MySQL server to clean up the database tables, optimizing them for better performance. It is recommended that you run this at least once a month."); ?></span>
 		</li>
 		<li>
-			<a href="index.php?mode=admin&task=toolsReset"><?php echo l('Reset Statistics'); ?></a><br />
+			<a href="index.php?mode=admin&amp;task=toolsReset"><?php echo l('Reset Statistics'); ?></a><br />
 			<span class="small"><?php echo l("Delete all players, clans and events from the database."); ?></span>
 		</li>
 		<li>
-			<a href="index.php?mode=admin&task=toolsNews"><?php echo l('News at Front page'); ?></a><br />
+			<a href="index.php?mode=admin&amp;task=toolsNews"><?php echo l('News at Front page'); ?></a><br />
 			<span class="small"><?php echo l("Write news to the front page."); ?></span>
+		</li>
+		<li>
+			<a href="index.php?mode=admin&amp;task=toolsSigClear"><?php echo l('Signature cleanup'); ?></a><br />
+			<span class="small"><?php echo l("Remove old signatures."); ?></span>
 		</li>
 	</ul>
 </div>

@@ -166,8 +166,7 @@ class Chart {
 
 		// check if we have already a picture
 		// create one only once a day
-		if(file_exists($this->_option['chartFile'])
-			&& SHOW_DEBUG === false) {
+		if(file_exists($this->_option['chartFile']) && SHOW_DEBUG === false) {
 			$chart = $this->_option['chartFile'];
 		}
 		else {
@@ -440,7 +439,7 @@ class Chart {
 	 * @return void
 	 */
 	private function _cleanOldCharts($name) {
-		$data = glob('tmp/'.$name.'/*');
+		$data = glob('tmp/'.$name.'*');
 		if(!empty($data)) {
 			foreach($data as $c) {
 				unlink($c);

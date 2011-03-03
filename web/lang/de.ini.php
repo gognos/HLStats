@@ -193,7 +193,6 @@ Edit Player or Clan Details = Spieler oder Clan Details bearbeiten
 Edit a player or clan's profile information. = Das Profil eines Spielers oder Clans bearbeiten.
 Admin-Event History = Admin-Aktion Verlauf
 View event history of logged Rcon commands and Admin Mod messages. = Zeige den Verlauf der gespeicherten Rcon Befehle und Admin Nachrichten.
-Host Statistics = Host Statistiken
 See which ISPs your players are using. = Von welchem ISP kommen die Spieler ?
 Optimize Database = Datenbank optimieren
 This operation tells the MySQL server to clean up the database tables, optimizing them for better performance. It is recommended that you run this at least once a month. = Dies optimiert und räumt die MySQL Datenbank und deren Tabellen auf und ermöglicht somit einen schnelleren Zugriff. Dies sollte einmal pro Monat ausgeführt werden.
@@ -359,6 +358,7 @@ All players, clans and events will be deleted from the database = Alle Spieler,C
 (All other admin settings will be retained) = Alle anderen Einstellungen bleiben erhalten
 You should kill = Beenden Sie
 before resetting the stats. You can restart it after they are reset = bevor Sie die Stats zurücksetzten. Danach sollte man den daemon wieder starten
+before resetting the stats. = bevor Sie die Stats zurücksetzten.
 
 Action Code = Aktion Code
 Player Action = Spieler Aktion
@@ -629,7 +629,6 @@ Size: 400x100 png with transparent background = Größe: 400x100 png mit transpa
 
 Event History = Aktion Verlauf
 Host Statistics = Host Statistiken
-Optimize Database = Datenbank optimieren
 if you get "table handler does not support check/repair" = wenn die Meldung "table handler does not support check/repair" erscheint
 Optimizing tables... = Optimiere Tabellen...
 Analyzing tables... = Analysiere Tabellen...
@@ -664,3 +663,8 @@ Team Reward = Teamlohn
 Team Statistics = Team Statistiken
 Selected = Ausgewählt
 Teams for = Teams für
+
+Signature cleanup = Signaturen säubern
+Remove old signatures. = Lösche alte Signaturen.
+old signatures removed ! = alte Signaturen gelöscht !
+Nothing removed. = Nichts gelöscht.
