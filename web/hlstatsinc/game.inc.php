@@ -110,7 +110,7 @@ pageHeader(array($gamename), array($gamename=>""));
 			<li>
 				<a href="<?php echo "index.php?mode=maps&amp;game=$game"; ?>"><?php echo l('Map Statistics'); ?></a>
 			</li>
-			<?php if (!$g_options['USEGEOIP']) { ?>
+			<?php if ($g_options['USEGEOIP'] === "1") { ?>
 			<li>
 				<a href="<?php echo "index.php?mode=country&amp;game=$game"; ?>"><?php echo l('Country Statistics'); ?></a>
 			</li>
