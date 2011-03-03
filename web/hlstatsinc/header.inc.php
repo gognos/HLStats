@@ -59,6 +59,7 @@ if(!isset($_GET['mode'])) {
 		?>
 	</title>
 	<link rel="stylesheet" href="css/<?php echo $g_options['style']; ?>.css" type="text/css" media="screen" title="Stylesheet" charset="utf-8" />
+	<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
 </head>
 <body>
 <div id="wrap">
