@@ -61,7 +61,7 @@ pageHeader(array(l("Admin"),l('Signature cleanup')), array(l("Admin")=>"index.ph
 		$removeCount = 0;
 		if(!empty($allSig)) {
 			foreach($allSig as $s) {
-				$ct = filectime($filename);
+				$ct = filectime($s);
 				if($ct < $timeFrame) {
 					unlink($s);
 					$removeCountt++;
