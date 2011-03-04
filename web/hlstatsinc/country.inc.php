@@ -181,7 +181,7 @@ pageHeader(
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo '<img src="hlstatsimg/site/flag/'.$entry['countryCode'].'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
+				echo '<img src="hlstatsimg/site/flag/'.strtolower($entry['countryCode']).'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
 				echo '<a href="index.php?mode=countryInfo&amp;countryCode='.$entry['countryCode'].'&amp;game='.$game.'">'.$entry['country'].'</a>';
 				echo '</td>',"\n";
 

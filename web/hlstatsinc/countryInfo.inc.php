@@ -203,7 +203,7 @@ pageHeader(
 				echo '<tr>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo '<img src="hlstatsimg/site/flag/'.$entry['countryCode'].'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
+				echo '<img src="hlstatsimg/site/flag/'.strtolower($entry['countryCode']).'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
