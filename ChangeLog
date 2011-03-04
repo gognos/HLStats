@@ -183,7 +183,7 @@ HLStats ChangeLog
 *) Fixed: Edit Clan details, no id given ( ticket:  2166174)
 *) Fixed: Rcon shown up in live stats ( ticket: 2166174 and 2180315)
 *) Fixed: TF2 SQl cleanup ( ticket: 2190031 )
-*) Fixed: Ingame messages printed to many information ( ticket: 2222115 )
+*) Fixed: Ingame messages printed too many information ( ticket: 2222115 )
 *) Fixed: Possible bug ( ticket: 2224659 )
 *) Changed: Player Chat history on a separate page ( ticket: 2249905 )
 *) Changed: Live stats works again but only with limited features ( ticket: 2182620,2190025,2206898)
@@ -257,6 +257,7 @@ HLStats ChangeLog
 
 1.35a beta (released 2008-01-22) (beta release !)
 (see more Details at https://sourceforge.net/projects/hlstats/ )
+*) First release from hlstats-community.org team
 *) Fix: Bug 1831896
 *) Fix: Bug 1676870
 *) Fix: Bug 1548966
