@@ -39,6 +39,84 @@
  *
  */
 
+// the initial row color
+$rcol = "row-dark";
+
+// the players for the selected country
+$hostStats['data'] = array();
+$hostStats['pages'] = array();
+
+// the current page to display
+$page = 1;
+if (isset($_GET["page"])) {
+	$check = validateInput($_GET['page'],'digit');
+	if($check === true) {
+		$page = $_GET['page'];
+	}
+}
+
+// the current element to sort by for the query
+$sort = 'obj_count';
+if (isset($_GET["sort"])) {
+	$check = validateInput($_GET['sort'],'nospace');
+	if($check === true) {
+		$sort = $_GET['sort'];
+	}
+}
+
+// the default next sort order
+$newSort = "ASC";
+// the default sort order for the query
+$sortorder = 'DESC';
+if (isset($_GET["sortorder"])) {
+	$check = validateInput($_GET['sortorder'],'nospace');
+	if($check === true) {
+		$sortorder = $_GET['sortorder'];
+	}
+
+	if($_GET["sortorder"] == "ASC") {
+		$newSort = "DESC";
+	}
+}
+
+
+// query to get the data from the db with the given options
+$queryStr = "SELECT SQL_CALC_FOUND_ROWS
+			ec.country,	
+			ec.countryCode,
+			ec.ipAddress,
+			COUNT(ec.id) AS obj_count
+		FROM `".DB_PREFIX."_Events_Connects` AS ec
+		LEFT JOIN `".DB_PREFIX."_Servers` AS s
+			ON s.serverId = ec.serverId
+		GROUP BY ec.ipAddress
+		ORDER BY ".$sort." ".$sortorder."";
+
+// calculate the limit
+if($page === 1) {
+	$queryStr .=" LIMIT 0,50";
+}
+else {
+	$start = 50*($page-1);
+	$queryStr .=" LIMIT ".$start.",50";
+}
+
+$query = mysql_query($queryStr);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$hostStats['data'][] = $result;
+	}
+}
+mysql_freeresult($query);
+
+// query to get the total rows which would be fetched without the LIMIT
+// works only if the $queryStr has SQL_CALC_FOUND_ROWS
+$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
+$result = mysql_fetch_assoc($query);
+$hostStats['pages'] = (int)ceil($result['rows']/50);
+mysql_freeresult($query);
+
 pageHeader(array(l("Admin"),l('Host Statistics')), array(l("Admin")=>"index.php?mode=admin",l('Host Statistics')=>''));
 
 ?>
@@ -54,5 +132,80 @@ pageHeader(array(l("Admin"),l('Host Statistics')), array(l("Admin")=>"index.php?
 </div>
 <div id="main">
 	<h1><?php echo l('Host Statistics'); ?></h1>
-	<p><?php echo l('Currently disabled !'); ?></p>
+	<table cellpadding="0" cellspacing="0" border="1" width="100%">
+		<tr>
+			<th class="<?php echo $rcol; ?>">
+				<a href="index.php?<?php echo makeQueryString(array('sort'=>'countryCode','sortorder'=>$newSort)); ?>">
+					<?php echo l('Country'); ?>
+				</a>
+				<?php if($sort == "countryCode") { ?>
+				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
+				<?php } ?>
+			</th>
+			<th class="<?php echo $rcol; ?>">
+				<a href="index.php?<?php echo makeQueryString(array('sort'=>'ipAddress','sortorder'=>$newSort)); ?>">
+					<?php echo l('IP Address'); ?>
+				</a>
+				<?php if($sort == "ipAddress") { ?>
+				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
+				<?php } ?>
+			</th>
+			<th class="<?php echo $rcol; ?>">
+				<a href="index.php?<?php echo makeQueryString(array('sort'=>'obj_count','sortorder'=>$newSort)); ?>">
+					<?php echo l('Connects'); ?>
+				</a>
+				<?php if($sort == "obj_count") { ?>
+				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
+				<?php } ?>
+			</th>
+			
+		</tr>
+	<?php
+		if(!empty($hostStats['data'])) {
+			if($page > 1) {
+				$rank = ($page - 1) * (50 + 1);
+			}
+			else {
+				$rank = 1;
+			}
+			foreach($hostStats['data'] as $k=>$entry) {
+				toggleRowClass($rcol);
+
+				echo '<tr>',"\n";
+
+				echo '<td class="',$rcol,'">';
+				echo '<img src="hlstatsimg/site/flag/'.$entry['countryCode'].'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
+				echo '</td>',"\n";
+
+				echo '<td class="',$rcol,'">';
+				echo $entry['ipAddress'].'</a>';
+				echo '</td>',"\n";
+				
+				echo '<td class="',$rcol,'">';
+				echo $entry['obj_count'];
+				echo '</td>',"\n";
+
+				echo '</tr>';
+			}
+			echo '<tr><td colspan="4" align="right">';
+			if($hostStats['pages'] > 1) {
+				for($i=1;$i<=$hostStats['pages'];$i++) {
+					if($page == ($i)) {
+						echo "[",$i,"]";
+					}
+					else {
+						echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a> ";
+					}
+				}
+			}
+			else {
+				echo "[1]";
+			}
+			echo '</td></tr>';
+		}
+		else {
+			echo '<tr><td colspan="4">',l('No data recorded'),'</td></tr>';
+		}
+	?>
+	</table>
 </div>

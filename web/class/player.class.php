@@ -266,7 +266,7 @@ class Player {
 			WHERE
 				t.victimId=".mysql_real_escape_string($this->playerId)."
 		";
-		$queryStr .= " UNION ALL1
+		$queryStr .= " UNION ALL
 			SELECT '".l('Team Kill')."' AS eventType,
 				eventTime,
 				CONCAT('".l('I killed teammate')." <a href=\"index.php?mode=playerinfo&player=', victimId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>', ' ".l('with')." ', weapon) AS eventDesc,
@@ -284,7 +284,7 @@ class Player {
 			SELECT '".l('Friendly Fire')."' AS eventType,
 				eventTime,
 				CONCAT('".l('My teammate')." <a href=\"index.php?mode=playerinfo&player=', killerId, '\">', `".DB_PREFIX."_Players`.`lastName`, '</a>', ' ".l('killed me with')." ', weapon) AS eventDesc,
-				`".DB_PREFIX."_Servers`.name` AS serverName,
+				`".DB_PREFIX."_Servers`.`name` AS serverName,
 				map
 			FROM `".DB_PREFIX."_Events_Teamkills` AS t
 			LEFT JOIN `".DB_PREFIX."_Servers` ON

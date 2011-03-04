@@ -1,7 +1,7 @@
 <?php
 /**
  * country overview file
- * display the complete game country sorted by country count
+ * display the players for selected country
  * @package HLStats
  * @author Johannes 'Banana' Keßler
  * @copyright Johannes 'Banana' Keßler
@@ -43,9 +43,20 @@
 // the initial row color
 $rcol = "row-dark";
 
-// the country array which holds the data to display and the page count
-$country['data'] = array();
-$country['pages'] = array();
+// the players for the selected country
+$countryPlayers['data'] = array();
+$countryPlayers['pages'] = array();
+
+// the country identifier which is needed to load the data
+$countryCode = false;
+if(!empty($_GET["countryCode"])) {
+	if(validateInput($_GET["countryCode"],'nospace') === true) {
+		$countryCode = $_GET["countryCode"];
+	}
+	else {
+		die("No countryCode specified.");
+	}
+}
 
 // the current page to display
 $page = 1;
@@ -81,43 +92,47 @@ if (isset($_GET["sortorder"])) {
 }
 
 
-	// query to get the data from the db with the given options
-	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
-		ec.country,
-		ec.countryCode,
-		COUNT(ec.id) AS obj_count
-	FROM `".DB_PREFIX."_Events_Connects` AS ec
-	LEFT JOIN `".DB_PREFIX."_Servers` AS s
-		ON s.serverId = ec.serverId
-	WHERE s.game = '".mysql_real_escape_string($game)."'
-		AND ec.countryCode <> ''
-	GROUP BY ec.countryCode
-	ORDER BY ".$sort." ".$sortorder."";
+// query to get the data from the db with the given options
+$queryStr = "SELECT SQL_CALC_FOUND_ROWS
+			ec.country,	
+			ec.countryCode,
+			p.playerId AS playerId,
+			p.lastName AS name,
+			COUNT(ec.id) AS obj_count
+		FROM `".DB_PREFIX."_Events_Connects` AS ec
+		LEFT JOIN `".DB_PREFIX."_Servers` AS s
+			ON s.serverId = ec.serverId
+		LEFT JOIN `".DB_PREFIX."_Players` AS p
+			ON p.playerId = ec.playerId
+		WHERE s.game = '".mysql_real_escape_string($game)."'
+			AND ec.countryCode = '".mysql_real_escape_string($countryCode)."'
+		GROUP BY p.playerId
+		ORDER BY ".$sort." ".$sortorder."";
 
-	// calculate the limit
-	if($page === 1) {
-		$queryStr .=" LIMIT 0,50";
-	}
-	else {
-		$start = 50*($page-1);
-		$queryStr .=" LIMIT ".$start.",50";
-	}
+// calculate the limit
+if($page === 1) {
+	$queryStr .=" LIMIT 0,50";
+}
+else {
+	$start = 50*($page-1);
+	$queryStr .=" LIMIT ".$start.",50";
+}
 
-	$query = mysql_query($queryStr);
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
-			$country['data'][] = $result;
-		}
+$query = mysql_query($queryStr);
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+if(mysql_num_rows($query) > 0) {
+	while($result = mysql_fetch_assoc($query)) {
+		$countryPlayers['data'][] = $result;
 	}
-	mysql_freeresult($query);
+}
+mysql_freeresult($query);
 
-	// query to get the total rows which would be fetched without the LIMIT
-	// works only if the $queryStr has SQL_CALC_FOUND_ROWS
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
-	$country['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+// query to get the total rows which would be fetched without the LIMIT
+// works only if the $queryStr has SQL_CALC_FOUND_ROWS
+$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
+$result = mysql_fetch_assoc($query);
+$countryPlayers['pages'] = (int)ceil($result['rows']/50);
+mysql_freeresult($query);
 
 pageHeader(
 	array($gamename, l("Country Statistics")),
@@ -143,14 +158,24 @@ pageHeader(
 		<?php echo l("Country Statistics"); ?> 
 		( <?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?> )
 	</h1>
+	<p>
+		<?php echo l('This information is based on the connect event. The connect event information is not accurate. It can happen that one game connect can have multiple log entries. Take those numbers only as reference.'); ?>
+	</p>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
-			<th class="<?php echo $rcol; ?>"><?php echo l('Rank'); ?></th>
 			<th class="<?php echo $rcol; ?>">
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'countryCode','sortorder'=>$newSort)); ?>">
 					<?php echo l('Country'); ?>
 				</a>
 				<?php if($sort == "countryCode") { ?>
+				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
+				<?php } ?>
+			</th>
+			<th class="<?php echo $rcol; ?>">
+				<a href="index.php?<?php echo makeQueryString(array('sort'=>'name','sortorder'=>$newSort)); ?>">
+					<?php echo l('Player'); ?>
+				</a>
+				<?php if($sort == "name") { ?>
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
@@ -162,29 +187,29 @@ pageHeader(
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
+			
 		</tr>
 	<?php
-		if(!empty($country['data'])) {
+		if(!empty($countryPlayers['data'])) {
 			if($page > 1) {
 				$rank = ($page - 1) * (50 + 1);
 			}
 			else {
 				$rank = 1;
 			}
-			foreach($country['data'] as $k=>$entry) {
+			foreach($countryPlayers['data'] as $k=>$entry) {
 				toggleRowClass($rcol);
 
 				echo '<tr>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo $rank+$k;
+				echo '<img src="hlstatsimg/site/flag/'.$entry['countryCode'].'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
 				echo '</td>',"\n";
 
 				echo '<td class="',$rcol,'">';
-				echo '<img src="hlstatsimg/site/flag/'.$entry['countryCode'].'.png" alt="'.$entry['country'].'" title="'.$entry['country'].'" />&nbsp;';
-				echo '<a href="index.php?mode=countryInfo&amp;countryCode='.$entry['countryCode'].'&amp;game='.$game.'">'.$entry['country'].'</a>';
+				echo '<a href="index.php?mode=playerinfo&amp;player='.$entry['playerId'].'">'.makeSavePlayerName($entry['name']).'</a>';
 				echo '</td>',"\n";
-
+				
 				echo '<td class="',$rcol,'">';
 				echo $entry['obj_count'];
 				echo '</td>',"\n";
@@ -192,8 +217,8 @@ pageHeader(
 				echo '</tr>';
 			}
 			echo '<tr><td colspan="4" align="right">';
-			if($country['pages'] > 1) {
-				for($i=1;$i<=$country['pages'];$i++) {
+			if($countryPlayers['pages'] > 1) {
+				for($i=1;$i<=$countryPlayers['pages'];$i++) {
 					if($page == ($i)) {
 						echo "[",$i,"]";
 					}

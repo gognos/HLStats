@@ -669,3 +669,7 @@ Signature cleanup = Signaturen säubern
 Remove old signatures. = Lösche alte Signaturen.
 old signatures removed ! = alte Signaturen gelöscht !
 Nothing removed. = Nichts gelöscht.
+
+This information is based on the connect event. The connect event information is not accurate. It can happen that one game connect can have multiple log entries. Take those numbers only as reference. = Diese Informationen basieren auf den Connect Events. Diese Infos sind nicht sehr verlässlich. Es kann passieren das ein Spielbeitrit mehrmals im Serverlog auftaucht. Somit sind diese Zahlen nur als Übersicht.
+
+IP Address = IP Adresse

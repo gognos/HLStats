@@ -154,7 +154,8 @@ $modes = array(
 	"teams",
 	"roles",
 	"awards",
-	"country"
+	"country",
+	"countryInfo"
 );
 
 $mode = '';

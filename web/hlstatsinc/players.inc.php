@@ -191,7 +191,7 @@ pageHeader(
 					echo "[",$i,"]";
 				}
 				else {
-					echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
+					echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a> ";
 				}
 			}
 			if($playersObj->getOption('page') < ($pData['pages']-13)) {
@@ -309,7 +309,7 @@ pageHeader(
 							echo "[",$i,"]";
 						}
 						else {
-							echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
+							echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a> ";
 						}
 					}
 				}

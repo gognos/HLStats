@@ -136,23 +136,6 @@ pageHeader(
 	if(!empty($history['data'])) {
 ?>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
-		<?php
-		echo '<tr><td colspan="5" align="right">';
-		if($history['pages'] > 1) {
-			for($i=1;$i<=$history['pages'];$i++) {
-				if($playerObj->getOption('page') == ($i)) {
-					echo "[",$i,"]";
-				}
-				else {
-					echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
-				}
-			}
-		}
-		else {
-			echo "[1]";
-		}
-		echo '</td></tr>',"\n";
-		?>
 		<tr>
 			<th class="<?php echo toggleRowClass($rcol); ?>">
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'eventTime','sortorder'=>$newSort)); ?>">
@@ -206,7 +189,7 @@ pageHeader(
 					echo "[",$i,"]";
 				}
 				else {
-					echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a>";
+					echo "<a href='index.php?",makeQueryString(array('page'=>$i)),"'>[",$i,"]</a> ";
 				}
 			}
 		}

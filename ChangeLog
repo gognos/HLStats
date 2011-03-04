@@ -6,7 +6,8 @@ HLStats ChangeLog
 *) New: New css style blue.css
 *) New: favicon.ico now  available ;-)
 *) New: Admintool added to clear old signatures ( older then one day )
-*) Opposing Force CTF/DM role models added
+*) New: Opposing Force CTF/DM role models added
+*) New: Admin host stats available again
 *) Changed: New Bug Tracker. Now FlySpray
 *) Changed: Mysql escape function on PHP now mysql_real_escape_string
 *) Changed: cleaner mysql query strings
