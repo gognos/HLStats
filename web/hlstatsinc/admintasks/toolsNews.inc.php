@@ -170,10 +170,10 @@ pageHeader(array(l("Admin"),l('News at Front page')), array(l("Admin")=>"index.p
 	<?php
 	if(!empty($return)) {
 		if($return['status'] === "1") {
-			echo '<div class="error">',$return['msg'],'</div>';
+			echo '<div class="error"><p>',$return['msg'],'</p></div>';
 		}
 		elseif($return['status'] === "2") {
-			echo '<div class="success">',$return['msg'],'</div>';
+			echo '<div class="success"><p>',$return['msg'],'</p></div>';
 		}
 	}
 	if(!empty($post) && isset($_GET['editpost'])) {

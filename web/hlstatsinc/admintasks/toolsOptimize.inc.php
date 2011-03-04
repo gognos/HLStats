@@ -66,7 +66,9 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 </div>
 <div id="main">
 	<h1><?php echo l('Optimize Database'); ?></h1>
-	<a href="index.php?mode=admin&amp;task=toolsOptimize&amp;upgrade=yes"><?php echo l('Click here'); ?></a> <?php echo l('if you get "table handler does not support check/repair"'); ?></a>
+	<p>
+		<a href="index.php?mode=admin&amp;task=toolsOptimize&amp;upgrade=yes"><?php echo l('Click here'); ?></a> <?php echo l('if you get "table handler does not support check/repair"'); ?></a>
+	</p>
 	<?php
 		if ($upgrade === true) {
 			$result = mysql_query("SHOW TABLES");

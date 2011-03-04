@@ -78,7 +78,7 @@ $query = mysql_query("
 			w.code,
 			w.name,
 			w.modifier
-		FROM `".DB_PREFIX."_Weapons` AS W
+		FROM `".DB_PREFIX."_Weapons` AS w
 		LEFT JOIN `".DB_PREFIX."_Games` AS g
 			ON g.code = w.game
 		ORDER BY w.game ASC,

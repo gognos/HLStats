@@ -64,7 +64,7 @@ pageHeader(array(l("Admin"),l('Signature cleanup')), array(l("Admin")=>"index.ph
 				$ct = filectime($s);
 				if($ct < $timeFrame) {
 					unlink($s);
-					$removeCountt++;
+					$removeCount++;
 				}
 			}
 		}
@@ -73,7 +73,7 @@ pageHeader(array(l("Admin"),l('Signature cleanup')), array(l("Admin")=>"index.ph
 			echo $removeCount." ".l('old signatures removed !');
 		}
 		else {
-			echo l('Nothing removed.');
+			echo '<p>'.l('Nothing removed.').'</p>';
 		}
 	?>
 	

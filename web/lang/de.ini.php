@@ -190,6 +190,7 @@ Roles = Rollen
 Weapons = Waffen
 Weapon Awards = Waffen Auszeichnungen
 Action Awards = Aktion Auszeichnungen
+Action Awards for = Aktion Auszeichnungen für
 Edit Player or Clan Details = Spieler oder Clan Details bearbeiten
 Edit a player or clan's profile information. = Das Profil eines Spielers oder Clans bearbeiten.
 Admin-Event History = Admin-Aktion Verlauf
