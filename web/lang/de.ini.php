@@ -135,6 +135,7 @@ actions = Aktionen
 Achieved = Erreicht
 Skill Bonus = Punkte Bonus
 Roles for = Rollen für
+Country = Land
 
 Nobody = Keiner
 
