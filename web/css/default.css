@@ -183,11 +183,15 @@ form.search input.searchbutton {
 	font-weight: bold;
 	font-style: normal;
 	color: red;
+	background: url(../hlstatsimg/warning.gif) no-repeat top left;
+	padding-left: 20px;
 }
 .success {
 	font-weight: bold;
 	font-style: normal;
 	color: green;
+	background: url(../hlstatsimg/success.gif) no-repeat top left;
+	padding-left: 20px;
 }
 
 /** percentage bar layout */

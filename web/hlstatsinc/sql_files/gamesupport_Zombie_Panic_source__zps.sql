@@ -68,5 +68,6 @@ INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','870','Remington 8
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','revolver','Revolver',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','torque','Torque',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','winchester','Winchester Double Barreled Shotgun',1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','m4','M4A1',1.00);
 
 # end of file
