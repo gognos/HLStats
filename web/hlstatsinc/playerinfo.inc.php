@@ -154,23 +154,8 @@ $rcol = "row-dark";
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l("Player ID"); ?></th>
 			<td><?php echo $player; ?></td>
-			<th align="right"><?php echo l("Rank"); ?></th>
-			<td>
-				<?php
-					if($playerObj->getParam('isBot') === "1") {
-						echo "<b>".l('BOT')."</b>";
-					}
-					elseif($playerObj->getParam('active') === "0") {
-						echo "<b>".l('inactive Player')."</b>";
-					}
-					else {
-						echo "<b>".$playerObj->getParam('rankPoints')."</b> ";
-						echo "(".l('ordered by Points').")<br />";
-						echo "(<a href='index.php?mode=players&game=".$game."&showall=1'>".l('from all players')."</a>)";
-					}
-					
-				?>
-			</td>
+			<th><?php echo l("Kills"); ?></th>
+			<td><?php echo $playerObj->getParam("kills"); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
@@ -190,8 +175,8 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
-			<th><?php echo l("Kills"); ?></th>
-			<td><?php echo $playerObj->getParam("kills"); ?></td>
+			<th><?php echo l("Deaths"); ?></th>
+			<td><?php echo $playerObj->getParam("deaths"); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l("Last Connect"); ?>*</th>
@@ -203,23 +188,18 @@ $rcol = "row-dark";
 				}
 			?>
 			</td>
-			<th><?php echo l("Deaths"); ?></th>
-			<td><?php echo $playerObj->getParam("deaths"); ?></td>
-		</tr>
-		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th><?php echo l("Total Connection Time"); ?>*</th>
-			<td><?php echo $playerObj->getParam('maxTime'); ?></td>
 			<th><?php echo l("Suicides"); ?></th>
 			<td><?php echo $playerObj->getParam("suicides"); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th><?php echo l("Average Ping"); ?></th>
-			<td><?php echo $playerObj->getParam('avgPing'); ?></td>
+			<th><?php echo l("Total Connection Time"); ?>*</th>
+			<td><?php echo $playerObj->getParam('maxTime'); ?></td>
 			<th><?php echo l("Kills per Death"); ?></th>
 			<td><?php echo number_format($playerObj->getParam("kpd"),2); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<td colspan="2">&nbsp;</td>
+			<th><?php echo l("Average Ping"); ?></th>
+			<td><?php echo $playerObj->getParam('avgPing'); ?></td>
 			<th><?php echo l("Teammate Kills"); ?>*</th>
 			<td><?php echo $playerObj->getParam("teamkills"); ?></td>
 		</tr>
@@ -229,17 +209,64 @@ $rcol = "row-dark";
 			<td><?php echo number_format($playerObj->getParam("accuracy"),2); ?>%</td>
 		</tr>
 	</table>
+	<a name="rank"></a>
+	<h2>
+		<?php echo l('Rank')." (".l('ordered by Points').")" ?>
+		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#rank"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
+	</h2>
+	<?php
+		if($playerObj->getParam('isBot') === "1") {
+			echo "<p>".l('BOT')."</p>";
+		}
+		elseif($playerObj->getParam('active') === "0") {
+			echo "<p>".l('inactive Player')."</p>";
+		}
+		else {
+	?>
+	<table border="1" cellspacing="0" cellpadding="4" width="100%">
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
+			<th width="220">
+				<?php echo l("Active players and no Bots"); ?>
+			</th>
+			<td>
+				<?php
+					echo "<b>".$playerObj->getParam('rankPoints')."</b> ";
+				?>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<?php echo l("All players and no Bots"); ?>
+			</th>
+			<td>
+				<?php
+					echo "<b>".$playerObj->getParam('allwithoutBot')."</b> ";
+				?>
+			</td>
+		</tr>
+			<tr>
+				<th>
+					<?php echo l("All players and with Bots"); ?>
+				</th>
+				<td>
+					<?php
+						echo "<b>".$playerObj->getParam('allPlayers')."</b> ";
+					?>
+				</td>
+			</tr>
+	</table>
+	<?php } ?>
 	<a name="profile"></a>
 	<h2>
 		<?php echo l('Profile'); ?>
-		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#Profile"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
+		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#profile"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 	</h2>
 	<table border="1" cellspacing="0" cellpadding="4" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
 				<img src="hlstatsimg/site/user.png" alt="Username" width="24" style="float: left;" />
 				&nbsp;<?php echo l("Real Name"); ?>
-				</th>
+			</th>
 			<td>
 			   <?php
 				if ($playerObj->getParam("fullName")) {

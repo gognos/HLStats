@@ -504,6 +504,8 @@ class Player {
 		$this->_getRoleSelection();
 
 		$this->_getRank('rankPoints');
+		$this->_getRank('allPlayers');
+		$this->_getRank('allwithoutBot');
 	}
 
 	/**
@@ -813,6 +815,36 @@ class Player {
 	 */
 	private function _getRank($mode) {
 		switch($mode) {
+			case 'allPlayers':
+				$queryStr = "SELECT count(*) AS rank
+							FROM `".DB_PREFIX."_Players` AS t1
+							LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS t2
+								ON t2.playerId = t1.playerId
+							WHERE t1.hideranking = '0'
+								AND t1.kills >= '1'
+								AND t1.game = '".mysql_real_escape_string($this->_game)."'";
+				$queryStr .= " AND t1.skill >
+									(SELECT skill FROM ".DB_PREFIX."_Players
+										WHERE playerId = '".mysql_real_escape_string($this->playerId)."')";
+				$query = mysql_query($queryStr);
+			break;
+			
+			case 'allwithoutBot':
+				$queryStr = "SELECT count(*) AS rank
+							FROM `".DB_PREFIX."_Players` AS t1
+							LEFT JOIN `".DB_PREFIX."_PlayerUniqueIds` AS t2
+								ON t2.playerId = t1.playerId
+							WHERE t1.hideranking = '0'
+								AND t1.kills >= '1'
+								AND t1.game = '".mysql_real_escape_string($this->_game)."'";
+					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
+				
+				$queryStr .= " AND t1.skill >
+									(SELECT skill FROM ".DB_PREFIX."_Players
+										WHERE playerId = '".mysql_real_escape_string($this->playerId)."')";
+				$query = mysql_query($queryStr);
+			break;
+			
 			case 'rankPoints':
 			default:
 				$queryStr = "SELECT count(*) AS rank
@@ -823,10 +855,7 @@ class Player {
 								AND t1.hideranking = '0'
 								AND t1.kills >= '1'
 								AND t1.game = '".mysql_real_escape_string($this->_game)."'";
-								
-				if($this->g_options['IGNOREBOTS'] === "1") {
 					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
-				}
 				
 				$queryStr .= " AND t1.skill >
 									(SELECT skill FROM ".DB_PREFIX."_Players
