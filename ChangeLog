@@ -5,6 +5,7 @@ HLStats ChangeLog
 *) New: Design styles (css) updated.
 *) New: Zombie Panic! Source had no weapon pics
 *) Fixed: old weapon images converted to png
+*) Fixed: #34
 
 1.61 (2011-03-08)
 *) New: New css style blue.css

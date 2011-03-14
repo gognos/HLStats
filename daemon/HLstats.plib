@@ -149,7 +149,7 @@ sub resolveCountry {
 
 	print "-- Resolving country for IP \"$ip\" ... "  if ($g_debug > 0);
 
-	if ($ip) {
+	if ($ip && -e "./geoip/GeoIP.dat") {
 		my $gi = Geo::IP::PurePerl->open( "./geoip/GeoIP.dat" );
 
 		my $country_code = $gi->country_code_by_addr($ip);
