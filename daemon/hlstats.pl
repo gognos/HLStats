@@ -60,7 +60,7 @@ use open qw( :std :encoding(UTF-8) );
 # debug
 use Data::Dumper;
 
-use Config::Tiny; ## new config syntax
+use Config::Tiny;
 
 $opt_libdir = dirname(__FILE__);
 $opt_configfile = "$opt_libdir/$opt_configfile_name";

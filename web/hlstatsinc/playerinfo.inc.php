@@ -116,8 +116,8 @@ $rcol = "row-dark";
 	</div>
 </div>
 <div id="main">
-	<h2><?php echo $pl_name; ?></h2>
-	<h1><?php echo l('Player Profile'); ?> / <?php echo l('Statistics Summary'); ?></h1>
+	<h1><?php echo $pl_name; ?></h1>
+	<h2><?php echo l('Player Profile'); ?> / <?php echo l('Statistics Summary'); ?></h2>
 	<table border="1" cellspacing="0" cellpadding="4" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
@@ -154,23 +154,8 @@ $rcol = "row-dark";
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l("Player ID"); ?></th>
 			<td><?php echo $player; ?></td>
-			<th align="right"><?php echo l("Rank"); ?></th>
-			<td>
-				<?php
-					if($playerObj->getParam('isBot') === "1") {
-						echo "<b>".l('BOT')."</b>";
-					}
-					elseif($playerObj->getParam('active') === "0") {
-						echo "<b>".l('inactive Player')."</b>";
-					}
-					else {
-						echo "<b>".$playerObj->getParam('rankPoints')."</b> ";
-						echo "(".l('ordered by Points').")<br />";
-						echo "(<a href='index.php?mode=players&game=".$game."&showall=1'>".l('from all players')."</a>)";
-					}
-					
-				?>
-			</td>
+			<th><?php echo l("Kills"); ?></th>
+			<td><?php echo $playerObj->getParam("kills"); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
@@ -190,8 +175,8 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
-			<th><?php echo l("Kills"); ?></th>
-			<td><?php echo $playerObj->getParam("kills"); ?></td>
+			<th><?php echo l("Deaths"); ?></th>
+			<td><?php echo $playerObj->getParam("deaths"); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l("Last Connect"); ?>*</th>
@@ -203,23 +188,18 @@ $rcol = "row-dark";
 				}
 			?>
 			</td>
-			<th><?php echo l("Deaths"); ?></th>
-			<td><?php echo $playerObj->getParam("deaths"); ?></td>
-		</tr>
-		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th><?php echo l("Total Connection Time"); ?>*</th>
-			<td><?php echo $playerObj->getParam('maxTime'); ?></td>
 			<th><?php echo l("Suicides"); ?></th>
 			<td><?php echo $playerObj->getParam("suicides"); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th><?php echo l("Average Ping"); ?></th>
-			<td><?php echo $playerObj->getParam('avgPing'); ?></td>
+			<th><?php echo l("Total Connection Time"); ?>*</th>
+			<td><?php echo $playerObj->getParam('maxTime'); ?></td>
 			<th><?php echo l("Kills per Death"); ?></th>
 			<td><?php echo number_format($playerObj->getParam("kpd"),2); ?></td>
 		</tr>
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<td colspan="2">&nbsp;</td>
+			<th><?php echo l("Average Ping"); ?></th>
+			<td><?php echo $playerObj->getParam('avgPing'); ?></td>
 			<th><?php echo l("Teammate Kills"); ?>*</th>
 			<td><?php echo $playerObj->getParam("teamkills"); ?></td>
 		</tr>
@@ -229,17 +209,64 @@ $rcol = "row-dark";
 			<td><?php echo number_format($playerObj->getParam("accuracy"),2); ?>%</td>
 		</tr>
 	</table>
+	<a name="rank"></a>
+	<h2>
+		<?php echo l('Rank')." (".l('ordered by Points').")" ?>
+		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#rank"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
+	</h2>
+	<?php
+		if($playerObj->getParam('isBot') === "1") {
+			echo "<p>".l('BOT')."</p>";
+		}
+		elseif($playerObj->getParam('active') === "0") {
+			echo "<p>".l('inactive Player')."</p>";
+		}
+		else {
+	?>
+	<table border="1" cellspacing="0" cellpadding="4" width="100%">
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
+			<th width="220">
+				<?php echo l("Active players and no Bots"); ?>
+			</th>
+			<td>
+				<?php
+					echo "<b>".$playerObj->getParam('rankPoints')."</b> ";
+				?>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<?php echo l("All players and no Bots"); ?>
+			</th>
+			<td>
+				<?php
+					echo "<b>".$playerObj->getParam('allwithoutBot')."</b> ";
+				?>
+			</td>
+		</tr>
+			<tr>
+				<th>
+					<?php echo l("All players and with Bots"); ?>
+				</th>
+				<td>
+					<?php
+						echo "<b>".$playerObj->getParam('allPlayers')."</b> ";
+					?>
+				</td>
+			</tr>
+	</table>
+	<?php } ?>
 	<a name="profile"></a>
-	<h1>
+	<h2>
 		<?php echo l('Profile'); ?>
-		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#Profile"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-	</h1>
+		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#profile"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
+	</h2>
 	<table border="1" cellspacing="0" cellpadding="4" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
 				<img src="hlstatsimg/site/user.png" alt="Username" width="24" style="float: left;" />
 				&nbsp;<?php echo l("Real Name"); ?>
-				</th>
+			</th>
 			<td>
 			   <?php
 				if ($playerObj->getParam("fullName")) {
@@ -371,10 +398,10 @@ $rcol = "row-dark";
 $aliases = $playerObj->getParam('aliases');
 if(!empty($aliases)) { ?>
 	<a name="aliases"></a>
-	<h1>
+	<h2>
 		<?php echo l('Aliases'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#aliases"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Name'); ?></th>
@@ -404,11 +431,11 @@ if(!empty($aliases)) { ?>
 $actions = $playerObj->getParam('actions');
 if(!empty($actions)) { ?>
 	<a name="playeractions"></a>
-	<h1>
+	<h2>
 		<?php echo l('Player Actions'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playeractions"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Action'); ?></th>
@@ -430,11 +457,11 @@ if(!empty($actions)) { ?>
 $playerPlayerActions = $playerObj->getParam('playerPlayerActions');
 if(!empty($playerPlayerActions)) { ?>
 	<a name="playerplayeractions"></a>
-	<h1>
+	<h2>
 		<?php echo l('Player-Player Actions'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playerplayeractions"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Action'); ?></th>
@@ -456,11 +483,11 @@ if(!empty($playerPlayerActions)) { ?>
 $teamSelection = $playerObj->getParam('teamSelection');
 if(!empty($teamSelection)) { ?>
 	<a name="teams"></a>
-	<h1>
+	<h2>
 		<?php echo l('Team Selection'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#teams"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Team'); ?></th>
@@ -484,11 +511,11 @@ if(!empty($teamSelection)) { ?>
 $roleSelection = $playerObj->getParam('roleSelection');
 if(!empty($roleSelection)) { ?>
 	<a name="roles"></a>
-	<h1>
+	<h2>
 		<?php echo l('Role Selection'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#role"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th width="40">&nbsp;</th>
@@ -514,11 +541,11 @@ if(!empty($roleSelection)) { ?>
 $weaponUsage = $playerObj->getParam('weaponUsage');
 if(!empty($weaponUsage)) { ?>
 	<a name="weaponusage"></a>
-	<h1>
+	<h2>
 		<?php echo l('Weapon Usage'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#weaponusage"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Weapon'); ?></th>
@@ -547,11 +574,11 @@ if(!empty($weaponUsage)) { ?>
 $weaponStats = $playerObj->getParam('weaponStats');
 if(!empty($weaponStats)) { ?>
 	<a name="weaponstats"></a>
-	<h1>
+	<h2>
 		<?php echo l('Weapon Stats'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#weaponstats"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Weapon'); ?></th>
@@ -594,11 +621,11 @@ if(!empty($weaponStats)) { ?>
 $weaponTarget = $playerObj->getParam('weaponTarget');
 if(!empty($weaponTarget)) { ?>
 	<a name="weapontarget"></a>
-	<h1>
+	<h2>
 		<?php echo l('Weapon Target'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#weapontarget"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Weapon'); ?></th>
@@ -636,11 +663,11 @@ if(!empty($weaponTarget)) { ?>
 $maps = $playerObj->getParam('maps');
 if(!empty($maps)) { ?>
 	<a name="maps"></a>
-	<h1>
+	<h2>
 		<?php echo l('Map Performance'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#maps"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Map Name'); ?></th>
@@ -668,12 +695,12 @@ if(!empty($maps)) { ?>
 $playerKillStats = $playerObj->getParam('killstats');
 if(!empty($playerKillStats)) { ?>
 	<a name="killstats"></a>
-	<h1>
+	<h2>
 		<?php echo l('Player Kill Statistics'); ?>
 		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#killstats"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 		<?php echo $killLimit ?> <?php echo l('or more kills'); ?>
 		(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-	</h1>
+	</h2>
 	<table cellpadding="2" cellspacing="0" border="1" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th><?php echo l('Victim'); ?></th>
@@ -729,11 +756,11 @@ if($g_options['showChart'] == "1") {
 	if(!empty($chart)) {
 ?>
 		<a name="playtime"></a>
-		<h1>
+		<h2>
 			<?php echo l('Playtime per day'); ?>
 			<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playtime"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 			(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-		</h1>
+		</h2>
 		<div class="chart"><img src="<?php echo $playtimeChart; ?>" /></div>
 <?php }
 
@@ -742,19 +769,21 @@ if($g_options['showChart'] == "1") {
 	if(!empty($killDayChart)) {
 ?>
 		<a name="playerkillsperday"></a>
-		<h1>
+		<h2>
 			<?php echo l('Player Kill Statistics per Day'); ?>
 			<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#playerkillsperday"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
 			(<?php echo l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'); ?>)
-		</h1>
+		</h2>
 		<div class="chart"><img src="<?php echo $killDayChart; ?>" /></div>
 <?php }
 }
 ?>
-<p><b><?php echo l('Note'); ?>:</b><br />
-<?php echo l('Player event histories cover only the last'); ?>&nbsp;
-<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>. <?php echo l('Items marked "Last'); ?>&nbsp;
-<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days" or "*" above are generated from the player\'s Event History. Player kill, death and suicide totals and points ratings cover the entire recorded period'); ?>.
+<p>&nbsp;</p>
+<p>
+	<b><?php echo l('Note'); ?>:</b><br />
+	<?php echo l('Player event histories cover only the last'); ?>&nbsp;
+	<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>. <?php echo l('Items marked "Last'); ?>&nbsp;
+	<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days" or "*" above are generated from the player\'s Event History. Player kill, death and suicide totals and points ratings cover the entire recorded period'); ?>.
 </p>
 <p style="text-align: right">
     <b><?php echo l('Admin Options'); ?>:</b>

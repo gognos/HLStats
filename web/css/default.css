@@ -313,6 +313,9 @@ form.search input.searchbutton {
 	background-color: #CC0000;
 	letter-spacing: .5px;
 }
+#main h2, #main-full h2 {
+	margin-top: 20px;	
+}
 
 .content {
 	padding: 10px;

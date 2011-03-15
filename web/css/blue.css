@@ -36,13 +36,14 @@ th {
 
 /* links */
 a {
-	color: #C6C6C6;
+	color: #fff;
 	background-color: inherit;
 	text-decoration: none;
 }
 a:hover {
 	color: #FFFFFF;
 	background-color: inherit;
+	text-decoration: underline;
 }
 
 /* headers */
@@ -271,12 +272,9 @@ form.search input.searchbutton {
 	float: right;
 	margin: 0; padding: 0;
 	width: 665px;
-	border: 1px solid #39495A;
-	background-color: #283846;
 }
 #main-full {
 	margin: 0; padding: 0;
-	border: 1px solid #39495A;
 	background-color: #283846;
 }
 #main h1, #main-full h1 {
@@ -286,6 +284,9 @@ form.search input.searchbutton {
 	color: #C6C6C6;
 	background-color: #39495A;
 	letter-spacing: .5px;
+}
+#main h2, #main-full h2 {
+	margin-top: 20px;	
 }
 
 .content {
