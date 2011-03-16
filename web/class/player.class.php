@@ -1084,7 +1084,7 @@ class Player {
 							(
 								SUM(es.damage) / SUM(es.hits)
 							)
-						), '-'
+						), 0
 					) as smdhr,
 					SUM(es.kills)
 						/

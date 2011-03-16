@@ -1071,57 +1071,49 @@ sub doEvent_Statsme2
 #
 # 503. Statsme (latency)
 #
+sub doEvent_Statsme_Latency {
+	my ($playerId, $ping) = @_;
 
-sub doEvent_Statsme_Latency
-{
-        my ($playerId, $ping) = @_;
+	my $desc;
+	my $player = $g_players{"$s_addr/$playerId"};
+	my $playerstr = &getPlayerInfoString($player, $playerId);
 
-        my $desc;
-        my $player = $g_players{"$s_addr/$playerId"};
-        my $playerstr = &getPlayerInfoString($player, $playerId);
+	if ($player) {
+		&recordEvent(
+			"StatsmeLatency", 0,
+			$player->get("playerid"),
+			$ping
+			);
+	}
+	else {
+		$desc = "(IGNORED) NOPLAYERINFO: ";
+	}
 
-        if ($player)
-        {
-                &recordEvent(
-                        "StatsmeLatency", 0,
-                        $player->get("playerid"),
-                        $ping
-                );
-        }
-        else
-        {
-                $desc = "(IGNORED) NOPLAYERINFO: ";
-        }
-
-        return $desc . $playerstr . " STATSME average latency \"$ping\"";
+	return $desc . $playerstr . " STATSME average latency \"$ping\"";
 }
 
 #
 # 504. Statsme (time)
 #
+sub doEvent_Statsme_Time {
+	my ($playerId, $time) = @_;
 
-sub doEvent_Statsme_Time
-{
-        my ($playerId, $time) = @_;
+	my $desc;
+	my $player = $g_players{"$s_addr/$playerId"};
+	my $playerstr = &getPlayerInfoString($player, $playerId);
 
-        my $desc;
-        my $player = $g_players{"$s_addr/$playerId"};
-        my $playerstr = &getPlayerInfoString($player, $playerId);
-
-        if ($player)
-        {
-                &recordEvent(
-                        "StatsmeTime", 0,
-                        $player->get("playerid"),
-                        $time
-                );
-        }
-        else
-        {
-                $desc = "(IGNORED) NOPLAYERINFO: ";
-        }
-
-        return $desc . $playerstr . " STATSME connection time \"$time\"";
+	if ($player) {
+		&recordEvent(
+			"StatsmeTime", 0,
+			$player->get("playerid"),
+			$time
+		);
+	}
+	else {
+		$desc = "(IGNORED) NOPLAYERINFO: ";
+	}
+	
+	return $desc . $playerstr . " STATSME connection time \"$time\"";
 }
 
 1;

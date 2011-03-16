@@ -594,14 +594,12 @@ while ($loop = &getLine()) {
 				);
 			}
 		}
-		elsif (like($ev_verb, "time"))
-		{
+		elsif (like($ev_verb, "time")) {
 			$ev_type = 504;
 
 			my $playerinfo = &getPlayerInfo($ev_player);
 
-			if ($playerinfo)
-			{
+			if ($playerinfo) {
 				my ($min, $sec) = split(/:/, $ev_properties{"time"});
 
 				my $hour = sprintf("%d", $min / 60);
