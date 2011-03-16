@@ -333,6 +333,13 @@ pageHeader(
 		$chart = $chartObj->getChart('playerActivity',$playersObj);
 		echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
 		echo '<div class="chart"><img src="',$chart,'" /></a>';
+
+		/*
+		* need data for this...
+		$chart = $chartObj->getChart('mostTimeOnline',$playersObj);
+		echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
+		echo '<div class="chart"><img src="',$chart,'" /></a>';
+		*/
     }
 ?>
 </div>

@@ -143,7 +143,8 @@ class Chart {
 			break;
 
 			case 'mostTimeOnline':
-				//$chart = $this->_mostTimeOnline();
+				$modeString = 'mostTimeOnline';
+				$methodName = '_mostTimeOnline';
 			break;
 
 			case 'playTimePerDay':
@@ -212,11 +213,6 @@ class Chart {
 				if($c % 4 == 0 || $kCount < 15) { $xLine[] = $entry['eventDay']; }
 				else { $xLine[] = ''; }
 				$c++;
-				/*
-				if($c % 4 == 0) { $xLine[] = $entry['eventDay']; }
-				else { $xLine[] = ''; }
-				$c++;
-			*/
 			}
 
 			// add the kills
@@ -349,16 +345,20 @@ class Chart {
 
 	/**
 	 * create the image for player activity
-	 * @todo To complete
-	 * @return array The path to the image
+	 * @param object $playersObj The already existing players Object
+	 *
+	 * @return the path to the image
 	 */
-	private function _mostTimeOnline() {
-		exit();
+	private function _mostTimeOnline($playersObj=false) {
 
 		if(!in_array('Players',get_declared_classes())) {
 			require 'players.class.php';
 		}
-		$playersObj = new Players($this->_game);
+
+		$cl = 'Players';
+		if(!($playersObj instanceof $cl)) {
+			$playersObj = new Players($this->_game);
+		}
 		$data = $playersObj->getMostTimeOnline();
 
 

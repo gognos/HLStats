@@ -261,6 +261,8 @@ class Players {
 			$queryStr .= " HAVING lastUpdate > '".$startDay."'";
 		}
 
+		$queryStr .= " ORDER BY lastUpdate";
+
 		$query = mysql_query($queryStr);
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
@@ -282,7 +284,6 @@ class Players {
 	 * @return array The data
 	 */
 	public function getMostTimeOnline() {
-		exit('not wroking yet');
 		$data = array();
 
 		$query = mysql_query("SELECT est.*,
@@ -293,9 +294,13 @@ class Players {
 					WHERE s.game = '".mysql_real_escape_string($this->_game)."'");
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		while($result = mysql_fetch_assoc($query)) {
-			$onlineArr[$result['playerId']][] = $result;
+			$data[$result['playerId']][] = $result;
 		}
 		mysql_free_result($query);
+
+		var_dump($data);
+		
+		return $data;
 	}
 }
 ?>
