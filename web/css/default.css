@@ -147,7 +147,7 @@ input.button, button {
 	margin: 0;
 	font: bolder 12px Arial, Sans-serif;
 	border: 1px solid #CCC;
-	padding: 1px;
+	padding: 3px;
 	background: #FFF;
 	color: #CC0000;
 }

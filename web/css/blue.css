@@ -103,7 +103,7 @@ label {
 }
 input,select {
 	padding: 2px;
-	border:1px solid #ddd;
+	border: 1px solid #ddd;
 	font: normal 1em Verdana, sans-serif;
 	color: #777;
 }
@@ -120,7 +120,7 @@ input.button, button {
 	margin: 0;
 	font: bolder 12px Arial, Sans-serif;
 	border: 1px solid #283846;
-	padding: 1px;
+	padding: 3px;
 	background: #39495A;
 	color: #C6C6C6;
 }
