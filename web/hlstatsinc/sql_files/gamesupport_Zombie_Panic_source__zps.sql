@@ -62,7 +62,6 @@ INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','grenade_frag','Gr
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','glock18c','Glock 18c',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','glock','Glock 17',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','carrierarms','Carrier',1.00);
-INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','arms','Zombie',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','ak47','AK-47',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','870','Remington 870',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'zps','revolver','Revolver',1.00);
