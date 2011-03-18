@@ -4,11 +4,14 @@ HLStats ChangeLog
 1.62 (tba)
 *) New: Design styles (css) updated.
 *) New: Zombie Panic! Source had no weapon pics
+*) New: Most time online chart at player overview. Needs serverplugin
+	which provides time info ( eg. AMX Mod X statsplugin )
 *) Changed: New Rank section in player detail page. #37
 *) Updated: blue.css and default.css small design changes
 *) Fixed: old weapon images converted to png
 *) Fixed: #34
 *) Fixed: number format error in player detail page
+*) Fixed: #36
 
 1.61 (2011-03-08)
 *) New: New css style blue.css

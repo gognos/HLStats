@@ -440,6 +440,17 @@ function getOptions() {
 	return $ret;
 }
 
+/**
+ * format the time from given seconds to H:i:s
+ * @param int The seconds
+ * @return string
+ */
+function getTimeFromSec($secs) {
+	return str_pad(floor($secs/3600),2,"0",STR_PAD_LEFT).":".
+		str_pad(floor(($secs%3600)/60),2,"0",STR_PAD_LEFT).":".
+		str_pad($secs%60,2,"0",STR_PAD_LEFT);
+}
+
 ######## THOSE FUNCTIONS BELOW SHOULD BE CHECKED ############
 /**
  * @todo functions to be checked

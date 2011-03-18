@@ -331,15 +331,28 @@ pageHeader(
 		$chartObj = new Chart($game);
 
 		$chart = $chartObj->getChart('playerActivity',$playersObj);
-		echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
-		echo '<div class="chart"><img src="',$chart,'" /></a>';
+		if(!empty($chart)) {
+			echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
+			echo '<div class="chart"><img src="',$chart,'" /></div>';
+		}
 
-		/*
-		* need data for this...
-		$chart = $chartObj->getChart('mostTimeOnline',$playersObj);
-		echo '<h2>',l('Players per day'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
-		echo '<div class="chart"><img src="',$chart,'" /></a>';
-		*/
+		
+		$chartObj2 = new Chart($game);
+		$chartObj2->setOption('height',350);
+		$chart = $chartObj2->getChart('mostTimeOnline',$playersObj);
+		if(!empty($chart)) {
+			echo '<h2>',l('Most time online (hours)'),' - ',l('Last'),' ',$g_options['DELETEDAYS'],' ',l('Days'),'</h2>';
+			echo '<div class="chart"><img src="',$chart,'" /></div>';
+			$chartData = $chartObj2->getChartData();
+			if(!empty($chartData)) {
+				echo '<h2></h2>';
+				echo "<ol>\n";
+				foreach($chartData as $playerId=>$entry) {
+					echo '<li><a href="index.php?mode=playerinfo&amp;player=',$playerId,'">',makeSavePlayerName($entry['playerName']),'</a> ',getTimeFromSec($entry['timeSec']),'</li>';
+				}
+				echo "</ol>\n";
+			}
+		}
     }
 ?>
 </div>

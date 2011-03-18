@@ -286,20 +286,44 @@ class Players {
 	public function getMostTimeOnline() {
 		$data = array();
 
-		$query = mysql_query("SELECT est.*,
-					TIME_TO_SEC(est.time) as tTime
-					FROM `".DB_PREFIX."_Events_StatsmeTime` AS est
-					LEFT JOIN `".DB_PREFIX."_Servers` AS s
-						ON s.serverId = est.serverId
-					WHERE s.game = '".mysql_real_escape_string($this->_game)."'");
+		$queryStr = "SELECT p.lastName AS name,
+					est.playerId AS pId,
+					sum(TIME_TO_SEC(est.time)) as tTime,
+					DATE(p.lastUpdate) AS lastUpdate
+				FROM `".DB_PREFIX."_Events_StatsmeTime` AS est
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
+					ON s.serverId = est.serverId
+				LEFT JOIN `".DB_PREFIX."_Players` AS p
+					ON p.playerId = est.playerId
+				WHERE s.game = '".mysql_real_escape_string($this->_game)."'";
+		
+					
+		// should we show all the players or not
+		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
+			$queryStr .= " ";
+		}
+		else {
+			$queryStr .= " AND p.active = '1'";
+		}
+		
+		$queryStr .= " GROUP BY est.playerId";
+		
+		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
+			// should we show only players from today
+			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
+		}
+		
+		$queryStr .= " ORDER BY `tTime` DESC
+				LIMIT 10";
+		$query = mysql_query($queryStr);
+					
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		while($result = mysql_fetch_assoc($query)) {
-			$data[$result['playerId']][] = $result;
+			$data[$result['pId']] = array('timeSec' => $result['tTime'],
+										'playerName' => $result['name']);
 		}
 		mysql_free_result($query);
 
-		var_dump($data);
-		
 		return $data;
 	}
 }

@@ -71,6 +71,12 @@ class Chart {
 	 * @var object The pChart pchart library
 	 */
 	private $_pChart = false;
+	
+	/**
+	 * the used data to draw the chart
+	 * @var array
+	 */
+	private $_currentChartData = array();
 
 	/**
 	 * load up and set default values
@@ -88,7 +94,6 @@ class Chart {
 
 		$this->setOption('width',660);
 		$this->setOption('height',300);
-		//$this->setOption('bgcolor','#ffffff');
 
 		// set the current day value
 		$this->setOption('curDate',date("Ymd"));
@@ -121,6 +126,15 @@ class Chart {
 		}
 
 		return false;
+	}
+	
+	/**
+	 * return the currently used chart data returned from the sub class
+	 * this is the raw data returned form the class
+	 * @return array
+	 */
+	public function getChartData() {
+		return $this->_currentChartData;
 	}
 
 	/**
@@ -197,6 +211,10 @@ class Chart {
 		}
 		$playerObj = new Player($playerId,false,$this->_game);
 		$data = $playerObj->getKillsPerDay();
+		
+		# used to access the loaded data for other uses
+		$this->_currentChartData = $data;
+		
 		if(!empty($data)) {
 
 			$c = 0;
@@ -228,7 +246,7 @@ class Chart {
 			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
 			$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-80);
 			$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
-			$this->_pChart->drawGraphArea(255,255,255,TRUE);
+			$this->_pChart->drawGraphArea(250,250,250,TRUE);
 			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,true,30,2,true);
 			$this->_pChart->drawGrid(4,TRUE,230,230,230,50);
 
@@ -239,7 +257,7 @@ class Chart {
 
 			// Finish the graph
 			//$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
-			$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),255,255,255);
+			$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),250,250,250);
 			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",10);
 			$this->_pChart->drawTitle(0,20,l("Player kills per day"),50,50,50,$this->_option['width']);
 
@@ -282,6 +300,9 @@ class Chart {
 			$playersObj = new Players($this->_game);
 		}
 		$data = $playersObj->getPlayerCountPerDay();
+		
+		# used to access the loaded data for other uses
+		$this->_currentChartData = $data;
 
 		if(!empty($data)) {
 
@@ -300,7 +321,7 @@ class Chart {
 				else { $xLine[] = ''; }
 				$c++;
 			}
-
+			
 			// add the players
 			$this->_pData->AddPoint($connects,'1');
 			$this->_pData->AddSerie('1');
@@ -314,7 +335,7 @@ class Chart {
 			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
 			$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-80);
 			$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
-			$this->_pChart->drawGraphArea(255,255,255,TRUE);
+			$this->_pChart->drawGraphArea(250,250,250,TRUE);
 			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,TRUE,30,2,true);
 			$this->_pChart->drawGrid(4,TRUE,230,230,230,50);
 
@@ -330,7 +351,7 @@ class Chart {
 
 			// Finish the graph
 			//$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
-			$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),255,255,255);
+			$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),250,250,250);
 			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",10);
 			$this->_pChart->drawTitle(0,20,l("Players per day"),50,50,50,$this->_option['width']);
 
@@ -350,6 +371,8 @@ class Chart {
 	 * @return the path to the image
 	 */
 	private function _mostTimeOnline($playersObj=false) {
+		
+		$ret = false;
 
 		if(!in_array('Players',get_declared_classes())) {
 			require 'players.class.php';
@@ -360,60 +383,52 @@ class Chart {
 			$playersObj = new Players($this->_game);
 		}
 		$data = $playersObj->getMostTimeOnline();
+		
+		# used to access the loaded data for other uses
+		$this->_currentChartData = $data;
+		
+		if(!empty($data)) {
+		
+			$players = array();
+			$times = array();
+			foreach($data as $playerId=>$entry) {
+				$players[] = $entry['playerName'];
+				$times[] = $entry['timeSec']/60/60;
+			}
+		
+			// add the players
+			$this->_pData->AddPoint($times,'1');
+			$this->_pData->AddSerie('1');
+			$this->_pData->SetSerieName(l("Most time online (hours)"),'1');
+		
+
+			// the dates for x axe
+			$this->_pData->AddPoint($players,'x');
+			$this->_pData->SetAbsciseLabelSerie("x");
+
+			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
+			$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-100);
+			$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
+			$this->_pChart->drawGraphArea(250,250,250,true);
+			$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,TRUE,30,2,TRUE);
+			$this->_pChart->drawGrid(4,false,230,230,230,250);
 
 
-		$c = 0;
-		$xLine = array();
-		$connects = array();
-		$disconnects = array();
+			// draw the bar graph
+			$this->_pChart->drawBarGraph($this->_pData->GetData(),$this->_pData->GetDataDescription(),TRUE);
 
-		// we need only the count for each day
-		foreach($data['connect'] as $d=>$e) {
-			$connects[] = count($e);
+			#  // Finish the graph
+			//$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
+			$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),250,250,250);
+			$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",10);
+			$this->_pChart->drawTitle(0,20,l("Most time online (hours)"),50,50,50,$this->_option['width']);
+		
+			$this->_pChart->Render($this->_option['chartFile']);
 
-			// this shows the date only every 5 days
-			if($c % 5 == 0) { $xLine[] = $d; }
-			else { $xLine[] = ''; }
-			$c++;
+			$ret =  $this->_option['chartFile'];
 		}
 
-		// we need only the count for each day
-		foreach($data['disconnect'] as $d=>$e) {
-			$disconnects[] = count($e);
-		}
-
-		// add the connects
-		$this->_pData->AddPoint($connects,'1');
-		$this->_pData->AddSerie('1');
-		$this->_pData->SetSerieName(l("Connects"),'1');
-
-		// the dates for x axe
-		$this->_pData->AddPoint($xLine,'x');
-		$this->_pData->SetAbsciseLabelSerie("x");
-
-		// add the disconnects
-		$this->_pData->AddPoint($disconnects,'2');
-		$this->_pData->AddSerie('2');
-		$this->_pData->SetSerieName(l("Disconnects"),'2');
-
-
-		$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
-		$this->_pChart->setGraphArea(50,30,$this->_option['width']-10,$this->_option['height']-70);
-		$this->_pChart->drawFilledRoundedRectangle(3,3,$this->_option['width']-3,$this->_option['height']-3,5,240,240,240);
-		$this->_pChart->drawGraphArea(255,255,255,TRUE);
-		$this->_pChart->drawScale($this->_pData->GetData(),$this->_pData->GetDataDescription(),SCALE_START0,150,150,150,TRUE,0,2);
-		$this->_pChart->drawGrid(4,TRUE,230,230,230,50);
-
-		#  // Draw the cubic curve graph
-		$this->_pChart->drawCubicCurve($this->_pData->GetData(),$this->_pData->GetDataDescription());
-		#
-		#  // Finish the graph
-		//$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",8);
-		$this->_pChart->drawLegend(10,$this->_option['height']-40,$this->_pData->GetDataDescription(),255,255,255);
-		$this->_pChart->setFontProperties("class/pchart/Fonts/tahoma.ttf",10);
-		$this->_pChart->drawTitle(0,20,l("Player activity"),50,50,50,$this->_option['width']);
-
-		return "tmp/".$this->_option['chartId'].".png";
+		return $ret;
 	}
 
 	/**
