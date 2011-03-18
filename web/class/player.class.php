@@ -1236,7 +1236,7 @@ class Player {
 	}
 
 	/**
-	 * get the rol selection data
+	 * get the role selection data
 	 *
 	 * @return void
 	 */
