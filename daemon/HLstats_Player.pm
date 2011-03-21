@@ -175,7 +175,7 @@ sub setUniqueId
 
 		my $query = "
 			INSERT INTO
-				".$::db_prefix."_Players
+				`".$::db_prefix."_Players`
 				(
 					lastName,
 					clan,
@@ -199,7 +199,7 @@ sub setUniqueId
 		{
 			$query = "
 				INSERT INTO
-					".$::db_prefix."_PlayerUniqueIds
+					`".$::db_prefix."_PlayerUniqueIds`
 					(
 						playerId,
 						uniqueId,
@@ -259,7 +259,7 @@ sub setName
 			SELECT
 				playerId
 			FROM
-				".$::db_prefix."_PlayerNames
+				`".$::db_prefix."_PlayerNames`
 			WHERE
 				playerId='" . $playerid . "'
 				AND name='" . &::quoteSQL($self->get("name")) . "'
@@ -270,7 +270,7 @@ sub setName
 		{
 			$query = "
 				INSERT INTO
-					".$::db_prefix."_PlayerNames
+					`".$::db_prefix."_PlayerNames`
 					(
 						playerId,
 						name,
@@ -291,7 +291,7 @@ sub setName
 		{
 			$query = "
 				UPDATE
-					".$::db_prefix."_PlayerNames
+					`".$::db_prefix."_PlayerNames`
 				SET
 					lastuse=" . $::ev_datetime . ",
 					numuses=numuses+1
@@ -336,7 +336,7 @@ sub updateDB
 	# Update player details
 	my $query = "
 		UPDATE
-			".$::db_prefix."_Players
+			`".$::db_prefix."_Players`
 		SET
 			lastName='" . &::quoteSQL($name) . "',
 			clan='$clan',
@@ -358,7 +358,7 @@ sub updateDB
 		# Update alias details
 		$query = "
 			UPDATE
-				".$::db_prefix."_PlayerNames
+				`".$::db_prefix."_PlayerNames`
 			SET
 				kills=kills + $kills,
 				deaths=deaths + $deaths,
