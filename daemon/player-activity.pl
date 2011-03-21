@@ -149,7 +149,7 @@ print " OK\n";
 print "-- Loading options... ";
 
 # load the options from DB
-my $result = &doQuery("SELECT `keyname`,`value` FROM ${db_prefix}_Options");
+my $result = &doQuery("SELECT `keyname`,`value` FROM `${db_prefix}_Options`");
 my ($keyname, $value, %oHash);
 while( ($keyname, $value) = $result->fetchrow_array ) {
 	$oHash{$keyname} = $value;
@@ -168,7 +168,7 @@ print "OK\n";
 ## main process
 my $frame = time() - ($conf_timeFrame*86400); # time in seconds
 
-&doQuery("UPDATE ${db_prefix}_Players
+&doQuery("UPDATE `${db_prefix}_Players`
 									SET `active` = '0'
 									WHERE (`skillchangeDate` < '".$frame."'
 											 OR `skillchangeDate` IS NULL)
