@@ -206,7 +206,7 @@ print "connected OK\n";
 print "-- Loading options... ";
 
 # load the options from DB
-my $result = &doQuery("SELECT `keyname`,`value` FROM ${db_prefix}_Options");
+my $result = &doQuery("SELECT `keyname`,`value` FROM `${db_prefix}_Options`");
 my ($keyname, $value, %oHash);
 while( ($keyname, $value) = $result->fetchrow_array ) {
 	$oHash{$keyname} = $value;
@@ -1276,7 +1276,7 @@ EOT
 				print "-> ${db_prefix}_Events_$eventTable ... "
 			}
 
-			&doQuery("DELETE$deleteType FROM ${db_prefix}_Events_$eventTable
+			&doQuery("DELETE$deleteType FROM `${db_prefix}_Events_$eventTable`
 						WHERE eventTime < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL $g_deletedays DAY)");
 
 			if ($g_debug > 0) {
@@ -1285,7 +1285,7 @@ EOT
 		}
 
 		# clean the awards_history
-		&doQuery("DELETE FROM ${db_prefix}_Awards_History
+		&doQuery("DELETE FROM `${db_prefix}_Awards_History`
 					WHERE `date` < DATE_SUB(CURRENT_DATE(), INTERVAL $g_deletedays DAY)");
 
 		if ($g_debug > 0) {
@@ -1303,9 +1303,7 @@ EOT
 				print "-> $table ... "
 			}
 
-			&doQuery("
-				OPTIMIZE TABLE $table
-			");
+			&doQuery("OPTIMIZE TABLE $table");
 
 			if ($g_debug > 0) {
 				print "OK\n";

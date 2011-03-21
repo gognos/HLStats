@@ -166,7 +166,7 @@ class Player {
 	 *
 	 * @param string $key The key for the wanted value
 	 *
-	 * @return string The valuefor given key
+	 * @return string The value for given key
 	 */
 	public function getOption($key) {
 		$ret = false;
@@ -185,7 +185,7 @@ class Player {
 	 * @param string Special parameters if needed
 	 * @return array The history
 	 */
-	public function getEventHistory($special=false) {
+	public function getEventHistory($special = false) {
 		$ret = array('data' => array(),
 					'pages' => false);
 
@@ -509,7 +509,7 @@ class Player {
 	}
 
 	/**
-	 * get the playe time for this player per day
+	 * get the play-time for this player per day
 	 * @todo: to complete
 	 *
 	 * @return array The playerTime data for the chart
