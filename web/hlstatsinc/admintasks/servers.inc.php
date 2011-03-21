@@ -73,6 +73,10 @@ if(isset($_POST['sub']['saveServer'])) {
 			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
 									WHERE `serverId` = '".mysql_real_escape_string($k)."'");
 			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			if($query === false) {
+				$return['status'] = "1";
+				$return['msg'] = l('Server could not be deleted !');
+			}
 			unset($_POST['server'][$k]);
 		}
 	}
@@ -154,7 +158,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	<div class="left-box">
 		<ul class="sidemenu">
 			<li>
-				<a href="index.php?mode=admin&task=gameoverview&code=<?php echo $gc; ?>"><?php echo l('Back to game overview'); ?></a>
+				<a href="index.php?mode=admin&amp;task=gameoverview&amp;code=<?php echo $gc; ?>"><?php echo l('Back to game overview'); ?></a>
 			</li>
 			<li>
 				<a href="index.php?mode=admin"><?php echo l('Back to admin overview'); ?></a>

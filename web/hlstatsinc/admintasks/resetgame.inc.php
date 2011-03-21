@@ -70,10 +70,78 @@ if(empty($gc) || empty($check)) {
 
 // process the reset for this game
 if (isset($_POST['sub']['reset'])) {
+	
+	// get the servers for this game
+	$serversArr = array();
+	$query = mysql_query("SELECT serverId FROM `".DB_PREFIX."_Servers` 
+						WHERE game = '".mysql_real_escape_string($gc)."'");
+	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+	while($result = mysql_fetch_assoc($query)) {
+		$serversArr[]= $result['serverId'];
+	}
+	if(empty($serversArr)) {
+		$return = l("Error: No servers found for this game. Nothing to reset.");
+		$stop = true;
+	}
+	$serversArrString = implode(",",$serversArr);
+	
+	$queryStr = '';
+	if($stop === false ) {
+		# get the event tables
+		$dbtables = array();
+		
+		$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		if (mysql_num_rows($query) < 1) {
+			die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
+				There may be something wrong with your HLStats database or your version of MySQL.");
+		}
 
+		while (list($table) = mysql_fetch_array($query)) {
+			$dbtables[] = $table;
+		}
+		
+		foreach ($dbtables as $dbt) {
+			# first get all the player IDs
+			if($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
+			}
+			elseif($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
+			}
+			else {
+				if(empty($queryStr)) {
+					$queryStr .= "SELECT `playerId` FROM `".$dbt."` 
+						WHERE `serverId` IN (".$serversArrString.")";
+				}
+				else {
+					$queryStr .= " UNION
+						SELECT `playerId` FROM `".$dbt."` 
+						WHERE `serverId` IN (".$serversArrString.")";
+				}
+			}
+		}
+	}
+	
+	if(!empty($queryStr)) {
+		$query = mysql_query($queryStr);
+		if(mysql_num_rows($query) > 0) {
+			while($result = mysql_fetch_assoc($query)) {
+				$players[] = $result['playerId'];
+			}
+			$playerIdString = implode(",",$players);
+		}
+		else {
+			$stop = true;
+			$return = l("Error: No players found for this game. Nothing to reset.");
+		}
+	}
+
+	
 	// we need first the playerids for this game
+	/*
 	$players = array();
-	$query = mysql_query("SELECT playerId FROM `".DB_PREFIX."_Players` WHERE game = '".mysql_real_escape_string($gc)."'");
+	$query = mysql_query("SELECT playerId 
+			FROM `".DB_PREFIX."_Players` 
+			WHERE game = '".mysql_real_escape_string($gc)."'");
 	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	while($result = mysql_fetch_assoc($query)) {
 		$players[]= $result['playerId'];
@@ -96,20 +164,10 @@ if (isset($_POST['sub']['reset'])) {
 		$stop = true;
 	}
 	$serversArrString = implode(",",$serversArr);
+	*/
 
 	# reset only if we have players and servers
 	if($stop === false) {
-
-		$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if (mysql_num_rows($query) < 1) {
-			die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
-				There may be something wrong with your hlstats database or your version of MySQL.");
-		}
-
-		while (list($table) = mysql_fetch_array($query)) {
-			$dbtables[] = $table;
-		}
 
 		array_push($dbtables,
 			DB_PREFIX."_PlayerNames",
@@ -118,21 +176,9 @@ if (isset($_POST['sub']['reset'])) {
 		);
 
 		foreach ($dbtables as $dbt) {
-			if($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
+			if($dbt == DB_PREFIX."_PlayerNames" || $dbt == DB_PREFIX."_PlayerUniqueIds" || $dbt == DB_PREFIX."_Players") {
 				if (mysql_query("DELETE FROM `".$dbt."`
-									WHERE killerId IN (".$playerIdString.")
-										OR victimId IN (".$playerIdString.")")) {
-					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-					$return .= $dbt." OK<br />";
-				}
-				else {
-					$return .= "Error for Table:".$dbt."<br />";
-				}
-
-			}
-			elseif($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
-				if (mysql_query("DELETE FROM `".$dbt."`
-									WHERE serverId IN (".$serversArrString.")")) {
+									WHERE playerId IN (".$playerIdString.")")) {
 					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					$return .= $dbt." OK<br />";
 				}
@@ -142,7 +188,7 @@ if (isset($_POST['sub']['reset'])) {
 			}
 			else {
 				if (mysql_query("DELETE FROM `".$dbt."`
-									WHERE playerId IN (".$playerIdString.")")) {
+									WHERE serverId IN (".$serversArrString.")")) {
 					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 					$return .= $dbt." OK<br />";
 				}
