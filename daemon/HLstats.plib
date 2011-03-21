@@ -203,17 +203,13 @@ sub rcon
 	my ($server_type) = "new"; # Default to HL1 rcon
 
 	my $result = &doQuery("
-		SELECT
-			${db_prefix}_Servers.rcon_password,
-			${db_prefix}_Games.source AS source
-		FROM
-			${db_prefix}_Servers
-		LEFT JOIN ${db_prefix}_Games ON
-			${db_prefix}_Games.code = ${db_prefix}_Servers.game
-		WHERE
-			${db_prefix}_Servers.address='$server_ip'
-		AND
-			${db_prefix}_Servers.port='$server_port'
+		SELECT s.rcon_password,
+			g.source AS source
+		FROM `${db_prefix}_Servers` AS s
+		LEFT JOIN `${db_prefix}_Games` AS g 
+			ON g.code = s.game
+		WHERE s.address = '$server_ip'
+			AND s.port = '$server_port'
 	");
 	my ($password, $source) = $result->fetchrow_array();
 	$result->finish;
@@ -341,7 +337,7 @@ sub recordEvent {
 
 	my $query = "
 		INSERT$insertType INTO
-			${db_prefix}_Events_$table
+			`${db_prefix}_Events_$table`
 			(
 				eventTime,
 				serverId,
@@ -392,7 +388,7 @@ sub checkEvent {
 	my %switch = ( "Frags" => "Weapons");
 	if($switch{$event}) {
 		my $query = &doQuery("SELECT code
-					FROM ${db_prefix}_$switch{$event}
+					FROM `${db_prefix}_$switch{$event}`
 					WHERE code = '$eventCode'");
 		my $wc = $query->fetchrow_array();
 		$query->finish;
@@ -431,12 +427,9 @@ sub calcSkill
 
 	# Look up the weapon's skill modifier
 	my $query = "
-		SELECT
-			modifier
-		FROM
-			${db_prefix}_Weapons
-		WHERE
-			code='" . &quoteSQL($weapon) . "' AND
+		SELECT modifier
+		FROM `${db_prefix}_Weapons`
+		WHERE code = '" . &quoteSQL($weapon) . "' AND
 			game='$g_servers{$s_addr}->{game}'
 	";
 	my $result = &doQuery($query);
@@ -536,7 +529,7 @@ sub getPlayerId
 	my ($uniqueId) = @_;
 
 	my $query = "SELECT playerId
-					FROM ${db_prefix}_PlayerUniqueIds
+					FROM `${db_prefix}_PlayerUniqueIds`
 					WHERE uniqueId='" . &::quoteSQL($uniqueId) . "'
 						AND game='" . $g_servers{$s_addr}->{game} . "'";
 	my $result = &doQuery($query);
@@ -574,13 +567,9 @@ sub updatePlayerProfile {
 	my $playerName = &abbreviate($player->get("name"));
 	my $playerId   = $player->get("playerid");
 
-	&doQuery("
-		UPDATE
-			${db_prefix}_Players
-		SET
-			$field='$value'
-		WHERE
-			playerId='$playerId'
+	&doQuery("UPDATE `${db_prefix}_Players` 
+		SET $field='$value'
+		WHERE playerId='$playerId'
 	");
 
 	&rcon("SET command successful for '$playerName'.",1);
@@ -618,8 +607,7 @@ sub getClanId
 			pattern,
 			position,
 			LENGTH(pattern) AS pattern_length
-		FROM
-			${db_prefix}_ClanTags
+		FROM `${db_prefix}_ClanTags`
 		ORDER BY
 			pattern_length DESC,
 			id
@@ -657,10 +645,8 @@ sub getClanId
 	}
 
 	my $query = "
-		SELECT
-			clanId
-		FROM
-			${db_prefix}_Clans
+		SELECT clanId
+		FROM `${db_prefix}_Clans`
 		WHERE
 			tag='" . &quoteSQL($clanTag) . "' AND
 			game='$g_servers{$s_addr}->{game}'
@@ -678,7 +664,7 @@ sub getClanId
 		# The clan doesn't exist yet, so we create it.
 		$query = "
 			INSERT INTO
-				${db_prefix}_Clans
+				`${db_prefix}_Clans`
 				(
 					tag,
 					name,
@@ -723,7 +709,7 @@ sub getServer
 			serverId,
 			game
 		FROM
-			${db_prefix}_Servers
+			`${db_prefix}_Servers`
 		WHERE
 			address='$address' AND
 			port='$port'

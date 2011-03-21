@@ -155,36 +155,34 @@ print "connected OK\n";
 # get the awards for each game
 $resultAwards = &doQuery("
 	SELECT
-		${db_prefix}_Awards.awardId,
-		${db_prefix}_Awards.game,
-		${db_prefix}_Awards.awardType,
-		${db_prefix}_Awards.code
+		a.awardId,
+		a.game,
+		a.awardType,
+		a.code
 	FROM
-		${db_prefix}_Awards
-	LEFT JOIN ${db_prefix}_Games ON
-		${db_prefix}_Games.code = ${db_prefix}_Awards.game
-	WHERE
-		${db_prefix}_Games.hidden='0'
-	ORDER BY
-		${db_prefix}_Awards.game,
-		${db_prefix}_Awards.awardType
+		`${db_prefix}_Awards` AS a
+	LEFT JOIN ${db_prefix}_Games AS g 
+		ON g.code = a.game
+	WHERE g.hidden='0'
+	ORDER BY a.game,
+		a.awardType
 ");
 
 $result = &doQuery("SELECT value, DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY)
-					FROM ${db_prefix}_Options
+					FROM `${db_prefix}_Options`
 					WHERE keyname='awards_d_date'");
 
 if ($result->rows > 0) {
 	($awards_d_date, $awards_d_date_new) = $result->fetchrow_array;
 
-	&doQuery("UPDATE ${db_prefix}_Options
+	&doQuery("UPDATE `${db_prefix}_Options`
 				SET value='$awards_d_date_new'
 				WHERE keyname='awards_d_date'");
 
 	print "\n++ Generating awards for $awards_d_date_new (previous: $awards_d_date)...\n\n";
 }
 else {
-	&doQuery("INSERT INTO ${db_prefix}_Options (keyname,value)
+	&doQuery("INSERT INTO `${db_prefix}_Options` (keyname,value)
 			VALUES ('awards_d_date',DATE_SUB(CURRENT_DATE(), INTERVAL 1 DAY))");
 }
 
@@ -194,16 +192,16 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 	print "$game ($awardType) $code";
 
 	if ($awardType eq "O") {
-		$table = "${db_prefix}_Events_PlayerActions";
-		$join  = "LEFT JOIN ${db_prefix}_Actions ON ${db_prefix}_Actions.id = $table.actionId";
-		$matchfield = "${db_prefix}_Actions.code";
-		$playerfield = "$table.playerId";
+		$table = "`${db_prefix}_Events_PlayerActions`";
+		$join  = "LEFT JOIN `${db_prefix}_Actions` ON `${db_prefix}_Actions`.`id` = $table.`actionId`";
+		$matchfield = "`${db_prefix}_Actions`.`code`";
+		$playerfield = "$table.`playerId`";
 	}
 	elsif ($awardType eq "W") {
-		$table = "${db_prefix}_Events_Frags";
+		$table = "`${db_prefix}_Events_Frags`";
 		$join  = "";
-		$matchfield = "$table.weapon";
-		$playerfield = "$table.killerId";
+		$matchfield = "$table.`weapon`";
+		$playerfield = "$table.`killerId`";
 	}
 
 	$result = &doQuery("
@@ -212,20 +210,20 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 			COUNT($matchfield) AS awardcount
 		FROM
 			$table
-		LEFT JOIN ${db_prefix}_Players ON
-			${db_prefix}_Players.playerId = $playerfield
+		LEFT JOIN `${db_prefix}_Players` ON
+			`${db_prefix}_Players`.`playerId` = $playerfield
 		$join
 		WHERE
-			$table.eventTime < CURRENT_DATE()
-			AND $table.eventTime > DATE_SUB(CURRENT_DATE(), INTERVAL $opt_numdays DAY)
-			AND ${db_prefix}_Players.game='$game'
-			AND ${db_prefix}_Players.hideranking='0'
-			AND $matchfield='$code'
+			$table.`eventTime` < CURRENT_DATE()
+			AND $table.`eventTime` > DATE_SUB(CURRENT_DATE(), INTERVAL $opt_numdays DAY)
+			AND `${db_prefix}_Players`.`game` = '$game'
+			AND `${db_prefix}_Players`.`hideranking` = '0'
+			AND $matchfield = '$code'
 		GROUP BY
 			$playerfield
 		ORDER BY
 			awardcount DESC,
-			${db_prefix}_Players.skill DESC
+			`${db_prefix}_Players.`skill` DESC
 		LIMIT 1
 	");
 
@@ -238,15 +236,15 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 
 	print "  - $d_winner_id ($d_winner_count)\n";
 
-	&doQuery("INSERT INTO ${db_prefix}_Awards_History
+	&doQuery("INSERT INTO `${db_prefix}_Awards_History`
 				SET d_winner_id = $d_winner_id,
-					d_winner_count=$d_winner_count,
+					d_winner_count = $d_winner_count,
 					`date` = DATE_SUB(CURRENT_DATE(), INTERVAL $opt_numdays DAY),
 					fk_award_id = $awardId,
 					game= '$game'
 				ON DUPLICATE KEY UPDATE
 					d_winner_id = $d_winner_id,
-					d_winner_count=$d_winner_count");
+					d_winner_count = $d_winner_count");
 }
 
 print "\n++ Awards generated successfully.\n";
