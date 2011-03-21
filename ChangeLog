@@ -13,6 +13,7 @@ HLStats ChangeLog
 *) Fixed: #34
 *) Fixed: number format error in player detail page
 *) Fixed: #36
+*) Fixed: #4
 
 1.61 (2011-03-08)
 *) New: New css style blue.css

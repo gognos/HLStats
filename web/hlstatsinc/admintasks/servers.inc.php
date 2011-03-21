@@ -88,6 +88,7 @@ if(isset($_POST['sub']['saveServer'])) {
 			}
 
 			// build the query
+			$queryStr = '';
 			foreach ($dbtables as $dbt) {
 				# first get all the player IDs
 				if($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
