@@ -202,6 +202,7 @@ Reset Statistics = Statistiken zurücksetzten
 Reset Statistics for = Statistiken zurücksetzten für
 Error: No players found for this game. Nothing to reset. = Fehler: Keine Spieler für dieses Spiel gefunden. Es wird nichts zurück gesetzt.
 Error: No servers found for this game. Nothing to reset. = Fehler: Keine Server für dieses Spiel gefunden. Es wird nichts zurück gesetzt.
+Reset for all servers or only specified one ? = Reset für alle Server oder nur einen speziellen ?
 Delete all players, clans and events from the database. = Alle Spieler, clans und Events löschen.
 News at Front page = News auf der Startseite
 Write news to the front page. = News auf der Startseite erstellen.

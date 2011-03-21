@@ -6,6 +6,7 @@ HLStats ChangeLog
 *) New: Zombie Panic! Source had no weapon pics
 *) New: Most time online chart at player overview. Needs serverplugin
 	which provides time info ( eg. AMX Mod X statsplugin )
+*) New: Game reset by server or all
 *) Changed: New Rank section in player detail page. #37
 *) Updated: blue.css and default.css small design changes
 *) Fixed: old weapon images converted to png

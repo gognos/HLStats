@@ -68,17 +68,25 @@ if(empty($gc) || empty($check)) {
 	exit('No game code given');
 }
 
+// get the servers for this game
+$serversArr = array();
+$serversArrCustom = array();
+$query = mysql_query("SELECT serverId,name FROM `".DB_PREFIX."_Servers` 
+					WHERE game = '".mysql_real_escape_string($gc)."'");
+if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+while($result = mysql_fetch_assoc($query)) {
+	$serversArr[] = $result['serverId'];
+	$serversArrCustom[$result['serverId']] = $result['name'];
+}
+
 // process the reset for this game
 if (isset($_POST['sub']['reset'])) {
 	
-	// get the servers for this game
-	$serversArr = array();
-	$query = mysql_query("SELECT serverId FROM `".DB_PREFIX."_Servers` 
-						WHERE game = '".mysql_real_escape_string($gc)."'");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	while($result = mysql_fetch_assoc($query)) {
-		$serversArr[]= $result['serverId'];
+	if(isset($_POST['select']['server']) && !empty($_POST['select']['server'])) {
+		$serversArr = array();
+		$serversArr[] = (int)$_POST['select']['server'];
 	}
+	
 	if(empty($serversArr)) {
 		$return = l("Error: No servers found for this game. Nothing to reset.");
 		$stop = true;
@@ -134,37 +142,6 @@ if (isset($_POST['sub']['reset'])) {
 			$return = l("Error: No players found for this game. Nothing to reset.");
 		}
 	}
-
-	
-	// we need first the playerids for this game
-	/*
-	$players = array();
-	$query = mysql_query("SELECT playerId 
-			FROM `".DB_PREFIX."_Players` 
-			WHERE game = '".mysql_real_escape_string($gc)."'");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	while($result = mysql_fetch_assoc($query)) {
-		$players[]= $result['playerId'];
-	}
-	if(empty($players)) {
-		$return = l("Error: No players found for this game. Nothing to reset.");
-		$stop = true;
-	}
-	$playerIdString = implode(",",$players);
-
-	// get the servers for this game
-	$serversArr = array();
-	$query = mysql_query("SELECT serverId FROM `".DB_PREFIX."_Servers` WHERE game = '".mysql_real_escape_string($gc)."'");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	while($result = mysql_fetch_assoc($query)) {
-		$serversArr[]= $result['serverId'];
-	}
-	if(empty($serversArr)) {
-		$return = l("Error: No servers found for this game. Nothing to reset.");
-		$stop = true;
-	}
-	$serversArrString = implode(",",$serversArr);
-	*/
 
 	# reset only if we have players and servers
 	if($stop === false) {
@@ -235,7 +212,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	<div class="left-box">
 		<ul class="sidemenu">
 			<li>
-				<a href="index.php?mode=admin&task=gameoverview&code=<?php echo $gc; ?>"><?php echo l('Back to game overview'); ?></a>
+				<a href="index.php?mode=admin&amp;task=gameoverview&amp;code=<?php echo $gc; ?>"><?php echo l('Back to game overview'); ?></a>
 			</li>
 			<li>
 				<a href="index.php?mode=admin"><?php echo l('Back to admin overview'); ?></a>
@@ -259,6 +236,17 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	}
 	?>
 	<form method="post" action="">
+		<p><?php echo l('Reset for all servers or only specified one ?'); ?></p>
+		<p>
+			<select name="select[server]">
+				<option value=""><?php echo l('All'); ?></option>
+			<?php
+			foreach($serversArrCustom as $key=>$value) {
+				echo '<option value="'.$key.'">'.$value.'</option>';
+			}
+			?>
+			</select>
+		</p>
 		<p align="center">
 		<button type="submit" name="sub[reset]" title="<?php echo l('Reset'); ?>">
 			<?php echo l('Reset'); ?>
