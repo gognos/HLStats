@@ -70,14 +70,65 @@ if(isset($_POST['sub']['saveServer'])) {
 	// delete
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
-									WHERE `serverId` = '".mysql_real_escape_string($k)."'");
+			
+			// we should first check if we have data associated with this server
+			// if we delete the server with data associated to this server
+			// we get "dead" data.
+			
+			$existingData = false;
+			$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
 			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if($query === false) {
-				$return['status'] = "1";
-				$return['msg'] = l('Server could not be deleted !');
+			if (mysql_num_rows($query) < 1) {
+				die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
+					There may be something wrong with your HLStats database or your version of MySQL.");
 			}
-			unset($_POST['server'][$k]);
+
+			while (list($table) = mysql_fetch_array($query)) {
+				$dbtables[] = $table;
+			}
+
+			// build the query
+			foreach ($dbtables as $dbt) {
+				# first get all the player IDs
+				if($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
+				}
+				elseif($dbt == DB_PREFIX.'_Events_Frags' || $dbt == DB_PREFIX.'_Events_Teamkills') {
+				}
+				else {
+					if(empty($queryStr)) {
+						$queryStr .= "SELECT `playerId` FROM `".$dbt."` 
+							WHERE `serverId`  = ".$k."";
+					}
+					else {
+						$queryStr .= " UNION
+							SELECT `playerId` FROM `".$dbt."` 
+							WHERE `serverId` = ".$k."";
+					}
+				}
+			}
+			
+			if(!empty($queryStr)) {
+				$query = mysql_query($queryStr);
+				if(mysql_num_rows($query) > 0) {
+					$existingData = true;
+				}
+			}
+			
+			
+			if($existingData === false) {
+				$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
+										WHERE `serverId` = '".mysql_real_escape_string($k)."'");
+				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				if($query === false) {
+					$return['status'] = "1";
+					$return['msg'] = l('Server could not be deleted !');
+				}
+				unset($_POST['server'][$k]);
+			}
+			else {
+				$return['status'] = "1";
+				$return['msg'] = l('Server could not be deleted ! Stats are still existing !');
+			}
 		}
 	}
 
@@ -175,6 +226,9 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 		<?php echo l('HLStats can use Rcon to give feedback to users when they'); ?>
 		<a href="index.php?mode=help#set"><?php echo l('update their profile'); ?></a>
 		<?php echo l('if you enable Rcon support in hlstats.conf and specify an Rcon Password for each server'); ?>.
+	</p>
+	<p>
+		<?php echo l('You can not remove a server which has stats data associated. Reset the player data first.'); ?>
 	</p>
 	<?php
 		if(!empty($return)) {

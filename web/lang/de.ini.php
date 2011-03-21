@@ -22,6 +22,9 @@ Data saved = Daten gespeichert
 Data could not be saved = Daten konnten nicht gespeichert werden
 Invalid Input = Ungültige Angabe
 BOT = BOT
+Data could not be updated = Daten konnten nicht gespeichert werden
+Server could not be deleted ! Stats are still existing ! = Server konnte nicht gelöscht werden ! Statistiken noch vorhanden !
+Server could not be deleted ! = Server konnte nicht gelöscht werden
 
 Contents = Übersicht
 Games = Spiele
@@ -351,6 +354,7 @@ Enter the addresses of all servers that you want to accept data from = Geben Sie
 HLStats can use Rcon to give feedback to users when they = HLStats kann das Rcon Passwort verwenden wenn die Spieler
 update their profile = Ihr Profil aktualisieren
 if you enable Rcon support in hlstats.conf and specify an Rcon Password for each server = wenn Sie die Rcon Unterstützung aktivieren und das Rcon Passwort für den Server angeben
+You can not remove a server which has stats data associated. Reset the player data first. = Man kann keinen Server löschen, an dem noch Statistiken drann hängen. Diesen server erst resetten.
 Go to = Gehe zu
 Basic View = Normale Ansicht
 Advanced View = Erweiterte Ansicht
