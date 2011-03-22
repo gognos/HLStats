@@ -192,10 +192,13 @@ if(!$g_options['hideNews']) {
 	$num_servers = $result['sc'];
 	mysql_free_result($query);
 
+	$lastevent = false;
 	$query = mysql_query("SELECT MAX(eventTime) AS lastEvent FROM `".DB_PREFIX."_Events_Frags`");
 	$result = mysql_fetch_assoc($query);
-	$timstamp = strtotime($result['lastEvent']);
-	$lastevent = getInterval($timstamp);
+	if(!empty($result['lastEvent'])) {
+		$timstamp = strtotime($result['lastEvent']);
+		$lastevent = getInterval($timstamp);
+	}
 	mysql_free_result($query);
 ?>
 	<ul>

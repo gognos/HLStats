@@ -275,6 +275,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 	$result = mysql_fetch_assoc($query);
 	$num_servers = $result['sc'];
 
+	$lastevent = false;
 	$query = mysql_query("SELECT MAX(eventTime) as lastEvent
 		FROM `".DB_PREFIX."_Events_Frags` AS ef
 		LEFT JOIN `".DB_PREFIX."_Servers` AS s
@@ -282,7 +283,10 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		WHERE s.game = '".mysql_real_escape_string($game)."'");
 	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	$result = mysql_fetch_assoc($query);
-	$lastevent = $result['lastEvent'];
+	if(!empty($result['lastEvent']) {
+		$timstamp = strtotime($result['lastEvent']);
+		$lastevent = getInterval($timstamp);
+	}
 	mysql_free_result($query);
 ?>
 <p>
@@ -290,16 +294,15 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		<li>
 			<?php echo "<b>$num_players</b> ",l('players')," ",l('ranked on')," <b>$num_servers</b> ",l('servers'),"."; ?>
 		</li>
-<?php
-	if (!empty($lastevent)) {
-		$lastevent = l(date('l',strtotime($lastevent))).' '.date("d. m. Y H:i:s T",strtotime($lastevent));
-?>
-		<li>
-			<?php echo l("Last kill")," <b>$lastevent</b>"; ?>
-		</li>
-<?php
-	}
-?>
+		<?php
+		if ($lastevent) {
+		?>
+			<li>
+				<?php echo l("Last kill"); ?> <b><?php echo $lastevent; ?></b> <?php echo l('ago'); ?>
+			</li>
+		<?php
+		}
+		?>
 		<li>
 			<?php echo l("All statistics are generated in real-time. Event history data expires after"), " <b>" . $g_options['DELETEDAYS'] . "</b> ",l("days"),"."; ?>
 		</li>
