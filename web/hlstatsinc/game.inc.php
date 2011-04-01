@@ -283,7 +283,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		WHERE s.game = '".mysql_real_escape_string($game)."'");
 	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 	$result = mysql_fetch_assoc($query);
-	if(!empty($result['lastEvent']) {
+	if(!empty($result['lastEvent'])) {
 		$timstamp = strtotime($result['lastEvent']);
 		$lastevent = getInterval($timstamp);
 	}
