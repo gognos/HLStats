@@ -223,7 +223,7 @@ while( ($awardId, $game, $awardType, $code) = $resultAwards->fetchrow_array ) {
 			$playerfield
 		ORDER BY
 			awardcount DESC,
-			`${db_prefix}_Players.`skill` DESC
+			`${db_prefix}_Players`.`skill` DESC
 		LIMIT 1
 	");
 
