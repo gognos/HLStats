@@ -76,8 +76,6 @@ require "$opt_libdir/HLStats_ServerQueries.pm";
 $|=1;
 Getopt::Long::Configure ("bundling");
 
-open STDERR, ">>./hlstats_error.log" or die $!;
-
 ##
 ## MAIN
 ##
@@ -110,6 +108,7 @@ $g_tkpoints = $Config->{General}->{TKPoints};
 $opt_help = 0;
 $opt_version = 0;
 $g_lan_hack = 1;
+$opt_quiet = 0;
 
 ## signint handling
 $SIG{INT} = \&endThis;
@@ -148,6 +147,7 @@ a MySQL database.
                                     data, instead of the current time on the
                                     database server, when recording events
       --notimestamp               disables above
+  -q, --quiet					  disables all output. usefull while run with cron
 
 Long options can be abbreviated, where such abbreviation is not ambiguous.
 Default values for options are indicated in square brackets [...].
@@ -161,7 +161,8 @@ EOT
 ;
 
 # Read Command Line Arguments
-# only help and version a this time
+# the other arguments will be catched later since they can overwrite
+# the file config
 GetOptions(
 	"help|h"			=> \$opt_help,
 	"version|v"			=> \$opt_version,
@@ -169,11 +170,20 @@ GetOptions(
 	"db-name=s"			=> \$db_name,
 	"db-password=s"		=> \$db_pass,
 	"db-username=s"		=> \$db_user,
+	"quiet|q"			=> \$opt_quiet
 ) or die($usage);
 
 if ($opt_help) {
 	print $usage;
 	exit(0);
+}
+
+# can be used to supress all the output
+# does not work with windows
+if($opt_quiet) {
+	open STDIN, '/dev/null'   or die  $!;
+	open STDOUT, '>>/dev/null' or die $!;
+	open STDERR, '>>/dev/null' or die $!;
 }
 
 if ($opt_version) {
