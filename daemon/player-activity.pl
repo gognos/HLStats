@@ -74,6 +74,7 @@ if($Config::Tiny::errstr ne '') {
 my $opt_help = 0;
 my $opt_version = 0;
 my $opt_numdays = 1;
+my $opt_quiet = 0;
 
 my $db_name = $Config->{Database}->{DBName};
 my $db_host = $Config->{Database}->{DBHost};
@@ -94,6 +95,7 @@ Update player activity from Half-Life server statistics.
                                     password on the command line is insecure.
                                     Use the configuration file instead.)
       --db-username=USERNAME      database username
+  -q, --quiet                     disables all output. usefull while run with cron
 
 Long options can be abbreviated, where such abbreviation is not ambiguous.
 
@@ -117,6 +119,14 @@ GetOptions(
 if ($opt_help) {
 	print $usage;
 	exit(0);
+}
+
+# can be used to supress all the output
+# does not work with windows
+if($opt_quiet) {
+	open STDIN, '/dev/null'   or die  $!;
+	open STDOUT, '>>/dev/null' or die $!;
+	open STDERR, '>>/dev/null' or die $!;
 }
 
 if ($opt_version) {
