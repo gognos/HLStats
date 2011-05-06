@@ -340,6 +340,10 @@ print "\n++ HLStats is now running ($g_mode mode";
 if ($g_debug > 0) { print ", debug level $g_debug"; }
 print ").\n\n";
 
+# hlstats player archive testing
+$archive = new HLstats_Player_Archive($g_deletedays,%g_eventTables);
+exit();
+
 #
 # Main data loop
 #
@@ -1303,6 +1307,7 @@ EOT
 		}
 	}
 
+	# optimize tables
 	if ($c % 500000 == 0) {
 		if ($g_debug > 0) {
 			print "\n-- Optimizing database: Optimizing tables...\n";

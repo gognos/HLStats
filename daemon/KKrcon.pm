@@ -77,7 +77,7 @@ sub new
 	
 	# Set up socket parameters
 	$self->{"_proto"}  = ($self->{"server_type"} != 3) ? getprotobyname("udp") : getprotobyname("tcp");
-	$self->{"_ipaddr"} = gethostbyname($self->{"server_host"}) or die("KKrcon: could not resolve Host \"" . $self->{"server_host"} . "\"\n");
+	$self->{"_ipaddr"} = gethostbyname($self->{"server_host"}) or die("KKrcon: could not resolve Host '".$self->{"server_host"}."'\n");
 	
 	$self->s_init_socket() if($self->{"server_type"} == 3);
 	return $self;
