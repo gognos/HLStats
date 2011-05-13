@@ -35,23 +35,35 @@ package HLstats_Player_Archive;
 # Constructor
 #
 sub new {
-	my $dDays = shift;
+	my $dDays = @_;
 	
 	print "Update player archive\n";
 	
 	my ($pId, $aId, $ac);
-	my $playerHash = ();
 	my $result = &::doQuery("SELECT `playerId`, `actionId`, COUNT(1) AS actionCount 
-				FROM `${db_prefix}_Events_PlayerActions`
+				FROM `".$::db_prefix."_Events_PlayerActions`
 				WHERE eventTime < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL $dDays DAY)
-				GROUP BY playerId");
+				GROUP BY playerId,actionId");
 	while( ($pId, $aId, $ac) = $result->fetchrow_array ) {
-		$popHash->{$pId}{$aId} = {$ac}
+		# we have to do this this way, since we use GROUP BY we can not make
+		# this with one query
+		&::doQuery("INSERT INTO `".$::db_prefix."_Events_PlayerActions_Archive`
+			SET playerId = '".$pId."', 
+			actionId = '".$aId."', 
+			count = '".$ac."'
+			ON DUPLICATE KEY UPDATE `count` = `count` + '".$ac."'
+		");
 	}
 	$result->finish;
-	
-	print Dumper($playerHash);
-	
+
+	my $result = &::doQuery("SELECT `killerid`, `weapon`, COUNT(*) AS wCount
+								FROM `".$::db_prefix."_Events_PlayerActions`
+								WHERE eventTime < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL $dDays DAY)
+								GROUP BY killerId,weapon");
+	while( ($kId, $weapon, $wc) = $result->fetchrow_array ) {
+
+	}
 }
 
 1;
+

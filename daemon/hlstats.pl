@@ -72,6 +72,7 @@ require "$opt_libdir/HLstats.plib";
 require "$opt_libdir/HLstats_EventHandlers.plib";
 require "$opt_libdir/geoip/PurePerl.pm";
 require "$opt_libdir/HLStats_ServerQueries.pm";
+require "$opt_libdir/HLStats_Player_Archive.pm";
 
 $|=1;
 Getopt::Long::Configure ("bundling");
@@ -341,7 +342,7 @@ if ($g_debug > 0) { print ", debug level $g_debug"; }
 print ").\n\n";
 
 # hlstats player archive testing
-$archive = new HLstats_Player_Archive($g_deletedays,%g_eventTables);
+$archive = new HLstats_Player_Archive($g_deletedays);
 exit();
 
 #
