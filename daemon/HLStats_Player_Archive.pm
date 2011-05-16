@@ -57,11 +57,16 @@ sub new {
 	$result->finish;
 
 	my $result = &::doQuery("SELECT `killerid`, `weapon`, COUNT(*) AS wCount
-								FROM `".$::db_prefix."_Events_PlayerActions`
+								FROM `".$::db_prefix."_Events_Frags`
 								WHERE eventTime < DATE_SUB(CURRENT_TIMESTAMP(), INTERVAL $dDays DAY)
 								GROUP BY killerId,weapon");
 	while( ($kId, $weapon, $wc) = $result->fetchrow_array ) {
-
+		&::doQuery("INSERT INTO `".$::db_prefix."_Events_Frags_Archive`
+			SET playerId = '".$kId."', 
+			weapon = '".$weapon."', 
+			count = '".$wc."'
+			ON DUPLICATE KEY UPDATE `count` = `count` + '".$wc."'
+		");
 	}
 }
 
