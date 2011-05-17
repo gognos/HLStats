@@ -11,6 +11,7 @@ HLStats ChangeLog
 	Useful for cron jobs
 *) Changed: New Rank section in player detail page. #37
 *) Updated: blue.css and default.css small design changes
+*) Updated: weapon and map pictures
 *) Fixed: old weapon images converted to png
 *) Fixed: #34
 *) Fixed: number format error in player detail page
