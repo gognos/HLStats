@@ -18,6 +18,13 @@ INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('zps','Zombie Panic Source','1'
 INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O','zps','kill_streak_12','kill,kill,kill','12 kills in a row',NULL,NULL);
 
 #
+# teams
+#
+INSERT IGNORE INTO `++DB_PREFIX++_Teams` VALUES (NULL,'zps','Undead','Undead','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Teams` VALUES (NULL,'zps','Survivor','Survivors','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Teams` VALUES (NULL,'zps','Spectator','Spectator','0');
+
+#
 # Player Actions
 #
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'zps','kill_streak_2',1,0,'','Double Kill','1','0','0','0');
