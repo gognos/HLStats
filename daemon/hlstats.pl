@@ -341,10 +341,6 @@ print "\n++ HLStats is now running ($g_mode mode";
 if ($g_debug > 0) { print ", debug level $g_debug"; }
 print ").\n\n";
 
-# hlstats player archive testing
-$archive = new HLstats_Player_Archive($g_deletedays);
-exit();
-
 #
 # Main data loop
 #
