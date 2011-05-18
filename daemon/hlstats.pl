@@ -72,7 +72,6 @@ require "$opt_libdir/HLstats.plib";
 require "$opt_libdir/HLstats_EventHandlers.plib";
 require "$opt_libdir/geoip/PurePerl.pm";
 require "$opt_libdir/HLStats_ServerQueries.pm";
-require "$opt_libdir/HLStats_Player_Archive.pm";
 
 $|=1;
 Getopt::Long::Configure ("bundling");
