@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -CSDA
 #
 # Original development:
 # +
@@ -146,8 +146,8 @@ print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_use
 
 $main::db_conn = DBI->connect(
 	"DBI:mysql:$db_name:$db_host",
-	$db_user, $db_pass, { RaiseError => 1, "mysql_enable_utf8" => 1, 'mysql_auto_reconnect' => 1,
-				'ShowErrorStatement' => 1 }
+	$db_user, $db_pass, { 'RaiseError' => 1, "mysql_enable_utf8" => 1, 
+		'mysql_auto_reconnect' => 1, 'ShowErrorStatement' => 1 }
 ) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
 	"Server error: $DBI::errstr\n");
 
@@ -170,7 +170,7 @@ $result->finish();
 my $conf_timeFrame = $oHash{TIMEFRAME};
 
 GetOptions(
-	"period=i"			=> \$conf_timeFrame,
+	"period=i"	=> \$conf_timeFrame,
 ) or die($usage);
 
 print "OK\n";
@@ -179,10 +179,10 @@ print "OK\n";
 my $frame = time() - ($conf_timeFrame*86400); # time in seconds
 
 &doQuery("UPDATE `${db_prefix}_Players`
-									SET `active` = '0'
-									WHERE (`skillchangeDate` < '".$frame."'
-											 OR `skillchangeDate` IS NULL)
-										AND `active` = '1'");
+			SET `active` = '0'
+			WHERE (`skillchangeDate` < '".$frame."'
+				OR `skillchangeDate` IS NULL)
+			AND `active` = '1'");
 
 print "\n++ Player activity updated successfully.\n";
 exit(0);
