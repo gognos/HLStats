@@ -41,7 +41,7 @@
 
 /**
  * create the steam profile url
- * eg. STEAM_0:0:123456
+ * e.g. STEAM_0:0:123456
  * Steam_community_number = (Last_part_of_steam_id * 2) + 76561197960265728 + Second_to_last_part_of_steam_id
  * this needs bcmath support in PHP
  * http://www.php.net/manual/en/book.bc.php
@@ -69,7 +69,7 @@ function getSteamProfileUrl($steamId) {
 /**
  * toggle the color/css class for each row
  *
- * @param string $col The curren css class
+ * @param string $col The current css class
  * @return string The new color
  */
 function toggleRowClass(&$col) {
@@ -84,7 +84,7 @@ function toggleRowClass(&$col) {
 }
 
 /**
- * make var failsave
+ * make var fail-save
  *
  * @param string $text
  * @return string
@@ -176,7 +176,7 @@ function validateInput($string,$mode) {
 /**
  * check and email if valid
  *
- * @param sctring email
+ * @param string email
  * @return boolean
  * @author  Dave Child 	http://www.ilovejackdaniels.com/
  */
@@ -215,7 +215,7 @@ function check_email_address($email) {
  * of default lang is uses, return string immediately
  *
  * @param string $string
- * @return strin $ret
+ * @return string $ret
  */
 function l($string) {
 	global $lData, $cl;
@@ -272,7 +272,7 @@ function getInterval($timestamp, $granularity = 2) {
 }
 
 /**
- * parse the lagunage file
+ * parse the language file
  * the parse ini file is too limited...
  *
  * @param string The file to parse
@@ -303,7 +303,7 @@ function parse_custom_lang_file($file) {
  * @param array $params The array with the params to be added (key=>value)
  * @param array $notkeys The keys to be removed
  *
- * @return string $querystring The final querystring for an url
+ * @return string $querystring The final query-string for an url
  */
 function makeQueryString($params, $notkeys = array()) {
 	$querystring = "";
@@ -326,7 +326,7 @@ function makeQueryString($params, $notkeys = array()) {
 }
 
 /**
- * inlcude the header and build the breadcrumb menu
+ * include the header and build the breadcrumb menu
  *
  * @param string $title The page title
  * @param array $location The entries for the breadcrumb
@@ -337,9 +337,9 @@ function pageHeader($title, $location) {
 }
 
 /**
- * get the formated email link
+ * get the formatted email link
  * @param string $email
- * @param [int $maxlenght]
+ * @param [int $maxlength]
  * @return string
  */
 function getEmailLink ($email, $maxlength=40) {
@@ -422,7 +422,7 @@ function getGameName($gCode) {
 }
 
 /**
- * retireve the data from the _Options table
+ * retrieve the data from the _Options table
  *
  * @return $ret array
  */
