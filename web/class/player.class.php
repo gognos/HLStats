@@ -83,7 +83,14 @@ class Player {
 	 * @var array The system options
 	 */
 	private $g_options = array();
-
+	
+	/**
+	 * mapping which game code has steam stats.
+	 * @var array gamecode=>PublicSteamGameCode
+	 * https://partner.steamgames.com/documentation/community_data
+	 */
+	private $_statsGames = array('css' => 'CS:S');
+ 
 	/**
 	 * load the player id
 	 *
@@ -1275,6 +1282,13 @@ class Player {
 			}
 			mysql_free_result($query);
 		}
+	}
+	
+	/**
+	 * get the public steam stats if available for this player/game
+	 */
+	private function _getSteamStats() {
+		
 	}
 }
 
