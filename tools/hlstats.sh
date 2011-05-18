@@ -38,29 +38,29 @@ cd $saveDir;
 case "$1" in
  start)
      echo "Starting HLStats...";
-     if [ -f hlstats162.pid ]; then
-        kill -0 `cat hlstats162.pid` >/dev/null 2>&1
+     if [ -f hlstats163.pid ]; then
+        kill -0 `cat hlstats163.pid` >/dev/null 2>&1
         if [ "$?" == "0" ]; then
             echo "HLStats already running!"
         else
-            rm -rf hlstats162.pid
+            rm -rf hlstats163.pid
             perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-            echo $! >hlstats162.pid
+            echo $! >hlstats163.pid
             echo "PID file created."
             echo "HLStats Started successfully!"
         fi
      else
         perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-        echo $! >hlstats162.pid
+        echo $! >hlstats163.pid
         echo "PID file created."
         echo "HLStats Started successfully!"
      fi
  ;;
  stop)
      echo "Stopping HLStats..."
-     kill -9 `cat hlstats162.pid` >/dev/null 2>&1
+     kill -9 `cat hlstats163.pid` >/dev/null 2>&1
      if [ "$?" == "0" ]; then
-        rm -rf hlstats162.pid
+        rm -rf hlstats163.pid
         echo "HLStats Stopped successfully."
      else
         echo "HLStats is not running!"
@@ -68,20 +68,20 @@ case "$1" in
  ;;
  restart)
      echo "Restarting HLStats..."
-     kill -9 `cat hlstats162.pid` >/dev/null 2>&1
+     kill -9 `cat hlstats163.pid` >/dev/null 2>&1
      if [ "$?" == "0" ]; then
-         rm -rf hlstats162.pid
+         rm -rf hlstats163.pid
          perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-         echo $! >hlstats162.pid
+         echo $! >hlstats163.pid
          echo "PID file created."
          echo "HLStats Restarted successfully!"
      else
          echo "HLStats is not running!"
-         if [ -f hlstats162.pid ]; then
-           rm -rf hlstats162.pid
+         if [ -f hlstats163.pid ]; then
+           rm -rf hlstats163.pid
          fi
          perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-         echo $! >hlstats162.pid
+         echo $! >hlstats163.pid
          echo "PID file created."
          echo "HLStats Started successfully!"
      fi

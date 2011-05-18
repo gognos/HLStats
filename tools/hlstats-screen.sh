@@ -45,7 +45,7 @@ DAEMON=hlstats.pl
 PARAMS=""
 
 # text for the output on the console
-DESC="HLStats 1.62"
+DESC="HLStats 1.63"
 
 # check if the directory
 if [ ! -e $DIR ] ; then
@@ -64,23 +64,23 @@ fi
 case "$1" in
 start)
      echo "Starting $DESC...";
-     if [ -f /tmp/hlstats162.pid ]; then
-        kill -0 `cat /tmp/hlstats162.pid` >/dev/null 2>&1
+     if [ -f /tmp/hlstats163.pid ]; then
+        kill -0 `cat /tmp/hlstats163.pid` >/dev/null 2>&1
         if [ "$?" == "0" ]; then
             echo "$DESC already running!"
         else
-            rm -rf /tmp/hlstats162.pid
+            rm -rf /tmp/hlstats163.pid
             cd $DIR;
             screen -A -m -d -S $NAME perl ./$DAEMON $PARAMS
 
-            echo $! > /tmp/hlstats162.pid
+            echo $! > /tmp/hlstats163.pid
             echo "PID file created."
             echo "$DESC started successfully!"
         fi
      else
         cd $DIR;
         screen -A -m -d -S $NAME perl ./$DAEMON $PARAMS
-        echo $! > /tmp/hlstats162.pid
+        echo $! > /tmp/hlstats163.pid
         echo "PID file created."
         echo "$DESC started successfully!"
      fi
@@ -90,7 +90,7 @@ stop)
      screen -S $NAME -X quit
 
      if [ "$?" == "0" ]; then
-        rm -rf /tmp/hlstats162.pid
+        rm -rf /tmp/hlstats163.pid
         echo "$DESC stopped successfully."
      else
         echo "$DESC is not running!"
@@ -102,7 +102,7 @@ restart)
        echo -n "Stopping $DESC."
        screen -S $NAME -X quit
 
-       rm -rf /tmp/hlstats162.pid
+       rm -rf /tmp/hlstats163.pid
        echo " ... done."
      else
        echo "Coulnd't find a running $DESC!"
@@ -111,7 +111,7 @@ restart)
      echo "Starting $DESC."
      cd $DIR; screen -A -m -d -S $NAME perl ./$DAEMON $PARAMS
 
-     echo $! > /tmp/hlstats162.pid
+     echo $! > /tmp/hlstats163.pid
      echo "PID file created."
      echo "$DESC restarted successfully!"
     ;;

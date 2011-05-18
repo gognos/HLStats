@@ -30,7 +30,7 @@
 
 
 # HLStats release version number
-our $g_version = "1.62";
+our $g_version = "1.63";
 
 %PATTERNS = ();
 %NAMES    = ();
