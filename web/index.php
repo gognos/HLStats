@@ -46,7 +46,7 @@ date_default_timezone_set('Europe/Berlin');
 
 /**
  * if you have problems with your installation
- * activate this paramter by setting it to true
+ * activate this parameter by setting it to true
  */
 define('SHOW_DEBUG',true);
 

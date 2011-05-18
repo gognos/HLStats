@@ -45,7 +45,7 @@ DAEMON=hlstats.pl
 PARAMS=""
 
 # text for the output on the console
-DESC="HLStats 1.61"
+DESC="HLStats 1.62"
 
 # check if the directory
 if [ ! -e $DIR ] ; then
