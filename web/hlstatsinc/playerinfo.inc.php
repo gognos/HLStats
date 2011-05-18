@@ -263,7 +263,7 @@ $rcol = "row-dark";
 	</h2>
 	<table border="1" cellspacing="0" cellpadding="4" width="100%">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
-			<th>
+			<th width="30%">
 				<img src="hlstatsimg/site/user.png" alt="Username" width="24" style="float: left;" />
 				&nbsp;<?php echo l("Real Name"); ?>
 			</th>
@@ -272,7 +272,7 @@ $rcol = "row-dark";
 				if ($playerObj->getParam("fullName")) {
 					echo "<b>" . htmlspecialchars($playerObj->getParam("fullName")) . "</b>";
 				} else {
-					echo l("Unknown");
+					echo l("Not specified");
 				}
 			   ?>
 			</td>
@@ -302,7 +302,7 @@ $rcol = "row-dark";
 					$email = getEmailLink($playerObj->getParam("email"));
 					echo $email;
 				} else {
-					echo l("Unknown");
+					echo l("Not specified");
 				}
 			   ?>
 			</td>
@@ -378,6 +378,23 @@ $rcol = "row-dark";
 				}
 			   ?>
 			</td>
+		</tr>
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
+			<th>
+				<img src="hlstatsimg/site/skype.png" alt="skype" width="24" style="float: left;" />
+				&nbsp;<?php echo l("Skype username"); ?>
+			</th>
+			<td>
+			   <?php
+				if ($playerObj->getParam("skype")) {
+					echo htmlspecialchars($playerObj->getParam("sykpe"));
+				} else {
+					echo l("Not specified");
+				}
+			   ?>
+			</td>
+			<th>&nbsp;</th>
+			<td>&nbsp;</td>
 		</tr>
 		<?php if($g_options['allowSig'] === "1" && $playerObj->getParam('isBot') === "0") { ?>
 		<tr>

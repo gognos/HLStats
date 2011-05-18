@@ -744,6 +744,9 @@ sub doEvent_Chat
 		elsif ($set_field eq "icq") {
 			&updatePlayerProfile($player, "icq", $set_value);
 		}
+		elsif ($set_field eq "skype") {
+			&updatePlayerProfile($player, "skype", $set_value);
+		}
 	}
 	elsif ($message =~ /^\/hls_hideranking$/i)
 	{

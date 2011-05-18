@@ -657,6 +657,7 @@ class Player {
 					p.icq,
 					p.myspace,
 					p.facebook,
+					p.sykpe,
 					p.jabber,
 					p.steamprofile,
 					p.game,

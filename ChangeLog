@@ -2,6 +2,8 @@ HLStats ChangeLog
 =================
 
 1.63 ()
+*) New: skype field in player table. hls_set skype from ingame #16
+*) Closed: #14
 
 1.62 (2011-05-18)
 *) New: Design styles (css) updated.

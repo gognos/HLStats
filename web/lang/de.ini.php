@@ -435,6 +435,7 @@ E-mail Address = E-Mail Adresse
 Home Page = Homepage
 Not specified = Nicht angegeben
 ICQ Number = ICQ Nummer
+Skype username = Skype Benutzername
 Player ID = Spieler ID
 Unique ID(s) = Eindeutige ID(s)
 IP Addresses = IP Adressen
