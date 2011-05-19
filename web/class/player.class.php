@@ -89,7 +89,13 @@ class Player {
 	 * @var array gamecode=>PublicSteamGameCode
 	 * https://partner.steamgames.com/documentation/community_data
 	 */
-	private $_statsGames = array('css' => 'CS:S');
+	private $_statsGames = array('css' => 'CS:S',
+				'l4d' => 'L4D',
+				'hl2mp' => 'HL2',
+				'l4d2' => 'L4D2',
+				'tf2' => 'TF2',
+				'css' => 'CS:S'
+			);
  
 	/**
 	 * load the player id
@@ -734,7 +740,9 @@ class Player {
 			while ($result = mysql_fetch_assoc($query)) {
 
 				if(strstr($result['uniqueId'],'STEAM_')) {
-					$result['uniqueId'] = getSteamProfileUrl($result['uniqueId']);
+					$ret = getSteamProfileUrl($result['uniqueId']);
+					$this->_getSteamStats($result['uniqueId']);
+					break;
 				}
 				$ret .= $result['uniqueId'].",<br />";
 			}
@@ -881,7 +889,7 @@ class Player {
 	}
 
 	/**
-	 * get the teamkills for this player and game
+	 * get the team-kills for this player and game
 	 *
 	 * @return void
 	 */
@@ -1286,9 +1294,29 @@ class Player {
 	
 	/**
 	 * get the public steam stats if available for this player/game
+	 * https://partner.steamgames.com/documentation/community_data
+	 * http://steamcommunity.com/profiles/76561197968575517/stats/L4D/?xml=1
 	 */
-	private function _getSteamStats() {
-		
+	private function _getSteamStats($steamID) {
+		$sPID = calculateSteamProfileID($steamID);
+		if(!empty($sPID) && isset($this->_statsGames[$this->_game])) {
+			$url = "http://steamcommunity.com/profiles/".$sPID."/stats/".$this->_statsGames[$this->_game]."/?xml=1";
+			$data = getDataFromURL($url);
+			if(!empty($data)) {
+				$xml = simplexml_load_string($data);
+				foreach($xml->achievements->achievement as $achievement) {
+					$att = $achievement->attributes();
+					$closed = (string)$att['closed'];
+					if($closed === "1") { # closed is achieved
+						$this->_playerData['steamAchievements'][] = array(
+							'name' => (string)$achievement->name,
+							'desc' => (string)$achievement->description,
+							'picture' => (string)$achievement->iconClosed
+						);
+					}
+				}
+			}
+		}
 	}
 }
 

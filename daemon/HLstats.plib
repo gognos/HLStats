@@ -704,15 +704,10 @@ sub getServer
 {
 	my ($address, $port) = @_;
 
-	my $query = "
-		SELECT
-			serverId,
-			game
-		FROM
-			`${db_prefix}_Servers`
-		WHERE
-			address='$address' AND
-			port='$port'
+	my $query = " SELECT serverId, game
+		FROM `${db_prefix}_Servers`
+		WHERE address = '$address' 
+		AND port = '$port'
 	";
 	my $result = &doQuery($query);
 
@@ -830,14 +825,14 @@ sub getPlayerInfo
 	return 0 if ($uniqueid eq "HLTV");
 
 	if($g_ignore_bots) {
-		return 0 if ($uniqueid =~ /^BOT/);
+		return 0 if ($uniqueid =~ /^BOT/ || $uniqueid =~ /^zombie/);
 	}
 	
 	# we do not ignore BOT but mark them as
-	if ($uniqueid =~ /^BOT/) {
+	if ($uniqueid =~ /^BOT/ || $uniqueid =~ /^zombie/) {
 		$isBot = 1;
 	}
-
+	
 	if ($forced_uniqueid) {
 		$uniqueid = $forced_uniqueid;
 	}
@@ -853,7 +848,7 @@ sub getPlayerInfo
 				team     => $team
 			};
 		}
-		elsif($uniqueid =~ /^BOT/) {
+		elsif($uniqueid =~ /^BOT/ || $uniqueid =~ /^zombie/) {
 			$md5 = Digest::MD5->new;
 			$md5->add($name);
 			$md5->add($s_addr);

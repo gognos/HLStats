@@ -1,4 +1,4 @@
-#!/usr/bin/perl -CSDA
+#!/usr/bin/perl 
 #
 # Original development:
 # +
@@ -170,7 +170,19 @@ GetOptions(
 	"db-name=s"			=> \$db_name,
 	"db-password=s"		=> \$db_pass,
 	"db-username=s"		=> \$db_user,
-	"quiet|q"			=> \$opt_quiet
+	"quiet|q"			=> \$opt_quiet,
+	"debug|d+"			=> \$g_debug,
+	
+	"mode|m=s"			=> \$g__mode,
+	"ip|i=s"			=> \$s_ip,
+	"port|p=i"			=> \$s_port,
+	"stdin!"			=> \$g_stdin,
+	"s"					=> \$g_stdin,
+	"server-ip=s"		=> \$g_server_ip,
+	"server-port=i"		=> \$g_server_port,
+	"timestamp!"		=> \$g_timestamp,
+	"t"					=> \$g_timestamp
+	
 ) or die($usage);
 
 if ($opt_help) {
@@ -224,7 +236,7 @@ while( ($keyname, $value) = $result->fetchrow_array ) {
 $result->finish();
 
 $g_use_geoip = $oHash{USEGEOIP};
-$g_mode = $oHash{MODE};
+$g_mode = $g__mode ? $g__mode : $oHash{MODE};
 $g_deletedays = $oHash{DELETEDAYS};
 $g_ignore_bots = $oHash{IGNOREBOTS};
 $g_rcon = $oHash{RCON};
@@ -238,21 +250,6 @@ $g_ingame_points = $oHash{INGAMEPOINTS};
 $g_option_strip_tags = $oHash{STRIPTAGS};
 
 print "OK\n";
-
-# Read Command Line Arguments
-# the second time but with the other options now
-GetOptions(
-	"debug|d+"			=> \$g_debug,
-	"mode|m=s"			=> \$g_mode,
-	"ip|i=s"			=> \$s_ip,
-	"port|p=i"			=> \$s_port,
-	"stdin!"			=> \$g_stdin,
-	"s"					=> \$g_stdin,
-	"server-ip=s"		=> \$g_server_ip,
-	"server-port=i"		=> \$g_server_port,
-	"timestamp!"		=> \$g_timestamp,
-	"t"					=> \$g_timestamp
-) or die($usage);
 
 ## Startup
 print "++ HLStats $g_version starting...\n\n";
@@ -375,7 +372,7 @@ while ($loop = &getLine()) {
 	# update the information about the server
 	# to avoid unaccounted maps
 	if($c % 500 == 0) {
-		$g_servers{$s_addr} = &getServer($s_peerhost, $s_peerport);
+		#$g_servers{$s_addr} = &getServer($s_peerhost, $s_peerport);
 		my $q = HLstats_ServerQueries->new(encoding => 'utf-8',
 											timeout => 1,
 											'addr' => $s_peerhost,
@@ -386,7 +383,8 @@ while ($loop = &getLine()) {
 			$g_servers{$s_addr}->{map} = $ret->{map};
 		}
 	}
-
+	
+	print "### players at server ".$g_servers{$s_addr}->{numplayers}."\n" if ($g_debug > 2);
 
 	# Get the datestamp (or complain)
 	# otherwise ignore the data and proceed to the next loop
@@ -835,8 +833,7 @@ while ($loop = &getLine()) {
 		{
 			my $playerinfo = &getPlayerInfo($ev_player);
 
-			if ($playerinfo)
-			{
+			if ($playerinfo) {
 				$ev_type = 2;
 
 				$ev_status = &doEvent_EnterGame(
@@ -845,12 +842,10 @@ while ($loop = &getLine()) {
 				);
 			}
 		}
-		elsif (like($ev_verb, "disconnected"))
-		{
+		elsif (like($ev_verb, "disconnected")) {
 			my $playerinfo = &getPlayerInfo($ev_player);
 
-			if ($playerinfo)
-			{
+			if ($playerinfo) {
 				$ev_type = 3;
 
 				$userid = $playerinfo->{"userid"};
@@ -873,12 +868,10 @@ while ($loop = &getLine()) {
 				&printNotice("NumPlayers ($s_addr): $g_servers{$s_addr}->{numplayers} (Disconnect)");
 			}
 		}
-		elsif (like($ev_verb, "STEAM USERID validated") || like($ev_verb, "VALVE USERID validated"))
-		{
+		elsif (like($ev_verb, "STEAM USERID validated") || like($ev_verb, "VALVE USERID validated")) {
 			my $playerinfo = &getPlayerInfo($ev_player);
 
-			if ($playerinfo)
-			{
+			if ($playerinfo) {
 				$ev_type = 1;
 
 				if ( ($g_preconnect->{$playerinfo->{"userid"}}->{"name"} eq $playerinfo->{"name"})
@@ -900,14 +893,12 @@ while ($loop = &getLine()) {
 
 			$ev_type = 46;
 
-			if ($playerinfo)
-			{
+			if ($playerinfo) {
 				$ev_status = &doEvent_RoleSelection(
 					$playerinfo->{"userid"},
 					$playerinfo->{"role"}
 				);
 			}
-
 		}
 	}
 	elsif ($s_output =~ /^Team "([^"]+)" ([^"\(]+) "([^"]+)" [^"\(]+ "([^"]+)" [^"\(]+(.*)$/)
@@ -1255,6 +1246,7 @@ EOT
 
 	# Clean up
 	while ( my($pl, $player) = each(%g_players) ) {
+
 		if ( ($ev_unixtime - $player->{timestamp}) > 600 ) {
 			# we delete any player who is inactive for over 10 mins (600 sec)
 			# - they probably disconnected silently somehow.

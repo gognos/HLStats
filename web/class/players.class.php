@@ -262,7 +262,7 @@ class Players {
 		}
 
 		$queryStr .= " ORDER BY lastUpdate";
-
+		
 		$query = mysql_query($queryStr);
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {

@@ -300,14 +300,11 @@ sub doEvent_Frag {
 	my $kskill;
 	my $vskill;
 
-	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers)
-	{
+	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers) {
 		$desc = "(IGNORED) NOTMINPLAYERS: ";
 	}
-	elsif ($killer && $victim && $weapon)
-	{
-		if (!&sameTeam($killer->{team}, $victim->{team}))
-		{
+	elsif ($killer && $victim && $weapon) {
+		if (!&sameTeam($killer->{team}, $victim->{team})) {
 			# Frag
 			&recordEvent(
 				"Frags", 0,
@@ -387,12 +384,10 @@ sub doEvent_PlayerPlayerAction
 
 	$action =~ s/ /_/g;
 
-	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers)
-	{
+	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers) {
 		$desc = "(IGNORED) NOTMINPLAYERS: ";
 	}
-	elsif ($player && $victim)
-	{
+	elsif ($player && $victim) {
 		my $query = "SELECT
 				id,
 				reward_player,
@@ -541,20 +536,17 @@ sub doEvent_PlayerAction
 # 012. Team Objectives/Actions
 #
 
-sub doEvent_TeamAction
-{
+sub doEvent_TeamAction {
 	my ($team, $action, $ev_prop) = @_;
 
 	my $desc;
 
 	$action =~ s/ /_/g;
 
-	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers)
-	{
+	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers) {
 		$desc = "(IGNORED) NOTMINPLAYERS: ";
 	}
-	else
-	{
+	else {
 		my $query = "
 			SELECT
 				id,
@@ -635,12 +627,10 @@ sub doEvent_WorldAction
 		$action .= "_" . $ev_prop{winner};
 	}
 
-	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers)
-	{
+	if ($g_servers{$s_addr}->{numplayers} < $g_minplayers) {
 		$desc = "(IGNORED) NOTMINPLAYERS: ";
 	}
-	else
-	{
+	else {
 		my $query = "
 			SELECT
 				id,
@@ -862,8 +852,7 @@ sub doEvent_TeamAlliance
 # 016. Team Score Report
 #
 
-sub doEvent_TeamScoreReport
-{
+sub doEvent_TeamScoreReport {
 	my ($team, $score, $numplayers) = @_;
 
 	return "Team \"$team\" scored \"$score\" with \"$numplayers\" players";

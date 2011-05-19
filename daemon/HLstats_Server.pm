@@ -31,8 +31,7 @@ package HLstats_Server;
 #
 
 
-sub new
-{
+sub new {
 	my ($class_name, $serverId, $address, $port, $game, $currentMap) = @_;
 
 	my ($self) = {};

@@ -133,8 +133,7 @@ sub set {
 #
 # Increment (or decrement) the value of 'key' by 'amount' (or 1 by default)
 #
-sub increment
-{
+sub increment {
 	my ($self, $key, $amount, $no_updatetime) = @_;
 
 	$amount = int($amount);
@@ -163,8 +162,7 @@ sub get {
 #
 # Set player's uniqueid
 #
-sub setUniqueId
-{
+sub setUniqueId {
 	my ($self, $uniqueid) = @_;
 
 	my $playerid = &::getPlayerId($uniqueid);
@@ -327,8 +325,7 @@ sub updateDB
 	my $skill  = $self->get("skill");
 	my $isBot = $self->get("isBot");
 
-	unless ($playerid)
-	{
+	unless ($playerid) {
 		warn ("Player->Update() with no playerid set!\n");
 		return 0;
 	}
@@ -353,8 +350,7 @@ sub updateDB
 	";
 	&::doQuery($query, "Player->updateDB(): $callref");
 
-	if ($name)
-	{
+	if ($name) {
 		# Update alias details
 		$query = "
 			UPDATE
@@ -365,8 +361,7 @@ sub updateDB
 				suicides=suicides + $suicides"
 		;
 
-		unless ($leaveLastUse)
-		{
+		unless ($leaveLastUse) {
 			# except on ChangeName we update the last use on a player's old name
 
 			$query .= ",

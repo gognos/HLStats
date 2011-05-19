@@ -411,6 +411,20 @@ $rcol = "row-dark";
 		</tr>
 		<?php } ?>
 	</table>
+	<?php
+		$steamAchievements = $playerObj->getParam('steamAchievements');
+		if(!empty($steamAchievements)) { 
+	?>
+	<h2>
+		<?php echo l('Steam Achievements'); ?>
+		<a href="index.php?mode=playerinfo&amp;player=<?php echo $player; ?>#Achievements"><img src="hlstatsimg/link.gif" alt="<?php echo l('Direct Link'); ?>" title="<?php echo l('Direct Link'); ?>" /></a>
+	</h2>
+	<?php
+			foreach($steamAchievements as $entry) {
+				echo '<img src="'.$entry['picture'].'" title="'.$entry['name'].' - '.$entry['desc'].'" alt="'.$entry['name'].'" width="32" height="32" />&nbsp;';
+			}
+		}
+	?>
 <?php
 $aliases = $playerObj->getParam('aliases');
 if(!empty($aliases)) { ?>

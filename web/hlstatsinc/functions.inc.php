@@ -50,6 +50,17 @@
  */
 function getSteamProfileUrl($steamId) {
 	$ret = $steamId;
+	
+	$s = calculateSteamProfileID($steamId);
+	
+	$ret = '<a href="http://steamcommunity.com/profiles/'.$s.'" target="_blank">'.$steamId.'</a>';
+
+	return $ret;
+}
+
+function calculateSteamProfileID($steamId) {
+	$ret = false;
+	
 	if(!empty($steamId) && strstr($steamId,'STEAM_') && function_exists('bcadd')) {
 		$t = explode(':',$steamId);
 		$s = bcadd('76561197960265728',$t[2]*2);
@@ -57,12 +68,13 @@ function getSteamProfileUrl($steamId) {
 
 		if(strstr($s,'.')) {
 			$st = explode('.',$s);
-			$s = $st[0];
+			$ret = $st[0];
 		}
-
-		$ret = '<a href="http://steamcommunity.com/profiles/'.$s.'" target="_blank">'.$steamId.'</a>';
+		else {
+			$ret = $s;
+		}
 	}
-
+	
 	return $ret;
 }
 
@@ -449,6 +461,30 @@ function getTimeFromSec($secs) {
 	return str_pad(floor($secs/3600),2,"0",STR_PAD_LEFT).":".
 		str_pad(floor(($secs%3600)/60),2,"0",STR_PAD_LEFT).":".
 		str_pad($secs%60,2,"0",STR_PAD_LEFT);
+}
+
+function getDataFromURL($url) {
+	$ret = false;
+	
+	if(!empty($url) && function_exists('curl_init')) {
+		$ch = curl_init();
+		
+		curl_setopt ($ch, CURLOPT_URL, $url);
+		curl_setopt ($ch, CURLOPT_TIMEOUT, 5); 
+		curl_setopt ($ch, CURLOPT_HEADER, 0);
+		curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)");
+		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
+		
+		# testing only
+		curl_setopt($ch, CURLOPT_PROXY, "http://10.0.1.11:80"); 
+		curl_setopt($ch, CURLOPT_PROXYPORT, 80);
+		# testing only end !!
+
+		$ret = curl_exec ($ch);
+		curl_close($ch);
+	}
+	
+	return $ret;
 }
 
 ?>
