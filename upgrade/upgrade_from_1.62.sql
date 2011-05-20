@@ -11,3 +11,5 @@
 #
 
 ALTER TABLE `#DB_PREFIX#_Players` ADD `sykpe` varchar(128) NULL DEFAULT NULL  AFTER `steamprofile`;
+ALTER TABLE `#DB_PREFIX#_Players` DROP `lastUpdate`;
+

@@ -204,8 +204,8 @@ pageHeader(
 		echo '</td></tr>',"\n";
 		?>
 		<tr>
-			<th class="<?php echo toggleRowClass($rcol); ?>"><?php echo l('Rank'); ?></th>
-			<th class="<?php echo toggleRowClass($rcol); ?>">
+			<th ><?php echo l('Rank'); ?></th>
+			<th >
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'lastName','sortorder'=>$newSort)); ?>">
 					<?php echo l('Name'); ?>
 				</a>
@@ -213,7 +213,7 @@ pageHeader(
 				<img src="hlstatsimg/<?php echo $playersObj->getOption('sortorder'); ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
-			<th class="<?php echo toggleRowClass($rcol); ?>">
+			<th >
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'skill','sortorder'=>$newSort)); ?>">
 					<?php echo l('Points'); ?>
 				</a>
@@ -221,7 +221,7 @@ pageHeader(
 				<img src="hlstatsimg/<?php echo $playersObj->getOption('sortorder'); ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
-			<th class="<?php echo toggleRowClass($rcol); ?>">
+			<th >
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'kills','sortorder'=>$newSort)); ?>">
 					<?php echo l('Kills'); ?>
 				</a>
@@ -229,7 +229,7 @@ pageHeader(
 				<img src="hlstatsimg/<?php echo $playersObj->getOption('sortorder'); ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
-			<th class="<?php echo toggleRowClass($rcol); ?>">
+			<th >
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'deaths','sortorder'=>$newSort)); ?>">
 					<?php echo l('Deaths'); ?>
 				</a>
@@ -237,7 +237,7 @@ pageHeader(
 				<img src="hlstatsimg/<?php echo $playersObj->getOption('sortorder'); ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
-			<th class="<?php echo toggleRowClass($rcol); ?>">
+			<th >
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'kpd','sortorder'=>$newSort)); ?>">
 					<?php echo l('Kills per Death'); ?>
 				</a>

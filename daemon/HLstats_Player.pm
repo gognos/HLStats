@@ -230,19 +230,16 @@ sub setUniqueId {
 #
 # Set player's name
 #
-sub setName
-{
+sub setName {
 	my ($self, $name) = @_;
 
 	my $oldname = $self->get("name");
 
-	if ($oldname eq $name)
-	{
+	if ($oldname eq $name) {
 		return 2;
 	}
 
-	if ($oldname)
-	{
+	if ($oldname) {
 		$self->updateDB();
 	}
 
@@ -251,8 +248,7 @@ sub setName
 
 	my $playerid = $self->get("playerid");
 
-	if ($playerid)
-	{
+	if ($playerid) {
 		my $query = "
 			SELECT
 				playerId
@@ -264,8 +260,7 @@ sub setName
 		";
 		my $result = &::doQuery($query);
 
-		if ($result->rows < 1)
-		{
+		if ($result->rows < 1) {
 			$query = "
 				INSERT INTO
 					`".$::db_prefix."_PlayerNames`
@@ -285,8 +280,7 @@ sub setName
 			";
 			&::doQuery($query);
 		}
-		else
-		{
+		else {
 			$query = "
 				UPDATE
 					`".$::db_prefix."_PlayerNames`
@@ -312,8 +306,7 @@ sub setName
 #
 # Update player information in database
 #
-sub updateDB
-{
+sub updateDB {
 	my ($self, $leaveLastUse, $callref) = @_;
 
 	my $playerid = $self->get("playerid");
@@ -340,13 +333,13 @@ sub updateDB
 			kills=kills + $kills,
 			deaths=deaths + $deaths,
 			suicides=suicides + $suicides,
-			oldSkill=skill,
-			skillchangeDate='".time()."',
+			oldSkill = skill,
+			skillchangeDate = '".$::ev_unixtime."',
 			active = '1',
 			skill=$skill,
 			isBot=$isBot
 		WHERE
-			playerId='$playerid'
+			playerId = '$playerid'
 	";
 	&::doQuery($query, "Player->updateDB(): $callref");
 
@@ -356,23 +349,23 @@ sub updateDB
 			UPDATE
 				`".$::db_prefix."_PlayerNames`
 			SET
-				kills=kills + $kills,
-				deaths=deaths + $deaths,
-				suicides=suicides + $suicides"
+				kills = kills + $kills,
+				deaths = deaths + $deaths,
+				suicides = suicides + $suicides"
 		;
 
 		unless ($leaveLastUse) {
 			# except on ChangeName we update the last use on a player's old name
 
 			$query .= ",
-				lastuse=" . $::ev_datetime . ""
+				lastuse = " . $::ev_datetime . ""
 			;
 		}
 
 		$query .= "
 			WHERE
-				playerId='" . $playerid . "'
-				AND name='" . &::quoteSQL($self->get("name")) . "'
+				playerId = '" . $playerid . "'
+				AND name = '" . &::quoteSQL($self->get("name")) . "'
 		";
 		&::doQuery($query);
 	}

@@ -162,7 +162,7 @@ class Players {
 				t1.active,
 				t1.isBot,
 				IFNULL(t1.kills/t1.deaths,0) AS kpd,
-				DATE(t1.lastUpdate) AS lastUpdate
+				DATE(t1.skillchangeDate) AS lastUpdate
 			FROM `".DB_PREFIX."_Players` as t1";
 
 		$queryStr .= " WHERE
@@ -180,7 +180,8 @@ class Players {
 
 		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
 			// should we show only players from today
-			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
+			$startDay = time()-86400;
+			$queryStr .= " AND 'lastUpdate' > '".$startDay."'";
 		}
 
 
@@ -233,7 +234,7 @@ class Players {
 		$data = array();
 
 		$queryStr = "SELECT `t1`.`playerId`,
-						DATE(t1.lastUpdate) AS lastUpdate
+						`skillchangeDate` AS lastUpdate
 						FROM `".DB_PREFIX."_Players` AS t1
 						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId
 						WHERE `t1`.`game` = '".mysql_real_escape_string($this->_game)."'";
@@ -253,21 +254,23 @@ class Players {
 
 		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
 			// should we show only players from today
-			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
+			$startDay = time()-86400;
+			$queryStr .= " AND 'lastUpdate' > '".$startDay."'";
 		}
 		elseif($this->g_options['DELETEDAYS'] !== "0") {
-			$startTime = time()-(86400*$this->g_options['DELETEDAYS']);
-			$startDay = date("Y-m-d",$startTime);
-			$queryStr .= " HAVING lastUpdate > '".$startDay."'";
+			$startDay = time()-(86400*$this->g_options['DELETEDAYS']);
+			$queryStr .= " AND 'lastUpdate' > '".$startDay."'";
 		}
+		
 
-		$queryStr .= " ORDER BY lastUpdate";
+		$queryStr .= " ORDER BY 'lastUpdate'";
 		
 		$query = mysql_query($queryStr);
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while ($result = mysql_fetch_assoc($query)) {
 				// we group by day
+				$result['lastUpdate'] = date("d.m.Y",$result['lastUpdate']);
 				$data[$result['lastUpdate']][] = $result['playerId'];
 			}
 		}
@@ -289,7 +292,7 @@ class Players {
 		$queryStr = "SELECT p.lastName AS name,
 					est.playerId AS pId,
 					sum(TIME_TO_SEC(est.time)) as tTime,
-					DATE(p.lastUpdate) AS lastUpdate
+					DATE(p.skillchangeDate) AS lastUpdate
 				FROM `".DB_PREFIX."_Events_StatsmeTime` AS est
 				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = est.serverId
@@ -306,15 +309,16 @@ class Players {
 			$queryStr .= " AND p.active = '1'";
 		}
 		
-		$queryStr .= " GROUP BY est.playerId";
-		
 		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
 			// should we show only players from today
-			$queryStr .= " HAVING lastUpdate = '".date('Y-m-d')."'";
+			$startDay = time()-86400;
+			$queryStr .= " AND 'lastUpdate' = '".$startDay."'";
 		}
 		
-		$queryStr .= " ORDER BY `tTime` DESC
+		$queryStr .= " GROUP BY est.playerId
+		 		ORDER BY `tTime` DESC
 				LIMIT 10";
+
 		$query = mysql_query($queryStr);
 					
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());

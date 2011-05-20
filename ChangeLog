@@ -4,6 +4,10 @@ HLStats ChangeLog
 1.63 ()
 *) New: skype field in player table. hls_set skype from ingame #16
 *) New: steam achievements are show at the games which have steam stats
+*) New: New style sheet 'rounded'
+*) Fixed: timestamp option was not used correctly.
+*) Fixed: deleted lastUpdate column from player table. is now replaced with
+	skillchangeDate
 *) Changed: L4D improvements. zombies are now handled as BOT to clear up
 	the stats
 *) Closed: #14
