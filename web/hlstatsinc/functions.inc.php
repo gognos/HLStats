@@ -476,8 +476,9 @@ function getDataFromURL($url) {
 		curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); 
 		
 		# testing only
-		#curl_setopt($ch, CURLOPT_PROXY, "http://10.0.1.11:80"); 
-		#curl_setopt($ch, CURLOPT_PROXYPORT, 80);
+		# use this if you need a proxy
+		# curl_setopt($ch, CURLOPT_PROXY, "http://10.0.1.11:80"); 
+		# curl_setopt($ch, CURLOPT_PROXYPORT, 80);
 		# testing only end !!
 
 		$ret = curl_exec ($ch);

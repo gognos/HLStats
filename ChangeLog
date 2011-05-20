@@ -3,7 +3,8 @@ HLStats ChangeLog
 
 1.63 ()
 *) New: skype field in player table. hls_set skype from ingame #16
-*) New: steam achievements are show at the games which have steam stats
+*) New: steam achievements are shown at the games which have steam stats
+	curl modul for php is needed
 *) New: New style sheet 'rounded'
 *) Fixed: timestamp option was not used correctly.
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
