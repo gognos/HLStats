@@ -29,7 +29,17 @@ INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden','latency','Best L
 #
 # Player Actions
 #
-
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_2', 1, 0, '', 'Double Kill (2 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_3', 2, 0, '', 'Triple Kill (3 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_4', 3, 0, '', 'Domination (4 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_5', 4, 0, '', 'Rampage (5 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_6', 5, 0, '', 'Mega Kill (6 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_7', 6, 0, '', 'Ownage (7 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_8', 7, 0, '', 'Ultra Kill (8 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_9', 8, 0, '', 'Killing Spree (9 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_10', 9, 0, '', 'Monster Kill (10 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_11', 10, 0, '', 'Unstoppable (11 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_12', 11, 0, '', 'God Like (12+ kills)', '1', '', '', '');
 
 
 #
