@@ -108,6 +108,15 @@ INSERT IGNORE INTO `++DB_PREFIX++_Team` VALUES ('ges', 'Janus', 'Janus', '0');
 #
 # Roles
 #
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'jaws', 'Jaws', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'bond', 'Bond', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'boris', 'Boris', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'Mayday', 'May Day', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'Mishkin', 'Mishkin', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'oddjob', 'Oddjob', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'ourumov', 'Ourumov', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'samedi', 'Samedi', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'valentin', 'Valentin', '0');
 
 
 
