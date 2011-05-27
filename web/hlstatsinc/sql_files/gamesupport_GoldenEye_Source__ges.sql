@@ -151,6 +151,8 @@ INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'oddjob', 'Oddjob', '0')
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'ourumov', 'Ourumov', '0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'samedi', 'Samedi', '0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'valentin', 'Valentin', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', 'female_scientist', 'Scientist', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES ('ges', '006_mi6', '006', '0');
 
 
 
