@@ -40,7 +40,7 @@ INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','Biker','Biker','0')
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','EXPLODING','Exploding','0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','GAS','Gas','0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','HUNTER','Hunter','0');
-INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','NamVet','NamVet','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','NamVet','Bill','0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','TANK','Tank','0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','TeenGirl','Teen Girl','0');
 INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'l4d','Unknown','Unknown','0');
