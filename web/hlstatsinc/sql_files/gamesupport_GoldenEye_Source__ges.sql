@@ -1,0 +1,119 @@
+#
+# HLstats Game Support file for Age of Chivalry
+# ----------------------------------------------------
+#
+# If you want to insert this manually and not via the admin interface
+# replace ++DB_PREFIX++ with the current table prefix !
+# and import this into your hlstats database
+
+#
+# Game Definition
+#
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('ges','GoldenEye: Source','1','0');
+
+#
+# Awards
+#
+
+#
+# Player Actions
+#
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'headshot', 1, 0, '', 'Headshot Kill', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_2', 1, 0, '', 'Double Kill (2 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_3', 2, 0, '', 'Triple Kill (3 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_4', 3, 0, '', 'Domination (4 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_5', 4, 0, '', 'Rampage (5 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_6', 5, 0, '', 'Mega Kill (6 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_7', 6, 0, '', 'Ownage (7 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_8', 7, 0, '', 'Ultra Kill (8 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_9', 8, 0, '', 'Killing Spree (9 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_10', 9, 0, '', 'Monster Kill (10 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_11', 10, 0, '', 'Unstoppable (11 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'kill_streak_12', 11, 0, '', 'God Like (12+ kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'Round_Win', 5, 0, '', 'Round Win', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'Round_Win_Team', 0, 3, '', 'Team Round Win', '', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_DEADLY', 10, 0, '', 'Most Deadly', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_HONORABLE', 5, 0, '', 'Most Honorable', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_PROFESSIONAL', 10, 0, '', 'Most Professional', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_MARKSMANSHIP', 1, 0, '', 'Marksmanship Award', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_AC10', 2, 0, '', 'AC-10 Award', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_FRANTIC', 2, 0, '', 'Most Frantic', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_WTA', 1, 0, '', 'Where''s the Ammo?', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_LEMMING', -1, 0, '', 'Lemming (suicide)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_LONGIN', 1, 0, '', 'Longest Innings', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_SHORTIN', -1, 0, '', 'Shortest Innings', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_DISHONORABLE', -10, 0, '', 'Most Dishonorable', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_NOTAC10', 4, 0, '', 'Where''s the Armor?', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'GE_AWARD_MOSTLYHARMLESS', -1, 0, '', 'Mostly Harmless', '1', '', '', '');
+
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'Match_Win', 15, 0, '', 'Match Won', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'achievement_unlocked', 10, 0, '', 'Achievment earned', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'alldatfound', 150, 0, '', 'Found all Facility Cartridges', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'camper_eliminated', 10, 0, '', 'Killed a Camper', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'cr_team_lose', 0, -1, '', '(CR) Team Lose', '0', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'cr_team_tie', 0, 0, '', '(CR) Tie in Teamplay', '0', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'cr_team_tie', 0, 0, '', '(CR) Tie in Teamplay', '0', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'cr_team_win', 0, 1, '', '(CR) Team Win', '0', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokencapture', 6, 0, '', '(CTK) Captured the Key', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokencaptured', 0, 1, '', '(CTK) Captured the Key in Teamplay', '0', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokendefended', 3, 0, '', '(CTK) Killed a Key bearer', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokendefense', 0, 1, '', '(CTK) Defended the Key in Teamplay', '', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokendropped', -3, 0, '', '(CTK) Lost the Key', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokenlost', 0, -1, '', '(CTK) Lost the Key in Teamplay', '', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokenpicked', 6, 0, '', '(CTK) Picked up the Key', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokenpicked', 6, 0, '', '(CTK) Picked up the Key', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ctk_tokenpickup', 0, 1, '', '(CTK) Picked up the Key in Teamplay', '', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'firstblood_kill', 5, 0, '', 'First Blood Kill', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'fullcamping', -30, 0, '', 'Deep Camping', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'fyeo_case_picked', 10, 0, '', '(FYEO) Picked up the Case', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'fyeo_caseholder_killed', 10, 0, '', '(FYEO) Killed the Case Holder', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'fyeo_eliminated', 3, 0, '', '(FYEO) Eliminated a Player', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'griefing', -10, 0, '', 'Griefing', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'lald_baronwinner', 20, 0, '', '(LaLD) Round Win as Baron Samedi', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'lald_eliminated', 2, 0, '', '(LaLD) Eliminated a Player', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'lald_flawlessvictory', 10, 0, '', '(LaLD) Flawless Victory', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'lald_ggpickup', 10, 0, '', '(LaLD) Golden Gun Pickup', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'lald_killedbaron', 20, 0, '', '(LaLD) Killed Baron Samedi', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'lald_survived', 5, 0, '', '(LaLD) Survived Through the Entire Round', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ld_flagescape', 2, 0, '', '(LD) Escaped Combat while holding a Flag', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ld_flagpickup', 15, 0, '', '(LD) Picked Up a Flag', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ld_flagslapped', 20, 0, '', '(LD) Killed a Flag Holder with Slappers', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ld_flagsuicide', -5, 0, '', '(LD) Suicide while holding a Flag', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ldflaghits', 1, 0, '', '(LD) Flag Hit', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ldflagpoints', 1, 0, '', '(LD) Flag Point', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'longdist_kill', 5, 0, '', 'Long Distance (170+ ft away) Shot Kill', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'massbounces_kill', 5, 0, '', 'Multiple Explosive Bounces Kill', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'mwgg_ggpickup', 10, 0, '', '(MWGG) Picked up the Golden Gun', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'mwgg_kill', 2, 0, '', '(MWGG) Kill with a Golden Gun', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'mwgg_killed', 10, 0, '', '(MWGG) Killed the Golden Gun Holder', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'mwgg_suicide', -5, 0, '', '(MWGG) Suicide while holding the Golden Gun', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'penetrated_shot', 2, 0, '', 'Penetrated Shot Kill', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'powerused', 2, 0, '', '(CR) Used Power', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'restoredpower', 5, 0, '', '(CR) Restored Power', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'rocket', 3, 0, '', 'Silo Rocket Launch', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'roundend_kill', 10, 0, '', 'After-round-end Kill', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'shuttle', 2, 0, '', 'Aztec Launchpad Opened', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'ufo_shot', 2, 0, '', 'UFO Kill', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'yolt_eliminated', 10, 0, '', '(YOLT) Eliminated a Player', '', '1', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'yolt_elimination', 1, 0, '', '(YOLT) Eliminated a Player in Teamplay', '', '', '1', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('ges', 'zoomed_shot', 1, 0, '', 'Zoomed-in Shot Kill', '1', '', '', '');
+
+#
+# Teams
+#
+INSERT IGNORE INTO `++DB_PREFIX++_Team` VALUES ('ges', 'MI6', 'MI6', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Team` VALUES ('ges', 'Janus', 'Janus', '0');
+
+
+#
+# Roles
+#
+
+
+
+#
+# Weapons
+#
+
+
+# end of file
