@@ -1,5 +1,5 @@
 #
-# HLstats Game Support file for zps
+# HLstats Game Support file for Zombi Panic: Source
 # ----------------------------------------------------
 #
 # If you want to insert this manually and not via the admin interface

@@ -7,6 +7,8 @@ HLStats ChangeLog
 *) New: New style sheet 'rounded'
 *) New: Player attacked Player events are now recorded.
 *) New: GoldenEye: Source gamesupport
+*) New: Left for dead 2 gamesupport
+*) Update: L4D, Hidden and other gamesupport files.
 *) Fixed: timestamp option was not used correctly.
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
 	skillchangeDate

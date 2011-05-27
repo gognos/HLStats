@@ -1,5 +1,5 @@
 #
-# HLstats Game Support file for Age of Chivalry
+# HLstats Game Support file for GoldenEye: Source
 # ----------------------------------------------------
 #
 # If you want to insert this manually and not via the admin interface

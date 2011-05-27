@@ -1,5 +1,5 @@
 #
-# HLstats Game Support file for Natural Selection 3.0
+# HLstats Game Support file for Natural Selection 
 # ----------------------------------------------------
 #
 # If you want to insert this manually and not via the admin interface
