@@ -56,36 +56,35 @@ INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'ff','Civilian','Civilian'
 #
 # Weapons
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES
-(NULL, 'ff', 'weapon_railgun', 'Railgun', 1.00),
-(NULL, 'ff', 'weapon_tranq', 'Tranq Gun', 1.00),
-(NULL, 'ff', 'weapon_medkit', 'Medkit', 1.00),
-(NULL, 'ff', 'weapon_spanner', 'Spanner', 1.00),
-(NULL, 'ff', 'weapon_crowbar', 'Crowbar', 1.00),
-(NULL, 'ff', 'weapon_shotgun', 'Shotgun', 1.00),
-(NULL, 'ff', 'grenade_napalm', 'Napalm Grenade', 1.00),
-(NULL, 'ff', 'weapon_ic', 'IC', 1.00),
-(NULL, 'ff', 'grenade_nail', 'Nail Grenade', 1.00),
-(NULL, 'ff', 'weapon_supershotgun', 'Super Shotgun', 1.00),
-(NULL, 'ff', 'weapon_supernailgun', 'Super Nailgun', 1.00),
-(NULL, 'ff', 'weapon_sniperrifle', 'Sniper Rifle', 1.00),
-(NULL, 'ff', 'weapon_rpg', 'Rocket Launcher', 1.00),
-(NULL, 'ff', 'weapon_pipelauncher', 'Pipe Launcher', 1.00),
-(NULL, 'ff', 'weapon_knife', 'Knife', 1.00),
-(NULL, 'ff', 'weapon_grenadelauncher', 'Grenade Launcher', 1.00),
-(NULL, 'ff', 'weapon_flamethrower', 'Flamethrower', 1.00),
-(NULL, 'ff', 'Dispenser', 'Dispenser', 1.00),
-(NULL, 'ff', 'weapon_autorifle', 'Auto Rifle', 1.00),
-(NULL, 'ff', 'weapon_assaultcannon', 'Assault Cannon', 1.00),
-(NULL, 'ff', 'SentryGun', 'Sentry Gun', 1.00),
-(NULL, 'ff', 'grenade_normal', 'Frag Grenade', 1.00),
-(NULL, 'ff', 'grenade_mirv', 'Mirv Grenade', 1.00),
-(NULL, 'ff', 'grenade_emp', 'Emp Grenade', 1.00),
-(NULL, 'ff', 'DETPACK', 'Detpack', 1.00),
-(NULL, 'ff', 'weapon_umbrella','Umbrella', 10.00),
-(NULL, 'ff', 'grenade_gas','Gas Grenade', 1.00),
-(NULL, 'ff', 'weapon_tommygun', 'Tommygun', 1.00),
-(NULL, 'ff', 'weapon_nailgun', 'Nailgun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_railgun', 'Railgun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_tranq', 'Tranq Gun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_medkit', 'Medkit', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_spanner', 'Spanner', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_crowbar', 'Crowbar', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_shotgun', 'Shotgun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'grenade_napalm', 'Napalm Grenade', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_ic', 'IC', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'grenade_nail', 'Nail Grenade', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_supershotgun', 'Super Shotgun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_supernailgun', 'Super Nailgun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_sniperrifle', 'Sniper Rifle', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_rpg', 'Rocket Launcher', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_pipelauncher', 'Pipe Launcher', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_knife', 'Knife', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_grenadelauncher', 'Grenade Launcher', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_flamethrower', 'Flamethrower', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'Dispenser', 'Dispenser', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_autorifle', 'Auto Rifle', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_assaultcannon', 'Assault Cannon', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'SentryGun', 'Sentry Gun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'grenade_normal', 'Frag Grenade', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'grenade_mirv', 'Mirv Grenade', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'grenade_emp', 'Emp Grenade', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'DETPACK', 'Detpack', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_umbrella','Umbrella', 10.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'grenade_gas','Gas Grenade', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_tommygun', 'Tommygun', 1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL, 'ff', 'weapon_nailgun', 'Nailgun', 1.00);
 
 
 # end of file

@@ -323,7 +323,9 @@ else {
 	"StatsmeTime",
 		["playerId", "time"],
 	"Chat",
-		["playerId","type","message"]
+		["playerId","type","message"],
+	"PlayerAttackedPlayer",
+		["playerId","victimId","weapon","damage","armor","hitgroup","health","damage_armor"],
 );
 
 # Finding all tables for auto optimisation
@@ -469,7 +471,20 @@ while ($loop = &getLine()) {
 		}
 		elsif (like($ev_verb, "attacked")) {
 			$ev_type = 9;
-			$ev_status = "(IGNORED) $s_output";
+			
+			my $playerinfo = &getPlayerInfo($ev_player);
+			my $victiminfo = &getPlayerInfo($ev_obj_a);
+			
+			if ($playerinfo && $victiminfo) {
+				#$ev_status = "(IGNORED) $s_output";
+				$ev_status = &doEvent_PlayerAttackedPlayer(
+					$playerinfo->{"userid"},
+					$victiminfo->{"userid"},
+					$ev_obj_b,
+					%ev_properties
+				);
+			}
+			
 		}
 		elsif (like($ev_verb, "triggered"))
 		{

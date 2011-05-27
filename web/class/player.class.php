@@ -515,6 +515,7 @@ class Player {
 		$this->_getMaps();
 		$this->_getPlayerKillStats();
 		$this->_getRoleSelection();
+		$this->_getHistats();
 
 		$this->_getRank('rankPoints');
 		$this->_getRank('allPlayers');
@@ -1133,6 +1134,8 @@ class Player {
 	/**
 	 * get the weapon target
 	 * if we have the information in db
+	 * uses Events_Statsme2 and Events_PlayerAttackedPlayer
+	 * both tables are summed up
 	 *
 	 * @return void
 	 */
@@ -1163,6 +1166,34 @@ class Player {
 			}
 			mysql_free_result($query);
 		}
+		
+		/*
+		SELECT COUNT(hitgroup) AS hits, SUM(damage) AS damage, epap.* 
+		FROM hlstats_Events_PlayerAttackedPlayer AS epap
+		GROUP BY playerId,weapon,hitgroup
+		*/
+		
+		# now get the data from the Events_PlayerAttacked_Player
+		$query = mysql_query("SELECT epap.*, w.name
+				FROM `".DB_PREFIX."_Events_PlayerAttackedPlayer` AS epap
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					ON s.serverId = epap.serverId
+				LEFT JOIN `".DB_PREFIX."_Weapons` AS w 
+					ON w.code = epap.weapon
+				WHERE s.game = '".mysql_real_escape_string($this->_game)."'
+					AND es2.PlayerId=".mysql_real_escape_string($this->playerId)."");
+		if(SHOW_DEBUG && mysql_error() != '') var_dump(mysql_error());
+		if(mysql_num_rows($query) > 0) {
+			while($result = mysql_fetch_assoc($query)) {
+				$result['hitgroup'] = 'sm'.str_replace(' ','',$result['hitgroup']);
+				$tmp[$result['weapon']][$result['hitgroup']] = 
+				
+				
+				#$this->_playerData['weaponTarget'][] = $result;
+			}
+			mysql_free_result($query);
+		}
+		
 	}
 
 	/**

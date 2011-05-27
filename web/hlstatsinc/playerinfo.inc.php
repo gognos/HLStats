@@ -691,6 +691,8 @@ if(!empty($weaponTarget)) { ?>
 	</table>
 <?php }
 
+$hitStats = $playerObj->getParam('histats');
+
 $maps = $playerObj->getParam('maps');
 if(!empty($maps)) { ?>
 	<a name="maps"></a>
