@@ -366,6 +366,37 @@ sub doEvent_Frag {
 	return $desc . $killerstr . " killed " . $victimstr . " with \"$weapon\"";
 }
 
+#
+# 009. Player attacked player
+#
+sub doEvent_PlayerAttackedPlayer {
+	my ($playerId, $victimId, $weaponCode, %ev_properties) = @_;
+	
+	my $desc;
+	my $attacker = $g_players{"$s_addr/$playerId"};
+	my $victim = $g_players{"$s_addr/$victimId"};
+	my $attackerstr = &getPlayerInfoString($attacker, $playerId);
+	my $victimstr = &getPlayerInfoString($victim, $victimId);
+		
+	if($attacker && $victim) {
+		&recordEvent(
+			"PlayerAttackedPlayer", 0,
+			$attacker->get("playerid"),
+			$victim->get("playerid"),
+			$weaponCode,
+			$ev_properties{damage},
+			$ev_properties{armor},
+			$ev_properties{hitgroup},
+			$ev_properties{health},
+			$ev_properties{damage_armor}
+		);
+	}
+	else {
+		$desc = "(IGNORED) NOPLAYERINFO/NOWEAPONINFO: ";
+	}
+
+	return $desc . $attackerstr . " attacked " . $victimstr . " with \"$weaponCode\"";
+}
 
 
 #

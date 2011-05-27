@@ -5,6 +5,8 @@ HLStats ChangeLog
 *) New: skype field in player table. hls_set skype from ingame #16
 *) New: steam achievements are show at the games which have steam stats
 *) New: New style sheet 'rounded'
+*) New: Player attacked Player events are now recorded.
+*) New: GoldenEye: Source gamesupport
 *) Fixed: timestamp option was not used correctly.
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
 	skillchangeDate
