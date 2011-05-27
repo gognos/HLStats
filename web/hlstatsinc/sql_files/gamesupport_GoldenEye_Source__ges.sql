@@ -114,6 +114,37 @@ INSERT IGNORE INTO `++DB_PREFIX++_Team` VALUES ('ges', 'Janus', 'Janus', '0');
 #
 # Weapons
 #
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_ProximityMine', 'Proximity Mines', 0.5);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_AutoShotgun', 'Automatic Shotgun', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Phantom', 'Phantom', 0.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Knife', 'Hunting Knife', 1.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_D5K', 'D5K Deutsche', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_SilverPP7', 'Silver PP7', 0.7);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_DD44', 'DD44', 1.2);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Grenade', 'Grenade', 1.4);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_CougarMagnum', 'Cougar Magnum', 1.2);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_D5K_SILENCED', 'D5K (Silenced)', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Shotgun', 'Shotgun', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Klobb', 'Klobb', 1.2);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_RCP90', 'RC-P90', 0.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_RemoteMine', 'Remote Mines', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_KF7Soviet', 'KF7 Soviet', 0.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_ZMG', 'ZMG', 0.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_SniperRifle', 'Sniper Rifle', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_GoldPP7', 'Golden PP7', 0.2);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_AR33', 'US AR33 Assault', 0.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_GoldenGun', 'Golden Gun', 0.5);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_ThrowingKnife', 'Throwing Knives', 1.6);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_PP7', 'PP7', 1.2);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_PP7_SILENCED', 'PP7 (Silenced)', 1.20);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_TimedMine', 'Timed Mines', 1.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_MilitaryLaser', 'Military Laser', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_GrenadeLauncher', 'Grenade Launcher', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Rocket', 'Rocket Launcher', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Taser', 'Taser', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_SniperButt', 'Sniper Butt', 1);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_Slapper', 'Slappers', 1.8);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES ('ges', '#GE_RocketLauncher', 'Rocket Launcher', 1);
 
 
 # end of file
