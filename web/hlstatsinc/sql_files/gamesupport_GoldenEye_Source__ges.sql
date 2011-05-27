@@ -14,6 +14,40 @@ INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('ges','GoldenEye: Source','1','
 #
 # Awards
 #
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_ProximityMine', 'Proximity Pulvarizer', 'kills with Proximity Mines');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_AutoShotgun', 'Automatic Shotgun', 'kills with Automatic Shotgun');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Phantom', 'Phantastic Phantom', 'kills with Phantom');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Knife', 'Silent Assassin', 'kills with Hunting Knife');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_D5K', 'D5K', 'kills with D5K Deutsche');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_SilverPP7', 'Silver PP7', 'kills with Silver PP7');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_DD44', 'DD44', 'kills with DD44');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Grenade', 'Grenade', 'kills with Grenades');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_CougarMagnum', 'Cougar Magnum', 'kills with Cougar Magnum');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_D5K_SILENCED', 'Silenced D5K', 'kills with D5K (Silenced)');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Shotgun', 'Shotgun', 'kills with Shotgun');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Klobb', 'Klobbering Time', 'kills with Klobb');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_RCP90', 'RCP 4 Death', 'kills with RC-P90');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_RemoteMine', 'Remotely Remove', 'kills with Remote Mines');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_KF7Soviet', 'KF7 Soviet', 'kills with KF7 Soviet');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_ZMG', 'ZMG', 'kills with ZMG');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_SniperRifle', 'A View To A Kill', 'kills with Sniper Rifle');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_GoldPP7', 'Golden PP7', 'kills with Golden PP7');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_AR33', 'ARYOU33?', 'kills with US AR33 Assault');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_GoldenGun', 'Unknown Pain', 'kills with Golden Gun');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_ThrowingKnife', 'Thorwing Knives', 'kills with Throwing Knives');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_PP7', 'PKing Soup', 'kills with PP7');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_PP7_SILENCED', 'Silenced PP7', 'kills with PP7 (Silenced)');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_TimedMine', 'Timed Termination', 'kills with Timed Mines');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_MilitaryLaser', 'Military Laser', 'kills with Military Laser');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_GrenadeLauncher', 'Grenade Launcher', 'kills with Grenade Launcher');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Rocket', 'Rocket Launcher', 'kills with Rocket Launcher');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Taser', 'Taser', 'kills with Taser');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_SniperButt', 'Sniper Butt', 'kills with Sniper Butt');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_Slapper', 'Bitch Fighter', 'kills with Slappers');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', '#GE_RocketLauncher', ', Rocket Launcher', 'kills with Rocket Launcher');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', 'latency', 'Lowest Ping','ms average connection');
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES ('W', 'ges', 'mostkills', 'Bond, James Bond', 'kills');
+
 
 #
 # Player Actions
