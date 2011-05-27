@@ -9,37 +9,37 @@
 #
 # Game Definition
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('hidden','The Hidden: Source','1','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES('hidden','The Hidden: Source','1','0');
 
 
 #
 # Awards
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'fn2000', 'FN2000 Assault Rifle', 'kills with FN2000 Assault Rifle');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'p90', 'FN P90 Sub Machine Gun', 'kills with FN P90 Sub Machine Gun');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'shotgun', 'Remington 870 MCS Shotgun', 'kills with Remington 870 MCS Shotgun');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'fn303', 'FN303 Less Lethal Launcher', 'kills with FN303 Less Lethal Launcher');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'pistol', 'FN FiveSeven Pistol', 'kills with FN FiveSeven Pistol');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'pistol2', 'FNP-9 Pistol', 'kills with FNP-9 Pistol');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'knife', 'Kabar D2 Knife', 'kills with Kabar D2 Knife');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'grenade_projectile', 'Pipe Bomb', 'kills with Pipe Bomb');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden', 'physics', 'Physics', 'kills with Physics');
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('W', 'hidden','latency','Best Latency','ms average connection');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'fn2000', 'FN2000 Assault Rifle', 'kills with FN2000 Assault Rifle');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'p90', 'FN P90 Sub Machine Gun', 'kills with FN P90 Sub Machine Gun');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'shotgun', 'Remington 870 MCS Shotgun', 'kills with Remington 870 MCS Shotgun');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'fn303', 'FN303 Less Lethal Launcher', 'kills with FN303 Less Lethal Launcher');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'pistol', 'FN FiveSeven Pistol', 'kills with FN FiveSeven Pistol');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'pistol2', 'FNP-9 Pistol', 'kills with FNP-9 Pistol');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'knife', 'Kabar D2 Knife', 'kills with Kabar D2 Knife');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'grenade_projectile', 'Pipe Bomb', 'kills with Pipe Bomb');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden', 'physics', 'Physics', 'kills with Physics');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES (NULL,'W', 'hidden','latency','Best Latency','ms average connection');
 
 #
 # Player Actions
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_2', 1, 0, '', 'Double Kill (2 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_3', 2, 0, '', 'Triple Kill (3 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_4', 3, 0, '', 'Domination (4 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_5', 4, 0, '', 'Rampage (5 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_6', 5, 0, '', 'Mega Kill (6 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_7', 6, 0, '', 'Ownage (7 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_8', 7, 0, '', 'Ultra Kill (8 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_9', 8, 0, '', 'Killing Spree (9 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_10', 9, 0, '', 'Monster Kill (10 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_11', 10, 0, '', 'Unstoppable (11 kills)', '1', '', '', '');
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES ('hidden', 'kill_streak_12', 11, 0, '', 'God Like (12+ kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_2', 1, 0, '', 'Double Kill (2 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_3', 2, 0, '', 'Triple Kill (3 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_4', 3, 0, '', 'Domination (4 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_5', 4, 0, '', 'Rampage (5 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_6', 5, 0, '', 'Mega Kill (6 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_7', 6, 0, '', 'Ownage (7 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_8', 7, 0, '', 'Ultra Kill (8 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_9', 8, 0, '', 'Killing Spree (9 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_10', 9, 0, '', 'Monster Kill (10 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_11', 10, 0, '', 'Unstoppable (11 kills)', '1', '', '', '');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'hidden', 'kill_streak_12', 11, 0, '', 'God Like (12+ kills)', '1', '', '', '');
 
 
 #
