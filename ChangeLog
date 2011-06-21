@@ -9,6 +9,7 @@ HLStats ChangeLog
 *) New: GoldenEye: Source gamesupport
 *) New: Left for dead 2 gamesupport
 *) Update: L4D, Hidden and other gamesupport files.
+*) Update: Server addons list
 *) Fixed: timestamp option was not used correctly.
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
 	skillchangeDate

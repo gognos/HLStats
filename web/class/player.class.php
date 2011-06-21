@@ -515,7 +515,7 @@ class Player {
 		$this->_getMaps();
 		$this->_getPlayerKillStats();
 		$this->_getRoleSelection();
-		$this->_getHistats();
+		#$this->_getHistats();
 
 		$this->_getRank('rankPoints');
 		$this->_getRank('allPlayers');
@@ -1141,6 +1141,7 @@ class Player {
 	 */
 	private function _getWeaponTarget() {
 		$this->_playerData['weaponTarget'] = array();
+		/*
 		$query = mysql_query("SELECT es2.weapon AS smweapon,
 					w.name,
 					SUM(es2.head) AS smhead,
@@ -1172,7 +1173,7 @@ class Player {
 		FROM hlstats_Events_PlayerAttackedPlayer AS epap
 		GROUP BY playerId,weapon,hitgroup
 		*/
-		
+		/*
 		# now get the data from the Events_PlayerAttacked_Player
 		$query = mysql_query("SELECT epap.*, w.name
 				FROM `".DB_PREFIX."_Events_PlayerAttackedPlayer` AS epap
@@ -1193,6 +1194,7 @@ class Player {
 			}
 			mysql_free_result($query);
 		}
+		*/
 		
 	}
 
