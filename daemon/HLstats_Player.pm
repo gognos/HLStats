@@ -328,16 +328,16 @@ sub updateDB {
 		UPDATE
 			`".$::db_prefix."_Players`
 		SET
-			lastName='" . &::quoteSQL($name) . "',
-			clan='$clan',
-			kills=kills + $kills,
-			deaths=deaths + $deaths,
-			suicides=suicides + $suicides,
+			lastName = '" . &::quoteSQL($name) . "',
+			clan = '$clan',
+			kills = kills + $kills,
+			deaths = deaths + $deaths,
+			suicides = suicides + $suicides,
 			oldSkill = skill,
 			skillchangeDate = '".$::ev_unixtime."',
 			active = '1',
-			skill=$skill,
-			isBot=$isBot
+			skill = $skill,
+			isBot = $isBot
 		WHERE
 			playerId = '$playerid'
 	";
@@ -371,6 +371,7 @@ sub updateDB {
 	}
 
 	# reset player stat properties
+	# we do not store the complete values here. Onl the differenc between the updates.
 	$self->set("kills", 0);
 	$self->set("deaths", 0);
 	$self->set("suicides", 0);

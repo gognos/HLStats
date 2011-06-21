@@ -176,7 +176,13 @@ pageHeader(
 		<?php echo l("From a total of"); ?> <b><?php echo intval($totalkills); ?></b> <?php echo l('kills'); ?>
 		(<?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days'); ?>)
 	</h1>
-	<img src="hlstatsimg/weapons/<?php echo $game; ?>/<?php echo $weapon; ?>.png" alt="<?php echo $wep_name; ?>" title="<?php echo $wep_name; ?>" border="0" /><br />
+	<?php
+		$wepImg = "hlstatsimg/weapons/".$game."/".$weapon.".png";
+		if(file_exists("hlstatsimg/weapons/".$game."/".$weapon."-big.png")) {
+			$wepImg = "hlstatsimg/weapons/".$game."/".$weapon."-big.png";
+		}
+	?>
+	<img src="<?php echo $wepImg; ?>" alt="<?php echo $wep_name; ?>" title="<?php echo $wep_name; ?>" border="0" /><br />
 	<small><?php echo $wep_name; ?></small><br />
 	<br />
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
