@@ -439,8 +439,7 @@ sub doEvent_PlayerPlayerAction
 		";
 		my $result = &doQuery($query);
 
-		if ($result->rows == 1)
-		{
+		if ($result->rows == 1) {
 			my ($actionid, $reward_player, $reward_team, $team) = $result->fetchrow_array;
 			$result->finish;
 
@@ -455,18 +454,15 @@ sub doEvent_PlayerPlayerAction
 			$player->increment("skill", $reward_player) if ($reward_player != 0);
 			$player->updateDB();
 
-			if ($team && $reward_team != 0)
-			{
+			if ($team && $reward_team != 0) {
 				&rewardTeam($team, $reward_team, $actionid);
 			}
 		}
-		else
-		{
+		else {
 			$desc = "(IGNORED) ";
 		}
 	}
-	else
-	{
+	else {
 		$desc = "(IGNORED) NOPLAYERINFO: ";
 	}
 

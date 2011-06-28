@@ -509,6 +509,12 @@ INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`, `addon`, `url`) VALUES
 ('sourcemod_version', 'SourceMod %', 'http://www.sourcemod.net'),
 ('sbguardian_version', 'SBGuardian %', 'http://www.steambans.com'),
 ('gg_version', 'GunGame AMXX %', 'http://wiki.hlsw.org/index.php/GunGame_AMXX'),
+('zp_version','Zombie Plague Mod %','http://forums.alliedmods.net/showthread.php?t=72505'),
+('zb_version','zBlock %','http://www.chti-team.fr/htdocs/documents/zblock.htm'),
+('smm_version','Mani Admin Plugin %','http://code.google.com/p/maniadminplugin/'),
+('spatialstats_version','Spatial statistics logging %','http://addons.eventscripts.com/addons/view/spatialstats'),
+('eventscripts_ver','EventScripts','http://www.eventscripts.com/'),
+('cssmatch_version','CSSMatch Plugin %','http://www.cssmatch.com/'),
 ('logmod_version', 'LogMod %', 'http://wiki.hlsw.net/index.php/LogMod_Information');
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Teams`;

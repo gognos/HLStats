@@ -491,8 +491,7 @@ sub rewardTeam
 
 	&printNotice("Rewarding team \"$team\" with \"$reward\" skill for action \"$actionid\" ...");
 
-	foreach $player (values(%g_players))
-	{
+	foreach $player (values(%g_players)) {
 		my $player_team = $player->get("team");
 		my $player_server = $player->get("server");
 		my $player_timestamp = $player->get("timestamp");
@@ -500,8 +499,7 @@ sub rewardTeam
 		if ($player_team eq $team && $player_server eq $s_addr
 			&& ($ev_unixtime - $player_timestamp < 120))
 		{
-			if ($g_debug > 2)
-			{
+			if ($g_debug > 2) {
 				&printNotice("Rewarding " . $player->getInfoString() . " with \"$reward\" skill for action \"$actionid\"");
 			}
 
