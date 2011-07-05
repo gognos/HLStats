@@ -36,7 +36,7 @@
 ##
 
 # $opt_configfile_name - Filename of configuration file.
-$opt_configfile_name = "hlstats.conf.ini";
+my $opt_configfile_name = "hlstats.conf.ini";
 
 ##
 ##
@@ -62,8 +62,8 @@ use Data::Dumper;
 
 use Config::Tiny;
 
-$opt_libdir = dirname(__FILE__);
-$opt_configfile = "$opt_libdir/$opt_configfile_name";
+my $opt_libdir = dirname(__FILE__);
+my $opt_configfile = "$opt_libdir/$opt_configfile_name";
 
 require "$opt_libdir/KKrcon.pm";
 require "$opt_libdir/HLstats_Server.pm";
@@ -81,7 +81,7 @@ Getopt::Long::Configure ("bundling");
 ##
 
 ## load config with config-tiny module
-$Config = Config::Tiny->read("$opt_libdir/hlstats.conf.ini");
+$Config = Config::Tiny->read($opt_configfile);
 if($Config::Tiny::errstr ne '') {
 	print "Error in config file. Please compare with example file !\n";
 	print $Config::Tiny::errstr;

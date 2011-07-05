@@ -63,7 +63,7 @@ $|=1;
 Getopt::Long::Configure ("bundling");
 
 ## load config with config-tiny module
-my $Config = Config::Tiny->read("$opt_libdir/hlstats.conf.ini");
+my $Config = Config::Tiny->read($opt_configfile);
 if($Config::Tiny::errstr ne '') {
 	print "Config file not found !\n";
 	print $Config::Tiny::errstr;
