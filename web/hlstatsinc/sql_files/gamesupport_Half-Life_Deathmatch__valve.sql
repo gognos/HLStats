@@ -41,8 +41,8 @@ INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','9mmhandgun','9m
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','bolt','Crossbow Bolt',1.70);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','crossbow','Crossbow',1.40);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','crowbar','Crowbar',1.90);
-INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','tau_cannon','Egon Tau Cannon / Rail Gun',1.00);
-INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','gluon gun','Gluon / Gauss Gun',1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','tau_cannon','Gauss Gun',1.00);
+INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','gluon gun','Gluon Gun',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','grenade','Grenade',1.00);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','hornet','Hornet',1.30);
 INSERT IGNORE INTO `++DB_PREFIX++_Weapons` VALUES (NULL,'valve','rpg_rocket','Rocket Propelled Grenade',1.00);
