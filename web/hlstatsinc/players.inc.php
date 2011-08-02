@@ -162,7 +162,7 @@ $pData = $playersObj->getPlayersOveriew();
 		<small>
 		<?php echo l('Default is to show only active players'); ?>
 		(<a href="index.php?mode=help#playersoverview">?</a>)<br />
-		<?php echo l('All players inlcude inactive players.'); ?><br />
+		<?php echo l('All players include inactive players.'); ?><br />
 		<?php echo l('BOTs will show only if the are not ignored.'); ?>
 		</small>
 	</div>

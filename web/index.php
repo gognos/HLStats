@@ -155,7 +155,8 @@ $modes = array(
 	"roles",
 	"awards",
 	"country",
-	"countryInfo"
+	"countryInfo",
+	"playerstimeline"
 );
 
 $mode = '';
