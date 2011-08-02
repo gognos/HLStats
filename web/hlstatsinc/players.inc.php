@@ -110,6 +110,9 @@ pageHeader(
 	array($gamename, l('Player Rankings')),
 	array($gamename => "index.php?game=$game", l('Player Rankings')=>"")
 );
+
+# get the players overview
+$pData = $playersObj->getPlayersOveriew();
 ?>
 
 <div id="sidebar">
@@ -146,7 +149,7 @@ pageHeader(
 			<input type="hidden" name="game" value="<?php echo $game; ?>" />
 			<input type="hidden" name="mode" value="players" />
 			<?php echo l('Only show players with'); ?><br />
-			<input type="text" name="minkills" size="4" maxlength="55555" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
+			<input type="text" name="minkills" size="4" maxlength="4" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
 			<?php echo l('or more kills'); ?>.<br />
 			<button type="submit" title="<?php echo l('Apply'); ?>">
 				<?php echo l('Apply'); ?>
@@ -166,8 +169,6 @@ pageHeader(
 </div>
 <div id="main">
 <?php
-	// get the players
-	$pData = $playersObj->getPlayersOveriew();
 	$rcol = "row-dark";
 ?>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
