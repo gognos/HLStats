@@ -134,6 +134,7 @@ $pData = $playersObj->getPlayersOveriew();
 			</li>
 			<?php if($g_options['IGNOREBOTS'] === "0") { ?>
 			<li>
+				<img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" border="0" align="middle" alt="BOTs">
 				<?php if(isset($_GET['showBots']) && $_GET['showBots'] === "1") { ?>
 				<a href="?mode=players&amp;game=<?php echo $game; ?>"><?php echo l('HideBots'); ?></a>
 				<?php } else { ?>
@@ -143,6 +144,9 @@ $pData = $playersObj->getPlayersOveriew();
 			<?php } ?>
 			<li>
 				<a href="<?php echo "index.php?mode=clans&amp;game=$game"; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="clan.gif">&nbsp;<?php echo l('Clan Rankings'); ?></a>
+			</li>
+			<li>
+				<a href="<?php echo "index.php?mode=playerstimeline&amp;game=$game"; ?>"><img src="hlstatsimg/chart.png" width="16" height="16" hspace="3" border="0" align="middle" alt="clan.gif">&nbsp;<?php echo l('Players timeline'); ?></a>
 			</li>
 		</ul>
 		<form method="GET" action="index.php">
