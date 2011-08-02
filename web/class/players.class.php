@@ -333,8 +333,31 @@ class Players {
 		return $data;
 	}
 	
+	/**
+	 * data to create a player timeline over all players available
+	 * @return array
+	 */
 	public function getTimeline() {
+		$data = array();
+
+		$queryStr = "SELECT DATE(ee.eventTime) AS eventTime, 
+							p.playerId, p.lastName
+						FROM `".DB_PREFIX."_Events_Entries` AS ee
+						INNER JOIN ".DB_PREFIX."_Players as p ON ee.playerId = p.playerId
+						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as pu ON ee.playerId = pu.playerId
+						WHERE p.game = '".mysql_real_escape_string($this->_game)."'
+						ORDER BY eventTime DESC ,p.lastName";
 		
+		$query = mysql_query($queryStr);
+
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		while($result = mysql_fetch_assoc($query)) {
+			$result['eventTime'] = strftime('%d %b %Y',strtotime($result['eventTime']));
+			$data[$result['eventTime']][$result['playerId']] = $result;
+		}
+		mysql_free_result($query);
+						
+		return $data;
 	}
 }
 ?>
