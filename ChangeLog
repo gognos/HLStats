@@ -3,7 +3,7 @@ HLStats ChangeLog
 
 1.63 ()
 *) New: skype field in player table. hls_set skype from ingame #16
-*) New: steam achievements are show at the games which have steam stats
+*) New: steam achievements are shown at the games which have steam stats
 *) New: New style sheet 'rounded'
 *) New: Player attacked Player events are now recorded.
 *) New: GoldenEye: Source gamesupport
@@ -21,6 +21,7 @@ HLStats ChangeLog
 *) Closed: #14
 *) Closed: #15
 *) Closed: #39
+*) Close: #18
 
 1.62 (2011-05-18)
 *) New: Design styles (css) updated.

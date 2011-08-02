@@ -32,7 +32,7 @@
 #
 
 my $DEBUG = 1;
-my $dry_run = 1;
+my $dry_run = 0;
 
 use strict;
 use Encode;
@@ -68,6 +68,7 @@ my $db_prefix = $Config->{Database}->{DBPrefix};
 if(!$dry_run) {
 open URLHANDLE, "<", "./urls.list" or die $!;
 my $ua = LWP::UserAgent->new;
+$ua->proxy(['http'], 'http://10.0.1.11:80/'); # local needed
 while (<URLHANDLE>) {
 	print $_."\n" if $DEBUG;
 	
@@ -145,7 +146,7 @@ foreach (@xmlFiles) {
 				lastUpdate = CURRENT_TIMESTAMP()
 		";
 
-		print $queryStr."\n" if $DEBUG;
+		#print $queryStr."\n" if $DEBUG;
 		
 		# do the query
 		my $result = doQuery($queryStr);
