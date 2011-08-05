@@ -41,6 +41,8 @@ use HTTP::Request;
 use LWP::UserAgent;
 use DBI;
 use Config::Tiny;
+use File::Basename;
+use File::Path qw(remove_tree);
 
 use Data::Dumper; #debug
 
@@ -64,8 +66,9 @@ my $db_user = $Config->{Database}->{DBUsername};
 my $db_pass = $Config->{Database}->{DBPassword};
 my $db_prefix = $Config->{Database}->{DBPrefix};
 
+# clean up the xmlData dir
+remove_tree('./xmlData/', {keep_root => 1 });
 
-if(!$dry_run) {
 open URLHANDLE, "<", "./urls.list" or die $!;
 my $ua = LWP::UserAgent->new;
 $ua->proxy(['http'], 'http://10.0.1.11:80/'); # local needed
@@ -92,7 +95,7 @@ while (<URLHANDLE>) {
 }
 #close the url file document
 close URLHANDLE;
-}
+
 
 # db connection
 my $db = DBI->connect(
@@ -111,6 +114,8 @@ foreach (@xmlFiles) {
 	
 	my $parser = XML::LibXML->new();
 	my $doc = $parser->parse_file($_);
+	
+	my $siteName = basename($_,".xml");
 
 	foreach my $player ($doc->findnodes('/root/players/player')) {
 		my $pName = $player->findnodes('./name');
@@ -123,15 +128,18 @@ foreach (@xmlFiles) {
 		my $pKills = $player->findnodes('./kills');
 		my $pLastConnect = $player->findnodes('./lastConnect');
 		my $pUniqueId = $player->findnodes('./uniqueId');
+		my $pgame = $player->findnodes('./game');
 
 		# build the query string
 		my $queryStr = "INSERT INTO `".$db_prefix."_playerDataTable` 
-			(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect)
+			(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect,
+				game,day,sitename)
 			VALUES (
 				".$db->quote($pUniqueId).", ".$db->quote($pName).", ".$db->quote($pProfile).",
 				".$db->quote($pCountry).", ".$db->quote($pCountryCode).",
 				".$db->quote($pSkill).", ".$db->quote($pOldSkill).", ".$db->quote($pKills).",
-				".$db->quote($pDeaths).", ".$db->quote($pLastConnect)."
+				".$db->quote($pDeaths).", ".$db->quote($pLastConnect).",
+				".$db->quote($pgame).", CURDATE(), ".$db->quote($siteName)."
 			)
 			ON DUPLICATE KEY UPDATE
 				name = VALUES(name), 
