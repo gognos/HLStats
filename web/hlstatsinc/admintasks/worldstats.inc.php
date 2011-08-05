@@ -40,31 +40,49 @@
  *
  */
 
-$_wsRegURL = "http://http://localhost/code/HLStats/web/worldstats/regapi.php";
+$_wsRegURL = "http://localhost/code/HLStats/worldstats/regapi.php";
+
+
+// get the games from the db
+$query = mysql_query("SELECT code,name
+						FROM `".DB_PREFIX."_Games`
+						ORDER BY `name`");
+$gamesArr = array();
+while ($result = mysql_fetch_assoc($query)) {
+	$gamesArr[$result['code']] = $result['name'];
+}
 
 $error = false;
 $status = false;
-
 if(isset($_POST['sub']['doRegister'])) {
 	if(isset($_POST['reg']['register']) && $_POST['reg']['register'] === "1") {
 		# we want to register
-		if($g_options['registeredToWorldStats'] === "1") {
+		if(isset($g_options['registeredToWorldStats']) && $g_options['registeredToWorldStats'] === "1") {
 			$error = "You are already registered.<br />If you have problems <a href='http://forum.hlstats-community.org'>please contact</a>";
 		}
 		else {
-			# we want to register.
-			# first run the status request
-			$ch = curl_init();
+			# build the query sting
+			$queryStr = 'id='.md5($_SERVER["SCRIPT_FILENAME"]);
+			# add the games
+			$queryGamesAdd = implode(',',$_POST['reg']['game']);
 			
-			curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?id='.md5($_SERVER["SCRIPT_FILENAME"]));
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+			if(!empty($queryGamesAdd)) {	
+				$queryStr .= "&games=".$queryGamesAdd;
+				
+				# we want to register.
+				# first run the status request
+				$ch = curl_init();
 			
-			$do = curl_exec($ch);
-			var_dump($do);
+				curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			
-			curl_close($ch);
+				$do = curl_exec($ch);
+				var_dump($do);
+			
+				curl_close($ch);
+			}
 		}
 	}
 }
@@ -98,7 +116,16 @@ pageHeader(array(l("Admin"),l('Worldstats')), array(l("Admin")=>"index.php?mode=
 	?>
 	<p>
 		<form method="post" action="">
-			<input type="checkbox" name="reg[register]" value="1" />&nbsp;Register your installation<br />
+			<?php
+			if(!empty($gamesArr)) {
+				echo '<select name="reg[game][]" multiple="true" size="5">';
+				foreach($gamesArr as $k=>$v) {
+					echo '<option value="',$k,'">',$v,'</option>';
+				}
+				echo '</select><br /><br />';
+			}
+			?>
+			<input type="checkbox" name="reg[register]" value="1" />&nbsp;Register your installation and selected games<br />
 			<br />
 			<button type="submit" name="sub[doRegister]" title="Do it">Do it</button>
 		</form>

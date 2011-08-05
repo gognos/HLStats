@@ -83,6 +83,8 @@ if(mysql_num_rows($query) > 0) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
+$return = '';
+
 switch($method) {
 	case 'POST':
 	case 'PUT':
@@ -101,12 +103,23 @@ switch($method) {
 	default:
 		if(!isset($_GET['id'])) exit('Missing argument: ID');
 		if(!isset($_GET['games'])) exit('Missing argument: GAMES');
-		# do we have this site already ?
 		
+		$gamesStr = filter_input(INPUT_GET,'games',FILTER_SANITIZE_ENCODED);
+		$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
 		
+		if(!empty($id) && !empty($gamesStr)) {
+			if(strstr(",",$gamesStr)) {
+				$games = explode($gamesStr);
+			}
+			else {
+				$games[] = $gamesStr;
+			}
+			
+			var_dump($games);
+		}
 }
 
 header('Content-type: text/xml; charset=UTF-8');
-echo $returnStart,$body,$returnEnd;
+echo $return;
 
 ?>
