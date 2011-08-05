@@ -110,6 +110,9 @@ pageHeader(
 	array($gamename, l('Player Rankings')),
 	array($gamename => "index.php?game=$game", l('Player Rankings')=>"")
 );
+
+# get the players overview
+$pData = $playersObj->getPlayersOveriew();
 ?>
 
 <div id="sidebar">
@@ -131,6 +134,7 @@ pageHeader(
 			</li>
 			<?php if($g_options['IGNOREBOTS'] === "0") { ?>
 			<li>
+				<img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" border="0" align="middle" alt="BOTs">
 				<?php if(isset($_GET['showBots']) && $_GET['showBots'] === "1") { ?>
 				<a href="?mode=players&amp;game=<?php echo $game; ?>"><?php echo l('HideBots'); ?></a>
 				<?php } else { ?>
@@ -141,12 +145,15 @@ pageHeader(
 			<li>
 				<a href="<?php echo "index.php?mode=clans&amp;game=$game"; ?>"><img src="hlstatsimg/clan.gif" width="16" height="16" hspace="3" border="0" align="middle" alt="clan.gif">&nbsp;<?php echo l('Clan Rankings'); ?></a>
 			</li>
+			<li>
+				<a href="<?php echo "index.php?mode=playerstimeline&amp;game=$game"; ?>"><img src="hlstatsimg/chart.png" width="16" height="16" hspace="3" border="0" align="middle" alt="clan.gif">&nbsp;<?php echo l('Players timeline'); ?></a>
+			</li>
 		</ul>
 		<form method="GET" action="index.php">
 			<input type="hidden" name="game" value="<?php echo $game; ?>" />
 			<input type="hidden" name="mode" value="players" />
 			<?php echo l('Only show players with'); ?><br />
-			<input type="text" name="minkills" size="4" maxlength="55555" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
+			<input type="text" name="minkills" size="4" maxlength="4" value="<?php echo $playersObj->getOption('minkills'); ?>"><br />
 			<?php echo l('or more kills'); ?>.<br />
 			<button type="submit" title="<?php echo l('Apply'); ?>">
 				<?php echo l('Apply'); ?>
@@ -155,7 +162,7 @@ pageHeader(
 		<small>
 		<?php echo l('Default is to show only active players'); ?>
 		(<a href="index.php?mode=help#playersoverview">?</a>)<br />
-		<?php echo l('All players inlcude inactive players.'); ?><br />
+		<?php echo l('All players include inactive players.'); ?><br />
 		<?php echo l('BOTs will show only if the are not ignored.'); ?>
 		</small>
 	</div>
@@ -166,8 +173,6 @@ pageHeader(
 </div>
 <div id="main">
 <?php
-	// get the players
-	$pData = $playersObj->getPlayersOveriew();
 	$rcol = "row-dark";
 ?>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">

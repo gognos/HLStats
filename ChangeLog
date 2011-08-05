@@ -9,15 +9,20 @@ HLStats ChangeLog
 *) New: Player attacked Player events are now recorded.
 *) New: GoldenEye: Source gamesupport
 *) New: Left for dead 2 gamesupport
+*) New: Players timeline
 *) Update: L4D, Hidden and other gamesupport files.
-*) Update: Server addons list
+*) Update: Server add-ons list
+*) Update: some interface changes
 *) Fixed: timestamp option was not used correctly.
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
 	skillchangeDate
+*) Fixed: players count per day
 *) Changed: L4D improvements. zombies are now handled as BOT to clear up
 	the stats
 *) Closed: #14
 *) Closed: #15
+*) Closed: #39
+*) Close: #18
 
 1.62 (2011-05-18)
 *) New: Design styles (css) updated.

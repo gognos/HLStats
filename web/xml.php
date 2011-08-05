@@ -138,7 +138,7 @@ if($g_options['allowXML'] == "1") {
 			if(!empty($gameCode) && validateInput($gameCode,'nospace') && $g_options['MODE'] === "Normal") {
 				$query = mysql_query("SELECT p.playerId, p.lastName, p.skill,
 									p.oldSkill, p.kills, p.deaths,
-									pu.uniqueId,
+									pu.uniqueId, p.game,
 									ec.country, ec.countryCode, MAX(ec.eventTime) AS lastConnect
 			    		FROM `".DB_PREFIX."_Players` AS p
 						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` AS pu
@@ -166,6 +166,7 @@ if($g_options['allowXML'] == "1") {
 					$xmlBody .= "<country>".$playerData['country']."</country>";
 					$xmlBody .= "<countryCode>".$playerData['countryCode']."</countryCode>";
 					$xmlBody .= "<lastConnect>".$playerData['lastConnect']."</lastConnect>";
+					$xmlBody .= "<game>".$playerData['game']."</game>";
 					$xmlBody .= "</player>";
 				}
 				$xmlBody .= "</players>";

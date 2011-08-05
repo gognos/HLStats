@@ -32,6 +32,13 @@
 #
 
 ##
+## Settings
+##
+
+# $opt_configfile_name - Filename of configuration file.
+my $opt_configfile_name = "hlstats.conf.ini";
+
+##
 ##
 ################################################################################
 ## No need to edit below this line
@@ -44,7 +51,8 @@ use Config::Tiny; ## new config syntax
 
 use File::Basename;
 
-$opt_libdir = dirname(__FILE__);
+my $opt_libdir = dirname(__FILE__);
+my $opt_configfile = "$opt_libdir/$opt_configfile_name";
 
 require "$opt_libdir/HLstats.plib";
 
@@ -56,7 +64,7 @@ Getopt::Long::Configure ("bundling");
 ##
 
 ## load config with config-tiny module
-$Config = Config::Tiny->read("$opt_libdir/hlstats.conf.ini");
+$Config = Config::Tiny->read($opt_configfile);
 if($Config::Tiny::errstr ne '') {
 	print "Config file not found !\n";
 	print $Config::Tiny::errstr;
@@ -95,7 +103,7 @@ Generate awards from Half-Life server statistics.
 Long options can be abbreviated, where such abbreviation is not ambiguous.
 
 Most options can be specified in the configuration file:
-  $opt_libdir/hlstats.conf.ini
+  $opt_configfile
 Note: Options set on the command line take precedence over options set in the
 configuration file.
 

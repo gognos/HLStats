@@ -233,45 +233,47 @@ class Players {
 	public function getPlayerCountPerDay() {
 		$data = array();
 
-		$queryStr = "SELECT `t1`.`playerId`,
-						`skillchangeDate`
-						FROM `".DB_PREFIX."_Players` AS t1
-						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as t2 ON t1.playerId = t2.playerId
-						WHERE `t1`.`game` = '".mysql_real_escape_string($this->_game)."'";
+		$queryStr = "SELECT DATE(ee.eventTime) AS eventTime, 
+							p.playerId
+						FROM `".DB_PREFIX."_Events_Entries` AS ee
+						INNER JOIN ".DB_PREFIX."_Players as p ON ee.playerId = p.playerId
+						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as pu ON ee.playerId = pu.playerId
+						WHERE p.game = '".mysql_real_escape_string($this->_game)."'";
 
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
 			$queryStr .= " ";
 		}
 		else {
-			$queryStr .= " AND t1.active = '1'";
+			$queryStr .= " AND p.active = '1'";
 		}
 		
 		// should we hide the bots
 		if($this->_option['showBots'] === "0") { # this is not the config setting, it is the link setting
-			$queryStr .= " AND `t2`.`uniqueID` not like 'BOT:%'";
+			$queryStr .= " AND pu.uniqueID not like 'BOT:%'";
 		}
 
 		if(isset($this->_option['showToday']) && $this->_option['showToday'] === "1") {
 			// should we show only players from today
 			$startDay = time()-86400;
-			$queryStr .= " AND `skillchangeDate` > '".$startDay."'";
+			$startDay = date("Y-m-d",$startDay);
+			$queryStr .= " AND `eventTime` > '".$startDay."'";
 		}
 		elseif($this->g_options['DELETEDAYS'] !== "0") {
 			$startDay = time()-(86400*$this->g_options['DELETEDAYS']);
-			$queryStr .= " AND `skillchangeDate` > '".$startDay."'";
+			$startDay = date("Y-m-d",$startDay);
+			$queryStr .= " AND `eventTime` > '".$startDay."'";
 		}
 		
+		$queryStr .= " ORDER BY `eventTime`";
 
-		$queryStr .= " ORDER BY `skillchangeDate`";
-		
 		$query = mysql_query($queryStr);
 		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
 		if(mysql_num_rows($query) > 0) {
 			while ($result = mysql_fetch_assoc($query)) {
-				// we group by day
-				$result['skillchangeDate'] = date("d.m.Y",$result['skillchangeDate']);
-				$data[$result['skillchangeDate']][] = $result['playerId'];
+				// we group by day and playerId
+				$result['eventTime'] = strftime('%d %b %Y',strtotime($result['eventTime']));
+				$data[$result['eventTime']][$result['playerId']] = $result['playerId'];
 			}
 		}
 		mysql_free_result($query);
@@ -328,6 +330,33 @@ class Players {
 		}
 		mysql_free_result($query);
 
+		return $data;
+	}
+	
+	/**
+	 * data to create a player timeline over all players available
+	 * @return array
+	 */
+	public function getTimeline() {
+		$data = array();
+
+		$queryStr = "SELECT DATE(ee.eventTime) AS eventTime, 
+							p.playerId, p.lastName
+						FROM `".DB_PREFIX."_Events_Entries` AS ee
+						INNER JOIN ".DB_PREFIX."_Players as p ON ee.playerId = p.playerId
+						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as pu ON ee.playerId = pu.playerId
+						WHERE p.game = '".mysql_real_escape_string($this->_game)."'
+						ORDER BY eventTime DESC ,p.lastName";
+		
+		$query = mysql_query($queryStr);
+
+		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		while($result = mysql_fetch_assoc($query)) {
+			$result['eventTime'] = strftime('%d %b %Y',strtotime($result['eventTime']));
+			$data[$result['eventTime']][$result['playerId']] = $result;
+		}
+		mysql_free_result($query);
+						
 		return $data;
 	}
 }
