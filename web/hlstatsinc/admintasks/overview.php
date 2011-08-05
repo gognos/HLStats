@@ -72,6 +72,9 @@ pageHeader(array(l("Admin")), array(l("Admin")=>""));
 				<a href="<?php echo "index.php?mode=admin&task=plugins"; ?>"><?php echo l('Server Plugins'); ?></a>
 			</li>
 			<li>
+				<a href="<?php echo "index.php?mode=admin&task=worldstats"; ?>"><?php echo l('Worldstats'); ?></a>
+			</li>
+			<li>
 				<a href="<?php echo "index.php"; ?>"><?php echo l('Back to game statistics'); ?></a>
 			</li>
 		</ul>

@@ -187,6 +187,7 @@ HLStats Options = HLStats Optionen
 Admin Users = Admin Benutzer
 Clan Tag Patterns = Clan Tag Erkennung
 Server Plugins = Server Plugins
+Worldstats = Worldstats
 Reset = Reset
 Actions = Aktionen
 Teams = Teams
