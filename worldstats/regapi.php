@@ -115,7 +115,13 @@ switch($method) {
 				$games[] = $gamesStr;
 			}
 			
-			var_dump($games);
+			foreach($games as $g) {
+				# check if we have thise site/game
+				$query = mysql_query("SELECT id FROM `".DB_PREFIX."_ws_sites`
+										WHERE `siteHash` = '".mysql_real_escape_string($id)."'
+											AND `game` = '".mysql_real_escape_string($g)."'");
+			}
+						
 		}
 }
 
