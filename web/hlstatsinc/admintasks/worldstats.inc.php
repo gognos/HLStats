@@ -51,9 +51,13 @@ $gamesArr = array();
 while ($result = mysql_fetch_assoc($query)) {
 	$gamesArr[$result['code']] = $result['name'];
 }
+$gamesArrToReg = $gamesArr;
 
 $error = false;
-$status = false;
+$success = false;
+$requestingSite = md5($_SERVER["SCRIPT_FILENAME"]);
+$alreadyRegGames = false;
+
 if(isset($_POST['sub']['doRegister'])) {
 	if(isset($_POST['reg']['register']) && $_POST['reg']['register'] === "1") {
 		# we want to register
@@ -62,9 +66,10 @@ if(isset($_POST['sub']['doRegister'])) {
 		}
 		else {
 			# build the query sting
-			$queryStr = 'id='.md5($_SERVER["SCRIPT_FILENAME"]);
+			
+			$queryStr = 'id='.$requestingSite;
 			# add the games
-			$queryGamesAdd = implode(',',$_POST['reg']['game']);
+			$queryGamesAdd = implode(';;',$_POST['reg']['game']);
 			
 			if(!empty($queryGamesAdd)) {	
 				$queryStr .= "&games=".$queryGamesAdd;
@@ -79,15 +84,133 @@ if(isset($_POST['sub']['doRegister'])) {
 				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			
 				$do = curl_exec($ch);
-				var_dump($do);
-			
+				$answerStr = false;
+				if(is_string($do) === true) {
+					$posSite = strpos($do,$requestingSite);
+					$posSemi = strpos($do,";;");
+					if($posSite !== false && $posSite === 0 && $posSemi !== false) {
+						# returning string should start with the $requestingSite
+						# and it should contain ;;
+						$success[] = 'Request send. Everthing ok.';
+						$firstRequest = true;
+						$answerStr = $do;
+					}
+					else {
+						$error = 'Something has gone wrong.';
+						if(SHOW_DEBUG) {
+							var_dump($do);
+							var_dump(curl_error($ch));
+						}
+					}
+				}
+				else {
+					$error = 'Your request has failed. Please try again.';
+					if(SHOW_DEBUG) {
+						var_dump($do);
+						var_dump(curl_error($ch));
+					}
+					
+				}
+				unset($do);
+				
+/*
+				if($firstRequest === true && !empty($answerStr)) {
+					$pParams = array();
+					
+					# now use the answer to register them
+					$parts = explode(";;",$answerStr);
+					foreach($parts as $p) {
+						$game = explode(";",$p);
+						if(count($game) === 3){
+							$pParams[]
+						}						
+					}
+					var_dump($pParams);
+					
+					curl_setopt($ch, CURLOPT_POST, true);
+					curl_setopt($ch, CURLOPT_URL,$_wsRegURL);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $pParams);
+
+					
+					$do = curl_exec($ch);
+					var_dump($do);
+				}
+
 				curl_close($ch);
+				*/
 			}
 		}
 	}
 }
+else {
+	# check the status of the available games
+	
+	if(!empty($gamesArr)) {
+		$queryStr = 'id='.$requestingSite;
+		# add the games
+		$queryGamesAdd = implode('__',array_keys($gamesArr));
 
-pageHeader(array(l("Admin"),l('Worldstats')), array(l("Admin")=>"index.php?mode=admin",l('Worldstats')=>''));
+		$queryStr .= "&games=".$queryGamesAdd;
+		
+		$ch = curl_init();
+	
+		curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+	
+		$do = curl_exec($ch);
+		$answerStr = $do;
+		if(is_string($do) === true) {
+			$posSite = strpos($do,$requestingSite);
+			$posSemi = strpos($do,"__");
+			if($posSite !== false && $posSite === 0 && $posSemi !== false) {
+				# returning string should start with the $requestingSite
+				# and it should contain ;;
+				$success[] = 'Connection established. Everthing ok.';
+				#$alreadyRegGames
+
+				$parts = explode("__",$answerStr);
+				foreach($parts as $p) {
+					$game = explode("_",$p);
+					if(count($game) === 3){
+						if($game[2] === "yes") {
+							unset($gamasArrToReg[$game[1]]);
+							$alreadyRegGames[] = $game;
+						}
+					}						
+				}
+			}
+			else {
+				$error = 'Something has gone wrong.';
+				if(SHOW_DEBUG) {
+					var_dump($do);
+					var_dump(curl_error($ch));
+				}
+			}
+		}
+		else {
+			$error = 'Your request has failed. Please try again.';
+			if(SHOW_DEBUG) {
+				var_dump($do);
+				var_dump(curl_error($ch));
+			}
+			
+		}
+		curl_close($ch);
+	}
+}
+
+pageHeader(
+	array(
+		l("Admin"),
+		l('Worldstats')
+	),
+	array(
+		l("Admin")=>"index.php?mode=admin",
+		l('Worldstats')=>'')
+	);
 ?>
 
 <div id="sidebar">
@@ -111,15 +234,16 @@ pageHeader(array(l("Admin"),l('Worldstats')), array(l("Admin")=>"index.php?mode=
 			echo '<div class="error">',$error,'</div>';
 		}
 		elseif(!empty($success)) {
-			echo '<div class="success">',$success,'</div>';
+			echo '<div class="success">',implode("<br />",$success),'</div>';
 		}
 	?>
 	<p>
 		<form method="post" action="">
+			<p>Games which are not registered yet:</p>
 			<?php
-			if(!empty($gamesArr)) {
+			if(!empty($gamesArrToReg)) {
 				echo '<select name="reg[game][]" multiple="true" size="5">';
-				foreach($gamesArr as $k=>$v) {
+				foreach($gamesArrToReg as $k=>$v) {
 					echo '<option value="',$k,'">',$v,'</option>';
 				}
 				echo '</select><br /><br />';

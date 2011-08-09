@@ -64,8 +64,8 @@ else {
 
 # db connection
 require('./db-conf.inc.php');
-$db_con = mysql_connect(DB_HOST,DB_USER,DB_PASS) OR die('Can not connect');
-$db_sel = mysql_select_db(DB_NAME,$db_con) OR die('Can not connect');
+$db_con = mysql_connect(DB_HOST,DB_USER,DB_PASS) OR die('RegAPI Error :: Can not connect');
+$db_sel = mysql_select_db(DB_NAME,$db_con) OR die('RegAPI Error :: Can not connect');
 mysql_query("SET character set utf8");
 mysql_query("SET NAMES utf8");
 
@@ -86,7 +86,6 @@ $method = $_SERVER['REQUEST_METHOD'];
 $return = '';
 
 switch($method) {
-	case 'POST':
 	case 'PUT':
 	case 'DELETE':
 	case 'HEAD':
@@ -99,6 +98,11 @@ switch($method) {
 		exit();
 	break;
 
+	case 'POST':
+		# used to register new entries
+		var_dump($_POST);
+	break;
+
 	case 'GET':
 	default:
 		if(!isset($_GET['id'])) exit('Missing argument: ID');
@@ -108,20 +112,26 @@ switch($method) {
 		$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
 		
 		if(!empty($id) && !empty($gamesStr)) {
-			if(strstr(",",$gamesStr)) {
-				$games = explode($gamesStr);
+			if(strstr($gamesStr,"__")) {
+				$games = explode("__",$gamesStr);
 			}
 			else {
 				$games[] = $gamesStr;
 			}
 			
 			foreach($games as $g) {
-				# check if we have thise site/game
+				# check if we have this site/game
 				$query = mysql_query("SELECT id FROM `".DB_PREFIX."_ws_sites`
 										WHERE `siteHash` = '".mysql_real_escape_string($id)."'
 											AND `game` = '".mysql_real_escape_string($g)."'");
+				if(mysql_num_rows($query) > 0) {
+					$return .= $id."_".$g."_yes__";
+				}
+				else {
+					$return .= $id."_".$g."_no__";
+				}
 			}
-						
+			#$return = trim($return,"");		
 		}
 }
 
