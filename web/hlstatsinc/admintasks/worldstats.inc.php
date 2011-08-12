@@ -60,86 +60,29 @@ $alreadyRegGames = false;
 
 if(isset($_POST['sub']['doRegister'])) {
 	if(isset($_POST['reg']['register']) && $_POST['reg']['register'] === "1") {
-		# we want to register
-		if(isset($g_options['registeredToWorldStats']) && $g_options['registeredToWorldStats'] === "1") {
-			$error = "You are already registered.<br />If you have problems <a href='http://forum.hlstats-community.org'>please contact</a>";
-		}
-		else {
-			# build the query sting
+		
+		# build the query sting
+		
+		$queryStr = 'id='.$requestingSite;
+		
+		if(!empty($_POST['reg']['game'])) {	
 			
-			$queryStr = 'id='.$requestingSite;
-			# add the games
-			$queryGamesAdd = implode(';;',$_POST['reg']['game']);
+			# we want to register.
+			$ch = curl_init();
 			
-			if(!empty($queryGamesAdd)) {	
-				$queryStr .= "&games=".$queryGamesAdd;
-				
-				# we want to register.
-				# first run the status request
-				$ch = curl_init();
+			$pParams['gamesToAdd'] = $_POST['reg']['game'];
 			
-				curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
-				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-			
-				$do = curl_exec($ch);
-				$answerStr = false;
-				if(is_string($do) === true) {
-					$posSite = strpos($do,$requestingSite);
-					$posSemi = strpos($do,";;");
-					if($posSite !== false && $posSite === 0 && $posSemi !== false) {
-						# returning string should start with the $requestingSite
-						# and it should contain ;;
-						$success[] = 'Request send. Everthing ok.';
-						$firstRequest = true;
-						$answerStr = $do;
-					}
-					else {
-						$error = 'Something has gone wrong.';
-						if(SHOW_DEBUG) {
-							var_dump($do);
-							var_dump(curl_error($ch));
-						}
-					}
-				}
-				else {
-					$error = 'Your request has failed. Please try again.';
-					if(SHOW_DEBUG) {
-						var_dump($do);
-						var_dump(curl_error($ch));
-					}
-					
-				}
-				unset($do);
-				
-/*
-				if($firstRequest === true && !empty($answerStr)) {
-					$pParams = array();
-					
-					# now use the answer to register them
-					$parts = explode(";;",$answerStr);
-					foreach($parts as $p) {
-						$game = explode(";",$p);
-						if(count($game) === 3){
-							$pParams[]
-						}						
-					}
-					var_dump($pParams);
-					
-					curl_setopt($ch, CURLOPT_POST, true);
-					curl_setopt($ch, CURLOPT_URL,$_wsRegURL);
-					curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
-					curl_setopt($ch, CURLOPT_POSTFIELDS, $pParams);
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $pParams);
 
-					
-					$do = curl_exec($ch);
-					var_dump($do);
-				}
+			
+			$do = curl_exec($ch);
+			var_dump($do);
 
-				curl_close($ch);
-				*/
-			}
+			curl_close($ch);
+
 		}
 	}
 }
