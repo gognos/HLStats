@@ -104,7 +104,7 @@ if($g_options['allowXML'] == "1") {
 							t1.lastName,
 							t1.skill
 			    		FROM `".DB_PREFIX."_Players` as t1 
-						INNER JOIN `".DB_PREFIX."`_PlayerUniqueIds` as t2
+						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
@@ -125,7 +125,6 @@ if($g_options['allowXML'] == "1") {
 			else {
 				$xmlBody = "<message>No game Code given.</message>";
 			}
-
 		break;
 
 		/**
