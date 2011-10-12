@@ -85,7 +85,7 @@ else {
 }
 
 // check for playerId
-if($_GET['playerId'] != "" && validateInput($_GET['playerId'],'digit') === true) {
+if(isset($_GET['playerId']) != "" && validateInput($_GET['playerId'],'digit') === true) {
 	$playerId = sanitize($_GET['playerId']);
 	$playerId = (int)$playerId;
 }

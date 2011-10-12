@@ -292,7 +292,7 @@ form.search input.searchbutton {
 }
 #main {
 	float: right;
-	width: 665px;
+	width: 660px;
 }
 
 #main h1, #main-full h1 {
@@ -315,7 +315,7 @@ form.search input.searchbutton {
 	float: left;
 	width: 220px;
 	margin: 0; 
-	padding: 2;
+	padding: 2px;
 	background-color: #e7e7e4;
 	border: 2px solid #9E9E9E;
 	border-radius: 5px; 
