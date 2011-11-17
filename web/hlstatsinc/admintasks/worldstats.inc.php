@@ -72,6 +72,7 @@ if(isset($_POST['sub']['doRegister'])) {
 			
 			$pParams['gamesToAdd'] = $_POST['reg']['game'];
 			
+#			curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
@@ -110,8 +111,7 @@ else {
 			$posSemi = strpos($do,"__");
 			if($posSite !== false && $posSite === 0 && $posSemi !== false) {
 				# returning string should start with the $requestingSite
-				# and it should contain ;;
-				$success[] = 'Connection established. Everthing ok.';
+				$success[] = 'Connection to master server possible.';
 				#$alreadyRegGames
 
 				$parts = explode("__",$answerStr);

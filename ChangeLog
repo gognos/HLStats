@@ -17,6 +17,7 @@ HLStats ChangeLog
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
 	skillchangeDate
 *) Fixed: players count per day
+*) Fixed: Possible fix for server view. Variable was a string
 *) Changed: L4D improvements. zombies are now handled as BOT to clear up
 	the stats
 *) Closed: #14

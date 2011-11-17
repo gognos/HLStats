@@ -48,7 +48,7 @@
 function GetServerData($command, $ip, $port) {
 
 	$data = '';
-	if (!$server_connection = fsockopen('udp://'.$ip, $port)) {
+	if (!$server_connection = fsockopen('udp://'.$ip, (int)$port)) {
 		return false;
 	}
 
@@ -531,7 +531,7 @@ function Source_Rcon ($ip, $port, $rcon, $string1, $string2 = NULL) {
 	$string2 .= "\x00";
 	*/
 
- 	if (!$server_connection = fsockopen("udp://".$ip, $port)) {
+ 	if (!$server_connection = fsockopen("udp://".$ip, (int)$port)) {
 		return false;
 	}
 
