@@ -1,4 +1,5 @@
-#!/usr/bin/perl 
+#!/usr/bin/perl -w
+
 #
 # Original development:
 # +
@@ -47,6 +48,11 @@ my $opt_configfile_name = "hlstats.conf.ini";
 use strict;
 no strict 'vars';
 
+BEGIN { 
+    binmode STDOUT, ':encoding(UTF-8)';
+    binmode STDERR, ':encoding(UTF-8)';
+}
+
 use POSIX;
 use Getopt::Long;
 use Time::Local;
@@ -55,12 +61,10 @@ use DBI;
 use Digest::MD5;
 use File::Basename;
 use Encode;
-use open qw( :std :encoding(UTF-8) );
+use Config::Tiny;
 
 # debug
 use Data::Dumper;
-
-use Config::Tiny;
 
 my $opt_libdir = dirname(__FILE__);
 my $opt_configfile = "$opt_libdir/$opt_configfile_name";

@@ -1,5 +1,5 @@
-#!/usr/bin/perl
-#
+#!/usr/bin/perl -w
+
 #
 # Original development:
 # +
@@ -44,11 +44,17 @@ my $opt_configfile_name = "hlstats.conf.ini";
 ## No need to edit below this line
 ##
 
+use strict;
+no strict 'vars';
+
+BEGIN { 
+    binmode STDOUT, ':encoding(UTF-8)';
+    binmode STDERR, ':encoding(UTF-8)';
+}
 
 use Getopt::Long;
 use DBI;
-use Config::Tiny; ## new config syntax
-
+use Config::Tiny;
 use File::Basename;
 
 my $opt_libdir = dirname(__FILE__);
