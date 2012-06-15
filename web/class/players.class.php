@@ -63,6 +63,11 @@ class Players {
 	private $g_options = array();
 
 	/**
+	 * the global DB Object
+	 */
+	private $_DB = false;
+
+	/**
 	 * set some vars and the game. Game code check is already done
 	 *
 	 * @param string $game The current game
@@ -74,6 +79,8 @@ class Players {
 		else {
 			throw new Exception("Game is missing for Players.class");
 		}
+
+		$this->_DB = $GLOBALS['DB'];
 
 		// set default values
 		$this->setOption('page',1);
@@ -123,7 +130,7 @@ class Players {
 						t1.lastName AS lastName,
 						t1.isBot AS isBot
 					FROM `".DB_PREFIX."_Players` AS t1
-					WHERE t1.game= '".mysql_real_escape_string($this->_game)."'
+					WHERE t1.game= '".$this->_DB->real_escape_string($this->_game)."'
 					AND t1.hideranking = 0";
 
 		if($this->g_options['IGNOREBOTS'] === "1") {
@@ -132,10 +139,10 @@ class Players {
 		
 		$queryStr .= " ORDER BY t1.skill DESC LIMIT 1";
 		
-		$query = mysql_query($queryStr);
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(!empty($query) && mysql_num_rows($query) > 0) {
-			$ret = mysql_fetch_assoc($query);
+		$query = $this->_DB->query($queryStr);
+		if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+		if(!empty($query) && $query->num_rows > 0) {
+			$ret = $query->fetch_assoc();
 		}
 		
 		return $ret;
@@ -166,9 +173,9 @@ class Players {
 			FROM `".DB_PREFIX."_Players` as t1";
 
 		$queryStr .= " WHERE
-				t1.game='".mysql_real_escape_string($this->_game)."'
+				t1.game='".$this->_DB->real_escape_string($this->_game)."'
 				AND t1.hideranking=0
-				AND t1.kills >= '".mysql_real_escape_string($this->_option['minkills'])."'";
+				AND t1.kills >= '".$this->_DB->real_escape_string($this->_option['minkills'])."'";
 
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
@@ -205,10 +212,10 @@ class Players {
 			$queryStr .=" LIMIT ".$start.",50";
 		}
 
-		$query = mysql_query($queryStr);
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			while($result = mysql_fetch_assoc($query)) {
+		$query = $this->_DB->query($queryStr);
+		if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+		if($query->num_rows > 0) {
+			while($result = $query->fetch_assoc()) {
 				$result['kpd'] = number_format($result['kpd'],2,'.','');
 				$result['lastName'] = makeSavePlayerName($result['lastName']);
 
@@ -218,8 +225,8 @@ class Players {
 		}
 
 		// get the max count for pagination
-		$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-		$result = mysql_fetch_assoc($query);
+		$query = $this->_DB->query("SELECT FOUND_ROWS() AS 'rows'");
+		$result = $query->fetch_assoc();
 		$ret['pages'] = (int)ceil($result['rows']/50);
 
 		return $ret;
@@ -238,7 +245,7 @@ class Players {
 						FROM `".DB_PREFIX."_Events_Entries` AS ee
 						INNER JOIN ".DB_PREFIX."_Players as p ON ee.playerId = p.playerId
 						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as pu ON ee.playerId = pu.playerId
-						WHERE p.game = '".mysql_real_escape_string($this->_game)."'";
+						WHERE p.game = '".$this->_DB->real_escape_string($this->_game)."'";
 
 		// should we show all the players or not
 		if(isset($this->_option['showall']) && $this->_option['showall'] === "1") {
@@ -267,16 +274,16 @@ class Players {
 		
 		$queryStr .= " ORDER BY `eventTime`";
 
-		$query = mysql_query($queryStr);
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			while ($result = mysql_fetch_assoc($query)) {
+		$query = $this->_DB->query($queryStr);
+		if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+		if($query->num_rows > 0) {
+			while ($result = $query->fetch_assoc()) {
 				// we group by day and playerId
 				$result['eventTime'] = strftime('%d %b %Y',strtotime($result['eventTime']));
 				$data[$result['eventTime']][$result['playerId']] = $result['playerId'];
 			}
 		}
-		mysql_free_result($query);
+		$query->free();
 
 		return $data;
 	}
@@ -300,7 +307,7 @@ class Players {
 					ON s.serverId = est.serverId
 				LEFT JOIN `".DB_PREFIX."_Players` AS p
 					ON p.playerId = est.playerId
-				WHERE s.game = '".mysql_real_escape_string($this->_game)."'";
+				WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'";
 		
 					
 		// should we show all the players or not
@@ -321,14 +328,14 @@ class Players {
 		 		ORDER BY `tTime` DESC
 				LIMIT 10";
 
-		$query = mysql_query($queryStr);
+		$query = $this->_DB->query($queryStr);
 					
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		while($result = mysql_fetch_assoc($query)) {
+		if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+		while($result = $query->fetch_assoc()) {
 			$data[$result['pId']] = array('timeSec' => $result['tTime'],
 										'playerName' => $result['name']);
 		}
-		mysql_free_result($query);
+		$query->free();
 
 		return $data;
 	}
@@ -345,17 +352,17 @@ class Players {
 						FROM `".DB_PREFIX."_Events_Entries` AS ee
 						INNER JOIN ".DB_PREFIX."_Players as p ON ee.playerId = p.playerId
 						INNER JOIN ".DB_PREFIX."_PlayerUniqueIds as pu ON ee.playerId = pu.playerId
-						WHERE p.game = '".mysql_real_escape_string($this->_game)."'
+						WHERE p.game = '".$this->_DB->real_escape_string($this->_game)."'
 						ORDER BY eventTime DESC ,p.lastName";
 		
-		$query = mysql_query($queryStr);
+		$query = $this->_DB->query($queryStr);
 
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		while($result = mysql_fetch_assoc($query)) {
+		if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+		while($result = $query->fetch_assoc()) {
 			$result['eventTime'] = strftime('%d %b %Y',strtotime($result['eventTime']));
 			$data[$result['eventTime']][$result['playerId']] = $result;
 		}
-		mysql_free_result($query);
+		$query->free();
 						
 		return $data;
 	}

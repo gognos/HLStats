@@ -109,13 +109,13 @@ if(!$g_options['hideNews']) {
 			<th align="center"><?php echo l('Top Clan'); ?></th>
 		</tr>
 	<?php
-		while ($gamedata = mysql_fetch_assoc($queryAllGames)) {
+		while ($gamedata = $queryAllGames->fetch_assoc()) {
 			
 			# get the top player
 			$playersObj = new Players($gamedata['code']);
 			$topplayer = $playersObj->topPlayer();
 			
-			$queryTopClan = mysql_query("SELECT
+			$queryTopClan = $DB->query("SELECT
 					c.clanId,
 					c.name,
 					AVG(p.skill) AS skill,
@@ -123,17 +123,17 @@ if(!$g_options['hideNews']) {
 				FROM `".DB_PREFIX."_Clans` AS c
 				LEFT JOIN `".DB_PREFIX."_Players` AS p
 					ON p.clan = c.clanId
-				WHERE c.game = '".mysql_real_escape_string($gamedata['code'])."'
+				WHERE c.game = '".$DB->real_escape_string($gamedata['code'])."'
 				GROUP BY c.clanId
 				HAVING skill IS NOT NULL AND numplayers > 1
 				ORDER BY skill DESC
 				LIMIT 1
 			");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 
 			$topclan = false;
-			if (mysql_num_rows($queryTopClan) === 1) {
-				$topclan = mysql_fetch_assoc($queryTopClan);
+			if ($queryTopClan->num_rows === 1) {
+				$topclan = $queryTopClan->fetch_assoc();
 			}
 	?>
 		<tr>
@@ -177,29 +177,29 @@ if(!$g_options['hideNews']) {
 <h1><?php echo l('General Statistics'); ?></h1>
 <p>
 <?php
-	$query = mysql_query("SELECT COUNT(*) AS pc FROM `".DB_PREFIX."_Players`");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT COUNT(*) AS pc FROM `".DB_PREFIX."_Players`");
+	$result = $query->fetch_assoc();
 	$num_players = $result['pc'];
-	mysql_free_result($query);
+	$query->free();
 
-	$query = mysql_query("SELECT COUNT(*) AS cc FROM `".DB_PREFIX."_Clans`");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT COUNT(*) AS cc FROM `".DB_PREFIX."_Clans`");
+	$result = $query->fetch_assoc();
 	$num_clans = $result['cc'];
-	mysql_free_result($query);
+	$query->free();
 
-	$query = mysql_query("SELECT COUNT(*) AS sc FROM `".DB_PREFIX."_Servers`");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT COUNT(*) AS sc FROM `".DB_PREFIX."_Servers`");
+	$result = $query->fetch_assoc();
 	$num_servers = $result['sc'];
-	mysql_free_result($query);
+	$query->free();
 
 	$lastevent = false;
-	$query = mysql_query("SELECT MAX(eventTime) AS lastEvent FROM `".DB_PREFIX."_Events_Frags`");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT MAX(eventTime) AS lastEvent FROM `".DB_PREFIX."_Events_Frags`");
+	$result = $query->fetch_assoc();
 	if(!empty($result['lastEvent'])) {
 		$timstamp = strtotime($result['lastEvent']);
 		$lastevent = getInterval($timstamp);
 	}
-	mysql_free_result($query);
+	$query->free();
 ?>
 	<ul>
 		<li>
