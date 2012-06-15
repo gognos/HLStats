@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -54,7 +54,7 @@ if (isset($_GET["date"])) {
 $tmptime = strtotime($date);
 $awards_d_date = l(date('l',$tmptime)).' '.date('d.m.',$tmptime);
 
-$query = mysql_query("SELECT a.name,
+$query = $DB->query("SELECT a.name,
 								a.verb,
 								ah.d_winner_id,
 								ah.d_winner_count,
@@ -67,32 +67,32 @@ $query = mysql_query("SELECT a.name,
 								ON p.playerId = ah.d_winner_id
 							LEFT JOIN `".DB_PREFIX."_Awards` AS a
 								ON a.awardId = ah.fk_award_id
-							WHERE ah.game = '".mysql_real_escape_string($game)."'
-								AND ah.date = '".mysql_real_escape_string($date)."'
+							WHERE ah.game = '".$DB->real_escape_string($game)."'
+								AND ah.date = '".$DB->real_escape_string($date)."'
 							ORDER BY a.awardType DESC,
 								a.name ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if (mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if ($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$awardsHistory['data'][] = $result;
 	}
 	unset($result);
 }
-mysql_free_result($query);
+$query->free();
 
 // get the dates for the date selection
 $dateSelect = array();
-$query = mysql_query("SELECT `date` FROM `".DB_PREFIX."_Awards_History`
-						WHERE game = '".mysql_real_escape_string($game)."'
+$query = $DB->query("SELECT `date` FROM `".DB_PREFIX."_Awards_History`
+						WHERE game = '".$DB->real_escape_string($game)."'
 						GROUP BY `date`");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$dateSelect[$result['date']] = $result['date'];
 	}
 	unset($result);
 }
-mysql_free_result($query);
+$query->free();
 
 
 pageHeader(
