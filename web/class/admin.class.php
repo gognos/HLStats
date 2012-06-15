@@ -59,10 +59,17 @@ class Admin {
 	private $_userData = false;
 
 	/**
+	 * the global DB Object
+	 */
+	private $_DB = false;
+
+	/**
 	 * load stuff and check if we are logged in
 	 */
 	public function __construct() {
 		$this->_checkAuth();
+
+		$this->_DB = $GLOBALS['DB'];
 	}
 
 	/**
@@ -91,22 +98,22 @@ class Admin {
 		$ret = false;
 
 		if(!empty($username) && !empty($pass)) {
-			$query = mysql_query("SELECT `username`,`password`
+			$query = $this->_DB->query("SELECT `username`,`password`
 									FROM `".DB_PREFIX."_Users`
-									WHERE `username` = '".mysql_real_escape_string($username)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if(mysql_num_rows($query) > 0) {
+									WHERE `username` = '".$this->_DB->real_escape_string($username)."'");
+			if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+			if($query->num_rows > 0) {
 				// we have such user, now check pass
-				$result = mysql_fetch_assoc($query);
+				$result = $quer-y>fetch_assoc();
 				$lPass = md5($pass);
 				if($result['password'] === $lPass) {
 					// valid username and password
 					// create auth code
 					$authCode = sha1($_SERVER["REMOTE_ADDR"].$_SERVER['HTTP_USER_AGENT'].$lPass);
-					$query = mysql_query("UPDATE `".DB_PREFIX."_Users`
-											SET `authCode` = '".mysql_real_escape_string($authCode)."'
-											WHERE `username` = '".mysql_real_escape_string($username)."'");
-					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+					$query = $this->_DB->query("UPDATE `".DB_PREFIX."_Users`
+											SET `authCode` = '".$this->_DB->real_escape_string($authCode)."'
+											WHERE `username` = '".$this->_DB->real_escape_string($username)."'");
+					if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
 					if($query !== false) {
 						$_SESSION['hlstatsAuth']['authCode'] = $authCode;
 						$ret = true;
@@ -128,10 +135,10 @@ class Admin {
 		if(isset($_SESSION['hlstatsAuth']['authCode'])) {
 			$authCode = $_SESSION['hlstatsAuth']['authCode'];
 			if(validateInput($authCode,'nospace') === true) {
-				$query = mysql_query("UPDATE `".DB_PREFIX."_Users`
+				$query = $this->_DB->query("UPDATE `".DB_PREFIX."_Users`
 										SET `authCode` = ''
-										WHERE `authCode` = '".mysql_real_escape_string($authCode)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+										WHERE `authCode` = '".$this->_DB->real_escape_string($authCode)."'");
+				if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
 			}
 		}
 
@@ -150,16 +157,16 @@ class Admin {
 		
 		if(!empty($username)) {
 			$queryStr = "UPDATE `".DB_PREFIX."_Users`
-							SET `username` = '".mysql_real_escape_string($username)."'";
+							SET `username` = '".$this->_DB->real_escape_string($username)."'";
 			if(!empty($pw)) {
 				$pw = md5($pw);
-				$queryStr .= ", `password` = '".mysql_real_escape_string($pw)."'";
+				$queryStr .= ", `password` = '".$this->_DB->real_escape_string($pw)."'";
 			}
 
-			$queryStr .= " WHERE `username` = '".mysql_real_escape_string($this->_userData['username'])."'";
+			$queryStr .= " WHERE `username` = '".$this->_DB->real_escape_string($this->_userData['username'])."'";
 
-			$query = mysql_query($queryStr);
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $this->_DB->query($queryStr);
+			if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
 			if($query !== false) {
 				$ret = true;
 			}
@@ -198,15 +205,15 @@ class Admin {
 	private function _getSessionDataFromDB($authCode) {
 		$ret = false;
 
-		$query = mysql_query("SELECT `username`,`password`
+		$query = $this->_DB->query("SELECT `username`,`password`
 								FROM `".DB_PREFIX."_Users`
-								WHERE `authCode` = '".mysql_real_escape_string($authCode)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			$ret = mysql_fetch_assoc($query);
+								WHERE `authCode` = '".$this->_DB->real_escape_string($authCode)."'");
+		if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
+		if($query->num_rows > 0) {
+			$ret = $query->fetch_assoc();
 		}
 
-		mysql_free_result($query);
+		$query->free();
 
 		$this->_userData['username'] = $ret['username'];
 
