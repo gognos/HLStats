@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -44,11 +44,11 @@ $_wsRegURL = "http://localhost/code/HLStats/worldstats/regapi.php";
 
 
 // get the games from the db
-$query = mysql_query("SELECT code,name
+$query = $db->query("SELECT code,name
 						FROM `".DB_PREFIX."_Games`
 						ORDER BY `name`");
 $gamesArr = array();
-while ($result = mysql_fetch_assoc($query)) {
+while ($result = $query->fetch_assoc()) {
 	$gamesArr[$result['code']] = $result['name'];
 }
 $gamesArrToReg = $gamesArr;
