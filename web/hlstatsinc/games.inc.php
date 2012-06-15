@@ -48,11 +48,11 @@ pageHeader(array(l("Contents")), array(l("Contents")=>""));
 <?php
 // should we hide the news ?
 if(!$g_options['hideNews']) {
-	$queryNews = mysql_query("SELECT id,`date`,`user`,`email`,`subject`,`message`
+	$queryNews = $DB->query("SELECT id,`date`,`user`,`email`,`subject`,`message`
 								FROM `".DB_PREFIX."_News`
 								ORDER BY `date` DESC");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($queryNews) > 0) {
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($queryNews->num_rows > 0) {
 ?>
 	<script type="text/javascript">
 	<!--
@@ -70,7 +70,7 @@ if(!$g_options['hideNews']) {
 	<h1><?php echo l('News'); ?></h1>
 	<?php
 		$i = 0;
-		while ($rowdata = mysql_fetch_assoc($queryNews)) {
+		while ($rowdata = $queryNews->fetch_assoc()) {
 			if($i == 0) {
 	?>
 	<div class="newsBox" id="newsBox_<?php echo $i; ?>">

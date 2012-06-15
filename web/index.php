@@ -80,10 +80,20 @@ require("hlstatsinc/functions.inc.php");
  */
 define("VERSION", "1.63");
 
+$DB = new mysqli(DB_ADDR,DB_USER,DB_PASS,DB_NAME);
+if($DB->connect_errno) {
+	var_dump($DB->connect_error);
+	die('Could not connect to the MySQL Server. Check your configuration.');	
+}
+$DB->query("SET NAMES utf8");
+$DB->query("SET collation_connection = 'utf8_unicode_ci'");
+$DB->set_charset("utf8");
+/*
 $db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS) OR die('Could not connect to the MySQL Server. Check your configuration.');
 $db_sel = mysql_select_db(DB_NAME,$db_con) OR die('Could not select database. Check your configuration.');
 mysql_query("SET NAMES utf8");
 mysql_query("SET collation_connection = 'utf8_unicode_ci'");
+*/
 
 /**
  * load the options
@@ -167,10 +177,10 @@ if(!empty($_GET["mode"])) {
 }
 
 // decide if we show the games or the game file
-$queryAllGames = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games`
+$queryAllGames = $DB->query("SELECT code, name FROM `".DB_PREFIX."_Games`
 								WHERE hidden='0' ORDER BY name");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-$num_games = mysql_num_rows($queryAllGames);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+$num_games = $queryAllGames->num_rows;
 
 $game = '';
 if(isset($_GET['game'])) {
@@ -178,15 +188,15 @@ if(isset($_GET['game'])) {
 	if($check === true) {
 		$game = $_GET['game'];
 
-		$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games` 
-								WHERE code = '".mysql_real_escape_string($game)."'
+		$query = $DB->query("SELECT name FROM `".DB_PREFIX."_Games` 
+								WHERE code = '".$DB->real_escape_string($game)."'
 								AND `hidden` = '0'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) < 1) {
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+		if($query->num_rows < 1) {
 			error("No such game '$game'.");
 		}
 		else {
-			$result = mysql_fetch_assoc($query);
+			$result = $query->fetch_assoc();
 			$gamename = $result['name'];
 			if(empty($mode)) $mode = 'game';
 		}
@@ -194,7 +204,7 @@ if(isset($_GET['game'])) {
 }
 else {
 	if ($num_games == 1) {
-		$result = mysql_fetch_assoc($queryAllGames);
+		$result = $queryAllGames->fetch_assoc();
 		if(!empty($num_games)) {
 			$game = $result['code'];
 			$gamename = $result['name'];
@@ -219,5 +229,5 @@ include("hlstatsinc/".$mode.".inc.php");
  * include the global footer
  */
 include("hlstatsinc/footer.inc.php");
-mysql_close($db_con);
+$DB->close();
 ?>

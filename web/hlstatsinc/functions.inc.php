@@ -422,13 +422,13 @@ function getLink ($url, $maxlength=40, $type="http://", $target="_blank") {
  */
 function getGameName($gCode) {
 	$gamename = ucfirst($gCode);
-	$query = mysql_query("SELECT name FROM ".DB_PREFIX."_Games WHERE code='".mysql_real_escape_string($gCode)."'");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if (mysql_num_rows($query) > 0) {
-		$result = mysql_fetch_assoc($query);
+	$query = $GLOBALS['DB']->query("SELECT name FROM ".DB_PREFIX."_Games WHERE code='".$GLOBALS['DB']->real_escape_string($gCode)."'");
+	if(SHOW_DEBUG && $GLOBALS['DB']->error) var_dump($GLOBALS['DB']->error);
+	if ($query->num_rows > 0) {
+		$result = $query->fetch_assoc();
 		$gamename = $result['name'];
 	}
-	mysql_free_result($query);
+	$query->free();
 
 	return $gamename;
 }
@@ -441,10 +441,10 @@ function getGameName($gCode) {
 function getOptions() {
 	$ret = array();
 
-	$query  = mysql_query("SELECT keyname, value FROM ".DB_PREFIX."_Options");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if (mysql_num_rows($query) > 0) {
-		while ($rowdata = mysql_fetch_assoc($query)) {
+	$query  = $GLOBALS['DB']->query("SELECT keyname, value FROM ".DB_PREFIX."_Options");
+	if(SHOW_DEBUG && $GLOBALS['DB']->error) var_dump($GLOBALS['DB']->error);
+	if ($query->num_rows > 0) {
+		while ($rowdata = $query->fetch_assoc()) {
 			$ret[$rowdata['keyname']] = $rowdata['value'];
 		}
 	}

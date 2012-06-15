@@ -10,6 +10,7 @@ HLStats ChangeLog
 *) New: GoldenEye: Source gamesupport
 *) New: Left for dead 2 gamesupport
 *) New: Players timeline
+*) Update: Using PHP mysqli extension now.
 *) Update: L4D, Hidden and other gamesupport files.
 *) Update: Server add-ons list
 *) Update: some interface changes
