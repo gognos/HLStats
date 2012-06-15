@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -81,16 +81,16 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the total actions count for this game
-$queryActionsCount = mysql_query("SELECT COUNT(*) ac
+$queryActionsCount = $DB->query("SELECT COUNT(*) ac
 	FROM `".DB_PREFIX."_Actions` AS a,
 		`".DB_PREFIX."_Events_PlayerActions` AS epa
 	WHERE epa.actionId = a.id
-		AND a.game = '".mysql_real_escape_string($game)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-$result = mysql_fetch_assoc($queryActionsCount);
+		AND a.game = '".$DB->real_escape_string($game)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+$result = $queryActionsCount->fetch_assoc();
 // get the total actions count for this game
 $totalactions = $result['ac'];
-mysql_free_result($queryActionsCount);
+$queryActionsCount->free();
 
 if(!empty($totalactions)) {
 	// query to get the data from the db with the given options
@@ -103,9 +103,9 @@ if(!empty($totalactions)) {
 		`".DB_PREFIX."_Events_PlayerActions` AS epa,
 		`".DB_PREFIX."_Players` AS p
 	WHERE epa.playerId = p.playerId
-		AND p.game = '".mysql_real_escape_string($game)."'
+		AND p.game = '".$DB->real_escape_string($game)."'
 		AND epa.actionId = a.id
-		AND a.game = '".mysql_real_escape_string($game)."'
+		AND a.game = '".$DB->real_escape_string($game)."'
 		AND p.hideranking = 0
 	GROUP BY a.id
 	ORDER BY ".$sort." ".$sortorder."";
@@ -119,21 +119,21 @@ if(!empty($totalactions)) {
 		$queryStr .=" LIMIT ".$start.",50";
 	}
 
-	$query = mysql_query($queryStr);
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
+	$query = $DB->query($queryStr);
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($query->num_rows > 0) {
+		while($result = $query->fetch_assoc()) {
 			$actions['data'][] = $result;
 		}
 	}
-	mysql_freeresult($query);
+	$query->free();
 
 	// query to get the total rows which would be fetched without the LIMIT
 	// works only if the $queryStr has SQL_CALC_FOUND_ROWS
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+	$result = $query->fetch_assoc();
 	$actions['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+	$query->free();
 }
 
 pageHeader(
