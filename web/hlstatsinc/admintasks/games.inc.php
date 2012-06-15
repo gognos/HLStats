@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -59,7 +59,7 @@ if (isset($_POST['sub']['newgame'])) {
 			foreach ($sqlContentArr as $line) {
 				$line = trim($line);
 				if(!preg_match("/^#/",$line) && $line != "") {
-					$query = mysql_query($line);
+					$query = $db->query($line);
 					if(!$query) {
 						echo("Query Failed: ".$line);
 						$i++;
@@ -84,38 +84,38 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 
 		// we need first the playids for this game
 		$players = array();
-		$query = mysql_query("SELECT playerId FROM ".DB_PREFIX."_Players
-								WHERE game = '".mysql_real_escape_string($gametodelete)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		while($result = mysql_fetch_assoc($query)) {
+		$query = $db->query("SELECT playerId FROM ".DB_PREFIX."_Players
+								WHERE game = '".$db->real_escape_string($gametodelete)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		while($result = $query->fetch_assoc()) {
 			$players[]= $result['playerId'];
 		}
 		if(!empty($players)) {
 			#die("Fatal error: No players found for this game.");
 			$playerIdString = implode(",",$players);
-			$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if (mysql_num_rows($query) < 1) {
+			$query = $db->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			if ($query->num_rows < 1) {
 				die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
 					There may be something wrong with your hlstats database or your version of MySQL.");
 			}
 
 			$dbtables = array();
-			while (list($table) = mysql_fetch_array($query)) {
+			while (list($table) = $DB->fetch_array($query)) {
 				$dbtables[] = $table;
 			}
 
 			foreach($dbtables as $table) {
 				if($table == '".DB_PREFIX."_Events_Frags' || $table == '".DB_PREFIX."_Events_Teamkills') {
-					mysql_query("DELETE FROM `".$table."`
+					$db->query("DELETE FROM `".$table."`
 									WHERE killerId IN (".$playerIdString.")
 										OR victimId IN (".$playerIdString.")");
-					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+					if(SHOW_DEBUG && $db->error) var_dump($db->error);
 				}
 				else {
-					mysql_query("DELETE FROM `".$table."`
+					$db->query("DELETE FROM `".$table."`
 									WHERE playerId IN (".$playerIdString.")");
-					if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+					if(SHOW_DEBUG && $db->error) var_dump($db->error);
 				}
 			}
 		}
@@ -125,21 +125,21 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 								DB_PREFIX.'_Roles', DB_PREFIX.'_Servers',
 								DB_PREFIX.'_Teams', DB_PREFIX.'_Weapons');
 		foreach($gameTables as $gt) {
-			$do = mysql_query("DELETE FROM `".$gt."` WHERE game = '".mysql_real_escape_string($_POST['gameToDelete'])."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$do = $db->query("DELETE FROM `".$gt."` WHERE game = '".$db->real_escape_string($_POST['gameToDelete'])."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
 			if($do === false) {
 				echo $gt,' ',l("ERROR");
 			}
 		}
 
-		mysql_query("DELETE FROM `".DB_PREFIX."_Games`
-						WHERE code='".mysql_real_escape_string($gametodelete)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		$db->query("DELETE FROM `".DB_PREFIX."_Games`
+						WHERE code='".$db->real_escape_string($gametodelete)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 
 		// delete the players
 		if(!empty($players)) {
-			mysql_query("DELETE FROM `".DB_PREFIX."_Players` WHERE playerId IN (".$playerIdString.")");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$db->query("DELETE FROM `".DB_PREFIX."_Players` WHERE playerId IN (".$playerIdString.")");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
 		}
 
 		header('Location: index.php?mode=admin&task=games');
@@ -147,11 +147,11 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 }
 else {
 	// get the games from the db
-	$query = mysql_query("SELECT code,name
+	$query = $db->query("SELECT code,name
 							FROM `".DB_PREFIX."_Games`
 							ORDER BY `name`");
 	$gamesArr = array();
-	while ($result = mysql_fetch_assoc($query)) {
+	while ($result = $query->fetch_assoc()) {
 		$gamesArr[$result['code']] = $result['name'];
 	}
 

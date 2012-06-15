@@ -149,7 +149,7 @@ if($query->num_rows > 0) {
 		$members['data'][] = $result;
 	}
 }
-$query->_free();
+$query->free();
 
 // query to get the total rows which would be fetched without the LIMIT
 // works only if the $queryStr has SQL_CALC_FOUND_ROWS

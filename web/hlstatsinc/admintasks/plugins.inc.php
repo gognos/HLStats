@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -44,9 +44,9 @@ $return = false;
 if(isset($_POST['sub']['saveAddons'])) {
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Server_Addons`
-									WHERE `rule` = '".mysql_real_escape_string($k)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $db->query("DELETE FROM `".DB_PREFIX."_Server_Addons`
+									WHERE `rule` = '".$db->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
 			unset($_POST['rule'][$k]);
 		}
 	}
@@ -56,12 +56,12 @@ if(isset($_POST['sub']['saveAddons'])) {
 		foreach($_POST['rule'] as $k=>$v) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['add'][$k])) {
-				$query = mysql_query("UPDATE `".DB_PREFIX."_Server_Addons`
-										SET `rule` = '".mysql_real_escape_string($v)."',
-											`addon` = '".mysql_real_escape_string($_POST['add'][$k])."',
-											`url` = '".mysql_real_escape_string($_POST['url'][$k])."'
-										WHERE `rule` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				$query = $db->query("UPDATE `".DB_PREFIX."_Server_Addons`
+										SET `rule` = '".$db->real_escape_string($v)."',
+											`addon` = '".$db->real_escape_string($_POST['add'][$k])."',
+											`url` = '".$db->real_escape_string($_POST['url'][$k])."'
+										WHERE `rule` = '".$db->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $db->error) var_dump($db->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -75,11 +75,11 @@ if(isset($_POST['sub']['saveAddons'])) {
 		$newAdd = trim($_POST['newadd']);
 		$newURL = trim($_POST['newurl']);
 		if(!empty($newOne) && !empty($newAdd)) {
-			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Server_Addons`
-									SET `rule` = '".mysql_real_escape_string($newOne)."',
-										`addon` = '".mysql_real_escape_string($newAdd)."',
-										`url` = '".mysql_real_escape_string($newURL)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $db->query("INSERT INTO `".DB_PREFIX."_Server_Addons`
+									SET `rule` = '".$db->real_escape_string($newOne)."',
+										`addon` = '".$db->real_escape_string($newAdd)."',
+										`url` = '".$db->real_escape_string($newURL)."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -94,13 +94,13 @@ if(isset($_POST['sub']['saveAddons'])) {
 
 $addons = false;
 // get the addons from db
-$query = mysql_query("SELECT rule,addon,url
+$query = $db->query("SELECT rule,addon,url
 						FROM `".DB_PREFIX."_Server_Addons`
 						ORDER BY rule ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
+if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if($query->num_rows > 0) {
 	unset($result);
-	while($result = mysql_fetch_assoc($query)) {
+	while($result = $query->fetch_assoc()) {
 		$addons[] = $result;
 	}
 }

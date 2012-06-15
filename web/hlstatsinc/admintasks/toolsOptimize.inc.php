@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -71,13 +71,13 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 	</p>
 	<?php
 		if ($upgrade === true) {
-			$result = mysql_query("SHOW TABLES");
+			$result = $db->query("SHOW TABLES");
 
 			echo "Upgrading all tables to MyISAM format:<ul>\n";
 			flush();
-			while (list($table) = mysql_fetch_array($result)) {
+			while (list($table) = $result->fetch_array()) {
 				echo "<li>$table ... ";
-				mysql_query("ALTER TABLE $table TYPE=MYISAM");
+				$db->query("ALTER TABLE $table TYPE=MYISAM");
 				echo "OK\n";
 				flush();
 			}
@@ -87,31 +87,31 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 		} else {
 
 
-			$result = mysql_query("SHOW TABLES");
+			$result = $db->query("SHOW TABLES");
 			$dbtables = '';
 
-			while (list($table) = mysql_fetch_array($result)) {
+			while (list($table) = $result->fetch_array()) {
 				if ($dbtables) $dbtables .= ", ";
 				$dbtables .= $table;
 			}
 
-			$query = mysql_query("OPTIMIZE TABLE $dbtables");
-			if(mysql_num_rows($query) > 0) {
-				while($result = mysql_fetch_assoc($query)) {
+			$query = $db->query("OPTIMIZE TABLE $dbtables");
+			if($query->num_rows > 0) {
+				while($result = $query->fetch_assoc()) {
 					$optimize[] = $result;
 				}
 			}
 			unset($result);
-			mysql_free_result($query);
+			$query->free();
 
-			$query = mysql_query("OPTIMIZE TABLE $dbtables");
-			if(mysql_num_rows($query) > 0) {
-				while($result = mysql_fetch_assoc($query)) {
+			$query = $db->query("OPTIMIZE TABLE $dbtables");
+			if($query->num_rows > 0) {
+				while($result = $query->fetch_assoc()) {
 					$analyze[] = $result;
 				}
 			}
 			unset($result);
-			mysql_free_result($query);
+			$query->free();
 	?>
 	<h2><?php echo l('Optimizing tables...'); ?></h2>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">

@@ -79,9 +79,9 @@ $killCount = $DB->query("SELECT COUNT(p.playerId) kc
 		ON p.playerId = ef.killerId
 	WHERE p.game = '".$DB->real_escape_string($game)."'");
 if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
-$result = $skillCount_fetch_assoc($killCount);
+$result = $killCount->fetch_assoc();
 $totalkills = $result['kc'];
-$skillCount->free();
+$killCount->free();
 
 if(!empty($totalkills)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS

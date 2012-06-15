@@ -140,7 +140,7 @@ pageHeader(
 				</a>
 			</th>
 			<th class="<?php echo toggleRowClass($rcol); ?>">
-				<?php echo l('Type'); ?>
+				<?php echo l('Description'); ?>
 			</th>
 			<th class="<?php echo toggleRowClass($rcol); ?>">
 				<a href="index.php?<?php echo makeQueryString(array('sort'=>'serverName','sortorder'=>$newSort)); ?>">
@@ -165,7 +165,7 @@ pageHeader(
 			echo '<tr>';
 			echo '<td class="',toggleRowClass($rcol),'">',$entry['eventTime'],'</td>';
 			echo '<td class="',toggleRowClass($rcol),'">',$entry['message'],'</td>';
-			echo '<td class="',toggleRowClass($rcol),'">',$entry['name'],'</td>';
+			echo '<td class="',toggleRowClass($rcol),'">',$entry['serverName'],'</td>';
 			echo '<td class="',toggleRowClass($rcol),'">',$entry['map'],'</td>';
 			echo '</tr>';
 		}

@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -113,21 +113,21 @@ else {
 	$queryStr .=" LIMIT ".$start.",50";
 }
 
-$query = mysql_query($queryStr);
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+$query = $db->query($queryStr);
+if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$adminEvents['data'][] = $result;
 	}
 }
-mysql_freeresult($query);
+$query->free();
 
 // query to get the total rows which would be fetched without the LIMIT
 // works only if the $queryStr has SQL_CALC_FOUND_ROWS
-$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-$result = mysql_fetch_assoc($query);
+$query = $db->query("SELECT FOUND_ROWS() AS 'rows'");
+$result = $query->fetch_assoc();
 $adminEvents['pages'] = (int)ceil($result['rows']/50);
-mysql_freeresult($query);
+$query->free();
 
 pageHeader(array(l("Admin"),l('Event History')), array(l("Admin")=>"index.php?mode=admin",l('Event History')=>''));
 ?>

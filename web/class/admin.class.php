@@ -104,7 +104,7 @@ class Admin {
 			if(SHOW_DEBUG && $this->_DB->error) var_dump($this->_DB->error);
 			if($query->num_rows > 0) {
 				// we have such user, now check pass
-				$result = $quer-y>fetch_assoc();
+				$result = $query->fetch_assoc();
 				$lPass = md5($pass);
 				if($result['password'] === $lPass) {
 					// valid username and password

@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -50,15 +50,15 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = mysql_query("SELECT name
+		$query = $DB->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_real_escape_string($gc)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			$result = mysql_fetch_assoc($query);
+							WHERE code = '".$DB->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+		if($query->num_rows > 0) {
+			$result = $query->fetch_assoc();
 			$gName = $result['name'];
 		}
-		mysql_free_result($query);
+		$query->free();
 	}
 }
 
@@ -72,9 +72,9 @@ if(isset($_POST['sub']['saveAwards'])) {
 	// del
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Awards`
-									WHERE `awardId` = '".mysql_real_escape_string($k)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $DB->query("DELETE FROM `".DB_PREFIX."_Awards`
+									WHERE `awardId` = '".$DB->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -87,12 +87,12 @@ if(isset($_POST['sub']['saveAwards'])) {
 				$name = trim($_POST['name'][$k]);
 				$verb = trim($_POST['verb'][$k]);
 
-				$query = mysql_query("UPDATE `".DB_PREFIX."_Awards`
-										SET `code` = '".mysql_real_escape_string($c)."',
-											`name` = '".mysql_real_escape_string($name)."',
-											`verb` = '".mysql_real_escape_string($verb)."'
-										WHERE `awardId` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				$query = $DB->query("UPDATE `".DB_PREFIX."_Awards`
+										SET `code` = '".$DB->real_escape_string($c)."',
+											`name` = '".$DB->real_escape_string($name)."',
+											`verb` = '".$DB->real_escape_string($verb)."'
+										WHERE `awardId` = '".$DB->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -108,13 +108,13 @@ if(isset($_POST['sub']['saveAwards'])) {
 			$name = trim($_POST['newname']);
 			$verb = trim($_POST['newverb']);
 
-			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Awards`
-									SET `code` = '".mysql_real_escape_string($newOne)."',
-										`name` = '".mysql_real_escape_string($name)."',
-										`verb` = '".mysql_real_escape_string($verb)."',
-										`game` = '".mysql_real_escape_string($gc)."',
+			$query = $DB->query("INSERT INTO `".DB_PREFIX."_Awards`
+									SET `code` = '".$DB->real_escape_string($newOne)."',
+										`name` = '".$DB->real_escape_string($name)."',
+										`verb` = '".$DB->real_escape_string($verb)."',
+										`game` = '".$DB->real_escape_string($gc)."',
 										`awardType` = 'W'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -129,14 +129,14 @@ if(isset($_POST['sub']['saveAwards'])) {
 
 // get the awards
 $awards = false;
-$query = mysql_query("SELECT awardId, code,name,verb
+$query = $DB->query("SELECT awardId, code,name,verb
 						FROM `".DB_PREFIX."_Awards`
-						WHERE game='".mysql_real_escape_string($gc)."'
+						WHERE game='".$DB->real_escape_string($gc)."'
 					AND awardType='W'
 					ORDER BY code ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$awards[] = $result;
 	}
 }

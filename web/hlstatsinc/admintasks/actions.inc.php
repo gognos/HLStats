@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -49,15 +49,15 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = mysql_query("SELECT name
+		$query = $DB->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_real_escape_string($gc)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			$result = mysql_fetch_assoc($query);
+							WHERE code = '".$DB->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+		if($query->num_rows > 0) {
+			$result = $query->fetch_assoc();
 			$gName = $result['name'];
 		}
-		mysql_free_result($query);
+		$query->free();
 	}
 }
 
@@ -68,24 +68,24 @@ if(empty($gc) || empty($check)) {
 
 // get the teams for this game
 $teams = false;
-$query = mysql_query("SELECT code,name FROM `".DB_PREFIX."_Teams`
-						WHERE `game` = '".mysql_real_escape_string($gc)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+$query = $DB->query("SELECT code,name FROM `".DB_PREFIX."_Teams`
+						WHERE `game` = '".$DB->real_escape_string($gc)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$teams[] = $result;
 	}
 }
-mysql_free_result($query);
+$query->free();
 
 if(isset($_POST['sub']['saveActions'])) {
 
 	//del
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Actions`
-									WHERE `id` = '".mysql_real_escape_string($k)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $DB->query("DELETE FROM `".DB_PREFIX."_Actions`
+									WHERE `id` = '".$DB->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -108,18 +108,18 @@ if(isset($_POST['sub']['saveActions'])) {
 				$fwa = 0;
 				if(isset($_POST['for_WorldActions'][$k])) $fwa = 1;
 
-				$query = mysql_query("UPDATE `".DB_PREFIX."_Actions`
-										SET `code` = '".mysql_real_escape_string($c)."',
-											reward_player = '".mysql_real_escape_string($rp)."',
-											reward_team = '".mysql_real_escape_string($rt)."',
-											team  = '".mysql_real_escape_string($_POST['team'][$k])."',
-											description  = '".mysql_real_escape_string($d)."',
-											for_PlayerActions  = '".mysql_real_escape_string($fpa)."',
-											for_PlayerPlayerActions  = '".mysql_real_escape_string($fppa)."',
-											for_TeamActions  = '".mysql_real_escape_string($fta)."',
-											for_WorldActions = '".mysql_real_escape_string($fwa)."'
-										WHERE `id` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				$query = $DB->query("UPDATE `".DB_PREFIX."_Actions`
+										SET `code` = '".$DB->real_escape_string($c)."',
+											reward_player = '".$DB->real_escape_string($rp)."',
+											reward_team = '".$DB->real_escape_string($rt)."',
+											team  = '".$DB->real_escape_string($_POST['team'][$k])."',
+											description  = '".$DB->real_escape_string($d)."',
+											for_PlayerActions  = '".$DB->real_escape_string($fpa)."',
+											for_PlayerPlayerActions  = '".$DB->real_escape_string($fppa)."',
+											for_TeamActions  = '".$DB->real_escape_string($fta)."',
+											for_WorldActions = '".$DB->real_escape_string($fwa)."'
+										WHERE `id` = '".$DB->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -145,19 +145,19 @@ if(isset($_POST['sub']['saveActions'])) {
 			$fwa = 0;
 			if(isset($_POST['newfor_WorldActions'])) $fwa = 1;
 
-			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Actions`
-									SET `code` = '".mysql_real_escape_string($newOne)."',
-										reward_player = '".mysql_real_escape_string($rp)."',
-										reward_team = '".mysql_real_escape_string($rt)."',
-										team  = '".mysql_real_escape_string($_POST['newteam'])."',
-										description  = '".mysql_real_escape_string($d)."',
-										for_PlayerActions  = '".mysql_real_escape_string($fpa)."',
-										for_PlayerPlayerActions  = '".mysql_real_escape_string($fppa)."',
-										for_TeamActions  = '".mysql_real_escape_string($fta)."',
-										for_WorldActions = '".mysql_real_escape_string($fwa)."',
-										game = '".mysql_real_escape_string($gc)."'
+			$query = $DB->query("INSERT INTO `".DB_PREFIX."_Actions`
+									SET `code` = '".$DB->real_escape_string($newOne)."',
+										reward_player = '".$DB->real_escape_string($rp)."',
+										reward_team = '".$DB->real_escape_string($rt)."',
+										team  = '".$DB->real_escape_string($_POST['newteam'])."',
+										description  = '".$DB->real_escape_string($d)."',
+										for_PlayerActions  = '".$DB->real_escape_string($fpa)."',
+										for_PlayerPlayerActions  = '".$DB->real_escape_string($fppa)."',
+										for_TeamActions  = '".$DB->real_escape_string($fta)."',
+										for_WorldActions = '".$DB->real_escape_string($fwa)."',
+										game = '".$DB->real_escape_string($gc)."'
 									");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -172,20 +172,20 @@ if(isset($_POST['sub']['saveActions'])) {
 
 $actions = false;
 // get the actions
-$query = mysql_query("SELECT id, code, reward_player, reward_team,
+$query = $DB->query("SELECT id, code, reward_player, reward_team,
 						team, description, for_PlayerActions,
 						for_PlayerPlayerActions,for_TeamActions,
 						for_WorldActions
 					FROM `".DB_PREFIX."_Actions`
-					WHERE game='".mysql_real_escape_string($gc)."'
+					WHERE game='".$DB->real_escape_string($gc)."'
 					ORDER BY code ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$actions[] = $result;
 	}
 }
-mysql_free_result($query);
+$query->free();
 
 
 $rcol = "row-dark";

@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -41,11 +41,11 @@
 
 $gameList = false;
 // get the games
-$query = mysql_query("SELECT code,name FROM `".DB_PREFIX."_Games`
+$query = $db->query("SELECT code,name FROM `".DB_PREFIX."_Games`
 					ORDER BY name ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()ƒ) {
 		$gameList[] = $result;
 	}
 }

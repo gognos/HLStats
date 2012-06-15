@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -60,19 +60,19 @@ if(!empty($_GET["clanId"])) {
 
 		// now get the clan details
 		// since we do not have a clan class we make it this way
-		$query = mysql_query("SELECT
+		$query = $db->query("SELECT
 				c.tag,
 				c.name,
 				c.homepage,
 				c.steamGroup
 			FROM ".DB_PREFIX."_Clans AS c
-			WHERE c.clanId=".mysql_real_escape_string($_GET["clanId"])."");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			WHERE c.clanId=".$db->real_escape_string($_GET["clanId"])."");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 
-		if (mysql_num_rows($query) > 0) {
-			$clanData = mysql_fetch_assoc($query);
+		if ($query->num_rows > 0) {
+			$clanData = $query->fetch_assoc();
 		}
-		mysql_free_result($query);
+		$query->free();
 	}
 }
 
@@ -107,12 +107,12 @@ if(isset($_POST['submit']['editPlayer']) && !empty($playerObj)) {
 // process the edit of a clan
 if(isset($_POST['submit']['editClan']) && !empty($clanData)) {
 	if(!empty($_POST['details'])) {
-		$query = mysql_query("UPDATE `".DB_PREFIX."_Clans`
-						SET `name` = '".mysql_real_escape_string($_POST['details']['name'])."',
-							`homepage` = '".mysql_real_escape_string($_POST['details']['homepage'])."',
-							`steamGroup` = '".mysql_real_escape_string($_POST['details']['steamGroup'])."'
-					WHERE `clanId` = '".mysql_real_escape_string($_GET["clanId"])."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		$query = $db->query("UPDATE `".DB_PREFIX."_Clans`
+						SET `name` = '".$db->real_escape_string($_POST['details']['name'])."',
+							`homepage` = '".$db->real_escape_string($_POST['details']['homepage'])."',
+							`steamGroup` = '".$db->real_escape_string($_POST['details']['steamGroup'])."'
+					WHERE `clanId` = '".$db->real_escape_string($_GET["clanId"])."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 		if($query !== false) {
 			header('Location: index.php?mode=admin&task=toolsEditdetails&clanId='.$_GET["clanId"]);
 		}
@@ -132,12 +132,12 @@ if(isset($_POST['submit']['searchForId'])) {
 	if($check === true && $check1 === true) {
 		// search for given ID
 		if($searchWhere === "player") {
-			$query = mysql_query("SELECT `playerId`
+			$query = $db->query("SELECT `playerId`
 									FROM `".DB_PREFIX."_Players`
-									WHERE `playerId` = '".mysql_real_escape_string($searchFor)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if(mysql_num_rows($query) > 0) {
-				$result = mysql_fetch_assoc($query);
+									WHERE `playerId` = '".$db->real_escape_string($searchFor)."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			if($query->num_rows > 0) {
+				$result = $query->fetch_assoc();
 				header('Location: index.php?mode=admin&task=toolsEditdetails&playerId='.$result['playerId']);
 			}
 			else {
@@ -146,12 +146,12 @@ if(isset($_POST['submit']['searchForId'])) {
 			}
 		}
 		elseif($searchWhere === "clan") {
-			$query = mysql_query("SELECT `clanId`
+			$query = $db->query("SELECT `clanId`
 									FROM `".DB_PREFIX."_Clans`
-									WHERE `clanId` = '".mysql_real_escape_string($searchFor)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if(mysql_num_rows($query) > 0) {
-				$result = mysql_fetch_assoc($query);
+									WHERE `clanId` = '".$db->real_escape_string($searchFor)."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			if($query->num_rows > 0) {
+				$result = $query->fetch_assoc();
 				header('Location: index.php?mode=admin&task=toolsEditdetails&clanId='.$result['clanId']);
 			}
 			else {

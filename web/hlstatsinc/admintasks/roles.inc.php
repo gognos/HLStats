@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -49,15 +49,15 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = mysql_query("SELECT name
+		$query = $db->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_real_escape_string($gc)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			$result = mysql_fetch_assoc($query);
+							WHERE code = '".$db->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		if($query->num_rows > 0) {
+			$result = $query->fetch_assoc();
 			$gName = $result['name'];
 		}
-		mysql_free_result($query);
+		$query->free();
 	}
 }
 
@@ -72,9 +72,9 @@ if(isset($_POST['sub']['saveRoles'])) {
 	// del
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = mysql_query("DELETE FROM `".DB_PREFIX."_Roles`
-									WHERE `roleId` = '".mysql_real_escape_string($k)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $db->query("DELETE FROM `".DB_PREFIX."_Roles`
+									WHERE `roleId` = '".$db->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -89,12 +89,12 @@ if(isset($_POST['sub']['saveRoles'])) {
 				$hide = 0;
 				if(isset($_POST['hidden'][$k])) $hide = 1;
 
-				$query = mysql_query("UPDATE `".DB_PREFIX."_Roles`
-										SET `code` = '".mysql_real_escape_string($c)."',
-											`name` = '".mysql_real_escape_string($name)."',
-											`hidden` = '".mysql_real_escape_string($hide)."'
-										WHERE `roleId` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				$query = $db->query("UPDATE `".DB_PREFIX."_Roles`
+										SET `code` = '".$db->real_escape_string($c)."',
+											`name` = '".$db->real_escape_string($name)."',
+											`hidden` = '".$db->real_escape_string($hide)."'
+										WHERE `roleId` = '".$db->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $db->error) var_dump($db->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -112,11 +112,11 @@ if(isset($_POST['sub']['saveRoles'])) {
 			$hide = 0;
 			if(isset($_POST['newhidden'])) $hide = 1;
 
-			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Roles`
-									SET `code` = '".mysql_real_escape_string($newOne)."',
-										`name` = '".mysql_real_escape_string($name)."',
-										`hidden` = '".mysql_real_escape_string($hide)."',
-										`game` = '".mysql_real_escape_string($gc)."'");
+			$query = $db->query("INSERT INTO `".DB_PREFIX."_Roles`
+									SET `code` = '".$db->real_escape_string($newOne)."',
+										`name` = '".$db->real_escape_string($name)."',
+										`hidden` = '".$db->real_escape_string($hide)."',
+										`game` = '".$db->real_escape_string($gc)."'");
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -131,13 +131,13 @@ if(isset($_POST['sub']['saveRoles'])) {
 
 // get the roles
 $roles = false;
-$query = mysql_query("SELECT roleId, code, name, hidden
+$query = $db->query("SELECT roleId, code, name, hidden
 						FROM `".DB_PREFIX."_Roles`
-						WHERE game='".mysql_real_escape_string($gc)."'
+						WHERE game='".$db->real_escape_string($gc)."'
 						ORDER BY code ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$roles[] = $result;
 	}
 }

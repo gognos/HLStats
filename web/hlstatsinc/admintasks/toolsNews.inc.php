@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -56,15 +56,15 @@ if(isset($_POST['saveNews'])) {
 	}
 	else {
 		$newsdate = date("Y-m-d H:i:s");
-		$result = mysql_query("INSERT INTO ".DB_PREFIX."_News
+		$result = $db->query("INSERT INTO ".DB_PREFIX."_News
 							VALUES ('',
 									'".$newsdate."',
-									'".mysql_real_escape_string($adminObj->getUsername())."',
-									'".mysql_real_escape_string($_POST["email"])."',
-									'".mysql_real_escape_string($subject)."',
-									'".mysql_real_escape_string($message)."')
+									'".$db->real_escape_string($adminObj->getUsername())."',
+									'".$db->real_escape_string($_POST["email"])."',
+									'".$db->real_escape_string($subject)."',
+									'".$db->real_escape_string($message)."')
 							");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
 	}
@@ -83,11 +83,11 @@ if(!empty($_GET['editpost']) || !empty($_GET['deletepost'])) {
 
 	$check = validateInput($postnr,'digit');
 	if(!empty($postnr) && $check === true) {
-		$query = mysql_query("SELECT * FROM `".DB_PREFIX."_News`
-						WHERE `id` = '".mysql_real_escape_string($postnr)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		$post = mysql_fetch_array($query);
-		mysql_free_result($query);
+		$query = $db->query("SELECT * FROM `".DB_PREFIX."_News`
+						WHERE `id` = '".$db->real_escape_string($postnr)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$post = $query->fetch_array();
+		$query->free();
 	}
 }
 
@@ -107,15 +107,15 @@ if(isset($_POST['editNews']) && !empty($_GET['editpost'])) {
 	}
 	else {
 		$newsdate = date("Y-m-d H:i:s");
-		$result = mysql_query("UPDATE `".DB_PREFIX."_News`
+		$result = $db->query("UPDATE `".DB_PREFIX."_News`
 								SET `date` = '".$newsdate."',
-									`user` = '".mysql_real_escape_string($adminObj->getUsername())."',
-									`email` = '".mysql_real_escape_string($_POST["email"])."',
-									`subject` = '".mysql_real_escape_string($_POST["subject"])."',
-									`message` = '".mysql_real_escape_string($_POST["message"])."'
-								WHERE `id` = '".mysql_real_escape_string($newsID)."'
+									`user` = '".$db->real_escape_string($adminObj->getUsername())."',
+									`email` = '".$db->real_escape_string($_POST["email"])."',
+									`subject` = '".$db->real_escape_string($_POST["subject"])."',
+									`message` = '".$db->real_escape_string($_POST["message"])."'
+								WHERE `id` = '".$db->real_escape_string($newsID)."'
 							");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
 	}
@@ -127,9 +127,9 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 	$check = validateInput($newsId,'digit');
 
 	if(!empty($newsId) && $check === true) {
-		$query = mysql_query("DELETE FROM `".DB_PREFIX."_News`
-								WHERE `id` = '".mysql_real_escape_string($newsId)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		$query = $db->query("DELETE FROM `".DB_PREFIX."_News`
+								WHERE `id` = '".$db->real_escape_string($newsId)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 		if($query !== false) {
 			$return['msg'] = l('News item deleted');
 			$return['status'] = "2";
@@ -143,10 +143,10 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 
 // load existing news
 $newsArray = false;
-$query = mysql_query("SELECT * FROM `".DB_PREFIX."_News` ORDER BY `date` DESC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+$query = $db->query("SELECT * FROM `".DB_PREFIX."_News` ORDER BY `date` DESC");
+if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$newsArray[] = $result;
 	}
 }

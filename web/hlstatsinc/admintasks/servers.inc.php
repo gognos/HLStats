@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -48,15 +48,15 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = mysql_query("SELECT name
+		$query = $db->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".mysql_real_escape_string($gc)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		if(mysql_num_rows($query) > 0) {
-			$result = mysql_fetch_assoc($query);
+							WHERE code = '".$db->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		if($query->num_rows > 0) {
+			$result = $query->fetch_assoc();
 			$gName = $result['name'];
 		}
-		mysql_free_result($query);
+		$query->free();
 	}
 }
 
@@ -76,14 +76,14 @@ if(isset($_POST['sub']['saveServer'])) {
 			// we get "dead" data.
 			
 			$existingData = false;
-			$query = mysql_query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if (mysql_num_rows($query) < 1) {
+			$query = $db->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			if ($query->num_rows < 1) {
 				die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
 					There may be something wrong with your HLStats database or your version of MySQL.");
 			}
 
-			while (list($table) = mysql_fetch_array($query)) {
+			while (list($table) = $query->fetch_array()) {
 				$dbtables[] = $table;
 			}
 
@@ -109,17 +109,17 @@ if(isset($_POST['sub']['saveServer'])) {
 			}
 			
 			if(!empty($queryStr)) {
-				$query = mysql_query($queryStr);
-				if(mysql_num_rows($query) > 0) {
+				$query = $db->query($queryStr);
+				if($query->num_rows > 0) {
 					$existingData = true;
 				}
 			}
 			
 			
 			if($existingData === false) {
-				$query = mysql_query("DELETE FROM `".DB_PREFIX."_Servers`
-										WHERE `serverId` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				$query = $db->query("DELETE FROM `".DB_PREFIX."_Servers`
+										WHERE `serverId` = '".$db->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $db->error) var_dump($db->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Server could not be deleted !');
@@ -139,16 +139,16 @@ if(isset($_POST['sub']['saveServer'])) {
 		foreach($_POST['server'] as $k=>$v) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['port'][$k]) && isset($_POST['name'][$k])) {
-				$query = mysql_query("UPDATE `".DB_PREFIX."_Servers`
-										SET `address` = '".mysql_real_escape_string($v)."',
-											`port` = '".mysql_real_escape_string(trim($_POST['port'][$k]))."',
-											`name` = '".mysql_real_escape_string(trim($_POST['name'][$k]))."',
-											`game` = '".mysql_real_escape_string($gc)."',
-											`publicaddress` = '".mysql_real_escape_string(trim($_POST['pub'][$k]))."',
-											`statusurl` = '".mysql_real_escape_string(trim($_POST['stat'][$k]))."',
-											`rcon_password` = '".mysql_real_escape_string(trim($_POST['rcon'][$k]))."'
-										WHERE `serverId` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+				$query = $db->query("UPDATE `".DB_PREFIX."_Servers`
+										SET `address` = '".$db->real_escape_string($v)."',
+											`port` = '".$db->real_escape_string(trim($_POST['port'][$k]))."',
+											`name` = '".$db->real_escape_string(trim($_POST['name'][$k]))."',
+											`game` = '".$db->real_escape_string($gc)."',
+											`publicaddress` = '".$db->real_escape_string(trim($_POST['pub'][$k]))."',
+											`statusurl` = '".$db->real_escape_string(trim($_POST['stat'][$k]))."',
+											`rcon_password` = '".$db->real_escape_string(trim($_POST['rcon'][$k]))."'
+										WHERE `serverId` = '".$db->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $db->error) var_dump($db->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be updated');
@@ -161,15 +161,15 @@ if(isset($_POST['sub']['saveServer'])) {
 	if(isset($_POST['newIP'])) {
 		$newOne = trim($_POST['newIP']);
 		if(!empty($newOne) && !empty($_POST['newport']) && !empty($_POST['newname'])) {
-			$query = mysql_query("INSERT INTO `".DB_PREFIX."_Servers`
-									SET `address` = '".mysql_real_escape_string(trim($_POST['newIP']))."',
-										`port` = '".mysql_real_escape_string(trim($_POST['newport']))."',
-										`name` = '".mysql_real_escape_string(trim($_POST['newname']))."',
-										`publicaddress` = '".mysql_real_escape_string(trim($_POST['newpub']))."',
-										`statusurl` = '".mysql_real_escape_string(trim($_POST['newstat']))."',
-										`rcon_password` = '".mysql_real_escape_string(trim($_POST['newrcon']))."',
-										`game` = '".mysql_real_escape_string($gc)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $db->query("INSERT INTO `".DB_PREFIX."_Servers`
+									SET `address` = '".$db->real_escape_string(trim($_POST['newIP']))."',
+										`port` = '".$db->real_escape_string(trim($_POST['newport']))."',
+										`name` = '".$db->real_escape_string(trim($_POST['newname']))."',
+										`publicaddress` = '".$db->real_escape_string(trim($_POST['newpub']))."',
+										`statusurl` = '".$db->real_escape_string(trim($_POST['newstat']))."',
+										`rcon_password` = '".$db->real_escape_string(trim($_POST['newrcon']))."',
+										`game` = '".$db->real_escape_string($gc)."'");
+			if(SHOW_DEBUG && $db->error) var_dump($db->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -184,18 +184,18 @@ if(isset($_POST['sub']['saveServer'])) {
 
 $servers = array();
 // load the servers
-$query = mysql_query("SELECT s.serverId, s.address, s.port,
+$query = $db->query("SELECT s.serverId, s.address, s.port,
 						s.name AS serverName,
 						s.publicaddress, s.statusurl,
 						s.rcon_password,
 						g.name AS gameName
 					FROM `".DB_PREFIX."_Servers` AS s
 					LEFT JOIN `".DB_PREFIX."_Games` AS g ON g.code = s.game
-					WHERE s.game = '".mysql_real_escape_string($gc)."'
+					WHERE s.game = '".$db->real_escape_string($gc)."'
 					ORDER BY address ASC, port ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$servers[] = $result;
 	}
 }

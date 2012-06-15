@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -44,9 +44,9 @@ if(isset($_POST['sub']['patterns'])) {
 
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = mysql_query("DELETE FROM `".DB_PREFIX."_ClanTags`
-									WHERE `id` = '".mysql_real_escape_string($k)."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $DB->query("DELETE FROM `".DB_PREFIX."_ClanTags`
+									WHERE `id` = '".$DB->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			unset($_POST['pat'][$k]);
 		}
 	}
@@ -56,11 +56,11 @@ if(isset($_POST['sub']['patterns'])) {
 		foreach($_POST['pat'] as $k=>$v) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['sel'][$k])) {
-				$query = mysql_query("UPDATE `".DB_PREFIX."_ClanTags`
+				$query = $DB->query("UPDATE `".DB_PREFIX."_ClanTags`
 										SET `pattern` = '".$v."',
-											`position` = '".mysql_real_escape_string($_POST['sel'][$k])."'
-										WHERE `id` = '".mysql_real_escape_string($k)."'");
-				if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+											`position` = '".$DB->real_escape_string($_POST['sel'][$k])."'
+										WHERE `id` = '".$DB->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -72,10 +72,10 @@ if(isset($_POST['sub']['patterns'])) {
 	if(isset($_POST['newpat'])) {
 		$newOne = trim($_POST['newpat']);
 		if(!empty($newOne) && !empty($_POST['newsel'])) {
-			$query = mysql_query("INSERT INTO `".DB_PREFIX."_ClanTags`
-									SET `pattern` = '".mysql_real_escape_string($newOne)."',
-										`position` = '".mysql_real_escape_string($_POST['newsel'])."'");
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+			$query = $DB->query("INSERT INTO `".DB_PREFIX."_ClanTags`
+									SET `pattern` = '".$DB->real_escape_string($newOne)."',
+										`position` = '".$DB->real_escape_string($_POST['newsel'])."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -91,12 +91,12 @@ if(isset($_POST['sub']['patterns'])) {
 
 $patterns = false;
 // get the patterns
-$query = mysql_query("SELECT id,pattern,position
+$query = $DB->query("SELECT id,pattern,position
 		FROM `".DB_PREFIX."_ClanTags`
 		ORDER BY position, pattern, id");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$patterns[] = $result;
 	}
 }

@@ -28,7 +28,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -49,10 +49,10 @@ if(isset($_POST['sub']['saveOptions'])) {
 	foreach($_POST['option'] as $k=>$v) {
 		$v = trim($v);
 
-		$query = mysql_query("UPDATE `".DB_PREFIX."_Options`
-							SET `value` = '".mysql_real_escape_string($v)."'
-							WHERE `keyname` = '".mysql_real_escape_string($k)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		$query = $db->query("UPDATE `".DB_PREFIX."_Options`
+							SET `value` = '".$db->real_escape_string($v)."'
+							WHERE `keyname` = '".$db->real_escape_string($k)."'");
+		if(SHOW_DEBUG && $db->error) var_dump($db->error);
 		if($query !== true) {
 			$return['msg'] = l('Could not save data');
 			$return['status'] = "1";

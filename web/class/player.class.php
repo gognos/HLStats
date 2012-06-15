@@ -469,11 +469,16 @@ class Player {
 		$queryStr = "SELECT SQL_CALC_FOUND_ROWS
 	 			ec.eventTime,
 	 			CONCAT('".l('I said')." \"', ec.message, '\"') AS message,
-	 			s.name, ec.map
+	 			s.name AS serverName, ec.map
 				FROM `".DB_PREFIX."_Events_Chat` AS ec
 				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
 					ON s.serverId = ec.serverId
 			WHERE ec.playerId = ".$this->_DB->real_escape_string($this->playerId)."";
+
+		$queryStr .= " ORDER BY ";
+		if(!empty($this->_option['sort']) && !empty($this->_option['sortorder'])) {
+			$queryStr .= " ".$this->_option['sort']." ".$this->_option['sortorder']."";
+		}
 
 		if($this->_option['page'] === 1) {
 			$queryStr .= " LIMIT 0,50";
@@ -486,14 +491,14 @@ class Player {
 		$query = $this->_DB->query($queryStr);
 		if(SHOW_DEBUG && $this->_DB->error != '') var_dump($this->_DB->error);
 		if($query->num_rows > 0) {
-			while($result = $query>fetch_assoc()) {
+			while($result = $query->fetch_assoc()) {
 				$ret['data'][] = $result;
 			}
 		}
 
 		//get data for pagination
 		$query = $this->_DB->query("SELECT FOUND_ROWS() AS 'rows'");
-		$result = $query>fetch_assoc();
+		$result = $query->fetch_assoc();
 		$ret['pages'] = (int)ceil($result['rows']/50);
 
 		return $ret;
@@ -910,7 +915,7 @@ class Player {
 				WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 					AND killerId = '".$this->_DB->real_escape_string($this->playerId)."'");
 		if(SHOW_DEBUG && $this->_DB->error != '') var_dump($this->_DB->error);
-		if($tquery->num_rows > 0) {
+		if($query->num_rows > 0) {
 			$result = $query->fetch_assoc();
 			$this->_playerData['teamkills'] = $result['tk'];
 		}
@@ -1130,7 +1135,7 @@ class Player {
 				GROUP BY es.weapon
 				ORDER BY smaccuracy DESC");
 		if(SHOW_DEBUG && $this->_DB->error != '') var_dump($this->_DB->error);
-		if($query->num_rows() > 0) {
+		if($query->num_rows > 0) {
 			while($result = $query->fetch_assoc()) {
 				$this->_playerData['weaponStats'][] = $result;
 			}
@@ -1227,7 +1232,7 @@ class Player {
 		ORDER BY kills DESC, percentage DESC");
 		if(SHOW_DEBUG && $this->_DB->error != '') var_dump($this->_DB->error);
 		if($query->num_rows > 0) {
-			while($result = $this->_DB->fetch_assoc()) {
+			while($result = $query->fetch_assoc()) {
 				$this->_playerData['maps'][] = $result;
 			}
 			$query->free();
