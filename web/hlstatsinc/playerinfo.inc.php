@@ -21,7 +21,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -72,17 +72,17 @@ $pl_urlname = urlencode($playerObj->getParam('lastName'));
 // get the game name
 // if it fails we use the game code which is stored in the player table
 $game = $playerObj->getParam("game");
-$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Games`
-					WHERE code = '".mysql_real_escape_string($game)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if (mysql_num_rows($query) != 1) {
+$query = $DB->query("SELECT name FROM `".DB_PREFIX."_Games`
+					WHERE code = '".$DB->real_escape_string($game)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if ($query->num_rows != 1) {
 	$gamename = ucfirst($game);
 }
 else {
-	$result = mysql_fetch_assoc($query);
+	$result = $query->fetch_assoc();
 	$gamename = $result['name'];
 }
-mysql_free_result($query);
+$query->free();
 
 // show header
 pageHeader(

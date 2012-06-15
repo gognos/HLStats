@@ -21,7 +21,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -75,18 +75,18 @@ if (isset($_GET["sortorder"])) {
 }
 
 
-$query = mysql_query("SELECT name FROM `".DB_PREFIX."_Weapons`
-				WHERE code = '".mysql_real_escape_string($weapon)."'
-				AND game = '".mysql_real_escape_string($game)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if (mysql_num_rows($query) != 1) {
+$query = $DB->query("SELECT name FROM `".DB_PREFIX."_Weapons`
+				WHERE code = '".$DB->real_escape_string($weapon)."'
+				AND game = '".$DB->real_escape_string($game)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if ($query->num_rows != 1) {
 	$wep_name = ucfirst($weapon);
 }
 else {
-	$result = mysql_fetch_assoc($query);
+	$result = $query->fetch_assoc();
 	$wep_name = $result["name"];
 }
-mysql_free_result($query);
+$query->free();
 
 // get the weapon info
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
@@ -98,8 +98,8 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 FROM `".DB_PREFIX."_Events_Frags` AS ef
 LEFT JOIN `".DB_PREFIX."_Players` AS p
 	ON p.playerId = ef.killerId
-WHERE ef.weapon = '".mysql_real_escape_string($weapon)."'
-	AND p.game = '".mysql_real_escape_string($game)."'
+WHERE ef.weapon = '".$DB->real_escape_string($weapon)."'
+	AND p.game = '".$DB->real_escape_string($game)."'
 	AND p.hideranking = 0
 GROUP BY ef.killerId
 ORDER BY ".$sort." ".$sortorder."";
@@ -113,39 +113,39 @@ else {
 	$queryStr .=" LIMIT ".$start.",50";
 }
 
-$query = mysql_query($queryStr);
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+$query = $DB->query($queryStr);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$players['data'][] = $result;
 	}
 }
 
 // get the max count for pagination
-$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-$result = mysql_fetch_assoc($query);
+$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+$result = $query->fetch_assoc();
 $players['pages'] = (int)ceil($result['rows']/50);
-mysql_freeresult($query);
+$query->free();
 
-$query = mysql_query($queryStr);
+$query = $DB->query($queryStr);
 
 // get the total kills
-$queryCount = mysql_query(" SELECT
+$queryCount = $DB->query(" SELECT
 		COUNT(DISTINCT ef.killerId) AS wc,
-		SUM(ef.weapon = '".mysql_real_escape_string($weapon)."') AS tc
+		SUM(ef.weapon = '".$DB->real_escape_string($weapon)."') AS tc
 	FROM `".DB_PREFIX."_Events_Frags` AS ef
 	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.playerId = ef.killerId
 	WHERE
-		ef.weapon = '".mysql_real_escape_string($weapon)."'
-		AND p.game = '".mysql_real_escape_string($game)."'
+		ef.weapon = '".$DB->real_escape_string($weapon)."'
+		AND p.game = '".$DB->real_escape_string($game)."'
 		AND p.hideranking = 0
 ");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-$result = mysql_fetch_assoc($queryCount);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+$result = $queryCount->fetch_assoc();
 $numitems = $result['wc'];
 $totalkills = $result['tc'];
-mysql_free_result($queryCount);
+$queryCount->free();
 
 pageHeader(
 	array($gamename, l("Weapon Details"), htmlspecialchars($wep_name)),

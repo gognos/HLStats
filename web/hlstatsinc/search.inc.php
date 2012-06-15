@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -75,10 +75,10 @@ if(!empty($sr_query) && !empty($sr_type) && !empty($sr_game)) {
 
 // get the game list
 $gamesArr = array();
-$query = mysql_query("SELECT code, name FROM `".DB_PREFIX."_Games`
+$query = $DB->query("SELECT code, name FROM `".DB_PREFIX."_Games`
 						WHERE hidden='0' ORDER BY name");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-while ($result = mysql_fetch_assoc($query)) {
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+while ($result = $query->fetch_assoc()) {
 	$gamesArr[$result['code']] = $result['name'];
 }
 
@@ -96,7 +96,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 	if(!empty($sr_query)) {
 		$andgame = "";
 		if ($sr_game !== "---") {
-			$andgame = "AND g.code = '".mysql_real_escape_string($sr_game)."'";
+			$andgame = "AND g.code = '".$DB->real_escape_string($sr_game)."'";
 		}
 
 		switch($sr_type) {
@@ -112,9 +112,9 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					WHERE g.hidden = '0' 
 						AND
 						(
-							c.tag LIKE '%".mysql_real_escape_string($sr_query)."%'
+							c.tag LIKE '%".$DB->real_escape_string($sr_query)."%'
 							OR 
-							c.name LIKE '%".mysql_real_escape_string($sr_query)."%'
+							c.name LIKE '%".$DB->real_escape_string($sr_query)."%'
 						)
 						".$andgame."
 					ORDER BY name";
@@ -132,7 +132,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					LEFT JOIN `".DB_PREFIX."_Games` AS g
 						ON g.code = p.game
 					WHERE g.hidden = '0' 
-						AND pu.uniqueId LIKE '%".mysql_real_escape_string($sr_query)."%'
+						AND pu.uniqueId LIKE '%".$DB->real_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY name";
 			break;
@@ -148,7 +148,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					LEFT JOIN `".DB_PREFIX."_Games` AS g
 						ON g.code = p.game
 					WHERE g.hidden = '0' 
-						AND pn.name LIKE '%".mysql_real_escape_string($sr_query)."%'
+						AND pn.name LIKE '%".$DB->real_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY name";
 			break;
@@ -156,10 +156,10 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 
 		if(!empty($queryStr)) {
 			$searchResults = array();
-			$query = mysql_query($queryStr);
-			if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-			if(mysql_num_rows($query) > 0) {
-				while($result = mysql_fetch_assoc($query)) {
+			$query = $DB->query($queryStr);
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+			if($query->num_rows > 0) {
+				while($result = $query->fetch_assoc()) {
 					$searchResults[$result['gamename']][] = $result;
 				}
 			}

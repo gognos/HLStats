@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -73,16 +73,16 @@ $queryStr = "SELECT IFNULL(t.name, ect.team) AS name,
 			ON ect.team = t.code
 		LEFT JOIN `".DB_PREFIX."_Servers` AS s
 			ON s.serverId = ect.serverId
-		WHERE t.game = '".mysql_real_escape_string($game)."'
-			AND s.game = '".mysql_real_escape_string($game)."'
+		WHERE t.game = '".$DB->real_escape_string($game)."'
+			AND s.game = '".$DB->real_escape_string($game)."'
 			AND (t.hidden <>'1' OR t.hidden IS NULL)
 		GROUP BY ect.team
 		ORDER BY ".$sort." ".$sortorder."";
 
-$query = mysql_query($queryStr);
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+$query = $DB->query($queryStr);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$teams['data'][] = $result;
 	}
 }

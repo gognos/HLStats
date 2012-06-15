@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -73,15 +73,15 @@ if (isset($_GET["sortorder"])) {
 }
 
 // get the data
-$killCount = mysql_query("SELECT COUNT(p.playerId) kc
+$killCount = $DB->query("SELECT COUNT(p.playerId) kc
 	FROM `".DB_PREFIX."_Events_Frags` AS ef
 	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.playerId = ef.killerId
-	WHERE p.game = '".mysql_real_escape_string($game)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-$result = mysql_fetch_assoc($killCount);
+	WHERE p.game = '".$DB->real_escape_string($game)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+$result = $skillCount_fetch_assoc($killCount);
 $totalkills = $result['kc'];
-mysql_free_result($killCount);
+$skillCount->free();
 
 if(!empty($totalkills)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
@@ -94,7 +94,7 @@ if(!empty($totalkills)) {
 			ON w.code = ef.weapon
 		LEFT JOIN `".DB_PREFIX."_Players` AS p
 			ON p.playerId = ef.killerId
-		WHERE p.game = '".mysql_real_escape_string($game)."'
+		WHERE p.game = '".$DB->real_escape_string($game)."'
 			AND p.hideranking = 0
 		GROUP BY ef.weapon
 		ORDER BY ".$sort." ".$sortorder."";
@@ -108,10 +108,10 @@ if(!empty($totalkills)) {
 		$queryStr .=" LIMIT ".$start.",50";
 	}
 
-	$query = mysql_query($queryStr);
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
+	$query = $DB->query($queryStr);
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($query->num_rows > 0) {
+		while($result = $query->fetch_assoc()) {
 			$result['percent'] = $result['kills']/$totalkills*100;
 
 			$weapons['data'][] = $result;
@@ -119,10 +119,10 @@ if(!empty($totalkills)) {
 	}
 
 	// get the max count for pagination
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+	$result = $query->fetch_assoc();
 	$weapons['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+	$query->free();
 }
 
 pageHeader(
