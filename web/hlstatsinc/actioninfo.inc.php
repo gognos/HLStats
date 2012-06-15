@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -93,32 +93,32 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the full action name
-$queryActionName = mysql_query("SELECT description FROM `".DB_PREFIX."_Actions`
-					WHERE code = '".mysql_real_escape_string($action)."'
-						AND game = '".mysql_real_escape_string($game)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if (mysql_num_rows($query) != 1) {
+$queryActionName = $DB->query("SELECT description FROM `".DB_PREFIX."_Actions`
+					WHERE code = '".$DB->real_escape_string($action)."'
+						AND game = '".$DB->real_escape_string($game)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if ($query->num_rows != 1) {
 	$act_name = ucfirst($action);
 }
 else {
-	$result = mysql_fetch_assoc($query);
+	$result = $query->fetch_assoc();
 	//the full action name
 	$act_name = $result["description"];
 }
-mysql_free_result($query);
+$query->free();
 
 // query to get the total total action count
-$queryCount = mysql_query("SELECT
+$queryCount = $DB->query("SELECT
 		COUNT(epa.Id) AS tc
 	FROM `".DB_PREFIX."_Events_PlayerActions` AS epa,
 		`".DB_PREFIX."_Players` AS p,
 		`".DB_PREFIX."_Actions` AS a
-	WHERE a.code = '".mysql_real_escape_string($action)."'
-		AND p.game = '".mysql_real_escape_string($game)."'
+	WHERE a.code = '".$DB->real_escape_string($action)."'
+		AND p.game = '".$DB->real_escape_string($game)."'
 		AND p.playerId = epa.playerId
 		AND epa.actionId = a.id");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-$result = mysql_fetch_assoc($queryCount);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+$result = $queryCount->fetch_assoc();
 // the toral action count for this specific action
 $totalact = $result['tc'];
 
@@ -134,8 +134,8 @@ if(!empty($totalact)) {
 		FROM `".DB_PREFIX."_Events_PlayerActions` AS epa,
 			`".DB_PREFIX."_Players` AS p,
 			`".DB_PREFIX."_Actions` AS a
-		WHERE a.code = '".mysql_real_escape_string($action)."'
-			AND p.game = '".mysql_real_escape_string($game)."'
+		WHERE a.code = '".$DB->real_escape_string($action)."'
+			AND p.game = '".$DB->real_escape_string($game)."'
 			AND p.playerId = epa.playerId
 			AND epa.actionId = a.id
 			AND p.hideranking <> '1'
@@ -151,19 +151,19 @@ if(!empty($totalact)) {
 		$queryStr .=" LIMIT ".$start.",50";
 	}
 
-	$query = mysql_query($queryStr);
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
+	$query = $DB->query($queryStr);
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($query->num_rows > 0) {
+		while($result = $query->fetch_assoc()) {
 			$players['data'][] = $result;
 		}
 	}
 
 	// query to get the total rows which would be fetched without the LIMIT
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+	$result = $query->fetch_assoc();
 	$players['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+	$DB->free();
 
 }
 
