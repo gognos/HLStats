@@ -27,7 +27,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -79,11 +79,18 @@ class Chart {
 	private $_currentChartData = array();
 
 	/**
+	 * the global DB Object
+	 */
+	private $_DB = false;
+
+	/**
 	 * load up and set default values
 	 *
 	 * @param string $game The game code
 	 */
 	public function __construct($game) {
+
+		$this->_DB = $GLOBALS['DB'];
 
 		if(!empty($game)) {
 			$this->_game = $game;

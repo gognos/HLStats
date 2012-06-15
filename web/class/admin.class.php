@@ -27,7 +27,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -67,9 +67,9 @@ class Admin {
 	 * load stuff and check if we are logged in
 	 */
 	public function __construct() {
-		$this->_checkAuth();
-
 		$this->_DB = $GLOBALS['DB'];
+		
+		$this->_checkAuth();
 	}
 
 	/**
