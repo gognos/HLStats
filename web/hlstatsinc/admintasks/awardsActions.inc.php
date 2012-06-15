@@ -112,7 +112,7 @@ if(isset($_POST['sub']['saveActions'])) {
 										`verb` = '".$DB->real_escape_string($verb)."',
 										`game` = '".$DB->real_escape_string($gc)."',
 										`awardType` = 'O'");
-			if(SHOW_DEBUG && $DB->error) var_dump($DB->error;
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
