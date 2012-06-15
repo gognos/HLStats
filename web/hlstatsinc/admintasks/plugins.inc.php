@@ -44,9 +44,9 @@ $return = false;
 if(isset($_POST['sub']['saveAddons'])) {
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = $db->query("DELETE FROM `".DB_PREFIX."_Server_Addons`
-									WHERE `rule` = '".$db->real_escape_string($k)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$query = $DB->query("DELETE FROM `".DB_PREFIX."_Server_Addons`
+									WHERE `rule` = '".$DB->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			unset($_POST['rule'][$k]);
 		}
 	}
@@ -56,12 +56,12 @@ if(isset($_POST['sub']['saveAddons'])) {
 		foreach($_POST['rule'] as $k=>$v) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['add'][$k])) {
-				$query = $db->query("UPDATE `".DB_PREFIX."_Server_Addons`
-										SET `rule` = '".$db->real_escape_string($v)."',
-											`addon` = '".$db->real_escape_string($_POST['add'][$k])."',
-											`url` = '".$db->real_escape_string($_POST['url'][$k])."'
-										WHERE `rule` = '".$db->real_escape_string($k)."'");
-				if(SHOW_DEBUG && $db->error) var_dump($db->error);
+				$query = $DB->query("UPDATE `".DB_PREFIX."_Server_Addons`
+										SET `rule` = '".$DB->real_escape_string($v)."',
+											`addon` = '".$DB->real_escape_string($_POST['add'][$k])."',
+											`url` = '".$DB->real_escape_string($_POST['url'][$k])."'
+										WHERE `rule` = '".$DB->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -75,11 +75,11 @@ if(isset($_POST['sub']['saveAddons'])) {
 		$newAdd = trim($_POST['newadd']);
 		$newURL = trim($_POST['newurl']);
 		if(!empty($newOne) && !empty($newAdd)) {
-			$query = $db->query("INSERT INTO `".DB_PREFIX."_Server_Addons`
-									SET `rule` = '".$db->real_escape_string($newOne)."',
-										`addon` = '".$db->real_escape_string($newAdd)."',
-										`url` = '".$db->real_escape_string($newURL)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$query = $DB->query("INSERT INTO `".DB_PREFIX."_Server_Addons`
+									SET `rule` = '".$DB->real_escape_string($newOne)."',
+										`addon` = '".$DB->real_escape_string($newAdd)."',
+										`url` = '".$DB->real_escape_string($newURL)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -94,10 +94,10 @@ if(isset($_POST['sub']['saveAddons'])) {
 
 $addons = false;
 // get the addons from db
-$query = $db->query("SELECT rule,addon,url
+$query = $DB->query("SELECT rule,addon,url
 						FROM `".DB_PREFIX."_Server_Addons`
 						ORDER BY rule ASC");
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
 	unset($result);
 	while($result = $query->fetch_assoc()) {

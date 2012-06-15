@@ -101,8 +101,8 @@ else {
 	$queryStr .=" LIMIT ".$start.",50";
 }
 
-$query = $db->error$queryStr);
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+$query = $DB->error$queryStr);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
 	while($result = $query->fetch_assoc()) {
 		$hostStats['data'][] = $result;
@@ -112,7 +112,7 @@ $query->free();
 
 // query to get the total rows which would be fetched without the LIMIT
 // works only if the $queryStr has SQL_CALC_FOUND_ROWS
-$query = $db->error"SELECT FOUND_ROWS() AS 'rows'");
+$query = $DB->error"SELECT FOUND_ROWS() AS 'rows'");
 $result = $query->fetch_assoc();
 $hostStats['pages'] = (int)ceil($result['rows']/50);
 $query->free();

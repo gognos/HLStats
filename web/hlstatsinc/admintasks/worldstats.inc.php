@@ -44,7 +44,7 @@ $_wsRegURL = "http://localhost/code/HLStats/worldstats/regapi.php";
 
 
 // get the games from the db
-$query = $db->query("SELECT code,name
+$query = $DB->query("SELECT code,name
 						FROM `".DB_PREFIX."_Games`
 						ORDER BY `name`");
 $gamesArr = array();

@@ -71,13 +71,13 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 	</p>
 	<?php
 		if ($upgrade === true) {
-			$result = $db->query("SHOW TABLES");
+			$result = $DB->query("SHOW TABLES");
 
 			echo "Upgrading all tables to MyISAM format:<ul>\n";
 			flush();
 			while (list($table) = $result->fetch_array()) {
 				echo "<li>$table ... ";
-				$db->query("ALTER TABLE $table TYPE=MYISAM");
+				$DB->query("ALTER TABLE $table TYPE=MYISAM");
 				echo "OK\n";
 				flush();
 			}
@@ -87,7 +87,7 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 		} else {
 
 
-			$result = $db->query("SHOW TABLES");
+			$result = $DB->query("SHOW TABLES");
 			$dbtables = '';
 
 			while (list($table) = $result->fetch_array()) {
@@ -95,7 +95,7 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 				$dbtables .= $table;
 			}
 
-			$query = $db->query("OPTIMIZE TABLE $dbtables");
+			$query = $DB->query("OPTIMIZE TABLE $dbtables");
 			if($query->num_rows > 0) {
 				while($result = $query->fetch_assoc()) {
 					$optimize[] = $result;
@@ -104,7 +104,7 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 			unset($result);
 			$query->free();
 
-			$query = $db->query("OPTIMIZE TABLE $dbtables");
+			$query = $DB->query("OPTIMIZE TABLE $dbtables");
 			if($query->num_rows > 0) {
 				while($result = $query->fetch_assoc()) {
 					$analyze[] = $result;

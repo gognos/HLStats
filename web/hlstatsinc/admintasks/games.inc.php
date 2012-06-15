@@ -59,7 +59,7 @@ if (isset($_POST['sub']['newgame'])) {
 			foreach ($sqlContentArr as $line) {
 				$line = trim($line);
 				if(!preg_match("/^#/",$line) && $line != "") {
-					$query = $db->query($line);
+					$query = $DB->query($line);
 					if(!$query) {
 						echo("Query Failed: ".$line);
 						$i++;
@@ -84,17 +84,17 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 
 		// we need first the playids for this game
 		$players = array();
-		$query = $db->query("SELECT playerId FROM ".DB_PREFIX."_Players
-								WHERE game = '".$db->real_escape_string($gametodelete)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$query = $DB->query("SELECT playerId FROM ".DB_PREFIX."_Players
+								WHERE game = '".$DB->real_escape_string($gametodelete)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		while($result = $query->fetch_assoc()) {
 			$players[]= $result['playerId'];
 		}
 		if(!empty($players)) {
 			#die("Fatal error: No players found for this game.");
 			$playerIdString = implode(",",$players);
-			$query = $db->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$query = $DB->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if ($query->num_rows < 1) {
 				die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
 					There may be something wrong with your hlstats database or your version of MySQL.");
@@ -107,15 +107,15 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 
 			foreach($dbtables as $table) {
 				if($table == '".DB_PREFIX."_Events_Frags' || $table == '".DB_PREFIX."_Events_Teamkills') {
-					$db->query("DELETE FROM `".$table."`
+					$DB->query("DELETE FROM `".$table."`
 									WHERE killerId IN (".$playerIdString.")
 										OR victimId IN (".$playerIdString.")");
-					if(SHOW_DEBUG && $db->error) var_dump($db->error);
+					if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				}
 				else {
-					$db->query("DELETE FROM `".$table."`
+					$DB->query("DELETE FROM `".$table."`
 									WHERE playerId IN (".$playerIdString.")");
-					if(SHOW_DEBUG && $db->error) var_dump($db->error);
+					if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				}
 			}
 		}
@@ -125,21 +125,21 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 								DB_PREFIX.'_Roles', DB_PREFIX.'_Servers',
 								DB_PREFIX.'_Teams', DB_PREFIX.'_Weapons');
 		foreach($gameTables as $gt) {
-			$do = $db->query("DELETE FROM `".$gt."` WHERE game = '".$db->real_escape_string($_POST['gameToDelete'])."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$do = $DB->query("DELETE FROM `".$gt."` WHERE game = '".$DB->real_escape_string($_POST['gameToDelete'])."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($do === false) {
 				echo $gt,' ',l("ERROR");
 			}
 		}
 
-		$db->query("DELETE FROM `".DB_PREFIX."_Games`
-						WHERE code='".$db->real_escape_string($gametodelete)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$DB->query("DELETE FROM `".DB_PREFIX."_Games`
+						WHERE code='".$DB->real_escape_string($gametodelete)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 
 		// delete the players
 		if(!empty($players)) {
-			$db->query("DELETE FROM `".DB_PREFIX."_Players` WHERE playerId IN (".$playerIdString.")");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$DB->query("DELETE FROM `".DB_PREFIX."_Players` WHERE playerId IN (".$playerIdString.")");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		}
 
 		header('Location: index.php?mode=admin&task=games');
@@ -147,7 +147,7 @@ elseif(isset($_POST['sub']['deleteGame'])) {
 }
 else {
 	// get the games from the db
-	$query = $db->query("SELECT code,name
+	$query = $DB->query("SELECT code,name
 							FROM `".DB_PREFIX."_Games`
 							ORDER BY `name`");
 	$gamesArr = array();

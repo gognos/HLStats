@@ -59,7 +59,7 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 		if (isset($_POST['confirm'])) {
 			$query = "SHOW TABLES LIKE '".DB_PREFIX."_Events_%'";
 
-			$query = $db->query($query);
+			$query = $DB->query($query);
 			if ($query->num_rows < 1) die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>There may be something wrong with your hlstats database or your version of MySQL.");
 
 			while (list($table) = $query->fetch_array()) {
@@ -76,22 +76,22 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 			echo "<ul>\n";
 			foreach ($dbtables as $dbt) {
 				echo "<li>$dbt ... ";
-				if ($db->query("TRUNCATE TABLE `$dbt`")) {
-					if(SHOW_DEBUG && $db->error) var_dump($db->error);
+				if ($DB->query("TRUNCATE TABLE `$dbt`")) {
+					if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 					echo "OK\n";
 				}
 				else {
-					$db->query("DELETE FROM `$dbt`");
-					if(SHOW_DEBUG && $db->error) var_dump($db->error);
+					$DB->query("DELETE FROM `$dbt`");
+					if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 					echo "OK\n";
 				}
 			}
 
 			echo "<li>Clearing awards ... ";
-			$db->query("UPDATE `".DB_PREFIX."_Awards` SET d_winner_id=NULL, d_winner_count=NULL");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
-			$db->query("TRUNCATE TABLE `".DB_PREFIX."_Awards_History`");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$DB->query("UPDATE `".DB_PREFIX."_Awards` SET d_winner_id=NULL, d_winner_count=NULL");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+			$DB->query("TRUNCATE TABLE `".DB_PREFIX."_Awards_History`");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			echo "OK\n";
 
 			echo "</ul>\n";
@@ -99,9 +99,9 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 			echo l("Done"),"<p>";
 
 			// add a last reset row into hlstats_options
-			$db->query("UPDATE `".DB_PREFIX."_Options` SET value = '".time()."'
+			$DB->query("UPDATE `".DB_PREFIX."_Options` SET value = '".time()."'
 							WHERE `keyname` = 'reset_date'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			$g_options['reset_date'] = date("d.m.Y");
 		}
 		else {

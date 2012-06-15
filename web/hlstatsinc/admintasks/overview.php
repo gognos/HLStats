@@ -41,11 +41,11 @@
 
 $gameList = false;
 // get the games
-$query = $db->query("SELECT code,name FROM `".DB_PREFIX."_Games`
+$query = $DB->query("SELECT code,name FROM `".DB_PREFIX."_Games`
 					ORDER BY name ASC");
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
-	while($result = $query->fetch_assoc()ƒ) {
+	while($result = $query->fetch_assoc()) {
 		$gameList[] = $result;
 	}
 }

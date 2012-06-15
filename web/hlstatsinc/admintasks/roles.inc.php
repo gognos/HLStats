@@ -49,10 +49,10 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = $db->query("SELECT name
+		$query = $DB->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".$db->real_escape_string($gc)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+							WHERE code = '".$DB->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if($query->num_rows > 0) {
 			$result = $query->fetch_assoc();
 			$gName = $result['name'];
@@ -72,9 +72,9 @@ if(isset($_POST['sub']['saveRoles'])) {
 	// del
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = $db->query("DELETE FROM `".DB_PREFIX."_Roles`
-									WHERE `roleId` = '".$db->real_escape_string($k)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$query = $DB->query("DELETE FROM `".DB_PREFIX."_Roles`
+									WHERE `roleId` = '".$DB->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -89,12 +89,12 @@ if(isset($_POST['sub']['saveRoles'])) {
 				$hide = 0;
 				if(isset($_POST['hidden'][$k])) $hide = 1;
 
-				$query = $db->query("UPDATE `".DB_PREFIX."_Roles`
-										SET `code` = '".$db->real_escape_string($c)."',
-											`name` = '".$db->real_escape_string($name)."',
-											`hidden` = '".$db->real_escape_string($hide)."'
-										WHERE `roleId` = '".$db->real_escape_string($k)."'");
-				if(SHOW_DEBUG && $db->error) var_dump($db->error);
+				$query = $DB->query("UPDATE `".DB_PREFIX."_Roles`
+										SET `code` = '".$DB->real_escape_string($c)."',
+											`name` = '".$DB->real_escape_string($name)."',
+											`hidden` = '".$DB->real_escape_string($hide)."'
+										WHERE `roleId` = '".$DB->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -112,11 +112,11 @@ if(isset($_POST['sub']['saveRoles'])) {
 			$hide = 0;
 			if(isset($_POST['newhidden'])) $hide = 1;
 
-			$query = $db->query("INSERT INTO `".DB_PREFIX."_Roles`
-									SET `code` = '".$db->real_escape_string($newOne)."',
-										`name` = '".$db->real_escape_string($name)."',
-										`hidden` = '".$db->real_escape_string($hide)."',
-										`game` = '".$db->real_escape_string($gc)."'");
+			$query = $DB->query("INSERT INTO `".DB_PREFIX."_Roles`
+									SET `code` = '".$DB->real_escape_string($newOne)."',
+										`name` = '".$DB->real_escape_string($name)."',
+										`hidden` = '".$DB->real_escape_string($hide)."',
+										`game` = '".$DB->real_escape_string($gc)."'");
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');
@@ -131,11 +131,11 @@ if(isset($_POST['sub']['saveRoles'])) {
 
 // get the roles
 $roles = false;
-$query = $db->query("SELECT roleId, code, name, hidden
+$query = $DB->query("SELECT roleId, code, name, hidden
 						FROM `".DB_PREFIX."_Roles`
-						WHERE game='".$db->real_escape_string($gc)."'
+						WHERE game='".$DB->real_escape_string($gc)."'
 						ORDER BY code ASC");
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
 	while($result = $query->fetch_assoc()) {
 		$roles[] = $result;

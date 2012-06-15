@@ -45,9 +45,9 @@ $gc = false;
 if(isset($_GET['code'])) {
 	$gc = trim($_GET['code']);
 	if(!empty($gc)) {
-		$query = $db->query("SELECT code,name,hidden FROM `".DB_PREFIX."_Games`
-								WHERE `code` = '".$db->real_escape_string($gc)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$query = $DB->query("SELECT code,name,hidden FROM `".DB_PREFIX."_Games`
+								WHERE `code` = '".$DB->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if($query->num_rows > 0) {
 			$gameData = $query->fetch_assoc();
 		}

@@ -50,10 +50,10 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = $db->query("SELECT name
+		$query = $DB->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".$db->real_escape_string($gc)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+							WHERE code = '".$DB->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if($query->num_rows > 0) {
 			$result = $query->fetch_assoc();
 			$gName = $result['name'];
@@ -69,11 +69,11 @@ if(empty($gc) || empty($check)) {
 
 $weapons = false;
 // get the teams
-$query = $db->query("SELECT weaponId, code, name, modifier
+$query = $DB->query("SELECT weaponId, code, name, modifier
 						FROM `".DB_PREFIX."_Weapons`
-						WHERE game = '".$db->real_escape_string($gc)."'
+						WHERE game = '".$DB->real_escape_string($gc)."'
 						ORDER BY code ASC");
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
 	while($result = $query->fetch_assoc()) {
 		$weapons[] = $result;
@@ -85,9 +85,9 @@ if(isset($_POST['sub']['saveWeapon'])) {
 	// del
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			$query = $db->query("DELETE FROM `".DB_PREFIX."_Weapons`
-									WHERE `weaponId` = '".$db->real_escape_string($k)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$query = $DB->query("DELETE FROM `".DB_PREFIX."_Weapons`
+									WHERE `weaponId` = '".$DB->real_escape_string($k)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			unset($_POST['code'][$k]);
 		}
 	}
@@ -100,12 +100,12 @@ if(isset($_POST['sub']['saveWeapon'])) {
 				$name = trim($_POST['name'][$k]);
 				$mod = trim($_POST['modifier'][$k]);
 
-				$query = $db->query("UPDATE `".DB_PREFIX."_Weapons`
-										SET `code` = '".$db->real_escape_string($c)."',
-											`name` = '".$db->real_escape_string($name)."',
-											`modifier` = '".$db->real_escape_string($mod)."'
-										WHERE `weaponId` = '".$db->real_escape_string($k)."'");
-				if(SHOW_DEBUG && $db->error) var_dump($db->error);
+				$query = $DB->query("UPDATE `".DB_PREFIX."_Weapons`
+										SET `code` = '".$DB->real_escape_string($c)."',
+											`name` = '".$DB->real_escape_string($name)."',
+											`modifier` = '".$DB->real_escape_string($mod)."'
+										WHERE `weaponId` = '".$DB->real_escape_string($k)."'");
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 				if($query === false) {
 					$return['status'] = "1";
 					$return['msg'] = l('Data could not be saved');
@@ -121,12 +121,12 @@ if(isset($_POST['sub']['saveWeapon'])) {
 			$name = trim($_POST['newname']);
 			$mod = trim($_POST['newmodifier']);
 
-			$query = $db->query("INSERT INTO `".DB_PREFIX."_Weapons`
-									SET `code` = '".$db->real_escape_string($newOne)."',
-										`name` = '".$db->real_escape_string($name)."',
-										`modifier` = '".$db->real_escape_string($mod)."',
-										`game` = '".$db->real_escape_string($gc)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			$query = $DB->query("INSERT INTO `".DB_PREFIX."_Weapons`
+									SET `code` = '".$DB->real_escape_string($newOne)."',
+										`name` = '".$DB->real_escape_string($name)."',
+										`modifier` = '".$DB->real_escape_string($mod)."',
+										`game` = '".$DB->real_escape_string($gc)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query === false) {
 				$return['status'] = "1";
 				$return['msg'] = l('Data could not be saved');

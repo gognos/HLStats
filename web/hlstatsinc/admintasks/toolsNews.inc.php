@@ -56,15 +56,15 @@ if(isset($_POST['saveNews'])) {
 	}
 	else {
 		$newsdate = date("Y-m-d H:i:s");
-		$result = $db->query("INSERT INTO ".DB_PREFIX."_News
+		$result = $DB->query("INSERT INTO ".DB_PREFIX."_News
 							VALUES ('',
 									'".$newsdate."',
-									'".$db->real_escape_string($adminObj->getUsername())."',
-									'".$db->real_escape_string($_POST["email"])."',
-									'".$db->real_escape_string($subject)."',
-									'".$db->real_escape_string($message)."')
+									'".$DB->real_escape_string($adminObj->getUsername())."',
+									'".$DB->real_escape_string($_POST["email"])."',
+									'".$DB->real_escape_string($subject)."',
+									'".$DB->real_escape_string($message)."')
 							");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
 	}
@@ -83,9 +83,9 @@ if(!empty($_GET['editpost']) || !empty($_GET['deletepost'])) {
 
 	$check = validateInput($postnr,'digit');
 	if(!empty($postnr) && $check === true) {
-		$query = $db->query("SELECT * FROM `".DB_PREFIX."_News`
-						WHERE `id` = '".$db->real_escape_string($postnr)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$query = $DB->query("SELECT * FROM `".DB_PREFIX."_News`
+						WHERE `id` = '".$DB->real_escape_string($postnr)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		$post = $query->fetch_array();
 		$query->free();
 	}
@@ -107,15 +107,15 @@ if(isset($_POST['editNews']) && !empty($_GET['editpost'])) {
 	}
 	else {
 		$newsdate = date("Y-m-d H:i:s");
-		$result = $db->query("UPDATE `".DB_PREFIX."_News`
+		$result = $DB->query("UPDATE `".DB_PREFIX."_News`
 								SET `date` = '".$newsdate."',
-									`user` = '".$db->real_escape_string($adminObj->getUsername())."',
-									`email` = '".$db->real_escape_string($_POST["email"])."',
-									`subject` = '".$db->real_escape_string($_POST["subject"])."',
-									`message` = '".$db->real_escape_string($_POST["message"])."'
-								WHERE `id` = '".$db->real_escape_string($newsID)."'
+									`user` = '".$DB->real_escape_string($adminObj->getUsername())."',
+									`email` = '".$DB->real_escape_string($_POST["email"])."',
+									`subject` = '".$DB->real_escape_string($_POST["subject"])."',
+									`message` = '".$DB->real_escape_string($_POST["message"])."'
+								WHERE `id` = '".$DB->real_escape_string($newsID)."'
 							");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		$return['msg'] = l('News has been saved');
 		$return['status'] = "2";
 	}
@@ -127,9 +127,9 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 	$check = validateInput($newsId,'digit');
 
 	if(!empty($newsId) && $check === true) {
-		$query = $db->query("DELETE FROM `".DB_PREFIX."_News`
-								WHERE `id` = '".$db->real_escape_string($newsId)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$query = $DB->query("DELETE FROM `".DB_PREFIX."_News`
+								WHERE `id` = '".$DB->real_escape_string($newsId)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if($query !== false) {
 			$return['msg'] = l('News item deleted');
 			$return['status'] = "2";
@@ -143,8 +143,8 @@ if(isset($_POST['deleteNews']) && !empty($_GET['deletepost'])) {
 
 // load existing news
 $newsArray = false;
-$query = $db->query("SELECT * FROM `".DB_PREFIX."_News` ORDER BY `date` DESC");
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+$query = $DB->query("SELECT * FROM `".DB_PREFIX."_News` ORDER BY `date` DESC");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
 	while($result = $query->fetch_assoc()) {
 		$newsArray[] = $result;

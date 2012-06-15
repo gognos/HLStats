@@ -60,14 +60,14 @@ if(!empty($_GET["clanId"])) {
 
 		// now get the clan details
 		// since we do not have a clan class we make it this way
-		$query = $db->query("SELECT
+		$query = $DB->query("SELECT
 				c.tag,
 				c.name,
 				c.homepage,
 				c.steamGroup
 			FROM ".DB_PREFIX."_Clans AS c
-			WHERE c.clanId=".$db->real_escape_string($_GET["clanId"])."");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			WHERE c.clanId=".$DB->real_escape_string($_GET["clanId"])."");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 
 		if ($query->num_rows > 0) {
 			$clanData = $query->fetch_assoc();
@@ -107,12 +107,12 @@ if(isset($_POST['submit']['editPlayer']) && !empty($playerObj)) {
 // process the edit of a clan
 if(isset($_POST['submit']['editClan']) && !empty($clanData)) {
 	if(!empty($_POST['details'])) {
-		$query = $db->query("UPDATE `".DB_PREFIX."_Clans`
-						SET `name` = '".$db->real_escape_string($_POST['details']['name'])."',
-							`homepage` = '".$db->real_escape_string($_POST['details']['homepage'])."',
-							`steamGroup` = '".$db->real_escape_string($_POST['details']['steamGroup'])."'
-					WHERE `clanId` = '".$db->real_escape_string($_GET["clanId"])."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$query = $DB->query("UPDATE `".DB_PREFIX."_Clans`
+						SET `name` = '".$DB->real_escape_string($_POST['details']['name'])."',
+							`homepage` = '".$DB->real_escape_string($_POST['details']['homepage'])."',
+							`steamGroup` = '".$DB->real_escape_string($_POST['details']['steamGroup'])."'
+					WHERE `clanId` = '".$DB->real_escape_string($_GET["clanId"])."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if($query !== false) {
 			header('Location: index.php?mode=admin&task=toolsEditdetails&clanId='.$_GET["clanId"]);
 		}
@@ -132,10 +132,10 @@ if(isset($_POST['submit']['searchForId'])) {
 	if($check === true && $check1 === true) {
 		// search for given ID
 		if($searchWhere === "player") {
-			$query = $db->query("SELECT `playerId`
+			$query = $DB->query("SELECT `playerId`
 									FROM `".DB_PREFIX."_Players`
-									WHERE `playerId` = '".$db->real_escape_string($searchFor)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+									WHERE `playerId` = '".$DB->real_escape_string($searchFor)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query->num_rows > 0) {
 				$result = $query->fetch_assoc();
 				header('Location: index.php?mode=admin&task=toolsEditdetails&playerId='.$result['playerId']);
@@ -146,10 +146,10 @@ if(isset($_POST['submit']['searchForId'])) {
 			}
 		}
 		elseif($searchWhere === "clan") {
-			$query = $db->query("SELECT `clanId`
+			$query = $DB->query("SELECT `clanId`
 									FROM `".DB_PREFIX."_Clans`
-									WHERE `clanId` = '".$db->real_escape_string($searchFor)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+									WHERE `clanId` = '".$DB->real_escape_string($searchFor)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			if($query->num_rows > 0) {
 				$result = $query->fetch_assoc();
 				header('Location: index.php?mode=admin&task=toolsEditdetails&clanId='.$result['clanId']);

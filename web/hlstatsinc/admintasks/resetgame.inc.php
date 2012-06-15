@@ -51,10 +51,10 @@ if(isset($_GET['gc'])) {
 	$check = validateInput($gc,'nospace');
 	if($check === true) {
 		// load the game info
-		$query = $db->query("SELECT name
+		$query = $DB->query("SELECT name
 							FROM `".DB_PREFIX."_Games`
-							WHERE code = '".$db->real_escape_string($gc)."'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+							WHERE code = '".$DB->real_escape_string($gc)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if($query->num_rows > 0) {
 			$result = $query->fetch_assoc();
 			$gName = $result['name'];
@@ -71,9 +71,9 @@ if(empty($gc) || empty($check)) {
 // get the servers for this game
 $serversArr = array();
 $serversArrCustom = array();
-$query = $db->query("SELECT serverId,name FROM `".DB_PREFIX."_Servers` 
-					WHERE game = '".$db->real_escape_string($gc)."'");
-if(SHOW_DEBUG && $db->error) var_dump($db->error);
+$query = $DB->query("SELECT serverId,name FROM `".DB_PREFIX."_Servers` 
+					WHERE game = '".$DB->real_escape_string($gc)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 while($result = $query->fetch_assoc()) {
 	$serversArr[] = $result['serverId'];
 	$serversArrCustom[$result['serverId']] = $result['name'];
@@ -98,8 +98,8 @@ if (isset($_POST['sub']['reset'])) {
 		# get the event tables
 		$dbtables = array();
 		
-		$query = $db->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
-		if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		$query = $DB->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if ($query->num_rows < 1) {
 			die("Fatal error: No events tables found with query:<p><pre>$query</pre><p>
 				There may be something wrong with your HLStats database or your version of MySQL.");
@@ -130,7 +130,7 @@ if (isset($_POST['sub']['reset'])) {
 	}
 	
 	if(!empty($queryStr)) {
-		$query = $db->query($queryStr);
+		$query = $DB->query($queryStr);
 		if($query->num_rows > 0) {
 			while($result = $query->fetch_assoc()) {
 				$players[] = $result['playerId'];
@@ -154,9 +154,9 @@ if (isset($_POST['sub']['reset'])) {
 
 		foreach ($dbtables as $dbt) {
 			if($dbt == DB_PREFIX."_PlayerNames" || $dbt == DB_PREFIX."_PlayerUniqueIds" || $dbt == DB_PREFIX."_Players") {
-				if ($db->query("DELETE FROM `".$dbt."`
+				if ($DB->query("DELETE FROM `".$dbt."`
 									WHERE playerId IN (".$playerIdString.")")) {
-					if(SHOW_DEBUG && $db->error) var_dump($db->error);
+					if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 					$return .= $dbt." OK<br />";
 				}
 				else {
@@ -164,9 +164,9 @@ if (isset($_POST['sub']['reset'])) {
 				}
 			}
 			else {
-				if ($db->query("DELETE FROM `".$dbt."`
+				if ($DB->query("DELETE FROM `".$dbt."`
 									WHERE serverId IN (".$serversArrString.")")) {
-					if(SHOW_DEBUG && $db->error) var_dump($db->error);
+					if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 					$return .= $dbt." OK<br />";
 				}
 				else {
@@ -179,9 +179,9 @@ if (isset($_POST['sub']['reset'])) {
 		$dbtablesGamecode [] = DB_PREFIX."_Clans";
 
 		foreach ($dbtablesGamecode as $dbtGame) {
-			if ($db->query("DELETE FROM `".$dbtGame."`
-								WHERE game = '".$db->real_escape_string($gc)."'")) {
-				if(SHOW_DEBUG && $db->error) var_dump($db->error);
+			if ($DB->query("DELETE FROM `".$dbtGame."`
+								WHERE game = '".$DB->real_escape_string($gc)."'")) {
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 
 				$return .= $dbtGame." OK<br />";
 			}
@@ -191,12 +191,12 @@ if (isset($_POST['sub']['reset'])) {
 		}
 
 		$return .= "Clearing awards ... <br />";
-		if ($db->query("UPDATE `".DB_PREFIX."_Awards` SET d_winner_id=NULL, d_winner_count=NULL
-					WHERE game = '".$db->real_escape_string($gc)."'")) {
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
-			$db->query("DELETE FROM `".DB_PREFIX."_Awards_History`
-					WHERE game = '".$db->real_escape_string($gc)."'");
-			if(SHOW_DEBUG && $db->error) var_dump($db->error);
+		if ($DB->query("UPDATE `".DB_PREFIX."_Awards` SET d_winner_id=NULL, d_winner_count=NULL
+					WHERE game = '".$DB->real_escape_string($gc)."'")) {
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+			$DB->query("DELETE FROM `".DB_PREFIX."_Awards_History`
+					WHERE game = '".$DB->real_escape_string($gc)."'");
+			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 			$return .= "Awards OK<br />";
 		}
 		else {
