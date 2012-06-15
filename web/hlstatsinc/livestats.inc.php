@@ -31,7 +31,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -65,18 +65,18 @@ $start = $time;
 include('hlstatsinc/binary_funcs.inc.php');
 include('hlstatsinc/hlquery_funcs.inc.php');
 
-$query = mysql_query("SELECT s.serverId, s.name, s.address,
+$query = $DB->query("SELECT s.serverId, s.name, s.address,
 			s.port, s.publicaddress, s.game, s.rcon_password,
 			g.name gamename
 		FROM `".DB_PREFIX."_Servers` AS s
 		LEFT JOIN `".DB_PREFIX."_Games` AS g ON s.game = g.code
-		WHERE serverId = '".mysql_real_escape_string($serverId)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if (mysql_num_rows($query) != 1) {
+		WHERE serverId = '".$DB->real_escape_string($serverId)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if ($query->num_rows != 1) {
 	die("Invalid or no server specified.");
 }
 else {
-	$server = mysql_fetch_assoc($query);
+	$server = $query->fetch_assoc();
 }
 
 pageHeader(
@@ -209,9 +209,9 @@ elseif (isset($server_rules['mp_timeleft']) && !empty($server_rules['mp_timeleft
 
 // Load our plugin list
 $server_details['addon_count'] = 0;
-$query = mysql_query("SELECT * FROM `".DB_PREFIX."_Server_Addons`");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-while ($addon_list = mysql_fetch_assoc($query)) {
+$query = $DB->query("SELECT * FROM `".DB_PREFIX."_Server_Addons`");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+while ($addon_list = $query->fetch_assoc()) {
 	$server_addon[$addon_list['rule']] = array('addon' => $addon_list['addon'], 'url' => $addon_list['url']);
 }
 

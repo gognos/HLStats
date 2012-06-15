@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -92,20 +92,20 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the total kills count for this map
-$queryCount = mysql_query("SELECT COUNT(DISTINCT ef.killerId) AS cc,
-		SUM(ef.map = '".mysql_real_escape_string($map)."') AS tc
+$queryCount = $DB->query("SELECT COUNT(DISTINCT ef.killerId) AS cc,
+		SUM(ef.map = '".$DB->real_escape_string($map)."') AS tc
 	FROM `".DB_PREFIX."_Events_Frags` AS ef
 	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.playerId = ef.killerId
-	WHERE ef.map = '".mysql_real_escape_string($map)."'
-		AND p.game = '".mysql_real_escape_string($game)."'
+	WHERE ef.map = '".$DB->real_escape_string($map)."'
+		AND p.game = '".$DB->real_escape_string($game)."'
 		AND p.hideranking = 0
 ");
-$result = mysql_fetch_assoc($queryCount);
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+$result = $queryCount->fetch_assoc();
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 // the total kills for this map
 $totalkills = $result['tc'];
-mysql_freeresult($queryCount);
+$queryCount->free();
 
 if(!empty($totalkills)) {
 	$queryStr = "SELECT SQL_CALC_FOUND_ROWS
@@ -117,8 +117,8 @@ if(!empty($totalkills)) {
 	FROM `".DB_PREFIX."_Events_Frags` AS ef
 	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.playerId = ef.killerId
-	WHERE ef.map = '".mysql_real_escape_string($map)."'
-		AND p.game = '".mysql_real_escape_string($game)."'
+	WHERE ef.map = '".$DB->real_escape_string($map)."'
+		AND p.game = '".$DB->real_escape_string($game)."'
 		AND p.hideranking = 0
 	GROUP BY ef.killerId
 	ORDER BY ".$sort." ".$sortorder."";
@@ -132,22 +132,22 @@ if(!empty($totalkills)) {
 		$queryStr .=" LIMIT ".$start.",50";
 	}
 
-	$query = mysql_query($queryStr);
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
+	$query = $DB->query($queryStr);
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($query->num_rows > 0) {
+		while($result = $query->fetch_assoc()) {
 			$result['percent'] = $result['frags']/$totalkills*100;
 			$players['data'][] = $result;
 		}
 	}
-	mysql_freeresult($query);
+	$query->free();
 
 	// query to get the total rows which would be fetched without the LIMIT
 	// works only if the $queryStr has SQL_CALC_FOUND_ROWS
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+	$result = $query->fetch_assoc();
 	$players['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+	$query->free();
 }
 
 

@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -81,17 +81,17 @@ if (isset($_GET["sortorder"])) {
 }
 
 // query to get the total kills count for this game
-$queryKillsCount = mysql_query("SELECT COUNT(*) as kc
+$queryKillsCount = $DB->query("SELECT COUNT(*) as kc
 	FROM `".DB_PREFIX."_Events_Frags` AS ef
 	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.playerId = ef.killerId
-	WHERE p.game = '".mysql_real_escape_string($game)."'
+	WHERE p.game = '".$DB->real_escape_string($game)."'
 		AND p.hideranking = 0");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-$result = mysql_fetch_assoc($queryKillsCount);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+$result = $queryKillsCount->fetch_assoc();
 // get the total kill count for this game
 $totalkills = $result['kc'];
-mysql_free_result($queryKillsCount);
+$queryKillsCount->free();
 
 if(!empty($totalkills)) {
 	// query to get the data from the db with the given options
@@ -101,7 +101,7 @@ if(!empty($totalkills)) {
 	FROM `".DB_PREFIX."_Events_Frags` AS ef
 	LEFT JOIN `".DB_PREFIX."_Players` AS p
 		ON p.playerId = ef.killerId
-	WHERE p.game = '".mysql_real_escape_string($game)."'
+	WHERE p.game = '".$DB->real_escape_string($game)."'
 		AND p.hideranking = 0
 	GROUP BY ef.map
 	ORDER BY ".$sort." ".$sortorder."";
@@ -115,22 +115,22 @@ if(!empty($totalkills)) {
 		$queryStr .=" LIMIT ".$start.",50";
 	}
 
-	$query = mysql_query($queryStr);
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($query) > 0) {
-		while($result = mysql_fetch_assoc($query)) {
+	$query = $DB->query($queryStr);
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($query->num_rows > 0) {
+		while($result = $query->fetch_assoc()) {
 			$result['percent'] = $result['kills']/$totalkills*100;
 			$maps['data'][] = $result;
 		}
 	}
-	mysql_freeresult($query);
+	$query->free();
 
 	// query to get the total rows which would be fetched without the LIMIT
 	// works only if the $queryStr has SQL_CALC_FOUND_ROWS
-	$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+	$result = $query->fetch_assoc();
 	$maps['pages'] = (int)ceil($result['rows']/50);
-	mysql_freeresult($query);
+	$query->free();
 
 }
 

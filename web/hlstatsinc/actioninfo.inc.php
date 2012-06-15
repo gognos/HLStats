@@ -163,7 +163,7 @@ if(!empty($totalact)) {
 	$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
 	$result = $query->fetch_assoc();
 	$players['pages'] = (int)ceil($result['rows']/50);
-	$DB->free();
+	$query->free();
 
 }
 

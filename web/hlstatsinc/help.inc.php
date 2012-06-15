@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -40,7 +40,7 @@
  *
  */
 
-$query = mysql_query("SELECT g.name AS gamename,
+$query = $DB->query("SELECT g.name AS gamename,
 		a.description,
 		IF(SIGN(a.reward_player) > 0,
 			CONCAT('+', a.reward_player),
@@ -64,16 +64,16 @@ $query = mysql_query("SELECT g.name AS gamename,
 		ON t.code = a.team
 		AND t.game = a.game
 	ORDER BY a.game ASC, a.description ASC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 $gameActions = array();
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$gameActions[] = $result;
 	}
-	mysql_free_result($query);
+	$query->free();
 }
 
-$query = mysql_query("
+$query = $DB->query("
 		SELECT g.name AS gamename,
 			w.code,
 			w.name,
@@ -83,13 +83,13 @@ $query = mysql_query("
 			ON g.code = w.game
 		ORDER BY w.game ASC,
 			w.modifier DESC");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 $weaponModifiers = array();
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$weaponModifiers[] = $result;
 	}
-	mysql_free_result($query);
+	$query->free();
 }
 
 pageHeader(array(l("Help")), array(l("Help")=>""));
