@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -42,20 +42,20 @@
 
 // check if we have roles for this game
 $hasRoles = false;
-$query = mysql_query("SELECT `roleId`
+$query = $DB->query("SELECT `roleId`
 						FROM `".DB_PREFIX."_Roles`
-						WHERE `game` = '".mysql_real_escape_string($game)."'");
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
+						WHERE `game` = '".$DB->real_escape_string($game)."'");
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
 	$hasRoles = true;
 }
-mysql_free_result($query);
+$query->free();
 
 $awarddata_arr = false;
 $awards_d_date = "None";
 // check if we have awards
 if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_options['awards_d_date'] != "") ) {
-	$queryAwards = mysql_query("SELECT a.name,
+	$queryAwards = $DB->query("SELECT a.name,
 									a.verb,
 									ah.d_winner_id,
 									ah.d_winner_count,
@@ -67,15 +67,15 @@ if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_optio
 									ON p.playerId = ah.d_winner_id
 								LEFT JOIN `".DB_PREFIX."_Awards` AS a
 									ON a.awardId = ah.fk_award_id
-								WHERE ah.game = '".mysql_real_escape_string($game)."'
-									AND ah.date = '".mysql_real_escape_string($g_options['awards_d_date'])."'
+								WHERE ah.game = '".$DB->real_escape_string($game)."'
+									AND ah.date = '".$DB->real_escape_string($g_options['awards_d_date'])."'
 								ORDER BY a.awardType DESC,
 									a.name ASC");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if (mysql_num_rows($queryAwards) > 0) {
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if ($queryAwards->num_rows > 0) {
 		$tmptime = strtotime($g_options['awards_d_date']);
 		$awards_d_date = l(date('l',$tmptime)).' '.date('d.m.',$tmptime);
-		while($result = mysql_fetch_assoc($queryAwards)) {
+		while($result = $queryAwards>fetch_assoc()) {
 			$awarddata_arr[] = $result;
 		}
 	}
@@ -131,11 +131,11 @@ pageHeader(array($gamename), array($gamename=>""));
 <?php
 // should we hide the news ?
 if(!$g_options['hideNews'] && $num_games === 1) {
-	$queryNews = mysql_query("SELECT id,`date`,`user`,`email`,`subject`,`message`
+	$queryNews = $DB->query("SELECT id,`date`,`user`,`email`,`subject`,`message`
 							 FROM `".DB_PREFIX."_News`
 							 ORDER BY `date` DESC");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	if(mysql_num_rows($queryNews) > 0) {
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	if($queryNews->num_rows > 0) {
 ?>
 <script type="text/javascript">
 	<!--
@@ -153,7 +153,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 	<h1><?php echo l('News'); ?></h1>
 	<?php
 		$i = 0;
-		while ($rowdata = mysql_fetch_assoc($queryNews)) {
+		while ($rowdata = $queryNews->fetch_assoc()) {
 			if($i == 0) {
 	?>
 	<div class="newsBox" id="newsBox_<?php echo $i; ?>">
@@ -225,7 +225,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 			<th>&nbsp;<?php echo l('Statistics'); ?></th>
 		</tr>
 <?php
-	$query = mysql_query("SELECT
+	$query = $DB->query("SELECT
 							serverId, name,
 							IF(publicaddress != '',
 								publicaddress,
@@ -235,12 +235,12 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 						FROM
 							".DB_PREFIX."_Servers
 						WHERE
-							game = '".mysql_real_escape_string($game)."'
+							game = '".$DB->real_escape_string($game)."'
 						ORDER BY
 							name ASC,
 							addr ASC");
 	$i=0;
-	while ($rowdata = mysql_fetch_array($query)) {
+	while ($rowdata = $query->fetch_array()) {
 		$c = ($i % 2) + 1;
 
 		if ($rowdata["statusurl"]) {
@@ -267,27 +267,27 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 </div>
 <h1><?php echo $gamename; ?> <?php echo l('Statistics'); ?></h1>
 <?php
-	$query = mysql_query("SELECT COUNT(*) AS plc FROM `".DB_PREFIX."_Players` WHERE game = '".mysql_real_escape_string($game)."'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT COUNT(*) AS plc FROM `".DB_PREFIX."_Players` WHERE game = '".$DB->real_escape_string($game)."'");
+	$result = $query->fetch_assoc();
 	$num_players = $result['plc'];
 
-	$query = mysql_query("SELECT COUNT(*) AS sc FROM `".DB_PREFIX."_Servers` WHERE game = '".mysql_real_escape_string($game)."'");
-	$result = mysql_fetch_assoc($query);
+	$query = $DB->query("SELECT COUNT(*) AS sc FROM `".DB_PREFIX."_Servers` WHERE game = '".$DB->real_escape_string($game)."'");
+	$result = $query->fetch_assoc();
 	$num_servers = $result['sc'];
 
 	$lastevent = false;
-	$query = mysql_query("SELECT MAX(eventTime) as lastEvent
+	$query = $DB->query("SELECT MAX(eventTime) as lastEvent
 		FROM `".DB_PREFIX."_Events_Frags` AS ef
 		LEFT JOIN `".DB_PREFIX."_Servers` AS s
 			ON s.serverId = ef.serverId
-		WHERE s.game = '".mysql_real_escape_string($game)."'");
-	if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-	$result = mysql_fetch_assoc($query);
+		WHERE s.game = '".$DB->real_escape_string($game)."'");
+	if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+	$result = $query->fetch_assoc();
 	if(!empty($result['lastEvent'])) {
 		$timstamp = strtotime($result['lastEvent']);
 		$lastevent = getInterval($timstamp);
 	}
-	mysql_free_result($query);
+	$query->free();
 ?>
 <p>
 	<ul>

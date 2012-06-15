@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -104,8 +104,8 @@ $queryStr = "SELECT SQL_CALC_FOUND_ROWS
 			ON s.serverId = ec.serverId
 		LEFT JOIN `".DB_PREFIX."_Players` AS p
 			ON p.playerId = ec.playerId
-		WHERE s.game = '".mysql_real_escape_string($game)."'
-			AND ec.countryCode = '".mysql_real_escape_string($countryCode)."'
+		WHERE s.game = '".$DB->real_escape_string($game)."'
+			AND ec.countryCode = '".$DB->real_escape_string($countryCode)."'
 		GROUP BY p.playerId
 		ORDER BY ".$sort." ".$sortorder."";
 
@@ -118,21 +118,21 @@ else {
 	$queryStr .=" LIMIT ".$start.",50";
 }
 
-$query = mysql_query($queryStr);
-if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-if(mysql_num_rows($query) > 0) {
-	while($result = mysql_fetch_assoc($query)) {
+$query = $DB->query($queryStr);
+if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+if($query->num_rows > 0) {
+	while($result = $query->fetch_assoc()) {
 		$countryPlayers['data'][] = $result;
 	}
 }
-mysql_freeresult($query);
+$query->free();
 
 // query to get the total rows which would be fetched without the LIMIT
 // works only if the $queryStr has SQL_CALC_FOUND_ROWS
-$query = mysql_query("SELECT FOUND_ROWS() AS 'rows'");
-$result = mysql_fetch_assoc($query);
+$query = $DB->query("SELECT FOUND_ROWS() AS 'rows'");
+$result = $query->fetch_assoc();
 $countryPlayers['pages'] = (int)ceil($result['rows']/50);
-mysql_freeresult($query);
+$query->free();
 
 pageHeader(
 	array($gamename, l("Country Statistics")),
