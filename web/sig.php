@@ -63,11 +63,15 @@ require('hlstatsinc/hlstats.conf.php');
  */
 require("hlstatsinc/functions.inc.php");
 
-// deb class and options
-$db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS) OR die('Could not connect to the MySQL Server. Check your configuration.');
-$db_sel = mysql_select_db(DB_NAME,$db_con) OR die('Could not select database. Check your configuration.');
-mysql_query("SET NAMES utf8");
-mysql_query("SET collation_connection = 'utf8_unicode_ci'");
+// db class and options
+$DB = new mysqli(DB_ADDR,DB_USER,DB_PASS,DB_NAME);
+if($DB->connect_errno) {
+	var_dump($DB->connect_error);
+	die('Could not connect to the MySQL Server. Check your configuration.');	
+}
+$DB->query("SET NAMES utf8");
+$DB->query("SET collation_connection = 'utf8_unicode_ci'");
+$DB->set_charset("utf8");
 
 // get the hlstats options
 $g_options = getOptions();
@@ -143,48 +147,48 @@ if($g_options['allowSig'] == "1") {
 		}
 
 		// get the player data
-		$query = mysql_query("SELECT * FROM `".DB_PREFIX."_Players`
-							WHERE playerId = '".mysql_real_escape_string($playerId)."'");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		$playerData = mysql_fetch_assoc($query);
+		$query = $DB->query("SELECT * FROM `".DB_PREFIX."_Players`
+							WHERE playerId = '".$DB->real_escape_string($playerId)."'");
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+		$playerData = $query->fetch_assoc();
 		if($playerData === false) {
 			// no player data !
 			echo "No data found";
 			exit();
 		}
 		// rank
-		$query = mysql_query("SELECT skill, playerId
+		$query = $DB->query("SELECT skill, playerId
 								FROM `".DB_PREFIX."_Players`
-								WHERE game = '".mysql_real_escape_string($playerData['game'])."'
+								WHERE game = '".$DB->real_escape_string($playerData['game'])."'
 								ORDER BY skill DESC");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		$ranKnum = 1;
-		while ($row = mysql_fetch_assoc($query)) {
+		while ($row = $query->fetch_assoc()) {
 			$statsArr[$row['playerId']] = $ranKnum;
 			$ranKnum++;
 		}
 		$playerRank = $statsArr[$playerId];
 		$playerWholeRank = count($statsArr);
-		mysql_free_result($query);
+		$query->free();
 
 		// server info
-		$query = mysql_query("SELECT serverId FROM `".DB_PREFIX."_Events_Connects`
-					WHERE playerId = '".mysql_real_escape_string($playerId)."'
+		$query = $DB->query("SELECT serverId FROM `".DB_PREFIX."_Events_Connects`
+					WHERE playerId = '".$DB->real_escape_string($playerId)."'
 					ORDER BY eventTime DESC
 					LIMIT 1");
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		$result = mysql_fetch_assoc($query);
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+		$result = $query->fetch_assoc();
 		$serverId = $result['serverId'];
-		mysql_free_result($query);
+		$query->free();
 		if(empty($serverId)) exit('Incorrect player info. This does not work.');
 
 		// now get the server info
-		$query = mysql_query("SELECT address,port,name
+		$query = $DB->query("SELECT address,port,name
 					FROM `".DB_PREFIX."_Servers`
-					WHERE serverId = ".mysql_real_escape_string($serverId));
-		if(SHOW_DEBUG && mysql_error()) var_dump(mysql_error());
-		$serverData = mysql_fetch_assoc($query);
-		mysql_free_result($query);
+					WHERE serverId = ".$DB->real_escape_string($serverId));
+		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+		$serverData = $query->fetch_assoc();
+		$query->free();
 
 		$font = $picPath.'svenings.ttf';
 		switch ($style) {
