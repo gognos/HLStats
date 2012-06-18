@@ -57,7 +57,7 @@ if(isset($_POST['sub']['patterns'])) {
 			$v = trim($v);
 			if(!empty($v) && isset($_POST['sel'][$k])) {
 				$query = $DB->query("UPDATE `".DB_PREFIX."_ClanTags`
-										SET `pattern` = '".$v."',
+										SET `pattern` = '".$DB->real_escape_string($v)."',
 											`position` = '".$DB->real_escape_string($_POST['sel'][$k])."'
 										WHERE `id` = '".$DB->real_escape_string($k)."'");
 				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
