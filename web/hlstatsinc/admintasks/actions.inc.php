@@ -225,7 +225,8 @@ pageHeader(array(l("Admin"),l('Actions')), array(l("Admin")=>"index.php?mode=adm
 		}
 	?>
 </div>
-<div style="clear: both;">
+<div style="clear: both;"></div>
+<div id="main-full" style="margin-top: 10px;">
 	<a name="actions"></a>
 	<form method="post" action="">
 		<table cellpadding="2" cellspacing="0" border="0" width="100%">
