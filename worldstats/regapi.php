@@ -88,7 +88,9 @@ if(mysql_num_rows($query) > 0) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-$return = array();
+$return['status'] = false;
+$return['msg'] = 'Error';
+$return['payload'] = '';
 
 switch($method) {
 	case 'PUT':
@@ -106,77 +108,89 @@ switch($method) {
 	case 'POST':
 		# used to register new entries
 
-		if(!isset($_GET['id'])) exit('Missing argument: ID');
-		if(!isset($_POST['payload'])) exit('Missing argument: payload');
-		#if(!isset($_POST['requestURL'])) exit('Missing argument: requestURL');
+		if(!isset($_GET['id']) || !isset($_POST['payload']))  {
+			$return['status'] = false;
+			$return['msg'] = 'Missing parameters id or payload';
+		}
+		else {
+			$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
 
-		$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
-		#$requestURL = filter_input(INPUT_POST,'requestURL',FILTER_SANITIZE_ENCODED);
-		#$payload = filter_input(INPUT_POST,'payload',FILTER_SANITIZE_ENCODED);
+			$payload = json_decode($_POST['payload'],true);
 
-		$payload = json_decode($_POST['payload'],true);
+			if($payload !== false) {
+				$gamesToAdd = $payload['games'];
+				$requestURL = $payload['requestURL'];
 
-		if($payload !== false) {
-			$gamesToAdd = $payload['games'];
-			$requestURL = $payload['requestURL'];
-
-			if(!empty($gamesToAdd)) {
-				$query = $DB->query("SELECT id FROM `".DB_PREFIX."_ws_sites`
-								WHERE `siteHash` = '".$DB->real_escape_string(md5($requestURL))."'
-								AND `game` IN ('".implode("','", $gamesToAdd)."')");
-				if($query->num_rows === 1) {
-					# site/game already there
-					var_dump("already there");
-				}
-				else {
-					# not registered yet
-					foreach($gamesToAdd as $_game) {
-						$query = $DB->query("INSERT INTO `".DB_PREFIX."_ws_sites` SET
-											`siteHash` = '".$DB->real_escape_string(md5($requestURL))."',
-											`siteURL` = '".$DB->real_escape_string($requestURL)."',
-											`game` = '".$DB->real_escape_string($_game)."',
-											`regDate` = '".date("Y-m-d H:i:s")."',
-											`valid` = 0");
-						var_dump($DB->error);
+				if(!empty($gamesToAdd)) {
+					$query = $DB->query("SELECT `id` FROM `".DB_PREFIX."_ws_sites`
+									WHERE `siteHash` = '".$DB->real_escape_string(md5($requestURL))."'
+									AND `game` IN ('".implode("','", $gamesToAdd)."')");
+					if($query->num_rows === 1) {
+						# site/game already there
+						$return['status'] = true;
+						$return['msg'] = 'Game already registered';
+					}
+					else {
+						# not registered yet
+						foreach($gamesToAdd as $_game) {
+							$query = $DB->query("INSERT INTO `".DB_PREFIX."_ws_sites` SET
+												`siteHash` = '".$DB->real_escape_string(md5($requestURL))."',
+												`siteURL` = '".$DB->real_escape_string($requestURL)."',
+												`game` = '".$DB->real_escape_string($_game)."',
+												`regDate` = '".date("Y-m-d H:i:s")."',
+												`valid` = 0");
+							if($DB->error) {
+								$return['status'] = false;
+								$return['msg'] = 'DB Error. see payload';
+								$return['payload'] = var_export($DB->error,true);
+								break;
+							}
+							else {
+								$return['status'] = true;
+								$return['msg'] = 'All fine';
+							}
+						}
 					}
 				}
 			}
 		}
-		exit();
-		
-		var_dump($_POST);
-		var_dump($_GET);
+	
 	break;
 
 	case 'GET':
 	default:
-		if(!isset($_GET['id'])) exit('Missing argument: ID');
-		if(!isset($_GET['games'])) exit('Missing argument: GAMES');
-		
-		$gamesStr = filter_input(INPUT_GET,'games',FILTER_SANITIZE_ENCODED);
-		$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
-		
-		if(!empty($id) && !empty($gamesStr)) {
-			if(strstr($gamesStr,"__")) {
-				$games = explode("__",$gamesStr);
-			}
-			else {
-				$games[] = $gamesStr;
-			}
+		if(!isset($_GET['id']) || !isset($_GET['games'])) {
+			$return['status'] = false;
+			$return['msg'] = 'Missing parameters id or games';
+		}
+		else {
+			$gamesStr = filter_input(INPUT_GET,'games',FILTER_SANITIZE_ENCODED);
+			$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
 			
-			foreach($games as $g) {
-				# check if we have this site/game
-				$query = $DB->query("SELECT id FROM `".DB_PREFIX."_ws_sites`
-										WHERE `siteHash` = '".$DB->real_escape_string($id)."'
-											AND `game` = '".$DB->real_escape_string($g)."'");
-				if($query->num_rows > 0) {
-					$return[$id][$g] = "yes";
+			if(!empty($id) && !empty($gamesStr)) {
+				$return['status'] = true;
+				$return['msg'] = 'Success';
+
+				if(strstr($gamesStr,"__")) {
+					$games = explode("__",$gamesStr);
 				}
 				else {
-					$return[$id][$g] = "no";
+					$games[] = $gamesStr;
+				}
+				
+				foreach($games as $g) {
+					# check if we have this site/game
+					$query = $DB->query("SELECT id FROM `".DB_PREFIX."_ws_sites`
+											WHERE `siteHash` = '".$DB->real_escape_string($id)."'
+												AND `game` = '".$DB->real_escape_string($g)."'");
+					if($query->num_rows > 0) {
+						$return['payload'][$id][$g] = "yes";
+					}
+					else {
+						$return['payload'][$id][$g] = "no";
+					}
 				}
 			}
-			#$return = trim($return,"");		
 		}
 }
 

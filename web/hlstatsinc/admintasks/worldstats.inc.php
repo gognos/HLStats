@@ -75,22 +75,38 @@ if(isset($_POST['sub']['doRegister'])) {
 			
 			# we want to register.
 			$ch = curl_init();
-			
-			#$pParams['gamesToAdd'] = implode(",",$_POST['reg']['game']);
-			#$pParams['requestURL'] = $requestingSite;
-			
+					
 			#curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, $pParams);
 
-			
 			$do = curl_exec($ch);
-			var_dump($do);
-
-			curl_close($ch);
+			$returnData = json_decode($do,true);
+			
+			if($returnData !== false && $returnData['status'] === true) {
+				$success[] = 'Registration was successfull';
+				header('Location: index.php?'.$_SERVER['QUERY_STRING']);
+			}
+			else {
+				$error = 'Your request has failed. Please try again.';
+				if(SHOW_DEBUG) {
+					var_dump($do);
+					var_dump(curl_error($ch));
+				}
+			}
 		}
+		else {
+			$error = 'Your request has failed. Please try again.';
+			if(SHOW_DEBUG) {
+				var_dump($do);
+				var_dump(curl_error($ch));
+			}
+			
+		}
+
+		curl_close($ch);
 	}
 }
 else {
@@ -115,12 +131,13 @@ else {
 
 		$answer = json_decode($answerStr,true);
 
-		if($answer !== false) {
+		if($answer !== false && $answer['status'] === true) {
 			$alreadyRegGames[] = array();
 
-			if(isset($answer[$requestingSiteHash])) {
+
+			if(isset($answer['payload'][$requestingSiteHash])) {
 				$success[] = 'Connection to master server possible.';
-				$_gameList = $answer[$requestingSiteHash];
+				$_gameList = $answer['payload'][$requestingSiteHash];
 				foreach($_gameList as $code => $status) {
 					if($status === "yes") {
 						unset($gamesArrToReg[$code]);
@@ -142,7 +159,6 @@ else {
 				var_dump($do);
 				var_dump(curl_error($ch));
 			}
-			
 		}
 		curl_close($ch);
 	}
