@@ -167,11 +167,11 @@ else {
 pageHeader(
 	array(
 		l("Admin"),
-		l('Worldstats')
+		l('WorldStats')
 	),
 	array(
 		l("Admin")=>"index.php?mode=admin",
-		l('Worldstats')=>'')
+		l('WorldStats')=>'')
 	);
 ?>
 
@@ -187,8 +187,12 @@ pageHeader(
 </div>
 <div id="main">
 	<h1><?php echo l('Worldstats'); ?></h1>
+	<div class="error">
+		This is a beta version. Please make sure you know what you are doing.<br />
+		Any bugs, questions or feedback is welcome. <a href="http://forum.hlstats-community.org" target="_blank">Use the forum to report.</a>
+	</div>
 	<p>
-		To be a part of the <a href="http://www.hlstats-community.org/worldstats" target="_blank">HLStats Worldstats</a> 
+		To be a part of the <a href="http://www.hlstats-community.org/worldstats" target="_blank">HLStats WorldStats</a> 
 		you need to "register" your HLStats installation and activate the xml interface.
 	</p>
 	<?php 
@@ -200,12 +204,12 @@ pageHeader(
 		}
 	?>
 	<p>
-		This URL will be used for registration:<br />
+		This URL will be used to register your installation:<br />
 		<b><?php echo $requestingSite; ?></b>
 	</p>
 	<p>
 		<form method="post" action="">
-			<p>Games which are not registered yet:</p>
+			<p>Games which are <b>NOT</b> registered yet:</p>
 			<?php
 			if(!empty($gamesArrToReg)) {
 				echo '<select name="reg[game][]" multiple="true" size="5">';
@@ -215,6 +219,8 @@ pageHeader(
 				echo '</select><br /><br />';
 			}
 			?>
+			<br />
+			Check the game(s) <b>above</b> and set the tick <b>below</b> to register the selected games to the WorldStats
 			<input type="checkbox" name="reg[register]" value="1" />&nbsp;Register your installation and selected games<br />
 			<br />
 			<button type="submit" name="sub[doRegister]" title="Do it">Do it</button>
