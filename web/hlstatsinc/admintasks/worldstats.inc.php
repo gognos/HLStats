@@ -55,7 +55,8 @@ $gamesArrToReg = $gamesArr;
 
 $error = false;
 $success = false;
-$requestingSite = md5($_SERVER["SCRIPT_FILENAME"]);
+$requestingSite = "http://".str_replace('index.php', 'xml.php', $_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_FILENAME"]);
+$requestingSiteHash = md5($requestingSite);
 $alreadyRegGames = false;
 
 if(isset($_POST['sub']['doRegister'])) {
@@ -63,16 +64,22 @@ if(isset($_POST['sub']['doRegister'])) {
 		
 		# build the query sting
 		
-		$queryStr = 'id='.$requestingSite;
+		$queryStr = 'id='.$requestingSiteHash;
 		
-		if(!empty($_POST['reg']['game'])) {	
+		if(!empty($_POST['reg']['game']) && is_array($_POST['reg']['game'])) {	
+
+			$payload['games'] = $_POST['reg']['game'];
+			$payload['requestURL'] = $requestingSite;
+
+			$pParams['payload'] = json_encode($payload);
 			
 			# we want to register.
 			$ch = curl_init();
 			
-			$pParams['gamesToAdd'] = $_POST['reg']['game'];
+			#$pParams['gamesToAdd'] = implode(",",$_POST['reg']['game']);
+			#$pParams['requestURL'] = $requestingSite;
 			
-#			curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
+			#curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
@@ -83,7 +90,6 @@ if(isset($_POST['sub']['doRegister'])) {
 			var_dump($do);
 
 			curl_close($ch);
-
 		}
 	}
 }
@@ -91,7 +97,7 @@ else {
 	# check the status of the available games
 	
 	if(!empty($gamesArr)) {
-		$queryStr = 'id='.$requestingSite;
+		$queryStr = 'id='.$requestingSiteHash;
 		# add the games
 		$queryGamesAdd = implode('__',array_keys($gamesArr));
 
@@ -106,29 +112,26 @@ else {
 	
 		$do = curl_exec($ch);
 		$answerStr = $do;
-		if(is_string($do) === true) {
-			$posSite = strpos($do,$requestingSite);
-			$posSemi = strpos($do,"__");
-			if($posSite !== false && $posSite === 0 && $posSemi !== false) {
-				# returning string should start with the $requestingSite
-				$success[] = 'Connection to master server possible.';
-				#$alreadyRegGames
 
-				$parts = explode("__",$answerStr);
-				foreach($parts as $p) {
-					$game = explode("_",$p);
-					if(count($game) === 3){
-						if($game[2] === "yes") {
-							unset($gamasArrToReg[$game[1]]);
-							$alreadyRegGames[] = $game;
-						}
-					}						
+		$answer = json_decode($answerStr,true);
+
+		if($answer !== false) {
+			$alreadyRegGames[] = array();
+
+			if(isset($answer[$requestingSiteHash])) {
+				$success[] = 'Connection to master server possible.';
+				$_gameList = $answer[$requestingSiteHash];
+				foreach($_gameList as $code => $status) {
+					if($status === "yes") {
+						unset($gamesArrToReg[$code]);
+						$alreadyRegGames[] = $code;
+					}
 				}
 			}
 			else {
 				$error = 'Something has gone wrong.';
 				if(SHOW_DEBUG) {
-					var_dump($do);
+					var_dump($answer);
 					var_dump(curl_error($ch));
 				}
 			}
@@ -174,12 +177,16 @@ pageHeader(
 	</p>
 	<?php 
 		if(!empty($error)) {
-			echo '<div class="error">',$error,'</div>';
+			echo '<div class="error"><p>',$error,'</p></div>';
 		}
 		elseif(!empty($success)) {
-			echo '<div class="success">',implode("<br />",$success),'</div>';
+			echo '<div class="success"><p>',implode("<br />",$success),'</p></div>';
 		}
 	?>
+	<p>
+		This URL will be used for registration:<br />
+		<b><?php echo $requestingSite; ?></b>
+	</p>
 	<p>
 		<form method="post" action="">
 			<p>Games which are not registered yet:</p>

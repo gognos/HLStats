@@ -30,7 +30,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
@@ -64,10 +64,15 @@ else {
 
 # db connection
 require('./db-conf.inc.php');
-$db_con = mysql_connect(DB_HOST,DB_USER,DB_PASS) OR die('RegAPI Error :: Can not connect');
-$db_sel = mysql_select_db(DB_NAME,$db_con) OR die('RegAPI Error :: Can not connect');
-mysql_query("SET character set utf8");
-mysql_query("SET NAMES utf8");
+// db class and options
+$DB = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
+if($DB->connect_errno) {
+	var_dump($DB->connect_error);
+	die('Could not connect to the MySQL Server. Check your configuration.');	
+}
+$DB->query("SET NAMES utf8");
+$DB->query("SET collation_connection = 'utf8_unicode_ci'");
+$DB->set_charset("utf8");
 
 # load the registerd sites
 $regSites = array();
@@ -83,7 +88,7 @@ if(mysql_num_rows($query) > 0) {
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-$return = '';
+$return = array();
 
 switch($method) {
 	case 'PUT':
@@ -100,7 +105,47 @@ switch($method) {
 
 	case 'POST':
 		# used to register new entries
+
+		if(!isset($_GET['id'])) exit('Missing argument: ID');
+		if(!isset($_POST['payload'])) exit('Missing argument: payload');
+		#if(!isset($_POST['requestURL'])) exit('Missing argument: requestURL');
+
+		$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
+		#$requestURL = filter_input(INPUT_POST,'requestURL',FILTER_SANITIZE_ENCODED);
+		#$payload = filter_input(INPUT_POST,'payload',FILTER_SANITIZE_ENCODED);
+
+		$payload = json_decode($_POST['payload'],true);
+
+		if($payload !== false) {
+			$gamesToAdd = $payload['games'];
+			$requestURL = $payload['requestURL'];
+
+			if(!empty($gamesToAdd)) {
+				$query = $DB->query("SELECT id FROM `".DB_PREFIX."_ws_sites`
+								WHERE `siteHash` = '".$DB->real_escape_string(md5($requestURL))."'
+								AND `game` IN ('".implode("','", $gamesToAdd)."')");
+				if($query->num_rows === 1) {
+					# site/game already there
+					var_dump("already there");
+				}
+				else {
+					# not registered yet
+					foreach($gamesToAdd as $_game) {
+						$query = $DB->query("INSERT INTO `".DB_PREFIX."_ws_sites` SET
+											`siteHash` = '".$DB->real_escape_string(md5($requestURL))."',
+											`siteURL` = '".$DB->real_escape_string($requestURL)."',
+											`game` = '".$DB->real_escape_string($_game)."',
+											`regDate` = '".date("Y-m-d H:i:s")."',
+											`valid` = 0");
+						var_dump($DB->error);
+					}
+				}
+			}
+		}
+		exit();
+		
 		var_dump($_POST);
+		var_dump($_GET);
 	break;
 
 	case 'GET':
@@ -121,21 +166,22 @@ switch($method) {
 			
 			foreach($games as $g) {
 				# check if we have this site/game
-				$query = mysql_query("SELECT id FROM `".DB_PREFIX."_ws_sites`
-										WHERE `siteHash` = '".mysql_real_escape_string($id)."'
-											AND `game` = '".mysql_real_escape_string($g)."'");
-				if(mysql_num_rows($query) > 0) {
-					$return .= $id."_".$g."_yes__";
+				$query = $DB->query("SELECT id FROM `".DB_PREFIX."_ws_sites`
+										WHERE `siteHash` = '".$DB->real_escape_string($id)."'
+											AND `game` = '".$DB->real_escape_string($g)."'");
+				if($query->num_rows > 0) {
+					$return[$id][$g] = "yes";
 				}
 				else {
-					$return .= $id."_".$g."_no__";
+					$return[$id][$g] = "no";
 				}
 			}
 			#$return = trim($return,"");		
 		}
 }
 
+# return json code
 header('Content-type: text/xml; charset=UTF-8');
-echo $return;
-
+echo json_encode($return);
+exit();
 ?>
