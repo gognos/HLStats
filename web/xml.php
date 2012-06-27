@@ -20,12 +20,12 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -103,7 +103,7 @@ if($g_options['allowXML'] == "1") {
 			    			t1.playerId,
 							t1.lastName,
 							t1.skill
-			    		FROM `".DB_PREFIX."_Players` as t1 
+			    		FROM `".DB_PREFIX."_Players` as t1
 						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` as t2
 			    			ON t1.playerId = t2.playerId
 			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'

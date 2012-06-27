@@ -72,7 +72,7 @@ sub new
 	$self->{"server_port"}   = int($params{"Port"}) or die("KKrcon: invalid Port \"" . $params{"Port"} . "\"\n");
 	$self->{"server_type"}   = ($server_types{$params{"Type"}} || 1);
 	
-	$self->{"socket"};
+	$self->{"socket"} = undef;
 	$self->{"error"} = "";
 	
 	# Set up socket parameters
@@ -276,7 +276,7 @@ sub send_rcon
 		$self->{error} = "Command to long to send!";
 		return 1;
 	}
-	my $tmp = pack("V", $size) .$tmp;
+	$tmp = pack("V", $size).$tmp;
 	unless(defined(send($self->{"socket"},$tmp,0)))
 	{
 		die("KKrcon: send $!");

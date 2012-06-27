@@ -20,7 +20,7 @@
 # +
 # + Johannes 'Banana' Keßler
 # + http://hlstats.sourceforge.net
-# + 2007 - 2011
+# + 2007 - 2012
 # +
 #
 #
@@ -74,7 +74,7 @@ my $ua = LWP::UserAgent->new;
 $ua->proxy(['http'], 'http://10.0.1.11:80/'); # local needed
 while (<URLHANDLE>) {
 	print $_."\n" if $DEBUG;
-	
+
 	my @data = split(/\|/);
 	my $uri = trim($data[0]);
 	my $siteName = trim($data[1]);
@@ -111,10 +111,10 @@ print "Parsing xml files...\n" if $DEBUG;
 my @xmlFiles = <./xmlData/*>;
 foreach (@xmlFiles) {
 	print "file: $_\n" if $DEBUG;
-	
+
 	my $parser = XML::LibXML->new();
 	my $doc = $parser->parse_file($_);
-	
+
 	my $siteName = basename($_,".xml");
 
 	foreach my $player ($doc->findnodes('/root/players/player')) {
@@ -131,7 +131,7 @@ foreach (@xmlFiles) {
 		my $pgame = $player->findnodes('./game');
 
 		# build the query string
-		my $queryStr = "INSERT INTO `".$db_prefix."_playerDataTable` 
+		my $queryStr = "INSERT INTO `".$db_prefix."_playerDataTable`
 			(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect,
 				game,day,sitename)
 			VALUES (
@@ -142,7 +142,7 @@ foreach (@xmlFiles) {
 				".$db->quote($pgame).", CURDATE(), ".$db->quote($siteName)."
 			)
 			ON DUPLICATE KEY UPDATE
-				name = VALUES(name), 
+				name = VALUES(name),
 				profile = VALUES(profile),
 				country = VALUES(country),
 				countryCode = VALUES(countryCode),
@@ -155,7 +155,7 @@ foreach (@xmlFiles) {
 		";
 
 		#print $queryStr."\n" if $DEBUG;
-		
+
 		# do the query
 		my $result = doQuery($queryStr);
 	}
@@ -165,7 +165,7 @@ foreach (@xmlFiles) {
 
 # run sql queries
 sub doQuery {
-	
+
 	my ($query, $callref) = @_;
 
 	if(!$db)  {
@@ -177,7 +177,7 @@ sub doQuery {
 		my $rs = $db->prepare("SET character set utf8");
 		$rs->execute;
 
-		my $rs = $db->prepare("SET NAMES utf8");
+		$rs = $db->prepare("SET NAMES utf8");
 		$rs->execute;
 	}
 

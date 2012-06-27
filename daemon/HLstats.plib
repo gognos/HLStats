@@ -77,7 +77,7 @@ sub doQuery
 		my $rs = $db_conn->prepare("SET character set utf8");
 		$rs->execute;
 
-		my $rs = $db_conn->prepare("SET NAMES utf8");
+		$rs = $db_conn->prepare("SET NAMES utf8");
 		$rs->execute;
 	}
 
@@ -300,8 +300,7 @@ sub printEvent {
 
 	if ($g_debug > 0) {
 		print localtime(time) . "" unless ($ev_timestamp);
-		printf("%s: %21s - E%03d: %s\n",
-			$ev_timestamp, $s_addr, $code, $description);
+		printf("%s: %21s - E%03d: %s\n", $ev_timestamp, $s_addr, $code, $description);
 	}
 }
 
@@ -707,6 +706,7 @@ sub getServer
 		WHERE address = '$address' 
 		AND port = '$port'
 	";
+
 	my $result = &doQuery($query);
 
 	if ($result->rows) {
@@ -786,7 +786,7 @@ sub getPlayerInfo
 {
 	my ($player, $forced_uniqueid) = @_;
 
-	my $name,$userid,$uniqeid,$team,$role;
+	my ($name,$userid,$uniqeid,$team,$role);
 	my $isBot = 0;
 
 	if ($player =~ /^([^<]+)<(\d+)><([^<>]*)><([^<>]*)><([^<>]*)>/) {

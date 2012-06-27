@@ -106,7 +106,7 @@ sub set {
 		}
 
 		if ($self->get($key) eq $value) {
-			if ($g_debug > 2) {
+			if ($::g_debug > 2) {
 				&printNotice("Hlstats_Player->set ignored: Value of \"$key\" is already \"$value\"");
 			}
 			return 0;
@@ -136,8 +136,14 @@ sub set {
 sub increment {
 	my ($self, $key, $amount, $no_updatetime) = @_;
 
-	$amount = int($amount);
-	$amount = 1 if ($amount == 0);
+	
+	if(defined($amount)) {
+		$amount = int($amount);
+		$amount = 1 if $amount == 0;
+	}
+	else {
+		$amount = 1;
+	}
 
 	my $value = $self->get($key);
 	$self->set($key, $value + $amount, $no_updatetime);
@@ -307,7 +313,7 @@ sub setName {
 # Update player information in database
 #
 sub updateDB {
-	my ($self, $leaveLastUse, $callref) = @_;
+	my ($self, $leaveLastUse) = @_;
 
 	my $playerid = $self->get("playerid");
 	my $name = $self->get("name");
@@ -341,6 +347,8 @@ sub updateDB {
 		WHERE
 			playerId = '$playerid'
 	";
+	my  ($c_package, $c_filename, $c_line) = caller;
+	my $callref = $c_package." ".$c_filename." ".$c_line;
 	&::doQuery($query, "Player->updateDB(): $callref");
 
 	if ($name) {

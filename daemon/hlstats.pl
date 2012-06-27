@@ -46,7 +46,7 @@ my $opt_configfile_name = "hlstats.conf.ini";
 ##
 
 use strict;
-no strict 'vars';
+no strict "vars";
 
 BEGIN { 
     binmode STDOUT, ':encoding(UTF-8)';
@@ -92,20 +92,20 @@ if($Config::Tiny::errstr ne '') {
 	print "\n";
 	exit(0)
 }
-$db_name = $Config->{Database}->{DBName};
-$db_host = $Config->{Database}->{DBHost};
-$db_user = $Config->{Database}->{DBUsername};
-$db_pass = $Config->{Database}->{DBPassword};
-$db_prefix = $Config->{Database}->{DBPrefix};
-$db_lowpriority = $Config->{Database}->{DBLowPriority};
-$s_ip = $Config->{System}->{BindIP};
-$s_port = $Config->{System}->{Port};
-$g_debug = $Config->{System}->{DebugLevel};
-$g_stdin = $Config->{System}->{Stdin};
-$g_server_ip = $Config->{System}->{ServerIP};
-$g_server_port = $Config->{System}->{ServerPort};
-$g_timestamp = $Config->{System}->{Timestamp};
-$g_tkpoints = $Config->{General}->{TKPoints};
+our $db_name = $Config->{Database}->{DBName};
+our $db_host = $Config->{Database}->{DBHost};
+our $db_user = $Config->{Database}->{DBUsername};
+our $db_pass = $Config->{Database}->{DBPassword};
+our $db_prefix = $Config->{Database}->{DBPrefix};
+our $db_lowpriority = $Config->{Database}->{DBLowPriority};
+our $s_ip = $Config->{System}->{BindIP};
+our $s_port = $Config->{System}->{Port};
+our $g_debug = $Config->{System}->{DebugLevel};
+our $g_stdin = $Config->{System}->{Stdin};
+our $g_server_ip = $Config->{System}->{ServerIP};
+our $g_server_port = $Config->{System}->{ServerPort};
+our $g_timestamp = $Config->{System}->{Timestamp};
+our $g_tkpoints = $Config->{General}->{TKPoints};
 
 # Options
 # default values
@@ -131,15 +131,15 @@ a MySQL database.
   -h, --help                      display this help and exit
   -v, --version                   output version information and exit
   -d, --debug                     enable debugging output (-dd for more)
-  -m, --mode=MODE                 player tracking mode (Normal, LAN or NameTrack)  [$g_mode]
-      --db-host=HOST              database ip or ip:port  [$db_host]
-      --db-name=DATABASE          database name  [$db_name]
+  -m, --mode=MODE                 player tracking mode (Normal, LAN or NameTrack)  [Normal]
+      --db-host=HOST              database ip or ip:port  [localhost]
+      --db-name=DATABASE          database name  [hlstats]
       --db-password=PASSWORD      database password (WARNING: specifying the
                                     password on the command line is insecure.
                                     Use the configuration file instead.)
       --db-username=USERNAME      database username
   -i, --ip=IP                     set IP address to listen on for UDP log data
-  -p, --port=PORT                 set port to listen on for UDP log data  [$s_port]
+  -p, --port=PORT                 set port to listen on for UDP log data  [27500]
   -s, --stdin                     read log data from standard input, instead of
                                     from UDP socket. Must specify --server-ip
                                     and --server-port to indicate the generator
@@ -217,7 +217,7 @@ if ($opt_version) {
 # Connect to the database
 print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_user' ... ";
 
-$db_conn = DBI->connect(
+our $db_conn = DBI->connect(
 	"DBI:mysql:$db_name:$db_host",
 	$db_user, $db_pass, { 'RaiseError' => 1, 'mysql_enable_utf8' => 1,
 				'mysql_auto_reconnect' => 1, 'ShowErrorStatement' => 1 }
@@ -239,19 +239,19 @@ while( ($keyname, $value) = $result->fetchrow_array ) {
 }
 $result->finish();
 
-$g_use_geoip = $oHash{USEGEOIP};
-$g_mode = $g__mode ? $g__mode : $oHash{MODE};
-$g_deletedays = $oHash{DELETEDAYS};
-$g_ignore_bots = $oHash{IGNOREBOTS};
-$g_rcon = $oHash{RCON};
-$g_rcon_record = $oHash{RCONRECORD};
-$g_rcon_ignoreself = $oHash{RCONIGNORESELF};
-$g_rcon_say = $oHash{RCONSAY};
-$g_minplayers = $oHash{MINPLAYERS};
-$g_skill_maxchange = $oHash{SKILLMAXCHANGE};
-$g_log_chat = $oHash{LOGCHAT};
-$g_ingame_points = $oHash{INGAMEPOINTS};
-$g_option_strip_tags = $oHash{STRIPTAGS};
+our $g_use_geoip = $oHash{USEGEOIP};
+our $g_mode = $g__mode ? $g__mode : $oHash{MODE};
+our $g_deletedays = $oHash{DELETEDAYS};
+our $g_ignore_bots = $oHash{IGNOREBOTS};
+our $g_rcon = $oHash{RCON};
+our $g_rcon_record = $oHash{RCONRECORD};
+our $g_rcon_ignoreself = $oHash{RCONIGNORESELF};
+our $g_rcon_say = $oHash{RCONSAY};
+our $g_minplayers = $oHash{MINPLAYERS};
+our $g_skill_maxchange = $oHash{SKILLMAXCHANGE};
+our $g_log_chat = $oHash{LOGCHAT};
+our $g_ingame_points = $oHash{INGAMEPOINTS};
+our $g_option_strip_tags = $oHash{STRIPTAGS};
 
 print "OK\n";
 
@@ -365,6 +365,13 @@ while ($loop = &getLine()) {
 	## unwanted chars
 	$s_output =~ s/[\r\n\0]//g;	# remove naughty characters
 
+	# default timestamp
+	my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time());
+	$ev_timestamp = sprintf("%04d-%02d-%02d %02d:%02d:%02d",
+		$year+1900, $mon+1, $mday, $hour, $min, $sec);
+	$ev_datetime  = "NOW()";
+	$ev_unixtime  = time();
+
 	# Get the server info, if we know the server, otherwise ignore the data
 	if (!$g_servers{$s_addr}) {
 		$g_servers{$s_addr} = &getServer($s_peerhost, $s_peerport);
@@ -408,13 +415,6 @@ while ($loop = &getLine()) {
 			$ev_timestamp = "$ev_year-$ev_month-$ev_day $ev_time";
 			$ev_datetime  = "'$ev_timestamp'";
 			$ev_unixtime  = timelocal($ev_sec,$ev_min,$ev_hour,$ev_day,$ev_month-1,$ev_year);
-		}
-		else {
-			my ($sec,$min,$hour,$mday,$mon,$year) = localtime(time());
-			$ev_timestamp = sprintf("%04d-%02d-%02d %02d:%02d:%02d",
-				$year+1900, $mon+1, $mday, $hour, $min, $sec);
-			$ev_datetime  = "NOW()";
-			$ev_unixtime  = time();
 		}
 	}
 	else {
@@ -857,7 +857,7 @@ while ($loop = &getLine()) {
 
 				$ev_status = &doEvent_EnterGame(
 					$playerinfo->{"userid"},
-					$ev_obj_a
+					$ev_player
 				);
 			}
 		}
@@ -872,7 +872,7 @@ while ($loop = &getLine()) {
 				if ($g_lan_hack && defined($g_players{"$s_addr/$userid"})
 					&& $g_players{"$s_addr/$userid"}->get("uniqueid") !~ /^BOT:/)
 				{
-					$g_lan_noplayerinfo_hack->{"$userid"} = {
+					our $g_lan_noplayerinfo_hack->{"$userid"} = {
 						ipaddress => $g_players{"$s_addr/$userid"}->get("uniqueid"),
 						name => $playerinfo->{"name"},
 						server => $s_addr

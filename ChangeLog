@@ -14,6 +14,10 @@ HLStats ChangeLog
 *) Update: L4D, Hidden and other gamesupport files.
 *) Update: Server add-ons list
 *) Update: some interface changes
+*) Web interface (PHP) uses the MySQLi extension now
+*) Works with Perl 5.12.4, MySQL 5.1.16
+*) Fixed: Player not tracked if NON-Steam server is used ;-)
+		Uses NOSTEAM_ in uniqueid
 *) Fixed: timestamp option was not used correctly.
 *) Fixed: deleted lastUpdate column from player table. is now replaced with
 	skillchangeDate

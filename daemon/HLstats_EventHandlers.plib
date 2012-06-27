@@ -37,7 +37,7 @@ sub doEvent_Connect
 {
 	my ($playerId, $ipAddr) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -71,6 +71,7 @@ sub doEvent_Connect
 	else
 	{
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " connected, address \"$ipAddr\","
@@ -84,9 +85,9 @@ sub doEvent_Connect
 
 sub doEvent_EnterGame
 {
-	my ($playerId) = @_;
+	my ($playerId, $ev_player) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -97,7 +98,19 @@ sub doEvent_EnterGame
 		);
 	}
 	else {
-		$desc = "(IGNORED) NOPLAYERINFO: ";
+		# check if we have this player in $g_preconnect
+		# since the entered game should come after connected and before anything else
+		# otherweise we will lose this player information....
+		if(($g_preconnect->{$playerId}) && ($g_preconnect->{$playerId}->{"server"} eq $s_addr)) {
+		
+			my $pre_playerinfo = &getPlayerInfo($ev_player, "NOSTEAM_".$g_preconnect->{$playerId}->{"ipaddress"});
+
+			&recordEvent("Entries", 0,$playerId);
+		}
+		else {
+			$desc = "(IGNORED) NOPLAYERINFO: ";
+			$playerstr = "";
+		}
 	}
 
 	return $desc . $playerstr . " entered the game";
@@ -112,7 +125,7 @@ sub doEvent_Disconnect
 {
 	my ($playerId) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -129,6 +142,7 @@ sub doEvent_Disconnect
 	else
 	{
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " disconnected";
@@ -143,7 +157,7 @@ sub doEvent_Suicide
 {
 	my ($playerId, $weapon) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -163,6 +177,7 @@ sub doEvent_Suicide
 	else
 	{
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " committed suicide with \"$weapon\"";
@@ -177,7 +192,7 @@ sub doEvent_TeamSelection
 {
 	my ($playerId, $team) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -191,9 +206,9 @@ sub doEvent_TeamSelection
 			$player->get("team")
 		);
 	}
-	else
-	{
+	else {
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " joined team \"$team\"";
@@ -208,7 +223,7 @@ sub doEvent_RoleSelection
 {
 	my ($playerId, $role) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -225,6 +240,7 @@ sub doEvent_RoleSelection
 	else
 	{
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " changed role to \"$role\"";
@@ -239,7 +255,7 @@ sub doEvent_ChangeName
 {
 	my ($playerId, $newname) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -273,6 +289,7 @@ sub doEvent_ChangeName
 	else
 	{
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " changed name to \"$newname\"";
@@ -288,7 +305,7 @@ sub doEvent_ChangeName
 sub doEvent_Frag {
 	my ($killerId, $victimId, $weaponCode) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $killer = $g_players{"$s_addr/$killerId"};
 	my $victim = $g_players{"$s_addr/$victimId"};
 	my $killerstr = &getPlayerInfoString($killer, $killerId);
@@ -372,7 +389,7 @@ sub doEvent_Frag {
 sub doEvent_PlayerAttackedPlayer {
 	my ($playerId, $victimId, $weaponCode, %ev_properties) = @_;
 	
-	my $desc;
+	my $desc = "";
 	my $attacker = $g_players{"$s_addr/$playerId"};
 	my $victim = $g_players{"$s_addr/$victimId"};
 	my $attackerstr = &getPlayerInfoString($attacker, $playerId);
@@ -407,7 +424,7 @@ sub doEvent_PlayerPlayerAction
 {
 	my ($playerId, $victimId, $action) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $victim = $g_players{"$s_addr/$victimId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
@@ -460,10 +477,12 @@ sub doEvent_PlayerPlayerAction
 		}
 		else {
 			$desc = "(IGNORED) ";
+			$playerstr = "";
 		}
 	}
 	else {
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " triggered \"$action\" against " . $victimstr;
@@ -479,7 +498,7 @@ sub doEvent_PlayerAction
 {
 	my ($playerId, $action, %type) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -553,7 +572,9 @@ sub doEvent_PlayerAction
 	else
 	{
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
+
 
 	return $desc . $playerstr . " triggered \"$action\"";
 }
@@ -566,7 +587,7 @@ sub doEvent_PlayerAction
 sub doEvent_TeamAction {
 	my ($team, $action, $ev_prop) = @_;
 
-	my $desc;
+	my $desc = "";
 
 	$action =~ s/ /_/g;
 
@@ -645,7 +666,7 @@ sub doEvent_WorldAction
 {
 	my ($action, %ev_prop) = @_;
 
-	my $desc;
+	my $desc = "";
 
 	$action =~ s/ /_/g;
 
@@ -816,7 +837,7 @@ sub doEvent_Chat
 
 		my $playerName = $player->get("name");
 
-		my $result = &doQuery("
+		$result = &doQuery("
 			SELECT
 				COUNT(skill)
 			FROM `${db_prefix}_Players`
@@ -825,7 +846,7 @@ sub doEvent_Chat
 			");
 		my ($ranknumber) = $result->fetchrow_array;
 
-		my $result = &doQuery("SELECT COUNT(skill) FROM `${db_prefix}_Players`");
+		$result = &doQuery("SELECT COUNT(skill) FROM `${db_prefix}_Players`");
 		my ($totalplayers) = $result->fetchrow_array;
 
 		&rcon("$playerName \"Rank: $ranknumber of $totalplayers; Points: $skill; KpD: $kpd!\"");
@@ -844,7 +865,7 @@ sub doEvent_Chat
 
 		my $playerName = $player->get("name");
 
-		my $result = &doQuery("
+		$result = &doQuery("
 			SELECT
 				COUNT(skill)
 			FROM `${db_prefix}_Players`
@@ -853,7 +874,7 @@ sub doEvent_Chat
 			");
 		my ($ranknumber) = $result->fetchrow_array;
 
-		my $result = &doQuery("SELECT COUNT(skill) FROM `${db_prefix}_Players`");
+		$result = &doQuery("SELECT COUNT(skill) FROM `${db_prefix}_Players`");
 		my ($totalplayers) = $result->fetchrow_array;
 
 		&rcon("$playerName \"Rank $ranknumber of $totalplayers; Points $skill; KpD: $kpd!\"",1);
@@ -979,7 +1000,7 @@ sub doEvent_Rcon {
 		$desc = "(IGNORED) ";
 	}
 
-	if($g_debug > 1) {
+	if($::g_debug > 1) {
 		return $desc . "$type Rcon from \"$ipAddr\", pw \"$password\": \"$command\"";
 	}
 	else {	
@@ -1026,7 +1047,7 @@ sub doEvent_Statsme
 {
         my ($playerId, $weapon, $shots, $hits, $headshots, $damage, $kills, $deaths) = @_;
 
-        my $desc;
+        my $desc = "";
         my $player = $g_players{"$s_addr/$playerId"};
         my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -1044,9 +1065,9 @@ sub doEvent_Statsme
                         $deaths
                 );
         }
-        else
-        {
-                $desc = "(IGNORED) NOPLAYERINFO: ";
+        else {
+			$desc = "(IGNORED) NOPLAYERINFO: ";
+			$playerstr = "";
         }
 
         return $desc . $playerstr . " STATSME weaponstats (weapon \"$weapon\") (shots \"$shots\") (hits \"$hits\") (headshots \"$headshots\") (damage \"$damage\") (kills \"$kills\") (deaths \"$deaths\")";
@@ -1060,12 +1081,11 @@ sub doEvent_Statsme2
 {
         my ($playerId, $weapon, $head, $chest, $stomach, $leftarm, $rightarm, $leftleg, $rightleg) = @_;
 
-        my $desc;
+        my $desc = "";
         my $player = $g_players{"$s_addr/$playerId"};
         my $playerstr = &getPlayerInfoString($player, $playerId);
 
-        if ($player)
-        {
+        if ($player) {
                 &recordEvent(
                         "Statsme2", 0,
                         $player->get("playerid"),
@@ -1079,9 +1099,9 @@ sub doEvent_Statsme2
                         $rightleg
                 );
         }
-        else
-        {
-                $desc = "(IGNORED) NOPLAYERINFO: ";
+        else {
+			$desc = "(IGNORED) NOPLAYERINFO: ";
+			$playerstr = "";
         }
 
         return $desc . $playerstr . " STATSME weaponstats2 (weapon \"$weapon\") (head \"$head\") (chest \"$chest\") (stomach \"$stomach\") (leftarm \"$leftarm\") (rightarm \"$rightarm\") (leftleg \"$leftleg\") (rightleg \"$rightleg\")";
@@ -1093,7 +1113,7 @@ sub doEvent_Statsme2
 sub doEvent_Statsme_Latency {
 	my ($playerId, $ping) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -1106,6 +1126,7 @@ sub doEvent_Statsme_Latency {
 	}
 	else {
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 
 	return $desc . $playerstr . " STATSME average latency \"$ping\"";
@@ -1117,7 +1138,7 @@ sub doEvent_Statsme_Latency {
 sub doEvent_Statsme_Time {
 	my ($playerId, $time) = @_;
 
-	my $desc;
+	my $desc = "";
 	my $player = $g_players{"$s_addr/$playerId"};
 	my $playerstr = &getPlayerInfoString($player, $playerId);
 
@@ -1130,6 +1151,7 @@ sub doEvent_Statsme_Time {
 	}
 	else {
 		$desc = "(IGNORED) NOPLAYERINFO: ";
+		$playerstr = "";
 	}
 	
 	return $desc . $playerstr . " STATSME connection time \"$time\"";
