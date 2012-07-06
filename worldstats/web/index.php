@@ -4,7 +4,7 @@
 	<title>HLStats WorldStats</title>
 	<meta charset="UTF-8">
 	<meta name="description" content="" />
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 	<script type="text/javascript" src="js/prettify.js"></script>
 	<script type="text/javascript" src="js/kickstart.js"></script>

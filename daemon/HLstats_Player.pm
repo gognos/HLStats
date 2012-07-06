@@ -67,7 +67,7 @@ sub new {
 		$params{name} =~ s/\[No.C-D\]//g;	# remove [No C-D] tag
 		$params{name} =~ s/\[OLD.C-D\]//g;	# remove [OLD C-D] tag
 		$params{name} =~ s/\[NOCL\]//g;		# remove [NOCL] tag
-		$params{name} =~ s/\([0-9]\)//g;	# strip (1) and (2) from player names
+		$params{name} =~ s/\([0-9]\)//g;	# strip (0-9) from player names
 	}
 
 	die("HLstats_Player->new(): must specify player's uniqueid\n")
