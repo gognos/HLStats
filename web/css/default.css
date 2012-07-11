@@ -250,6 +250,7 @@ form.search input.searchbutton {
 	margin: 0;
 	padding: 0;
 	color: #000;
+	width: 700px;
 }
 .breadcrumb-container {
 }
