@@ -26,7 +26,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -116,9 +116,10 @@ $rcol = "row-dark";
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo $pl_name; ?></h1>
 	<h2><?php echo l('Player Profile'); ?> / <?php echo l('Statistics Summary'); ?></h2>
-	<table border="1" cellspacing="0" cellpadding="4" width="100%">
+	<table cellspacing="0" cellpadding="4" width="100%" border="1">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
 			   <?php echo l("Member of Clan"); ?>
@@ -223,7 +224,7 @@ $rcol = "row-dark";
 		}
 		else {
 	?>
-	<table border="1" cellspacing="0" cellpadding="4" width="100%">
+	<table cellspacing="0" cellpadding="4" width="100%" border="1">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th width="220">
 				<?php echo l("Active players and no Bots"); ?>
@@ -234,7 +235,7 @@ $rcol = "row-dark";
 				?>
 			</td>
 		</tr>
-		<tr>
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
 			<th>
 				<?php echo l("All players and no Bots"); ?>
 			</th>
@@ -244,16 +245,16 @@ $rcol = "row-dark";
 				?>
 			</td>
 		</tr>
-			<tr>
-				<th>
-					<?php echo l("All players and with Bots"); ?>
-				</th>
-				<td>
-					<?php
-						echo "<b>".$playerObj->getParam('allPlayers')."</b> ";
-					?>
-				</td>
-			</tr>
+		<tr class="<?php echo toggleRowClass($rcol); ?>">
+			<th>
+				<?php echo l("All players and with Bots"); ?>
+			</th>
+			<td>
+				<?php
+					echo "<b>".$playerObj->getParam('allPlayers')."</b> ";
+				?>
+			</td>
+		</tr>
 	</table>
 	<?php } ?>
 	<a name="profile"></a>
@@ -413,7 +414,7 @@ $rcol = "row-dark";
 	</table>
 	<?php
 		$steamAchievements = $playerObj->getParam('steamAchievements');
-		if(!empty($steamAchievements)) { 
+		if(!empty($steamAchievements)) {
 	?>
 	<h2>
 		<?php echo l('Steam Achievements'); ?>
@@ -768,6 +769,7 @@ if(!empty($playerKillStats)) { ?>
 		location = "index.php?mode=playerinfo&player=<?php echo $player ?>&killLimit=" + num + "#killstats";
 	}
 	</script>
+	<p>
 	<?php echo l('Show people this person has killed'); ?>
 		<select onchange='changeLimit(this.options[this.selectedIndex].value)'>
 	<?php
@@ -779,6 +781,7 @@ if(!empty($playerKillStats)) { ?>
 	?>
 	</select>
 	<?php echo l('or more times in the last'),' ',$g_options['DELETEDAYS'],' ',l('days'); ?>
+	</p>
 <?php }
 
 
@@ -811,15 +814,16 @@ if($g_options['showChart'] == "1") {
 <?php }
 }
 ?>
-<p>&nbsp;</p>
-<p>
-	<b><?php echo l('Note'); ?>:</b><br />
-	<?php echo l('Player event histories cover only the last'); ?>&nbsp;
-	<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>. <?php echo l('Items marked "Last'); ?>&nbsp;
-	<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days" or "*" above are generated from the player\'s Event History. Player kill, death and suicide totals and points ratings cover the entire recorded period'); ?>.
-</p>
-<p style="text-align: right">
-    <b><?php echo l('Admin Options'); ?>:</b>
-    <a href="<?php echo "index.php?mode=admin&amp;task=toolsEditdetails&amp;playerId=$player"; ?>"><?php echo l('Edit Player Details'); ?></a>
-</p>
+	<p>&nbsp;</p>
+	<p>
+		<b><?php echo l('Note'); ?>:</b><br />
+		<?php echo l('Player event histories cover only the last'); ?>&nbsp;
+		<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?>. <?php echo l('Items marked "Last'); ?>&nbsp;
+		<?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days" or "*" above are generated from the player\'s Event History. Player kill, death and suicide totals and points ratings cover the entire recorded period'); ?>.
+	</p>
+	<p style="text-align: right">
+	    <b><?php echo l('Admin Options'); ?>:</b>
+	    <a href="<?php echo "index.php?mode=admin&amp;task=toolsEditdetails&amp;playerId=$player"; ?>"><?php echo l('Edit Player Details'); ?></a>
+	</p>
+	</div>
 </div>

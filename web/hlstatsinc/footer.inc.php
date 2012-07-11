@@ -35,40 +35,40 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
  */
 ?>
-</div> <!-- end main -->
-<br style="clear: both;" />
-<div class="footer">
-	<p>
-		<?php echo l('Generated in real-time by'); ?> <a href="http://www.hlstats-community.org">HLStats</a> <?php echo VERSION; ?> &nbsp;&nbsp;&nbsp; [<a href="index.php?mode=admin">Admin</a>]
-		<?php
-			if(isset($auth) && !empty($auth)) {
-				echo '&nbsp;[<a href="index.php?mode=admin&amp;logout=1">',l('Logout'),'</a>]';
-			}
-		?>
-		<form action="" method="post">
-			<select name="hls_lang_selection">
-				<option value="en">EN</option>
-				<?php
-				$available_langs = glob(getcwd()."/lang/*.ini.php");
-				foreach($available_langs as $available_lang) {
-					$available_lang = str_replace(".ini.php",'',basename($available_lang));
-					$selected = '';
-					if($cl === $available_lang) $selected="selected='1'";
-					echo '<option value="'.$available_lang.'" '.$selected.'>'.strtoupper($available_lang)."</option>";
+	<br style="clear: both;" />
+	<div class="footer">
+		<p>
+			<?php echo l('Generated in real-time by'); ?> <a href="http://www.hlstats-community.org">HLStats</a> <?php echo VERSION; ?> &nbsp;&nbsp;&nbsp; [<a href="index.php?mode=admin">Admin</a>]
+			<?php
+				if(isset($auth) && !empty($auth)) {
+					echo '&nbsp;[<a href="index.php?mode=admin&amp;logout=1">',l('Logout'),'</a>]';
 				}
-				?>
-			</select>
-			<button type="submit" name="submit-change-lang" title="<?php echo l('Change language'); ?>" >
-				<?php echo l('Change language'); ?>
-			</button>
-		</form>
-	</p>
+			?>
+			<form action="" method="post">
+				<select name="hls_lang_selection">
+					<option value="en">EN</option>
+					<?php
+					$available_langs = glob(getcwd()."/lang/*.ini.php");
+					foreach($available_langs as $available_lang) {
+						$available_lang = str_replace(".ini.php",'',basename($available_lang));
+						$selected = '';
+						if($cl === $available_lang) $selected="selected='1'";
+						echo '<option value="'.$available_lang.'" '.$selected.'>'.strtoupper($available_lang)."</option>";
+					}
+					?>
+				</select>
+				<button type="submit" name="submit-change-lang" title="<?php echo l('Change language'); ?>" >
+					<?php echo l('Change language'); ?>
+				</button>
+			</form>
+		</p>
+	</div>
 </div>
 </body>
 </html>

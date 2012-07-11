@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -53,7 +53,7 @@ if (isset($_GET["minkills"])) {
 	}
 }
 if (isset($_GET["showall"])) {
-	
+
 	$check = validateInput($_GET['showall'],'digit');
 	if($check === true) {
 		$playersObj->setOption("showall",$_GET['showall']);
@@ -130,15 +130,13 @@ $pData = $playersObj->getPlayersOveriew();
 			</li>
 			<li>
 				<a href="?mode=players&amp;game=<?php echo $game; ?>&amp;showToday=1"><?php echo l('Show players from today'); ?></a>
-
 			</li>
 			<?php if($g_options['IGNOREBOTS'] === "0") { ?>
 			<li>
-				<img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" border="0" align="middle" alt="BOTs">
 				<?php if(isset($_GET['showBots']) && $_GET['showBots'] === "1") { ?>
-				<a href="?mode=players&amp;game=<?php echo $game; ?>"><?php echo l('HideBots'); ?></a>
+				<a href="?mode=players&amp;game=<?php echo $game; ?>"><img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" border="0" align="middle" alt="BOTs">&nbsp;<?php echo l('HideBots'); ?></a>
 				<?php } else { ?>
-				<a href="?mode=players&amp;game=<?php echo $game; ?>&amp;showBots=1"><?php echo l('Show BOTs too'); ?></a>
+				<a href="?mode=players&amp;game=<?php echo $game; ?>&amp;showBots=1"><img src="hlstatsimg/bot.png" width="16" height="16" hspace="3" border="0" align="middle" alt="BOTs">&nbsp;<?php echo l('Show BOTs too'); ?></a>
 				<?php } ?>
 			</li>
 			<?php } ?>
@@ -172,10 +170,11 @@ $pData = $playersObj->getPlayersOveriew();
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 <?php
 	$rcol = "row-dark";
 ?>
-	<table cellpadding="0" cellspacing="0" border="1" width="100%">
+	<table cellpadding="0" cellspacing="0" width="100%" border="1">
 		<?php
 		echo '<tr><td colspan="6" align="right">';
 		if($pData['pages'] > 1) {
@@ -341,7 +340,7 @@ $pData = $playersObj->getPlayersOveriew();
 			echo '<div class="chart"><img src="',$chart,'" /></div>';
 		}
 
-		
+
 		$chartObj2 = new Chart($game);
 		$chartObj2->setOption('height',350);
 		$chart = $chartObj2->getChart('mostTimeOnline',$playersObj);
@@ -360,4 +359,5 @@ $pData = $playersObj->getPlayersOveriew();
 		}
     }
 ?>
+	</div>
 </div>
