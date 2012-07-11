@@ -247,8 +247,21 @@ form.search input.searchbutton {
 	position: absolute;
 	top: 17px;
 	left: 150px;
-	margin: 0; padding: 0;
+	margin: 0;
+	padding: 0;
 	color: #000;
+}
+.breadcrumb-container {
+}
+.breadcrumb-container a {
+	float: left;
+	height: 24px;
+	text-decoration: none;
+}
+.breadcrumb_divider {
+	width: 12px;
+	height: 24px;
+	float: left;
 }
 
 /* navigation tabs */
@@ -314,7 +327,7 @@ form.search input.searchbutton {
 	letter-spacing: .5px;
 }
 #main h2, #main-full h2 {
-	margin-top: 20px;	
+	margin-top: 20px;
 }
 
 .content {
@@ -393,5 +406,5 @@ form.search input.searchbutton {
 }
 
 .chart {
-	
+
 }
