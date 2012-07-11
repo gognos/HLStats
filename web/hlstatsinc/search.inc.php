@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -109,11 +109,11 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 					FROM `".DB_PREFIX."_Clans` AS c
 					LEFT JOIN `".DB_PREFIX."_Games` AS g
 						ON g.code = c.game
-					WHERE g.hidden = '0' 
+					WHERE g.hidden = '0'
 						AND
 						(
 							c.tag LIKE '%".$DB->real_escape_string($sr_query)."%'
-							OR 
+							OR
 							c.name LIKE '%".$DB->real_escape_string($sr_query)."%'
 						)
 						".$andgame."
@@ -131,7 +131,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 						ON pu.playerId = pn.playerId
 					LEFT JOIN `".DB_PREFIX."_Games` AS g
 						ON g.code = p.game
-					WHERE g.hidden = '0' 
+					WHERE g.hidden = '0'
 						AND pu.uniqueId LIKE '%".$DB->real_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY name";
@@ -147,7 +147,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 						ON p.playerId = pn.playerId
 					LEFT JOIN `".DB_PREFIX."_Games` AS g
 						ON g.code = p.game
-					WHERE g.hidden = '0' 
+					WHERE g.hidden = '0'
 						AND pn.name LIKE '%".$DB->real_escape_string($sr_query)."%'
 						".$andgame."
 					ORDER BY name";
@@ -182,6 +182,7 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Find a Player or Clan'); ?></h1>
 	<form method="post" action="">
 		<p>
@@ -234,4 +235,5 @@ if(isset($_POST['submit']['search']) || $remoteSearch === true) {
 			echo '<div style="text-align: center; color: red;"><b>',l('Nothing found'),'</b></div>';
 		}
 	?>
+	</div>
 </div>

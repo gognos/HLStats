@@ -36,7 +36,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -276,6 +276,7 @@ while ($addon_list = $query->fetch_assoc()) {
 	?>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo htmlentities($server_details['hostname'], ENT_COMPAT, "UTF-8"); ?></h1>
 	<p>
 		<a href="index.php?game=<?php echo $server['game']; ?>"><?php echo $server_details['gamedesc'];?></a>
@@ -335,4 +336,5 @@ while ($addon_list = $query->fetch_assoc()) {
 			?>
 		</table>
 	<?php } ?>
+	</div>
 </div>

@@ -26,7 +26,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -172,6 +172,7 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l("Weapon Details"); ?> |
 		<?php echo l("From a total of"); ?> <b><?php echo intval($totalkills); ?></b> <?php echo l('kills'); ?>
 		(<?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('Days'); ?>)
@@ -263,4 +264,5 @@ pageHeader(
 		}
 	?>
 	</table>
+	</div>
 </div>

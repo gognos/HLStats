@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -44,7 +44,7 @@ $playersObj = new Players($game);
 
 pageHeader(
 	array($gamename, l('Players timeline')),
-	array($gamename => "index.php?game=$game", 
+	array($gamename => "index.php?game=$game",
 			l("Player Rankings") => "index.php?mode=players&game=$game",
 			l("Players timeline")=>"")
 );
@@ -67,6 +67,7 @@ $timeline = $playersObj->getTimeline();
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<?php
 	if(!empty($timeline)) {
 		foreach($timeline as $day=>$entry) {
@@ -79,4 +80,5 @@ $timeline = $playersObj->getTimeline();
 		}
 	}
 	?>
+	</div>
 </div>

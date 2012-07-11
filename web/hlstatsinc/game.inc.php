@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -128,6 +128,7 @@ pageHeader(array($gamename), array($gamename=>""));
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 <?php
 // should we hide the news ?
 if(!$g_options['hideNews'] && $num_games === 1) {
@@ -183,8 +184,8 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 }
 	if (!$g_options['hideAwards'] && !empty($awarddata_arr)) {
 ?>
-<h1><?php echo l("Daily Awards")," ",l("for")," ",$awards_d_date,""; ?></h1>
-	<div class="content">
+	<h1><?php echo l("Daily Awards")," ",l("for")," ",$awards_d_date,""; ?></h1>
+
 	<table width="100%" border="1" cellspacing="0" cellpadding="4">
 <?php foreach($awarddata_arr as $awarddata) { ?>
 		<tr>
@@ -212,12 +213,12 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		</tr>
 <?php } ?>
 	</table>
-	</div>
+
 <?php
 	}
 ?>
-<h1><?php echo l('Participating Servers'); ?></h1>
-<div class="content">
+	<h1><?php echo l('Participating Servers'); ?></h1>
+
 	<table width="100%" border="0" cellspacing="1" cellpadding="4">
 		<tr>
 			<th>&nbsp;<?php echo l('Name'); ?></th>
@@ -264,8 +265,8 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 	}
 ?>
 	</table>
-</div>
-<h1><?php echo $gamename; ?> <?php echo l('Statistics'); ?></h1>
+
+	<h1><?php echo $gamename; ?> <?php echo l('Statistics'); ?></h1>
 <?php
 	$query = $DB->query("SELECT COUNT(*) AS plc FROM `".DB_PREFIX."_Players` WHERE game = '".$DB->real_escape_string($game)."'");
 	$result = $query->fetch_assoc();
@@ -308,3 +309,5 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		</li>
 	</ul>
 </p>
+	</div>
+</div>

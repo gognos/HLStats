@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -124,6 +124,7 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<a name="help"></a>
 	<h1>How and where can I get help if I need it ?</h1>
 	<p>
@@ -329,4 +330,5 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 		BOTs are recored if the <b>IGNOREBOTS</b> option is set to <b>0</b>. This enables
 		a additional option which displays those too. Otherwise no BOT is recorded or even shown.
 	</p>
+	</div>
 </div>
