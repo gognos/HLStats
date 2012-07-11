@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -65,6 +65,7 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Optimize Database'); ?></h1>
 	<p>
 		<a href="index.php?mode=admin&amp;task=toolsOptimize&amp;upgrade=yes"><?php echo l('Click here'); ?></a> <?php echo l('if you get "table handler does not support check/repair"'); ?></a>
@@ -208,4 +209,5 @@ pageHeader(array(l("Admin"),l('Optimize Database')), array(l("Admin")=>"index.ph
 		?>
 	</table>
 	<?php } ?>
+	</div>
 </div>

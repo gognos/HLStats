@@ -5,7 +5,7 @@
  * @author Johannes 'Banana' Keßler
  * @copyright Johannes 'Banana' Keßler
  */
- 
+
 /**
  *
  * Original development:
@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -69,6 +69,7 @@ pageHeader(array(l("Admin"),l('Users')), array(l("Admin")=>"index.php?mode=admin
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Users'); ?></h1>
 	<p>
 		<?php echo l('Passwords are encrypted in the database and so cannot be viewed. However, you can change a user\'s password by entering a new plain text value in the Password field'); ?><br />
@@ -109,4 +110,5 @@ pageHeader(array(l("Admin"),l('Users')), array(l("Admin")=>"index.php?mode=admin
 			</tr>
 		</table>
 	</form>
+	</div>
 </div>

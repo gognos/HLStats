@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -54,6 +54,7 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Reset Statistics'); ?></h1>
 	<?php
 		if (isset($_POST['confirm'])) {
@@ -121,9 +122,10 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 					<?php echo l('Are you sure you want to reset all statistics? All players, clans and events will be deleted from the database'); ?>.
 					<?php echo l('(All other admin settings will be retained)'); ?><br />
 					<br />
-					<b><?php echo l('Note'); ?>:</b> <?php echo l('You should kill'); ?> <b>hlstats.pl</b>
-					<?php echo l('before resetting the stats.'); ?>.<br />
-					<br />
+					<p class="info"><?php echo l('Note'); ?>:<br />
+						<?php echo l('You should kill'); ?> <b>hlstats.pl</b>
+						<?php echo l('before resetting the stats.'); ?>.
+					</p>
 					<input type="hidden" name="confirm" value="1">
 					<center>
 						<button type="submit" title="<?php echo l('Reset Stats'); ?>">
@@ -139,4 +141,5 @@ pageHeader(array(l("Admin"),l('Reset Statistics')), array(l("Admin")=>"index.php
 			</tr>
 		</table>
 	</form>
+	</div>
 </div>

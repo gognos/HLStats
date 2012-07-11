@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -71,7 +71,7 @@ if(empty($gc) || empty($check)) {
 // get the servers for this game
 $serversArr = array();
 $serversArrCustom = array();
-$query = $DB->query("SELECT serverId,name FROM `".DB_PREFIX."_Servers` 
+$query = $DB->query("SELECT serverId,name FROM `".DB_PREFIX."_Servers`
 					WHERE game = '".$DB->real_escape_string($gc)."'");
 if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 while($result = $query->fetch_assoc()) {
@@ -81,23 +81,23 @@ while($result = $query->fetch_assoc()) {
 
 // process the reset for this game
 if (isset($_POST['sub']['reset'])) {
-	
+
 	if(isset($_POST['select']['server']) && !empty($_POST['select']['server'])) {
 		$serversArr = array();
 		$serversArr[] = (int)$_POST['select']['server'];
 	}
-	
+
 	if(empty($serversArr)) {
 		$return = l("Error: No servers found for this game. Nothing to reset.");
 		$stop = true;
 	}
 	$serversArrString = implode(",",$serversArr);
-	
+
 	$queryStr = '';
 	if($stop === false ) {
 		# get the event tables
 		$dbtables = array();
-		
+
 		$query = $DB->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
 		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 		if ($query->num_rows < 1) {
@@ -108,7 +108,7 @@ if (isset($_POST['sub']['reset'])) {
 		while (list($table) = $query->fetch_array()) {
 			$dbtables[] = $table;
 		}
-		
+
 		foreach ($dbtables as $dbt) {
 			# first get all the player IDs
 			if($dbt == DB_PREFIX.'_Events_Admin' || $dbt == DB_PREFIX.'_Events_Rcon') {
@@ -117,18 +117,18 @@ if (isset($_POST['sub']['reset'])) {
 			}
 			else {
 				if(empty($queryStr)) {
-					$queryStr .= "SELECT `playerId` FROM `".$dbt."` 
+					$queryStr .= "SELECT `playerId` FROM `".$dbt."`
 						WHERE `serverId` IN (".$serversArrString.")";
 				}
 				else {
 					$queryStr .= " UNION
-						SELECT `playerId` FROM `".$dbt."` 
+						SELECT `playerId` FROM `".$dbt."`
 						WHERE `serverId` IN (".$serversArrString.")";
 				}
 			}
 		}
 	}
-	
+
 	if(!empty($queryStr)) {
 		$query = $DB->query($queryStr);
 		if($query->num_rows > 0) {
@@ -221,6 +221,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Reset Statistics for'); ?>: <?php echo $gName; ?></h1>
 	<?php echo l('Are you sure you want to reset all statistics for game'); ?> <b><?php echo $gName; ?></b> ? <br />
 	<br />
@@ -253,4 +254,5 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 		</button>
 		</p>
 	</form>
+	</div>
 </div>

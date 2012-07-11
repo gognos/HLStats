@@ -80,6 +80,7 @@ pageHeader(array(l("Admin")), array(l("Admin")=>""));
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Authorisation Required'); ?></h1>
 	<?php
 	if(!empty($return['status'])) {
@@ -107,4 +108,5 @@ pageHeader(array(l("Admin")), array(l("Admin")=>""));
 		</button>
 	</form>
 	<p class="info"><?php echo l('Please ensure cookies are enabled in your browser security options'); ?></p>
+	</div>
 </div>

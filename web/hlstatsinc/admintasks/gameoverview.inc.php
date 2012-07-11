@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -67,6 +67,7 @@ pageHeader(array(l("Admin"),l('Game Overview')), array(l("Admin")=>"index.php?mo
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Game Overview'); ?>: <?php echo $gameData['name']; ?></h1>
 	<ul>
 		<li>
@@ -118,4 +119,5 @@ pageHeader(array(l("Admin"),l('Game Overview')), array(l("Admin")=>"index.php?mo
 			<span class="small"><?php echo l("Manage the awards for each action."); ?></span>
 		</li>
 	</ul>
+	</div>
 </div>

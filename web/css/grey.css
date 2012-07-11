@@ -30,8 +30,7 @@ table {
 }
 td {
 	margin: 0;
-	padding: 0;
-	padding: 0px 10px;
+	padding: 3px;
 }
 th {
 	height: 34px;
@@ -416,7 +415,9 @@ form.search input.searchbutton {
 	margin-top: -2px;
 }
 #main-full {
-	margin: 0; padding: 0;
+	margin: 0;
+	padding: 0;
+	background-color: #fff;
 }
 #main h1, #main-full h1 {
 

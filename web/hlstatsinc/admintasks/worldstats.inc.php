@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -61,21 +61,21 @@ $alreadyRegGames = false;
 
 if(isset($_POST['sub']['doRegister'])) {
 	if(isset($_POST['reg']['register']) && $_POST['reg']['register'] === "1") {
-		
+
 		# build the query sting
-		
+
 		$queryStr = 'id='.$requestingSiteHash;
-		
-		if(!empty($_POST['reg']['game']) && is_array($_POST['reg']['game'])) {	
+
+		if(!empty($_POST['reg']['game']) && is_array($_POST['reg']['game'])) {
 
 			$payload['games'] = $_POST['reg']['game'];
 			$payload['requestURL'] = $requestingSite;
 
 			$pParams['payload'] = json_encode($payload);
-			
+
 			# we want to register.
 			$ch = curl_init();
-					
+
 			#curl_setopt($ch, CURLOPT_HTTPHEADER, array( 'Expect:' ) );
 			curl_setopt($ch, CURLOPT_POST, true);
 			curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
@@ -84,7 +84,7 @@ if(isset($_POST['sub']['doRegister'])) {
 
 			$do = curl_exec($ch);
 			$returnData = json_decode($do,true);
-			
+
 			if($returnData !== false && $returnData['status'] === true) {
 				$success[] = 'Registration was successfull';
 				header('Location: index.php?'.$_SERVER['QUERY_STRING']);
@@ -103,7 +103,7 @@ if(isset($_POST['sub']['doRegister'])) {
 				var_dump($do);
 				var_dump(curl_error($ch));
 			}
-			
+
 		}
 
 		curl_close($ch);
@@ -111,21 +111,21 @@ if(isset($_POST['sub']['doRegister'])) {
 }
 else {
 	# check the status of the available games
-	
+
 	if(!empty($gamesArr)) {
 		$queryStr = 'id='.$requestingSiteHash;
 		# add the games
 		$queryGamesAdd = implode('__',array_keys($gamesArr));
 
 		$queryStr .= "&games=".$queryGamesAdd;
-		
+
 		$ch = curl_init();
-	
+
 		curl_setopt($ch, CURLOPT_URL,$_wsRegURL.'?'.$queryStr);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,true);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-	
+
 		$do = curl_exec($ch);
 		$answerStr = $do;
 
@@ -186,16 +186,17 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Worldstats'); ?></h1>
 	<div class="error">
 		This is a beta version. Please make sure you know what you are doing.<br />
 		Any bugs, questions or feedback is welcome. <a href="http://forum.hlstats-community.org" target="_blank">Use the forum to report.</a>
 	</div>
 	<p>
-		To be a part of the <a href="http://www.hlstats-community.org/worldstats" target="_blank">HLStats WorldStats</a> 
+		To be a part of the <a href="http://www.hlstats-community.org/worldstats" target="_blank">HLStats WorldStats</a>
 		you need to "register" your HLStats installation and activate the xml interface.
 	</p>
-	<?php 
+	<?php
 		if(!empty($error)) {
 			echo '<div class="error"><p>',$error,'</p></div>';
 		}
@@ -226,4 +227,5 @@ pageHeader(
 			<button type="submit" name="sub[doRegister]" title="Do it">Do it</button>
 		</form>
 	</p>
+	</div>
 </div>

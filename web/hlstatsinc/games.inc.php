@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -44,7 +44,7 @@ require('class/players.class.php');
 pageHeader(array(l("Contents")), array(l("Contents")=>""));
 ?>
 <div id="main-full">
-
+<div class="content">
 <?php
 // should we hide the news ?
 if(!$g_options['hideNews']) {
@@ -100,8 +100,7 @@ if(!$g_options['hideNews']) {
 }
 ?>
 
-<h1><?php echo l('Games'); ?></h1>
-<div class="content">
+	<h1><?php echo l('Games'); ?></h1>
 	<table border="0" cellspacing="0" cellpadding="2" width="100%">
 		<tr>
 			<th colspan="3"><?php echo l('Game'); ?></th>
@@ -110,11 +109,11 @@ if(!$g_options['hideNews']) {
 		</tr>
 	<?php
 		while ($gamedata = $queryAllGames->fetch_assoc()) {
-			
+
 			# get the top player
 			$playersObj = new Players($gamedata['code']);
 			$topplayer = $playersObj->topPlayer();
-			
+
 			$queryTopClan = $DB->query("SELECT
 					c.clanId,
 					c.name,

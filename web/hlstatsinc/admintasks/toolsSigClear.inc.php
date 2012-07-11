@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -53,6 +53,7 @@ pageHeader(array(l("Admin"),l('Signature cleanup')), array(l("Admin")=>"index.ph
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Signature cleanup'); ?></h1>
 	<?php
 		// remove all the signatures which are older then today
@@ -68,13 +69,13 @@ pageHeader(array(l("Admin"),l('Signature cleanup')), array(l("Admin")=>"index.ph
 				}
 			}
 		}
-		
+
 		if(!empty($removeCount)) {
 			echo $removeCount." ".l('old signatures removed !');
 		}
 		else {
-			echo '<p>'.l('Nothing removed.').'</p>';
+			echo '<p class="info">'.l('Nothing removed.').'</p>';
 		}
 	?>
-	
+	</div>
 </div>

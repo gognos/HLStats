@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -165,6 +165,7 @@ pageHeader(array(l("Admin"),l('News at Front page')), array(l("Admin")=>"index.p
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('News at Front page'); ?></h1>
 	<p><?php echo l('Here you can write and edit the news which are displayed at the front page'); ?></p>
 	<?php
@@ -235,7 +236,7 @@ pageHeader(array(l("Admin"),l('News at Front page')), array(l("Admin")=>"index.p
 	</form>
 	<?php } else { ?>
 	<form method="post" action="">
-		<table border="0" cellpadding="2" cellspacing="0">
+		<table border="1" cellpadding="2" cellspacing="0">
 			<tr>
 				<th width="100px">
 					<?php echo l('Author'); ?>:
@@ -303,4 +304,5 @@ pageHeader(array(l("Admin"),l('News at Front page')), array(l("Admin")=>"index.p
 			?>
 		</table>
 	<?php }	?>
+	</div>
 </div>

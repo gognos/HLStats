@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -184,6 +184,7 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Clan Profile and Statistics Summary'); ?></h1>
 	<table width="100%" border="1" cellspacing="0" cellpadding="2">
 		<tr class="<?php echo toggleRowClass($rcol); ?>">
@@ -398,4 +399,5 @@ pageHeader(
 	    <b><?php echo l('Admin Options'); ?>:</b>
 	    <a href="<?php echo "index.php?mode=admin&amp;task=toolsEditdetails&amp;clanId=$clan"; ?>"><?php echo l('Edit Clan Details'); ?></a>
 	</p>
+	</div>
 </div>

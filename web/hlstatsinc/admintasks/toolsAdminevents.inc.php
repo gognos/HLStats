@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -143,6 +143,7 @@ pageHeader(array(l("Admin"),l('Event History')), array(l("Admin")=>"index.php?mo
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Event History'); ?></h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
@@ -230,4 +231,5 @@ pageHeader(array(l("Admin"),l('Event History')), array(l("Admin")=>"index.php?mo
 		}
 	?>
 	</table>
+	</div>
 </div>

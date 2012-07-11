@@ -219,7 +219,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 ?>
 	<h1><?php echo l('Participating Servers'); ?></h1>
 
-	<table width="100%" border="0" cellspacing="1" cellpadding="4">
+	<table width="100%" border="1" cellspacing="1" cellpadding="4">
 		<tr>
 			<th>&nbsp;<?php echo l('Name'); ?></th>
 			<th>&nbsp;<?php echo l('Address'); ?></th>

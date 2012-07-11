@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -94,7 +94,7 @@ if (isset($_GET["sortorder"])) {
 
 // query to get the data from the db with the given options
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
-			ec.country,	
+			ec.country,
 			ec.countryCode,
 			p.playerId AS playerId,
 			p.lastName AS name,
@@ -154,8 +154,9 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1>
-		<?php echo l("Country Statistics"); ?> 
+		<?php echo l("Country Statistics"); ?>
 		( <?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?> )
 	</h1>
 	<p>
@@ -187,7 +188,7 @@ pageHeader(
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
-			
+
 		</tr>
 	<?php
 		if(!empty($countryPlayers['data'])) {
@@ -209,7 +210,7 @@ pageHeader(
 				echo '<td class="',$rcol,'">';
 				echo '<a href="index.php?mode=playerinfo&amp;player='.$entry['playerId'].'">'.makeSavePlayerName($entry['name']).'</a>';
 				echo '</td>',"\n";
-				
+
 				echo '<td class="',$rcol,'">';
 				echo $entry['obj_count'];
 				echo '</td>',"\n";
@@ -237,4 +238,5 @@ pageHeader(
 		}
 	?>
 	</table>
+	</div>
 </div>

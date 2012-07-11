@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -82,7 +82,7 @@ if (isset($_GET["sortorder"])) {
 
 // query to get the data from the db with the given options
 $queryStr = "SELECT SQL_CALC_FOUND_ROWS
-			ec.country,	
+			ec.country,
 			ec.countryCode,
 			ec.ipAddress,
 			COUNT(ec.id) AS obj_count
@@ -131,6 +131,7 @@ pageHeader(array(l("Admin"),l('Host Statistics')), array(l("Admin")=>"index.php?
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Host Statistics'); ?></h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
 		<tr>
@@ -158,7 +159,7 @@ pageHeader(array(l("Admin"),l('Host Statistics')), array(l("Admin")=>"index.php?
 				<img src="hlstatsimg/<?php echo $sortorder; ?>.gif" alt="Sorting" width="7" height="7" />
 				<?php } ?>
 			</th>
-			
+
 		</tr>
 	<?php
 		if(!empty($hostStats['data'])) {
@@ -180,7 +181,7 @@ pageHeader(array(l("Admin"),l('Host Statistics')), array(l("Admin")=>"index.php?
 				echo '<td class="',$rcol,'">';
 				echo $entry['ipAddress'].'</a>';
 				echo '</td>',"\n";
-				
+
 				echo '<td class="',$rcol,'">';
 				echo $entry['obj_count'];
 				echo '</td>',"\n";
@@ -208,4 +209,5 @@ pageHeader(array(l("Admin"),l('Host Statistics')), array(l("Admin")=>"index.php?
 		}
 	?>
 	</table>
+	</div>
 </div>

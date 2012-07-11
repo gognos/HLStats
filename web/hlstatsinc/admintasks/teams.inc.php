@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -161,6 +161,7 @@ pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Teams for'); ?>: <?php echo $gName; ?></h1>
 	<p>
 		<?php echo l("You can specify descriptive names for each game's team codes"); ?>
@@ -226,4 +227,5 @@ pageHeader(array(l("Admin"),l('Teams')), array(l("Admin")=>"index.php?mode=admin
 			</tr>
 		</table>
 	</form>
+	</div>
 </div>

@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -139,8 +139,9 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1>
-		<?php echo l("Country Statistics"); ?> 
+		<?php echo l("Country Statistics"); ?>
 		( <?php echo l('Last'); ?> <?php echo $g_options['DELETEDAYS']; ?> <?php echo l('days'); ?> )
 	</h1>
 	<table cellpadding="0" cellspacing="0" border="1" width="100%">
@@ -212,4 +213,5 @@ pageHeader(
 		}
 	?>
 	</table>
+	</div>
 </div>

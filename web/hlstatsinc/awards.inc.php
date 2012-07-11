@@ -34,7 +34,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -116,6 +116,7 @@ pageHeader(
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l("Awards History"),' ',l('for'),' ',$awards_d_date; ?></h1>
 	<form method="get" action="index.php">
 	<input type="hidden" name="mode" value="awards" />
@@ -163,7 +164,7 @@ echo l('Date selection');
 				if($entry['d_winner_id']) {
 					if($entry['isBot'] === "1") {
 						echo '<img src="hlstatsimg/bot.png" alt="'.l('BOT').'" title="'.l('BOT').'" width="16" height="16" />';
-					}	
+					}
 					elseif($entry['active'] === "1") {
 						echo '<img src="hlstatsimg/player.gif" alt="'.l('active Player').'" title="'.l('active Player').'" width="16" height="16" />';
 					}
@@ -189,4 +190,5 @@ echo l('Date selection');
 	<p><b><?php echo l('Note'); ?>:</b><br />
 	<?php echo l('Award history cover only the last'),'&nbsp;',$g_options['DELETEDAYS'],' ',l('days')?>
 	</p>
+	</div>
 </div>

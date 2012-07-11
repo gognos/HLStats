@@ -109,7 +109,7 @@ $server_players = array();
 
 // Get info
 if (!$server_details = Source_A2S_Info($server_ip, $server_port)) {
-	die(l("The details for this server couldn't be retrieved, this maybe because the server is currently unavailable."));
+	die('<p class="error">'.l("The details for this server couldn't be retrieved, this maybe because the server is currently unavailable.").'</p>');
 }
 
 $server['source'] = 0;

@@ -33,7 +33,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -70,11 +70,11 @@ if(isset($_POST['sub']['saveServer'])) {
 	// delete
 	if(!empty($_POST['del'])) {
 		foreach($_POST['del'] as $k=>$v) {
-			
+
 			// we should first check if we have data associated with this server
 			// if we delete the server with data associated to this server
 			// we get "dead" data.
-			
+
 			$existingData = false;
 			$query = $DB->query("SHOW TABLES LIKE '".DB_PREFIX."_Events_%'");
 			if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
@@ -97,25 +97,25 @@ if(isset($_POST['sub']['saveServer'])) {
 				}
 				else {
 					if(empty($queryStr)) {
-						$queryStr .= "SELECT `playerId` FROM `".$dbt."` 
+						$queryStr .= "SELECT `playerId` FROM `".$dbt."`
 							WHERE `serverId`  = ".$k."";
 					}
 					else {
 						$queryStr .= " UNION
-							SELECT `playerId` FROM `".$dbt."` 
+							SELECT `playerId` FROM `".$dbt."`
 							WHERE `serverId` = ".$k."";
 					}
 				}
 			}
-			
+
 			if(!empty($queryStr)) {
 				$query = $DB->query($queryStr);
 				if($query->num_rows > 0) {
 					$existingData = true;
 				}
 			}
-			
-			
+
+
 			if($existingData === false) {
 				$query = $DB->query("DELETE FROM `".DB_PREFIX."_Servers`
 										WHERE `serverId` = '".$DB->real_escape_string($k)."'");
@@ -219,6 +219,7 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 	</div>
 </div>
 <div id="main">
+	<div class="content">
 	<h1><?php echo l('Servers for'); ?>: <?php echo $gName; ?></h1>
 	<p>
 		<?php echo l('Enter the addresses of all servers that you want to accept data from'); ?>
@@ -307,4 +308,5 @@ pageHeader(array(l("Admin"),l('Servers')), array(l("Admin")=>"index.php?mode=adm
 			</tr>
 		</table>
 	</form>
+	</div>
 </div>
