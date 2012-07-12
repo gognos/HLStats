@@ -20,12 +20,12 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  * +
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -67,7 +67,7 @@ require("hlstatsinc/functions.inc.php");
 $DB = new mysqli(DB_ADDR,DB_USER,DB_PASS,DB_NAME);
 if($DB->connect_errno) {
 	var_dump($DB->connect_error);
-	die('Could not connect to the MySQL Server. Check your configuration.');	
+	die('Could not connect to the MySQL Server. Check your configuration.');
 }
 $DB->query("SET NAMES utf8");
 $DB->query("SET collation_connection = 'utf8_unicode_ci'");
@@ -236,7 +236,7 @@ if($g_options['allowSig'] == "1") {
 				$foreground = imagecolorallocate($imgH, 255, 255, 255);
 				$background = imagecolorallocate($imgH, 0, 0, 0);
 			break;
-			
+
 			case 'css_nitro':
 				// 400x100
 				$imgH = imagecreatefrompng($picPath."css_by_nitrocium.png");

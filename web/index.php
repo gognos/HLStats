@@ -25,14 +25,14 @@
  *
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2011
+ * + 2007 - 2012
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
- * 
+ *
  */
 
 /**
@@ -83,7 +83,7 @@ define("VERSION", "1.63");
 $DB = new mysqli(DB_ADDR,DB_USER,DB_PASS,DB_NAME);
 if($DB->connect_errno) {
 	var_dump($DB->connect_error);
-	die('Could not connect to the MySQL Server. Check your configuration.');	
+	die('Could not connect to the MySQL Server. Check your configuration.');
 }
 $DB->query("SET NAMES utf8");
 $DB->query("SET collation_connection = 'utf8_unicode_ci'");
@@ -188,7 +188,7 @@ if(isset($_GET['game'])) {
 	if($check === true) {
 		$game = $_GET['game'];
 
-		$query = $DB->query("SELECT name FROM `".DB_PREFIX."_Games` 
+		$query = $DB->query("SELECT name FROM `".DB_PREFIX."_Games`
 								WHERE code = '".$DB->real_escape_string($game)."'
 								AND `hidden` = '0'");
 		if(SHOW_DEBUG && $DB->error) var_dump($DB->error);

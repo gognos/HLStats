@@ -4,9 +4,9 @@
 #
 # REPLACE #DB_PREFIX# WITH YOUR CURRENT HLSTATS PREFIX eg. hlstats
 #
-# To upgrade an existing HLStats 1.61 database to version 1.62, type:
+# To upgrade an existing HLStats 1.62 database to version 1.63, type:
 #
-#   mysql hlstats_db_name < upgrade_from_1.61.sql
+#   mysql hlstats_db_name < upgrade_from_1.62.sql
 #
 #
 
@@ -19,10 +19,3 @@ INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`,`addon`,`url`) VALUES ('smm_vers
 INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`,`addon`,`url`) VALUES ('spatialstats_version','Spatial statistics logging %','http://addons.eventscripts.com/addons/view/spatialstats');
 INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`,`addon`,`url`) VALUES ('eventscripts_ver','EventScripts','http://www.eventscripts.com/');
 INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`,`addon`,`url`) VALUES ('cssmatch_version','CSSMatch Plugin %','http://www.cssmatch.com/');
-
-
-
-
-
-
-
