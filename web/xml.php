@@ -64,10 +64,14 @@ require('./hlstatsinc/hlstats.conf.php');
 require("hlstatsinc/functions.inc.php");
 
 // db class and options
-$db_con = mysql_connect(DB_ADDR,DB_USER,DB_PASS) OR die('Could not connect to the MySQL Server. Check your configuration.');
-$db_sel = mysql_select_db(DB_NAME,$db_con) OR die('Could not select database. Check your configuration.');
-mysql_query("SET NAMES utf8");
-mysql_query("SET collation_connection = 'utf8_unicode_ci'");
+$DB = new mysqli(DB_ADDR,DB_USER,DB_PASS,DB_NAME);
+if($DB->connect_errno) {
+	var_dump($DB->connect_error);
+	die('Could not connect to the MySQL Server. Check your configuration.');
+}
+$DB->query("SET NAMES utf8");
+$DB->query("SET collation_connection = 'utf8_unicode_ci'");
+$DB->set_charset("utf8");
 
 // get the hlstats options
 $g_options = getOptions();
@@ -99,21 +103,22 @@ if($g_options['allowXML'] == "1") {
 		case 'playerlist':
 			$gameCode = sanitize($_GET['gameCode']);
 			if(!empty($gameCode) && validateInput($gameCode,'nospace')) {
-				$query = mysql_query("SELECT
+				$query = $DB->query("SELECT
 			    			t1.playerId,
 							t1.lastName,
 							t1.skill
 			    		FROM `".DB_PREFIX."_Players` as t1
 						INNER JOIN `".DB_PREFIX."_PlayerUniqueIds` as t2
 			    			ON t1.playerId = t2.playerId
-			    		WHERE t1.game = '".mysql_real_escape_string($gameCode)."'
+			    		WHERE t1.game = '".$DB->real_escape_string($gameCode)."'
 			    			AND t1.hideranking=0
 			    			AND t2.uniqueId not like 'BOT:%'
 			    		ORDER BY t1.skill DESC
 			    		LIMIT 10");
 				$xmlBody = "<message>Top 10 player list</message>";
 				$xmlBody .= "<players>";
-				while ($playerData = mysql_fetch_assoc($query)) {
+				if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
+				while ($playerData = $query->fetch_assoc()) {
 					$xmlBody .="<player>";
 					$xmlBody .="<name><![CDATA[".htmlentities($playerData['lastName'],ENT_COMPAT,"UTF-8")."]]></name>";
 					$xmlBody .="<skill>".$playerData['skill']."</skill>";
@@ -135,7 +140,7 @@ if($g_options['allowXML'] == "1") {
 		case 'worldstats':
 			$gameCode = sanitize($_GET['gameCode']);
 			if(!empty($gameCode) && validateInput($gameCode,'nospace') && $g_options['MODE'] === "Normal") {
-				$query = mysql_query("SELECT p.playerId, p.lastName, p.skill,
+				$query = $DB->query("SELECT p.playerId, p.lastName, p.skill,
 									p.oldSkill, p.kills, p.deaths,
 									pu.uniqueId, p.game,
 									ec.country, ec.countryCode, MAX(ec.eventTime) AS lastConnect
@@ -144,7 +149,7 @@ if($g_options['allowXML'] == "1") {
 			    			ON p.playerId = pu.playerId
 						INNER JOIN `".DB_PREFIX."_Events_Connects` AS ec
 							ON ec.playerId = p.playerId
-			    		WHERE p.game = '".mysql_real_escape_string($gameCode)."'
+			    		WHERE p.game = '".$DB->real_escape_string($gameCode)."'
 			    			AND p.hideranking = 0
 			    			AND pu.uniqueId not like 'BOT:%'
 						GROUP BY ec.playerId
@@ -153,7 +158,7 @@ if($g_options['allowXML'] == "1") {
 
 				$xmlBody = "<message>Top 100 player worldstats list</message>";
 				$xmlBody .= "<players>";
-				while ($playerData = mysql_fetch_assoc($query)) {
+				while ($playerData = $query->fetch_assoc()) {
 					$xmlBody .= "<player>";
 					$xmlBody .= "<name><![CDATA[".htmlentities($playerData['lastName'],ENT_COMPAT,"UTF-8")."]]></name>";
 					$xmlBody .= "<skill>".$playerData['skill']."</skill>";
@@ -184,7 +189,7 @@ if($g_options['allowXML'] == "1") {
 			$serverId = sanitize($_GET['serverId']);
 			if(!empty($serverId) && validateInput($serverId,'digit')) {
 				// check if we have such server
-				$query = mysql_query("
+				$query = $DB->query("
 						SELECT
 							s.serverId,
 							s.name,
@@ -197,11 +202,11 @@ if($g_options['allowXML'] == "1") {
 						FROM `".DB_PREFIX."_Servers` AS s
 						LEFT JOIN `".DB_PREFIX."_Games` AS g
 							ON s.game = g.code
-						WHERE s.serverId = ".mysql_real_escape_string($serverId)."
+						WHERE s.serverId = ".$DB->real_escape_string($serverId)."
 				");
-				if (mysql_num_rows($query) === 1) {
+				if ($query->num_rows === 1) {
 					// get the server data
-					$serverData = mysql_fetch_assoc($query);
+					$serverData = $query->fetch_assoc();
 
 					$xmlBody = "<message>Server Information</message>";
 					$xmlBody .= "<server>";

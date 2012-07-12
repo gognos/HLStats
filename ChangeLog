@@ -6,6 +6,7 @@ HLStats ChangeLog
 *) New: steam achievements are shown at the games which have steam stats
 	curl modul for php is needed
 *) New: New style sheet 'rounded'
+*) New: New style sheet 'grey'
 *) New: Player attacked Player events are now recorded.
 *) New: GoldenEye: Source gamesupport
 *) New: Left for dead 2 gamesupport
