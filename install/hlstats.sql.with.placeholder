@@ -560,3 +560,21 @@ CREATE TABLE `#DB_PREFIX#_Awards_History` (
   `date` varchar(32) NOT NULL,
   UNIQUE KEY `fk_award_id` (`fk_award_id`,`date`,`game`)
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `#DB_PREFIX#_Events_PlayerAttackedPlayer`;
+CREATE TABLE `#DB_PREFIX#_Events_PlayerAttackedPlayer` (
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+    `eventTime` datetime DEFAULT NULL,
+	`serverId` int(10) DEFAULT NULL,
+	`map` varchar(64) DEFAULT NULL,
+	`playerId` int(10) DEFAULT NULL,
+	`weapon` varchar(64) DEFAULT NULL,
+	`victimId` int(10) DEFAULT NULL,
+	`damage` int(10) DEFAULT NULL,
+	`armor` int(10) DEFAULT NULL,
+	`health` int(10) DEFAULT NULL,
+	`hitgroup` varchar(32) DEFAULT NULL,
+	`damage_armor` int(10) DEFAULT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+

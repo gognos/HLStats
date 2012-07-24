@@ -1,6 +1,10 @@
 HLStats ChangeLog
 =================
 
+1.64 (TBA)
+*) Fixed: missing SQL statement for the PlayerAttackedPlayer table
+	Thx to kimaki
+
 1.63 (2012-07-12)
 *) New: skype field in player table. hls_set skype from ingame #16
 *) New: steam achievements are shown at the games which have steam stats
