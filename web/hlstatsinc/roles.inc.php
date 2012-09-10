@@ -98,7 +98,7 @@ else {
 $query = $DB->query($queryStr);
 if(SHOW_DEBUG && $DB->error) var_dump($DB->error);
 if($query->num_rows > 0) {
-	while($result = $DB->fetch_assoc()) {
+	while($result = $query->fetch_assoc()) {
 		$roles['data'][] = $result;
 	}
 }
