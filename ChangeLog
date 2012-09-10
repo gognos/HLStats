@@ -4,7 +4,7 @@ HLStats ChangeLog
 1.64 (TBA)
 *) Fixed: missing SQL statement for the PlayerAttackedPlayer table
 	Thx to kimaki
-*) New: CS:GO support
+*) New: CS:GO support ( thx to /r/Globaloffensive )
 *) Update: Fortress forever gamesupport update
 
 1.63 (2012-07-12)
