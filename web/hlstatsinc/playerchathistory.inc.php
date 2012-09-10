@@ -119,7 +119,7 @@ pageHeader(
 	</div>
 	<h1><?php echo l('Game'); ?></h1>
 	<div class="left-box">
-		<img src="hlstatsimg/game-<?php echo $playerObj->getParam('game'); ?>-big.png" alt="<?php echo $playerObj->getParam('game'); ?>" title="<?php echo $playerObj->getParam('game'); ?>" width="100px" height="100px" />
+		<img src="hlstatsimg/game-<?php echo $playerObj->getParam('game'); ?>-big.png" alt="<?php echo $playerObj->getParam('game'); ?>" title="<?php echo $playerObj->getParam('game'); ?>" width="100px" />
 	</div>
 </div>
 <div id="main">
