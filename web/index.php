@@ -78,7 +78,7 @@ require("hlstatsinc/functions.inc.php");
 /**
  * the release version
  */
-define("VERSION", "1.63");
+define("VERSION", "1.64");
 
 $DB = new mysqli(DB_ADDR,DB_USER,DB_PASS,DB_NAME);
 if($DB->connect_errno) {

@@ -10,7 +10,7 @@
 #
 # Game Definition
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('czero','Counter-Strike: Condition Zero','0','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('czero','Counter-Strike: Condition Zero','1','0');
 
 
 #
