@@ -19,7 +19,39 @@ INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O','csgo','Defused_The_B
 #
 # Player Actions
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'csgo','Begin_Bomb_Defuse_Without_Kit',0,0,'CT','Start Defusing the Bomb Without a Defuse Kit','1','0','0','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Begin_Bomb_Defuse_Without_Kit', 0, 0, 'CT', 'Start Defusing the Bomb Without a Defuse Kit', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Begin_Bomb_Defuse_With_Kit', 0, 0, 'CT', 'Start Defusing the Bomb With a Defuse Kit', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Planted_The_Bomb', 10, 2, 'TERRORIST', 'Plant the Bomb', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Defused_The_Bomb', 10, 0, 'CT', 'Defuse the Bomb', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Touched_A_Hostage', 0, 0, 'CT', 'Touch a Hostage', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Rescued_A_Hostage', 5, 1, 'CT', 'Rescue a Hostage', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Killed_A_Hostage', -15, 1, 'CT', 'Kill a Hostage', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Spawned_With_The_Bomb', 2, 0, 'TERRORIST', 'Spawn with the Bomb', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Got_The_Bomb', 2, 0, 'TERRORIST', 'Pick up the Bomb', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Dropped_The_Bomb', -2, 0, 'TERRORIST', 'Drop the Bomb', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'CTs_Win', 0, 2, 'CT', 'All Terrorists eliminated', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Terrorists_Win', 0, 2, 'TERRORIST', 'All Counter-Terrorists eliminated', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'All_Hostages_Rescued', 0, 10, 'CT', 'Counter-Terrorists rescued all the hostages', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Target_Bombed', 0, 5, 'TERRORIST', 'Terrorists bombed the target', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Bomb_Defused', 0, 5, 'CT', 'Counter-Terrorists defused the bomb', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Escaped_As_VIP', 0, 10, 'CT', 'VIP escaped', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Assassinated_The_VIP', 0, 6, 'TERRORIST', 'Terrorists assassinated the VIP', '0', '0', '1', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Became_VIP', 1, 0, 'CT', 'Become the VIP', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'headshot', 1, 0, '', 'Headshot', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'round_mvp', 0, 0, '', 'Round MVP', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_2', 1, 0, '', 'Double Kill (2 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_3', 2, 0, '', 'Triple Kill (3 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_4', 3, 0, '', 'Domination (4 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_5', 4, 0, '', 'Rampage (5 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_6', 5, 0, '', 'Mega Kill (6 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_7', 6, 0, '', 'Ownage (7 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_8', 7, 0, '', 'Ultra Kill (8 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_9', 8, 0, '', 'Killing Spree (9 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_10', 9, 0, '', 'Monster Kill (10 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_11', 10, 0, '', 'Unstoppable (11 kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_12', 11, 0, '', 'God Like (12+ kills)', '1', '0', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'domination', 5, 0, '', 'Domination', '0', '1', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'revenge', 3, 0, '', 'Revenge', '0', '1', '0', '0');
 
 #
 # Team Actions
