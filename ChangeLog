@@ -5,6 +5,7 @@ HLStats ChangeLog
 *) Fixed: missing SQL statement for the PlayerAttackedPlayer table
 	Thx to kimaki
 *) New: CS:GO support
+*) Update: Fortress forever gamesupport update
 
 1.63 (2012-07-12)
 *) New: skype field in player table. hls_set skype from ingame #16

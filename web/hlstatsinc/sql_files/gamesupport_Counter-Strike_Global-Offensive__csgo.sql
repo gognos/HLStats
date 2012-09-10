@@ -15,9 +15,52 @@ INSERT IGNORE INTO `++DB_PREFIX++_Games` VALUES ('csgo','Counter-Strike: Global 
 # Awards
 #
 INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O','csgo','Defused_The_Bomb','Top Defuser','bomb defusions',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'ak47', 'AK47', 'kills with ak47',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'AUG', 'Aug', 'kills with aug',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'awp', 'AWP', 'kills with awp',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'deagle', 'Desert Eagle', 'kills with deagle',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'elite', 'Dual Berretta Elites', 'kills with elite',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'famas', 'Fusil Automatique', 'kills with famas',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'fiveseven', 'Five Seven', 'kills with fiveseven',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'g3sg1', 'G3 SG1', 'kills with g3sg1',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'galilar', 'Galil', 'kills with galil',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'glock', 'Glock', 'kills with glock',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'hegrenade', 'High Explosive Grenade', 'kills with grenade',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'firebomb', 'Incendiary Grenade', 'kills with inferno',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'knife', 'Knife Maniac', 'knifings',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'm249', 'M249', 'kills with m249',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'm4a1', 'M4A4', 'kills with m4a4',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'mac10', 'MAC-10', 'kills with mac10',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'mag7', 'MAG-7', 'kills with mag7',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O', 'csgo', 'headshot', 'Headshot King', 'shots in the head',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'latency', 'Best Latency', 'ms average connection',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O', 'csgo', 'round_mvp', 'Most Valuable Player', 'times earning Round MVP',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'mostkills', 'Most Kills', 'kills',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'suicide', 'Suicides', 'suicides',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'teamkills', 'Team Killer', 'team kills',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'mp7', 'MP7', 'kills with mp7',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'mp9', 'MP9', 'kills with mp9',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'negev', 'Negev', 'kills with negev',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'nova', 'Nova', 'kills with nova',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'hkp2000', 'P2000', 'kills with p2000',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'p250', 'P250', 'kills with p250',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'p90', 'P90', 'kills with p90',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'bizon', 'PP-Bizon', 'kills with pp-bizon',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'sawedoff', 'Sawed-Off', 'kills with sawed-off',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'scar20', 'SCAR-20', 'kills with scar-20',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'sg553', 'SG 553', 'kills with sg553',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'ssg08', 'SSG 08', 'kills with ssg08',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'tec9', 'Tec-9', 'kills with Tec-9',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O', 'csgo', 'Defused_The_Bomb', 'Top Defuser', 'bomb defusions',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O', 'csgo', 'Planted_The_Bomb', 'Top Demolitionist', 'bomb plantings',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O', 'csgo', 'Killed_A_Hostage', 'Top Hostage Killer', 'hostages killed',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'O', 'csgo', 'Rescued_A_Hostage', 'Top Hostage Rescuer', 'hostages rescued',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'ump45', 'UMP-45', 'kills with ump45',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'xm1014', 'XM automatic Shotgun', 'kills with xm1014',NULL,NULL);
+INSERT IGNORE INTO `++DB_PREFIX++_Awards` VALUES (NULL,'W', 'csgo', 'taser', 'Zeus x27', 'kills with taser',NULL,NULL);
 
 #
-# Player Actions
+# Actions
 #
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Begin_Bomb_Defuse_Without_Kit', 0, 0, 'CT', 'Start Defusing the Bomb Without a Defuse Kit', '1', '0', '0', '0');
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'Begin_Bomb_Defuse_With_Kit', 0, 0, 'CT', 'Start Defusing the Bomb With a Defuse Kit', '1', '0', '0', '0');
@@ -54,11 +97,6 @@ INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'domination', 5, 
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'revenge', 3, 0, '', 'Revenge', '0', '1', '0', '0');
 
 #
-# Team Actions
-#
-INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES (NULL,'csgo','CTs_Win',0,2,'CT','All Terrorists eliminated','0','0','1','0');
-
-#
 # Teams
 #
 INSERT IGNORE INTO `++DB_PREFIX++_Teams` VALUES (NULL,'csgo','TERRORIST','Terrorist','0');
@@ -68,7 +106,7 @@ INSERT IGNORE INTO `++DB_PREFIX++_Teams` VALUES (NULL,'csgo','SPECTATOR','Specta
 #
 # Roles
 #
-INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'csgo','scout','Scout','0');
+# INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'csgo','scout','Scout','0');
 
 #
 # Weapons
