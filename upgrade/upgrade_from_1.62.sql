@@ -22,17 +22,17 @@ INSERT INTO `#DB_PREFIX#_Server_Addons` (`rule`,`addon`,`url`) VALUES ('cssmatch
 
 DROP TABLE IF EXISTS `#DB_PREFIX#_Events_PlayerAttackedPlayer`;
 CREATE TABLE `#DB_PREFIX#_Events_PlayerAttackedPlayer` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `eventTime` datetime DEFAULT NULL,
-		  `serverId` int(10) DEFAULT NULL,
-		  `map` varchar(64) DEFAULT NULL,
-		  `playerId` int(10) DEFAULT NULL,
-		  `weapon` varchar(64) DEFAULT NULL,
-		  `victimId` int(10) DEFAULT NULL,
-		  `damage` int(10) DEFAULT NULL,
-		  `armor` int(10) DEFAULT NULL,
-		  `health` int(10) DEFAULT NULL,
-		  `hitgroup` varchar(32) DEFAULT NULL,
-		  `damage_armor` int(10) DEFAULT NULL,
-		  PRIMARY KEY (`id`)
+	`id` int(11) NOT NULL AUTO_INCREMENT,
+	`eventTime` datetime DEFAULT NULL,
+	`serverId` int(10) DEFAULT NULL,
+	`map` varchar(64) DEFAULT NULL,
+	`playerId` int(10) DEFAULT NULL,
+	`weapon` varchar(64) DEFAULT NULL,
+	`victimId` int(10) DEFAULT NULL,
+	`damage` int(10) DEFAULT NULL,
+	`armor` int(10) DEFAULT NULL,
+	`health` int(10) DEFAULT NULL,
+	`hitgroup` varchar(32) DEFAULT NULL,
+	`damage_armor` int(10) DEFAULT NULL,
+	PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
