@@ -95,6 +95,8 @@ INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_11',
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_streak_12', 11, 0, '', 'God Like (12+ kills)', '1', '0', '0', '0');
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'domination', 5, 0, '', 'Domination', '0', '1', '0', '0');
 INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'revenge', 3, 0, '', 'Revenge', '0', '1', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'kill_assist', 2, 0, '', 'Kill Assist', '0', '1', '0', '0');
+INSERT IGNORE INTO `++DB_PREFIX++_Actions` VALUES(NULL,'csgo', 'mvp', 10, 0, '', 'Most valuable player', '1', '0', '0', '0');
 
 #
 # Teams
@@ -106,7 +108,9 @@ INSERT IGNORE INTO `++DB_PREFIX++_Teams` VALUES (NULL,'csgo','SPECTATOR','Specta
 #
 # Roles
 #
-# INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'csgo','scout','Scout','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'csgo','st6','SEAL Team 6','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'csgo','phoenix','Phoenix Connexion','0');
+INSERT IGNORE INTO `++DB_PREFIX++_Roles` VALUES (NULL,'csgo','leet','Elite Crew','0');
 
 #
 # Weapons
