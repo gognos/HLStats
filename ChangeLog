@@ -1,7 +1,7 @@
 HLStats ChangeLog
 =================
 
-1.64 (TBA)
+1.64 (2012-09-12)
 *) Fixed: missing SQL statement for the PlayerAttackedPlayer table
 	Thx to kimaki
 *) New: CS:GO support ( thx to /r/Globaloffensive )
