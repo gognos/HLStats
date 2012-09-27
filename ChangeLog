@@ -1,5 +1,8 @@
 HLStats ChangeLog
 =================
+1.65 ()
+*) Fixed: Possible sql error with Players table. There was no default value.
+	Run the sql upgrade file to fix this. (thx to druxxi)
 
 1.64 (2012-09-12)
 *) Fixed: missing SQL statement for the PlayerAttackedPlayer table
