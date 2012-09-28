@@ -388,7 +388,7 @@ $rcol = "row-dark";
 			<td>
 			   <?php
 				if ($playerObj->getParam("skype")) {
-					echo htmlspecialchars($playerObj->getParam("sykpe"));
+					echo htmlspecialchars($playerObj->getParam("skype"));
 				} else {
 					echo l("Not specified");
 				}

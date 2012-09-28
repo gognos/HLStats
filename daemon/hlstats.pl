@@ -847,7 +847,7 @@ while ($loop = &getLine()) {
 		$ev_properties = $3;
 
 		%ev_properties = &getProperties($ev_properties);
-
+		
 		if (like($ev_verb, "entered the game"))
 		{
 			my $playerinfo = &getPlayerInfo($ev_player);

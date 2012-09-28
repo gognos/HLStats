@@ -552,6 +552,7 @@ CREATE TABLE `#DB_PREFIX#_Weapons` (
   KEY `code` (`code`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `#DB_PREFIX#_Awards_History`;
 CREATE TABLE `#DB_PREFIX#_Awards_History` (
 `fk_award_id` int(10) NOT NULL,
   `game` varchar(32) NOT NULL,

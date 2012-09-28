@@ -334,42 +334,31 @@ sub recordEvent {
 	my $insertType = "";
 	$insertType = " DELAYED" if ($db_lowpriority);
 
-	my $query = "
-		INSERT$insertType INTO
+	my $query = "INSERT$insertType INTO
 			`${db_prefix}_Events_$table`
 			(
 				eventTime,
 				serverId,
-				map"
-	;
+				map";
 
-	foreach $i (@cols)
-	{
+	foreach $i (@cols) {
 		$query .= ",\n$i";
 	}
 
-	$query .= "
-			)
-		VALUES
-		(
+	$query .= " ) VALUES (
 			$ev_datetime,
 			'$g_servers{$s_addr}->{id}',
-			'$g_servers{$s_addr}->{map}'"
-	;
+			'$g_servers{$s_addr}->{map}'";
 
-	for $i (@coldata)
-	{
+	for $i (@coldata) {
 		$query .= ",\n'" . &quoteSQL($i) . "'";
 	}
 
-	$query .= "
-		)
-	";
+	$query .= " ) ";
 
 	my $result = &doQuery($query);
 
-	if ($getid)
-	{
+	if ($getid) {
 		$result = &doQuery("SELECT LAST_INSERT_ID()");
 		($lastid) = $result->fetchrow_array;
 		return $lastid;
@@ -714,7 +703,7 @@ sub getServer
 		$result->finish;
 
 		# get the current map to avoid unknown maps
-		my $currentMap;
+		my $currentMap='';
 		my $q = HLstats_ServerQueries->new(encoding => 'utf-8',
 											timeout => 1,
 											'addr' => $address,
