@@ -30,7 +30,7 @@
 
 
 # HLStats release version number
-our $g_version = "1.64";
+our $g_version = "1.65";
 
 %PATTERNS = ();
 %NAMES    = ();
@@ -206,7 +206,7 @@ sub rcon
 		SELECT s.rcon_password,
 			g.source AS source
 		FROM `${db_prefix}_Servers` AS s
-		LEFT JOIN `${db_prefix}_Games` AS g 
+		LEFT JOIN `${db_prefix}_Games` AS g
 			ON g.code = s.game
 		WHERE s.address = '$server_ip'
 			AND s.port = '$server_port'
@@ -553,7 +553,7 @@ sub updatePlayerProfile {
 	my $playerName = &abbreviate($player->get("name"));
 	my $playerId   = $player->get("playerid");
 
-	&doQuery("UPDATE `${db_prefix}_Players` 
+	&doQuery("UPDATE `${db_prefix}_Players`
 		SET $field='$value'
 		WHERE playerId='$playerId'
 	");
@@ -692,7 +692,7 @@ sub getServer
 
 	my $query = " SELECT serverId, game
 		FROM `${db_prefix}_Servers`
-		WHERE address = '$address' 
+		WHERE address = '$address'
 		AND port = '$port'
 	";
 
@@ -814,12 +814,12 @@ sub getPlayerInfo
 	if($g_ignore_bots) {
 		return 0 if ($uniqueid =~ /^BOT/ || $uniqueid =~ /^zombie/);
 	}
-	
+
 	# we do not ignore BOT but mark them as
 	if ($uniqueid =~ /^BOT/ || $uniqueid =~ /^zombie/) {
 		$isBot = 1;
 	}
-	
+
 	if ($forced_uniqueid) {
 		$uniqueid = $forced_uniqueid;
 	}

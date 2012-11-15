@@ -20,7 +20,7 @@
 # +
 # + Johannes 'Banana' Keßler
 # + http://hlstats.sourceforge.net
-# + 2007 - 2011
+# + 2007 - 2012
 # +
 #
 # This program is free software is licensed under the
@@ -38,29 +38,29 @@ cd $saveDir;
 case "$1" in
  start)
      echo "Starting HLStats...";
-     if [ -f hlstats164.pid ]; then
-        kill -0 `cat hlstats164.pid` >/dev/null 2>&1
+     if [ -f hlstats165.pid ]; then
+        kill -0 `cat hlstats165.pid` >/dev/null 2>&1
         if [ "$?" == "0" ]; then
             echo "HLStats already running!"
         else
-            rm -rf hlstats164.pid
+            rm -rf hlstats165.pid
             perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-            echo $! >hlstats164.pid
+            echo $! >hlstats165.pid
             echo "PID file created."
             echo "HLStats Started successfully!"
         fi
      else
         perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-        echo $! >hlstats164.pid
+        echo $! >hlstats165.pid
         echo "PID file created."
         echo "HLStats Started successfully!"
      fi
  ;;
  stop)
      echo "Stopping HLStats..."
-     kill -9 `cat hlstats164.pid` >/dev/null 2>&1
+     kill -9 `cat hlstats165.pid` >/dev/null 2>&1
      if [ "$?" == "0" ]; then
-        rm -rf hlstats164.pid
+        rm -rf hlstats165.pid
         echo "HLStats Stopped successfully."
      else
         echo "HLStats is not running!"
@@ -68,20 +68,20 @@ case "$1" in
  ;;
  restart)
      echo "Restarting HLStats..."
-     kill -9 `cat hlstats164.pid` >/dev/null 2>&1
+     kill -9 `cat hlstats165.pid` >/dev/null 2>&1
      if [ "$?" == "0" ]; then
-         rm -rf hlstats164.pid
+         rm -rf hlstats165.pid
          perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-         echo $! >hlstats164.pid
+         echo $! >hlstats165.pid
          echo "PID file created."
          echo "HLStats Restarted successfully!"
      else
          echo "HLStats is not running!"
-         if [ -f hlstats164.pid ]; then
-           rm -rf hlstats164.pid
+         if [ -f hlstats165.pid ]; then
+           rm -rf hlstats165.pid
          fi
          perl ../daemon/hlstats.pl >/dev/null 2>&1 &
-         echo $! >hlstats164.pid
+         echo $! >hlstats165.pid
          echo "PID file created."
          echo "HLStats Started successfully!"
      fi

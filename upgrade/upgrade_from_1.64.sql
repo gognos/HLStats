@@ -11,3 +11,4 @@
 #
 
 ALTER TABLE `#DB_PREFIX#_Players` CHANGE COLUMN `icq` `icq` varchar(10), CHANGE COLUMN `myspace` `myspace` varchar(128), CHANGE COLUMN `facebook` `facebook` varchar(128), CHANGE COLUMN `jabber` `jabber` varchar(128), CHANGE COLUMN `steamprofile` `steamprofile` varchar(128);
+ALTER TABLE `#DB_PREFIX#_Players` CHANGE COLUMN `sykpe` `skype` varchar(128);
