@@ -223,7 +223,9 @@ else {
  * include the requested page
  * the $mode is checked above
  */
-include("hlstatsinc/".$mode.".inc.php");
+if(!empty($mode)) {
+	include("hlstatsinc/".$mode.".inc.php");
+}
 
 /**
  * include the global footer
