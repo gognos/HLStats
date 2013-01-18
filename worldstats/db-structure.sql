@@ -24,6 +24,7 @@ CREATE TABLE `hlstats_ws_sites` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `siteHash` varchar(32) DEFAULT NULL,
   `siteURL` varchar(255) DEFAULT NULL,
+  `requestURL` varchar(255) DEFAULT NULL,
   `game` varchar(64) DEFAULT NULL,
   `regDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
