@@ -98,12 +98,78 @@ $pData = $playersObj->getPlayersOveriew();
 <h2>Players</h2>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-		<th>Name</th>
-		<th>Skill</th>
-		<th>Kills</th>
-		<th>Deaths</th>
-		<th>Last time online</th>
-		<th>Country</th>
+		<th>
+			<a href="index.php?<?php echo makeQueryString(array('sort'=>'name','sortorder'=>$newSort)); ?>">
+				Name
+				<?php if($playersObj->getOption("sort") == "name") {
+					if($newSort == "ASC") {
+						echo '<span class="icon blue" data-icon="|"></span>';
+					} else {
+						echo '<span class="icon blue" data-icon="~"></span>';
+					}
+				} ?>
+			</a>
+		</th>
+		<th>
+			<a href="index.php?<?php echo makeQueryString(array('sort'=>'skill','sortorder'=>$newSort)); ?>">
+				Skill
+				<?php if($playersObj->getOption("sort") == "skill") {
+					if($newSort == "ASC") {
+						echo '<span class="icon blue" data-icon="|"></span>';
+					} else {
+						echo '<span class="icon blue" data-icon="~"></span>';
+					}
+				} ?>
+			</a>
+		</th>
+		<th>
+			<a href="index.php?<?php echo makeQueryString(array('sort'=>'kills','sortorder'=>$newSort)); ?>">
+				Kills
+				<?php if($playersObj->getOption("sort") == "kills") {
+					if($newSort == "ASC") {
+						echo '<span class="icon blue" data-icon="|"></span>';
+					} else {
+						echo '<span class="icon blue" data-icon="~"></span>';
+					}
+				} ?>
+			</a>
+		</th>
+		<th>
+			<a href="index.php?<?php echo makeQueryString(array('sort'=>'deaths','sortorder'=>$newSort)); ?>">
+				Deaths
+				<?php if($playersObj->getOption("sort") == "deaths") {
+					if($newSort == "ASC") {
+						echo '<span class="icon blue" data-icon="|"></span>';
+					} else {
+						echo '<span class="icon blue" data-icon="~"></span>';
+					}
+				} ?>
+			</a>
+		</th>
+		<th>
+			<a href="index.php?<?php echo makeQueryString(array('sort'=>'lastConnect','sortorder'=>$newSort)); ?>">
+				Last time online
+				<?php if($playersObj->getOption("sort") == "lastConnect") {
+					if($newSort == "ASC") {
+						echo '<span class="icon blue" data-icon="|"></span>';
+					} else {
+						echo '<span class="icon blue" data-icon="~"></span>';
+					}
+				} ?>
+			</a>
+		</th>
+		<th>
+			<a href="index.php?<?php echo makeQueryString(array('sort'=>'countryCode','sortorder'=>$newSort)); ?>">
+				Country
+				<?php if($playersObj->getOption("sort") == "countryCode") {
+					if($newSort == "ASC") {
+						echo '<span class="icon blue" data-icon="|"></span>';
+					} else {
+						echo '<span class="icon blue" data-icon="~"></span>';
+					}
+				} ?>
+			</a>
+		</th>
 		<th>Stats profile</th>
 		<th>Steam profile</th>
 	</tr>

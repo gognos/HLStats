@@ -20,7 +20,7 @@
  *
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2012
+ * + 2007 - 2013
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
@@ -72,6 +72,7 @@ if(!empty($_GET["p"])) {
 		$_page = $_GET['p'];
 	}
 }
+if(empty($_page)) $_page = 'home';
 
 header("Content-type: text/html; charset=UTF-8");
 ?>
@@ -95,11 +96,11 @@ header("Content-type: text/html; charset=UTF-8");
 	<div id="wrap" class="clearfix">
 		<h1>HLStats - WorldStats</h1>
 		<ul class="menu">
-			<li class="current"><a href="index.php"><span class="icon" data-icon="o"></span>Home</a></li>
-			<li><a href="index.php?p=servers">Servers</a></li>
-			<li><a href="index.php?p=players">Players</a>
-			<li><a href="index.php?p=clans">Clans</a></li>
-			<li><a href="index.php?p=weapons">Weapons</a></li>
+			<li <?php if($_page == "home") echo 'class="current"' ?>><a href="index.php">Home</a></li>
+			<li <?php if($_page == "servers") echo 'class="current"' ?>><a href="index.php?p=servers">Servers</a></li>
+			<li <?php if($_page == "players") echo 'class="current"' ?>><a href="index.php?p=players">Players</a>
+			<li <?php if($_page == "clans") echo 'class="current"' ?>><a href="index.php?p=clans">Clans</a></li>
+			<li <?php if($_page == "weapons") echo 'class="current"' ?>><a href="index.php?p=weapons">Weapons</a></li>
 		</ul>
 		<div class="col_12">
 			<?php
