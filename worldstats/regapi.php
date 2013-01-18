@@ -30,19 +30,19 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2012
+ * + 2007 - 2013
  * +
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
  */
 
 define('DEBUG',true);
-define('LOCAL',false);
+define('LOCAL',true);
 
 # utf-8 encoding
 mb_http_output('UTF-8');
@@ -68,7 +68,7 @@ require('./db-conf.inc.php');
 $DB = new mysqli(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 if($DB->connect_errno) {
 	var_dump($DB->connect_error);
-	die('Could not connect to the MySQL Server. Check your configuration.');	
+	die('Could not connect to the MySQL Server. Check your configuration.');
 }
 $DB->query("SET NAMES utf8");
 $DB->query("SET collation_connection = 'utf8_unicode_ci'");
@@ -154,7 +154,7 @@ switch($method) {
 				}
 			}
 		}
-	
+
 	break;
 
 	case 'GET':
@@ -166,7 +166,7 @@ switch($method) {
 		else {
 			$gamesStr = filter_input(INPUT_GET,'games',FILTER_SANITIZE_ENCODED);
 			$id = filter_input(INPUT_GET,'id',FILTER_SANITIZE_ENCODED);
-			
+
 			if(!empty($id) && !empty($gamesStr)) {
 				$return['status'] = true;
 				$return['msg'] = 'Success';
@@ -177,7 +177,7 @@ switch($method) {
 				else {
 					$games[] = $gamesStr;
 				}
-				
+
 				foreach($games as $g) {
 					# check if we have this site/game
 					$query = $DB->query("SELECT id FROM `".DB_PREFIX."_ws_sites`

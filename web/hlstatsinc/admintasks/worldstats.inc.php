@@ -29,7 +29,7 @@
  * +
  * + Johannes 'Banana' Keßler
  * + http://hlstats.sourceforge.net
- * + 2007 - 2012
+ * + 2007 - 2013
  * +
  *
  * This program is free software is licensed under the
@@ -221,7 +221,8 @@ pageHeader(
 			}
 			?>
 			<br />
-			Check the game(s) <b>above</b> and set the tick <b>below</b> to register the selected games to the WorldStats
+			Check the game(s) <b>above</b> and set the tick <b>below</b> to register the selected games to the WorldStats<br />
+			<br />
 			<input type="checkbox" name="reg[register]" value="1" />&nbsp;Register your installation and selected games<br />
 			<br />
 			<button type="submit" name="sub[doRegister]" title="Do it">Do it</button>
