@@ -12,7 +12,7 @@ CREATE TABLE `hlstats_ws_playerDataTable` (
   `lastUpdate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `game` varchar(64) DEFAULT NULL,
   `day` date DEFAULT NULL,
-  `sitename` varchar(64) DEFAULT NULL,
+  `siteName` varchar(64) DEFAULT NULL,
   UNIQUE KEY `uniqueID` (`uniqueID`,`game`,`day`),
   KEY `uniqueID_2` (`uniqueID`),
   KEY `game` (`game`),

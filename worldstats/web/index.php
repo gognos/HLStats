@@ -61,9 +61,10 @@ $DB->set_charset("utf8");
 
 $_pages = array(
 	"players",
-	"servers",
+	"sites",
 	"clans",
-	"weapons"
+	"weapons",
+	"games"
 );
 
 $_page = 'home';
@@ -97,10 +98,11 @@ header("Content-type: text/html; charset=UTF-8");
 		<h1>HLStats - WorldStats</h1>
 		<ul class="menu">
 			<li <?php if($_page == "home") echo 'class="current"' ?>><a href="index.php">Home</a></li>
-			<li <?php if($_page == "servers") echo 'class="current"' ?>><a href="index.php?p=servers">Servers</a></li>
+			<li <?php if($_page == "sites") echo 'class="current"' ?>><a href="index.php?p=sites">Sites</a></li>
 			<li <?php if($_page == "players") echo 'class="current"' ?>><a href="index.php?p=players">Players</a>
 			<li <?php if($_page == "clans") echo 'class="current"' ?>><a href="index.php?p=clans">Clans</a></li>
 			<li <?php if($_page == "weapons") echo 'class="current"' ?>><a href="index.php?p=weapons">Weapons</a></li>
+			<li <?php if($_page == "games") echo 'class="current"' ?>><a href="index.php?p=games">Games</a></li>
 		</ul>
 		<div class="col_12">
 			<?php
