@@ -120,6 +120,7 @@ switch($method) {
 			if($payload !== false) {
 				$gamesToAdd = $payload['games'];
 				$requestURL = $payload['requestURL'];
+				$siteURL = $payload['siteURL'];
 
 				if(!empty($gamesToAdd)) {
 					$query = $DB->query("SELECT `id` FROM `".DB_PREFIX."_ws_sites`
@@ -135,7 +136,8 @@ switch($method) {
 						foreach($gamesToAdd as $_game) {
 							$query = $DB->query("INSERT INTO `".DB_PREFIX."_ws_sites` SET
 												`siteHash` = '".$DB->real_escape_string(md5($requestURL))."',
-												`siteURL` = '".$DB->real_escape_string($requestURL)."',
+												`requestURL` = '".$DB->real_escape_string($requestURL)."',
+												`siteURL` = '".$DB->real_escape_string($siteURL)."',
 												`game` = '".$DB->real_escape_string($_game)."',
 												`regDate` = '".date("Y-m-d H:i:s")."',
 												`valid` = 0");

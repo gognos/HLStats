@@ -70,6 +70,7 @@ if(isset($_POST['sub']['doRegister'])) {
 
 			$payload['games'] = $_POST['reg']['game'];
 			$payload['requestURL'] = $requestingSite;
+			$payload['siteURL'] = str_replace('index.php', 'xml.php',$requestingSite);
 
 			$pParams['payload'] = json_encode($payload);
 
