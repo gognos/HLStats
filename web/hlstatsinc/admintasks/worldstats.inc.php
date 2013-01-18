@@ -55,7 +55,7 @@ $gamesArrToReg = $gamesArr;
 
 $error = false;
 $success = false;
-$requestingSite = "http://".str_replace('index.php', 'xml.php', $_SERVER["SERVER_NAME"].$_SERVER["SCRIPT_FILENAME"]);
+$requestingSite = "http://".str_replace('index.php', 'xml.php', $_SERVER["SERVER_NAME"].'/'.str_replace($_SERVER["DOCUMENT_ROOT"], '', $_SERVER["SCRIPT_FILENAME"]));
 $requestingSiteHash = md5($requestingSite);
 $alreadyRegGames = false;
 
