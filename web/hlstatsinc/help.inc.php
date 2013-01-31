@@ -264,7 +264,7 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 		while you are playing on a participating game server. To say commands, push your
 		chat key and type the command text.<br />
 		<br />
-		Syntax: say <b>/set option value</b>.<br />
+		Syntax: say <b>/hls_set option value</b>.<br />
 		<br />
 		Acceptable "options" are:
 		<ul>
@@ -329,6 +329,15 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 		timeFrame. If not the player is set to in-active.<br />
 		BOTs are recored if the <b>IGNOREBOTS</b> option is set to <b>0</b>. This enables
 		a additional option which displays those too. Otherwise no BOT is recorded or even shown.
+	</p>
+	<a name="ingameCommands"></a>
+	<h1>Are there any ingame commands a player can use ?</h1>
+	<p>
+		There are the following say commands a player can use:<br/>
+		<b>/hls_set</b> => To set a profile option<br />
+		<b>/hls_hideranking</b> => Make your profile hidden in the stats.<br />
+		<b>/skill</b> => Show the current ranking<br />
+		<b>/pskill</b> => Show the current ranking with a personal message.
 	</p>
 	</div>
 </div>

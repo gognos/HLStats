@@ -2,6 +2,7 @@ HLStats ChangeLog
 =================
 x.xx ()
 *) Updated: TF2 gamesupportfile
+*) Updated: Help overview page.
 
 1.65 (2012-11-15)
 *) Fixed: Possible sql error with Players table. There was no default value.
