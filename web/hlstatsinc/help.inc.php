@@ -120,6 +120,9 @@ pageHeader(array(l("Help")), array(l("Help")=>""));
 			<li>
 				<a href="#playersoverview">What are active players etc. ?</a>
 			</li>
+			<li>
+				<a href="#ingameCommands">Available ingame commands</a>
+			</li>
 		</ul>
 	</div>
 </div>
@@ -334,10 +337,12 @@ Victim Points = Victim Points - (Victim Points / Killer Points)
 	<h1>Are there any ingame commands a player can use ?</h1>
 	<p>
 		There are the following say commands a player can use:<br/>
-		<b>/hls_set</b> => To set a profile option<br />
-		<b>/hls_hideranking</b> => Make your profile hidden in the stats.<br />
-		<b>/skill</b> => Show the current ranking<br />
-		<b>/pskill</b> => Show the current ranking with a personal message.
+		<ul>
+			<li><b>/hls_set</b> => To set a profile option</li>
+			<li><b>/hls_hideranking</b> => Make your profile hidden in the stats.</li>
+			<li><b>/skill</b> => Show the current ranking</li>
+			<li><b>/pskill</b> => Show the current ranking with a personal message.</li>
+		</ul>
 	</p>
 	</div>
 </div>
