@@ -172,8 +172,19 @@ sub setUniqueId {
 	my ($self, $uniqueid) = @_;
 
 	my $playerid = &::getPlayerId($uniqueid);
+	
+	if ($playerid) {
+		# An existing player. Get their skill rating. 
 
-	if (!$playerid) {
+        my $query = "SELECT skill, kills, deaths, UNIX_TIMESTAMP(lastUpdate) 
+                     FROM ".$::db_prefix."_Players 
+                     WHERE playerId='$playerid' 
+                ";
+        my $result = &::doQuery($query);
+        ($self->{skill}, $self->{kills}, $self->{deaths}, $self->{rating_last}) = $result->fetchrow_array;
+        $result->finish;
+    }
+    else {
 		# This is a new player. Create a new record for them in the Players
 		# table.
 
