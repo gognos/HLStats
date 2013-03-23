@@ -3,6 +3,7 @@ HLStats ChangeLog
 x.xx ()
 *) Updated: TF2 gamesupportfile
 *) Updated: Help overview page.
+*) Fixed: Weapon name mixup. thx to kimaki from http://hldm.cz/en
 
 1.65 (2012-11-15)
 *) Fixed: Possible sql error with Players table. There was no default value.
