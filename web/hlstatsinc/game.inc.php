@@ -75,7 +75,7 @@ if (!$g_options['hideAwards'] && (isset($g_options['awards_d_date']) && $g_optio
 	if ($queryAwards->num_rows > 0) {
 		$tmptime = strtotime($g_options['awards_d_date']);
 		$awards_d_date = l(date('l',$tmptime)).' '.date('d.m.',$tmptime);
-		while($result = $queryAwards>fetch_assoc()) {
+		while($result = $queryAwards->fetch_assoc()) {
 			$awarddata_arr[] = $result;
 		}
 	}
