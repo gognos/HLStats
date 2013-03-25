@@ -136,7 +136,7 @@ sub set {
 sub increment {
 	my ($self, $key, $amount, $no_updatetime) = @_;
 
-	
+
 	if(defined($amount)) {
 		$amount = int($amount);
 		$amount = 1 if $amount == 0;
@@ -172,16 +172,16 @@ sub setUniqueId {
 	my ($self, $uniqueid) = @_;
 
 	my $playerid = &::getPlayerId($uniqueid);
-	
-	if ($playerid) {
-		# An existing player. Get their skill rating. 
 
-        my $query = "SELECT skill, kills, deaths, UNIX_TIMESTAMP(lastUpdate) 
-                     FROM ".$::db_prefix."_Players 
-                     WHERE playerId='$playerid' 
+	if ($playerid) {
+		# An existing player. Get their skill rating.
+
+        my $query = "SELECT skill, kills, deaths
+                     FROM ".$::db_prefix."_Players
+                     WHERE playerId='$playerid'
                 ";
         my $result = &::doQuery($query);
-        ($self->{skill}, $self->{kills}, $self->{deaths}, $self->{rating_last}) = $result->fetchrow_array;
+        ($self->{skill}, $self->{kills}, $self->{deaths}) = $result->fetchrow_array;
         $result->finish;
     }
     else {
