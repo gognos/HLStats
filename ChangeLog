@@ -1,9 +1,17 @@
 HLStats ChangeLog
 =================
-1.65 ()
+x.xx ()
+*) Updated: TF2 gamesupportfile
+*) Updated: Help overview page.
+*) Fixed: Weapon name mixup. thx to kimaki from http://hldm.cz/en
+*) Fixed: Possible fix for loosing points. thx to kit400
+*) Fixed: Switched weapon names in Half-Life Deathmatch awards (thx to kimaki)
+
+1.65 (2012-11-15)
 *) Fixed: Possible sql error with Players table. There was no default value.
 	Run the sql upgrade file to fix this. (thx to druxxi)
-*) Fiexed: some typos and code improvements
+*) Fixed: some typos and code improvements
+*) Fixed: typo in table rows and code
 
 1.64 (2012-09-12)
 *) Fixed: missing SQL statement for the PlayerAttackedPlayer table

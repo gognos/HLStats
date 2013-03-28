@@ -31,7 +31,6 @@
 # along with this program; if not, visit http://hlstats-community.org/License.html
 #
 
-
 ##
 ## Settings
 ##
@@ -48,7 +47,7 @@ my $opt_configfile_name = "hlstats.conf.ini";
 use strict;
 no strict 'vars';
 
-BEGIN { 
+BEGIN {
     binmode STDOUT, ':encoding(UTF-8)';
     binmode STDERR, ':encoding(UTF-8)';
 }
@@ -151,7 +150,7 @@ print "-- Connecting to MySQL database '$db_name' on '$db_host' as user '$db_use
 
 $main::db_conn = DBI->connect(
 	"DBI:mysql:$db_name:$db_host",
-	$db_user, $db_pass, { 'RaiseError' => 1, "mysql_enable_utf8" => 1, 
+	$db_user, $db_pass, { 'RaiseError' => 1, "mysql_enable_utf8" => 1,
 		'mysql_auto_reconnect' => 1, 'ShowErrorStatement' => 1 }
 ) or die ("\nCan't connect to MySQL database '$db_name' on '$db_host'\n" .
 	"Server error: $DBI::errstr\n");

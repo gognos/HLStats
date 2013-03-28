@@ -58,44 +58,13 @@ if($Config::Tiny::errstr ne '') {
 	print "Error in config file. Please compare with example file !\n";
 	print $Config::Tiny::errstr;
 	print "\n";
-	exit(0)
+	exit(1);
 }
 my $db_name = $Config->{Database}->{DBName};
 my $db_host = $Config->{Database}->{DBHost};
 my $db_user = $Config->{Database}->{DBUsername};
 my $db_pass = $Config->{Database}->{DBPassword};
 my $db_prefix = $Config->{Database}->{DBPrefix};
-
-# clean up the xmlData dir
-remove_tree('./xmlData/', {keep_root => 1 });
-
-open URLHANDLE, "<", "./urls.list" or die $!;
-my $ua = LWP::UserAgent->new;
-$ua->proxy(['http'], 'http://10.0.1.11:80/'); # local needed
-while (<URLHANDLE>) {
-	print $_."\n" if $DEBUG;
-
-	my @data = split(/\|/);
-	my $uri = trim($data[0]);
-	my $siteName = trim($data[1]);
-
-	print $uri."\n" if $DEBUG;
-	print $siteName."\n" if $DEBUG;
-
-	my $request = HTTP::Request->new( GET => $uri);
-	print "Requesting...\n" if $DEBUG;
-	my $response = $ua->request( $request );
-	print "  Status: ", $response->status_line, "\n" if $DEBUG;
-
-	# save the content
-	open XMLFILE,">./xmlData/".$siteName.".xml" or die $!;
-	print XMLFILE $response->content;
-
-	close XMLFILE;
-}
-#close the url file document
-close URLHANDLE;
-
 
 # db connection
 my $db = DBI->connect(
@@ -105,6 +74,8 @@ my $db = DBI->connect(
 ) or die ("\nCan't connect to MySQL database");
 doQuery("SET character set utf8");
 doQuery("SET NAMES utf8");
+
+
 
 # read the xml data and write it into the db
 print "Parsing xml files...\n" if $DEBUG;
@@ -130,34 +101,36 @@ foreach (@xmlFiles) {
 		my $pUniqueId = $player->findnodes('./uniqueId');
 		my $pgame = $player->findnodes('./game');
 
-		# build the query string
-		my $queryStr = "INSERT INTO `".$db_prefix."_playerDataTable`
-			(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect,
-				game,day,sitename)
-			VALUES (
-				".$db->quote($pUniqueId).", ".$db->quote($pName).", ".$db->quote($pProfile).",
-				".$db->quote($pCountry).", ".$db->quote($pCountryCode).",
-				".$db->quote($pSkill).", ".$db->quote($pOldSkill).", ".$db->quote($pKills).",
-				".$db->quote($pDeaths).", ".$db->quote($pLastConnect).",
-				".$db->quote($pgame).", CURDATE(), ".$db->quote($siteName)."
-			)
-			ON DUPLICATE KEY UPDATE
-				name = VALUES(name),
-				profile = VALUES(profile),
-				country = VALUES(country),
-				countryCode = VALUES(countryCode),
-				skill = VALUES(skill),
-				oldSkill = VALUES(oldSkill),
-				kills = VALUES(kills),
-				deaths = VALUES(deaths),
-				lastConnect = VALUES(lastConnect),
-				lastUpdate = CURRENT_TIMESTAMP()
-		";
+		if($dry_run ne 1) {
+			# build the query string
+			my $queryStr = "INSERT INTO `".$db_prefix."_playerDataTable`
+				(uniqueID, name, profile, country, countryCode, skill, oldSkill, kills, deaths, lastConnect,
+					game,day,sitename)
+				VALUES (
+					".$db->quote($pUniqueId).", ".$db->quote($pName).", ".$db->quote($pProfile).",
+					".$db->quote($pCountry).", ".$db->quote($pCountryCode).",
+					".$db->quote($pSkill).", ".$db->quote($pOldSkill).", ".$db->quote($pKills).",
+					".$db->quote($pDeaths).", ".$db->quote($pLastConnect).",
+					".$db->quote($pgame).", CURDATE(), ".$db->quote($siteName)."
+				)
+				ON DUPLICATE KEY UPDATE
+					name = VALUES(name),
+					profile = VALUES(profile),
+					country = VALUES(country),
+					countryCode = VALUES(countryCode),
+					skill = VALUES(skill),
+					oldSkill = VALUES(oldSkill),
+					kills = VALUES(kills),
+					deaths = VALUES(deaths),
+					lastConnect = VALUES(lastConnect),
+					lastUpdate = CURRENT_TIMESTAMP()
+			";
 
-		#print $queryStr."\n" if $DEBUG;
+			#print $queryStr."\n" if $DEBUG;
 
-		# do the query
-		my $result = doQuery($queryStr);
+			# do the query
+			my $result = doQuery($queryStr);
+		}
 	}
 }
 

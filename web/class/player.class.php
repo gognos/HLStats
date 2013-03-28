@@ -29,7 +29,7 @@
  *
  * This program is free software is licensed under the
  * COMMON DEVELOPMENT AND DISTRIBUTION LICENSE (CDDL) Version 1.0
- * 
+ *
  * You should have received a copy of the COMMON DEVELOPMENT AND DISTRIBUTION LICENSE
  * along with this program; if not, visit http://hlstats-community.org/License.html
  *
@@ -76,7 +76,7 @@ class Player {
 	 * @var array $_saveFields
 	 */
 	private $_saveFields = array();
-	
+
 	/**
 	 * the system options
 	 *
@@ -88,7 +88,7 @@ class Player {
 	 * the global DB Object
 	 */
 	private $_DB = false;
-	
+
 	/**
 	 * mapping which game code has steam stats.
 	 * @var array gamecode=>PublicSteamGameCode
@@ -101,7 +101,7 @@ class Player {
 				'tf2' => 'TF2',
 				'css' => 'CS:S'
 			);
- 
+
 	/**
 	 * load the player id
 	 *
@@ -141,7 +141,7 @@ class Player {
 
 		// set some default values
 		$this->setOption('page',1);
-		
+
 		global $g_options;
 		$this->g_options = $g_options;
 
@@ -471,7 +471,7 @@ class Player {
 	 			CONCAT('".l('I said')." \"', ec.message, '\"') AS message,
 	 			s.name AS serverName, ec.map
 				FROM `".DB_PREFIX."_Events_Chat` AS ec
-				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = ec.serverId
 			WHERE ec.playerId = ".$this->_DB->real_escape_string($this->playerId)."";
 
@@ -545,7 +545,7 @@ class Player {
 		$query = $this->_DB->query("SELECT est.*,
 				TIME_TO_SEC(est.time) as tTime
 			FROM `".DB_PREFIX."_Events_StatsmeTime` AS est
-			LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+			LEFT JOIN `".DB_PREFIX."_Servers` AS s
 				ON s.serverId = est.serverId
 			WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 				AND est.playerId = '".$this->_DB->real_escape_string($this->playerId)."'");
@@ -698,7 +698,7 @@ class Player {
 					p.suicides,
 					CONCAT(c.tag, ' ', c.name) AS clan_name
 				FROM `".DB_PREFIX."_Players` AS p
-				LEFT JOIN `".DB_PREFIX."_Clans` AS c 
+				LEFT JOIN `".DB_PREFIX."_Clans` AS c
 					ON c.clanId = p.clan
 				WHERE p.playerId = '".$this->_DB->real_escape_string($this->playerId)."'");
 			if(SHOW_DEBUG && $this->_DB->error != '') var_dump($this->_DB->error);
@@ -791,7 +791,7 @@ class Player {
 			else {
 				$this->_playerData['lastConnect'] = $result['eventTime'];
 				$this->_playerData['country'] = $result['country'];
-				$this->_playerData['countryCode'] = strtolower($result['countryCode']);	
+				$this->_playerData['countryCode'] = strtolower($result['countryCode']);
 			}
 			$query->free();
 		}
@@ -857,7 +857,7 @@ class Player {
 										WHERE playerId = '".$this->_DB->real_escape_string($this->playerId)."')";
 				$query = $this->_DB->query($queryStr);
 			break;
-			
+
 			case 'allwithoutBot':
 				$queryStr = "SELECT count(*) AS rank
 							FROM `".DB_PREFIX."_Players` AS t1
@@ -867,13 +867,13 @@ class Player {
 								AND t1.kills >= '1'
 								AND t1.game = '".$this->_DB->real_escape_string($this->_game)."'";
 					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
-				
+
 				$queryStr .= " AND t1.skill >
 									(SELECT skill FROM ".DB_PREFIX."_Players
 										WHERE playerId = '".$this->_DB->real_escape_string($this->playerId)."')";
 				$query = $this->_DB->query($queryStr);
 			break;
-			
+
 			case 'rankPoints':
 			default:
 				$queryStr = "SELECT count(*) AS rank
@@ -885,7 +885,7 @@ class Player {
 								AND t1.kills >= '1'
 								AND t1.game = '".$this->_DB->real_escape_string($this->_game)."'";
 					$queryStr .= " AND t2.uniqueId NOT LIKE 'BOT:%'";
-				
+
 				$queryStr .= " AND t1.skill >
 									(SELECT skill FROM ".DB_PREFIX."_Players
 										WHERE playerId = '".$this->_DB->real_escape_string($this->playerId)."')";
@@ -910,7 +910,7 @@ class Player {
 		$this->_playerData['teamkills'] = l('No info');
 		$query = $this->_DB->query("SELECT COUNT(*) tk
 				FROM `".DB_PREFIX."_Events_Teamkills` AS et
-				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = et.serverId
 				WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 					AND killerId = '".$this->_DB->real_escape_string($this->playerId)."'");
@@ -933,7 +933,7 @@ class Player {
 					IFNULL(ROUND((SUM(es.hits)
 						/ SUM(es.shots) * 100), 1), 0.0) AS accuracy
 					FROM `".DB_PREFIX."_Events_Statsme` AS es
-				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = es.serverId
 				WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 					AND playerId='".$this->_DB->real_escape_string($this->playerId)."'");
@@ -978,9 +978,9 @@ class Player {
 						COUNT(epa.id) AS obj_count,
 						COUNT(epa.id) * a.reward_player AS obj_bonus
 					FROM `".DB_PREFIX."_Actions` AS a
-					LEFT JOIN `".DB_PREFIX."_Events_PlayerActions` AS epa 
+					LEFT JOIN `".DB_PREFIX."_Events_PlayerActions` AS epa
 						ON epa.actionId = a.id
-					LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					LEFT JOIN `".DB_PREFIX."_Servers` AS s
 						ON s.serverId = epa.serverId
 					WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 						AND epa.playerId = ".$this->_DB->real_escape_string($this->playerId)."
@@ -1006,9 +1006,9 @@ class Player {
 						COUNT(eppa.id) AS obj_count,
 						COUNT(eppa.id) * a.reward_player AS obj_bonus
 					FROM `".DB_PREFIX."_Actions` AS a
-					LEFT JOIN `".DB_PREFIX."_Events_PlayerPlayerActions` AS eppa 
+					LEFT JOIN `".DB_PREFIX."_Events_PlayerPlayerActions` AS eppa
 						ON eppa.actionId = a.id
-					LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					LEFT JOIN `".DB_PREFIX."_Servers` AS s
 						ON s.serverId = eppa.serverId
 					WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 						AND eppa.playerId = ".$this->_DB->real_escape_string($this->playerId)."
@@ -1042,9 +1042,9 @@ class Player {
 					COUNT(ect.id) AS teamcount,
 					COUNT(ect.id) / $numteamjoins * 100 AS percent
 				FROM `".DB_PREFIX."_Events_ChangeTeam` AS ect
-				LEFT JOIN `".DB_PREFIX."_Teams`AS t 
+				LEFT JOIN `".DB_PREFIX."_Teams`AS t
 					ON ect.team = t.code
-				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = ect.serverId
 				WHERE t.game = '".$this->_DB->real_escape_string($this->_game)."'
 					AND s.game = '".$this->_DB->real_escape_string($this->_game)."'
@@ -1074,9 +1074,9 @@ class Player {
 						COUNT(ef.weapon) AS kills,
 						COUNT(ef.weapon) / ".$this->_playerData['kills']." * 100 AS percent
 					FROM `".DB_PREFIX."_Events_Frags` AS ef
-					LEFT JOIN `".DB_PREFIX."_Weapons` AS w 
+					LEFT JOIN `".DB_PREFIX."_Weapons` AS w
 						ON w.code = ef.weapon
-					LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					LEFT JOIN `".DB_PREFIX."_Servers` AS s
 						ON s.serverId = ef.serverId
 					WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 						AND ef.killerId = '".$this->_DB->real_escape_string($this->playerId)."'
@@ -1126,7 +1126,7 @@ class Player {
 					(SUM(es.hits) / SUM(es.shots) * 100) as smaccuracy,
 					IFNULL(((SUM(es.shots) / SUM(es.kills))), 0) as smspk
 				FROM `".DB_PREFIX."_Events_Statsme` AS es
-					LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					LEFT JOIN `".DB_PREFIX."_Servers` AS s
 						ON s.serverId = es.serverId
 					LEFT JOIN `".DB_PREFIX."_Weapons` AS w
 					 	ON w.code = es.weapon
@@ -1164,9 +1164,9 @@ class Player {
 					SUM(es2.leftleg) AS smleftleg,
 					SUM(es2.rightleg) AS smrightleg
 				FROM `".DB_PREFIX."_Events_Statsme2` AS es2
-				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = es2.serverId
-				LEFT JOIN `".DB_PREFIX."_Weapons` AS w 
+				LEFT JOIN `".DB_PREFIX."_Weapons` AS w
 					ON w.code = es2.weapon
 				WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 					AND es2.PlayerId=".$this->_DB->real_escape_string($this->playerId)."
@@ -1179,9 +1179,9 @@ class Player {
 			}
 			$query->free();
 		}
-		
+
 		/*
-		SELECT COUNT(hitgroup) AS hits, SUM(damage) AS damage, epap.* 
+		SELECT COUNT(hitgroup) AS hits, SUM(damage) AS damage, epap.*
 		FROM hlstats_Events_PlayerAttackedPlayer AS epap
 		GROUP BY playerId,weapon,hitgroup
 		*/
@@ -1189,9 +1189,9 @@ class Player {
 		# now get the data from the Events_PlayerAttacked_Player
 		$query = $this->_DB->query("SELECT epap.*, w.name
 				FROM `".DB_PREFIX."_Events_PlayerAttackedPlayer` AS epap
-				LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+				LEFT JOIN `".DB_PREFIX."_Servers` AS s
 					ON s.serverId = epap.serverId
-				LEFT JOIN `".DB_PREFIX."_Weapons` AS w 
+				LEFT JOIN `".DB_PREFIX."_Weapons` AS w
 					ON w.code = epap.weapon
 				WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 					AND es2.PlayerId=".$this->_DB->real_escape_string($this->playerId)."");
@@ -1199,15 +1199,15 @@ class Player {
 		if($query->num_rows > 0) {
 			while($result = $query->fetch_assoc()) {
 				$result['hitgroup'] = 'sm'.str_replace(' ','',$result['hitgroup']);
-				$tmp[$result['weapon']][$result['hitgroup']] = 
-				
-				
+				$tmp[$result['weapon']][$result['hitgroup']] =
+
+
 				#$this->_playerData['weaponTarget'][] = $result;
 			}
 			$query->free();
 		}
 		*/
-		
+
 	}
 
 	/**
@@ -1224,7 +1224,7 @@ class Player {
 			IFNULL(SUM(killerId = ".$this->_DB->real_escape_string($this->playerId).") / SUM(victimId=".$this->_DB->real_escape_string($this->playerId)."), 0) AS kpd,
 			CONCAT(SUM(killerId = ".$this->_DB->real_escape_string($this->playerId).")) / ".$this->_DB->real_escape_string($this->_playerData['kills'])." * 100 AS percentage
 		FROM `".DB_PREFIX."_Events_Frags` AS ef
-		LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+		LEFT JOIN `".DB_PREFIX."_Servers` AS s
 			ON s.serverId = ef.serverId
 		WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."' AND killerId='".$this->_DB->real_escape_string($this->playerId)."'
 			OR victimId = '".$this->_DB->real_escape_string($this->playerId)."'
@@ -1255,7 +1255,7 @@ class Player {
 						(playerId,kills)
 					   	SELECT victimId, killerId
 					   	FROM `".DB_PREFIX."_Events_Frags` AS ef
-					   	LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					   	LEFT JOIN `".DB_PREFIX."_Servers` AS s
 							ON s.serverId = ef.serverId
 					   WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 						   AND killerId = ".$this->_DB->real_escape_string($this->playerId)."");
@@ -1264,7 +1264,7 @@ class Player {
 		$this->_DB->query("INSERT INTO `".DB_PREFIX."_".$this->playerId."_Frags_Kills` (playerId,deaths)
 						SELECT killerId,victimId
 						FROM `".DB_PREFIX."_Events_Frags` AS ef
-						LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+						LEFT JOIN `".DB_PREFIX."_Servers` AS s
 							ON s.serverId = ef.serverId
 					WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 						AND victimId = ".$this->_DB->real_escape_string($this->playerId)."");
@@ -1280,7 +1280,7 @@ class Player {
 					IFNULL(Count(fk.kills)/Count(fk.deaths),
 					IFNULL(FORMAT(Count(fk.kills), 2), 0)) AS kpd
 				FROM `".DB_PREFIX."_".$this->playerId."_Frags_Kills` AS fk
-				INNER JOIN `".DB_PREFIX."_Players` AS p 
+				INNER JOIN `".DB_PREFIX."_Players` AS p
 					ON fk.playerId = p.playerId
 				WHERE p.hideranking = 0
 				GROUP BY fk.playerId
@@ -1317,9 +1317,9 @@ class Player {
 						COUNT(ecr.id) / $numrolejoins * 100 AS percent,
 						r.code AS rolecode
 					FROM `".DB_PREFIX."_Events_ChangeRole` AS ecr
-					LEFT JOIN `".DB_PREFIX."_Roles` AS r 
+					LEFT JOIN `".DB_PREFIX."_Roles` AS r
 						ON ecr.role = r.code
-					LEFT JOIN `".DB_PREFIX."_Servers` AS s 
+					LEFT JOIN `".DB_PREFIX."_Servers` AS s
 						ON s.serverId = ecr.serverId
 					WHERE s.game = '".$this->_DB->real_escape_string($this->_game)."'
 						AND ecr.playerId = ".$this->_DB->real_escape_string($this->playerId)."
@@ -1336,7 +1336,7 @@ class Player {
 			$query->free();
 		}
 	}
-	
+
 	/**
 	 * get the public steam stats if available for this player/game
 	 * https://partner.steamgames.com/documentation/community_data
@@ -1348,16 +1348,18 @@ class Player {
 			$url = "http://steamcommunity.com/profiles/".$sPID."/stats/".$this->_statsGames[$this->_game]."/?xml=1";
 			$data = getDataFromURL($url);
 			if(!empty($data)) {
-				$xml = simplexml_load_string($data);
-				foreach($xml->achievements->achievement as $achievement) {
-					$att = $achievement->attributes();
-					$closed = (string)$att['closed'];
-					if($closed === "1") { # closed is achieved
-						$this->_playerData['steamAchievements'][] = array(
-							'name' => (string)$achievement->name,
-							'desc' => (string)$achievement->description,
-							'picture' => (string)$achievement->iconClosed
-						);
+				$xml = @simplexml_load_string($data);
+				if($xml !== false) {
+					foreach($xml->achievements->achievement as $achievement) {
+						$att = $achievement->attributes();
+						$closed = (string)$att['closed'];
+						if($closed === "1") { # closed is achieved
+							$this->_playerData['steamAchievements'][] = array(
+								'name' => (string)$achievement->name,
+								'desc' => (string)$achievement->description,
+								'picture' => (string)$achievement->iconClosed
+							);
+						}
 					}
 				}
 			}
