@@ -6,6 +6,8 @@ x.xx ()
 *) Fixed: Weapon name mixup. thx to kimaki from http://hldm.cz/en
 *) Fixed: Possible fix for loosing points. thx to kit400
 *) Fixed: Switched weapon names in Half-Life Deathmatch awards (thx to kimaki)
+*) Fixed: Variable error in ipstats overview
+*) Changed: Misleading text string
 
 1.65 (2012-11-15)
 *) Fixed: Possible sql error with Players table. There was no default value.
