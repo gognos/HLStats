@@ -223,7 +223,7 @@ if(!$g_options['hideNews'] && $num_games === 1) {
 		<tr>
 			<th>&nbsp;<?php echo l('Name'); ?></th>
 			<th>&nbsp;<?php echo l('Address'); ?></th>
-			<th>&nbsp;<?php echo l('Statistics'); ?></th>
+			<th>&nbsp;<?php echo l('Current Server Statistics'); ?></th>
 		</tr>
 <?php
 	$query = $DB->query("SELECT
