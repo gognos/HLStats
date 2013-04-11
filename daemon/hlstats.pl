@@ -1277,9 +1277,8 @@ EOT
 
 			my($server) = split(/\//, $pl);
 			$g_servers{$server}->{numplayers}-- if ($player->get("uniqueid") !~ /PENDING/);
-			&printNotice("NumPlayers ($server): $g_servers{$server}->{numplayers} (Auto-Disconnect)");
 
-			$player->updateDB();
+			#$player->updateDB();
 			delete($g_players{$pl});
 		}
 	}
