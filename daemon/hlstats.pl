@@ -894,14 +894,17 @@ while ($loop = &getLine()) {
 				$ev_type = 1;
 
 				if($g_preconnect->{$playerinfo->{"userid"}}) {
-					if ( ($g_preconnect->{$playerinfo->{"userid"}}->{"name"} eq $playerinfo->{"name"})
-						&& ($g_preconnect->{$playerinfo->{"userid"}}->{"server"} eq $s_addr) )
-					{
+				#	if ( ($g_preconnect->{$playerinfo->{"userid"}}->{"name"} eq $playerinfo->{"name"})
+				#		&& ($g_preconnect->{$playerinfo->{"userid"}}->{"server"} eq $s_addr) )
+				#	{
 						$ev_status = &doEvent_Connect(
 							$playerinfo->{"userid"},
 							$g_preconnect->{$playerinfo->{"userid"}}->{"ipaddress"}
 						);
-					}
+				#	}
+				}
+				else {
+					 $ev_status = "No preconnect information...";
 				}
 			}
 		}
@@ -1279,7 +1282,7 @@ EOT
 			$g_servers{$server}->{numplayers}-- if ($player->get("uniqueid") !~ /PENDING/);
 			&printNotice("NumPlayers ($server): $g_servers{$server}->{numplayers} (Auto-Disconnect)");
 
-			$player->updateDB();
+			#$player->updateDB();
 			delete($g_players{$pl});
 		}
 	}
