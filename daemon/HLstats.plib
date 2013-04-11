@@ -896,8 +896,7 @@ sub getPlayerInfo
 			$g_servers{$s_addr}->{numplayers}++ if (!$haveplayer);
 			&printNotice("NumPlayers ($s_addr): $g_servers{$s_addr}->{numplayers} (LAN Connect)");
 		}
-		else
-		{
+		else {
 			&printNotice("No player object available for player \"$name\" <U:$userid>");
 		}
 	}

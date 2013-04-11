@@ -173,18 +173,7 @@ sub setUniqueId {
 
 	my $playerid = &::getPlayerId($uniqueid);
 
-	if ($playerid) {
-		# An existing player. Get their skill rating.
-
-        my $query = "SELECT skill, kills, deaths
-                     FROM ".$::db_prefix."_Players
-                     WHERE playerId='$playerid'
-                ";
-        my $result = &::doQuery($query);
-        ($self->{skill}, $self->{kills}, $self->{deaths}) = $result->fetchrow_array;
-        $result->finish;
-    }
-    else {
+	if (!$playerid) {
 		# This is a new player. Create a new record for them in the Players
 		# table.
 
@@ -390,7 +379,7 @@ sub updateDB {
 	}
 
 	# reset player stat properties
-	# we do not store the complete values here. Onl the differenc between the updates.
+	# we do not store the complete values here. Only the difference between the updates.
 	$self->set("kills", 0);
 	$self->set("deaths", 0);
 	$self->set("suicides", 0);
